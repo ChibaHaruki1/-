@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\ObjectX">
+      <UniqueIdentifier>{0ea3b3fe-7d72-47fe-a400-b57c6687bf05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MotionLood">
+      <UniqueIdentifier>{959c7fdd-1bcf-4070-9576-1c412c58fd3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object2D">
+      <UniqueIdentifier>{13298b50-4476-47fd-9cd1-62705e0cb85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object3D">
+      <UniqueIdentifier>{656aec54-79af-437d-9c34-1e1a8a146ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\SummarizeObject">
+      <UniqueIdentifier>{de6e4b6a-db1a-40bf-8544-6f405b64b9f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{be3adee8-252f-49fb-ab12-e2201da2c86d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{eebd0c5e-f77f-4e33-9875-6743f4453f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\SummarizeObject">
+      <UniqueIdentifier>{d9954aea-c666-4ad3-b130-59c83bdc4b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{b6f44a57-c778-44c6-a6dc-a59a07198a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MotionLood">
+      <UniqueIdentifier>{8ed62e31-59dc-4467-84ab-ca961b712ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game">
+      <UniqueIdentifier>{c395a34c-5489-491c-a390-e9af4ad9add2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object2D">
+      <UniqueIdentifier>{a5b1fd0e-2605-4072-9d38-4f123b6d8551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ObjectX">
+      <UniqueIdentifier>{47cb5187-c330-40a3-abd7-2d0a24ce6329}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Object3D">
+      <UniqueIdentifier>{e0f0e1ab-0340-4254-80df-8f31fd4b5a88}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="block.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="character.cpp">
+      <Filter>ソース ファイル\MotionLood</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyinmotion.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="enemycharacter.cpp">
+      <Filter>ソース ファイル\MotionLood</Filter>
+    </ClCompile>
+    <ClCompile Include="2d_ui.cpp">
+      <Filter>ソース ファイル\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="bg.cpp">
+      <Filter>ソース ファイル\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="billborad.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="bosseffect.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="direction_obj.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="efect.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソース ファイル\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="gage.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="model_prts.cpp">
+      <Filter>ソース ファイル\MotionLood</Filter>
+    </ClCompile>
+    <ClCompile Include="particles.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="player.x.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="skydoom.cpp">
+      <Filter>ソース ファイル\ObjectX</Filter>
+    </ClCompile>
+    <ClCompile Include="ui.cpp">
+      <Filter>ソース ファイル\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>ソース ファイル\SummarizeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="object2D.cpp">
+      <Filter>ソース ファイル\SummarizeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="object3D.cpp">
+      <Filter>ソース ファイル\SummarizeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="objectX.cpp">
+      <Filter>ソース ファイル\SummarizeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="manager.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="objectmanagerX.cpp">
+      <Filter>ソース ファイル\SummarizeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="object_set.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="stage_obj.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="event.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="instance.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="object.h">
+      <Filter>ヘッダー ファイル\SummarizeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="object2D.h">
+      <Filter>ヘッダー ファイル\SummarizeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="object3D.h">
+      <Filter>ヘッダー ファイル\SummarizeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="objectmanagerX.h">
+      <Filter>ヘッダー ファイル\SummarizeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="objectX.h">
+      <Filter>ヘッダー ファイル\SummarizeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="manager.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="rendererh.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ヘッダー ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="character.h">
+      <Filter>ヘッダー ファイル\MotionLood</Filter>
+    </ClInclude>
+    <ClInclude Include="enemycharacter.h">
+      <Filter>ヘッダー ファイル\MotionLood</Filter>
+    </ClInclude>
+    <ClInclude Include="model_prts.h">
+      <Filter>ヘッダー ファイル\MotionLood</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="event.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="instance.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="object_set.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="stage_obj.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="billboard.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="bosseffect.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="efect.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="field.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="gage.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="particles.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>ヘッダー ファイル\Object3D</Filter>
+    </ClInclude>
+    <ClInclude Include="2d_ui.h">
+      <Filter>ヘッダー ファイル\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="bg.h">
+      <Filter>ヘッダー ファイル\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダー ファイル\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ヘッダー ファイル\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="direction_obj.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyinmotion.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="player.x.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+    <ClInclude Include="skydoom.h">
+      <Filter>ヘッダー ファイル\ObjectX</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
