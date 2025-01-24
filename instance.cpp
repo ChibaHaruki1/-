@@ -37,6 +37,7 @@ CInstance::CInstance()
 		m_pTelephonPole[nCount1] = nullptr;            //電柱のポインターの初期化
 		m_pSurveillanceCameraUp[nCount1] = nullptr;    //監視カメラの上の部分のポインターの初期化
 		m_pSurveillanceCameraDown[nCount1] = nullptr;  //監視カメラの下の部分のポインターの初期化
+		m_pLaser[nCount1] = nullptr;                   //レーザーのポインターの初期化
 	}
 
 	//がれきの最大数分回す
@@ -158,6 +159,7 @@ void CInstance::Uninit()
 		m_pTelephonPole[nCount1] = nullptr;            //電柱のポインターの初期化
 		m_pSurveillanceCameraUp[nCount1] = nullptr;    //監視カメラの上の部分のポインターの初期化
 		m_pSurveillanceCameraDown[nCount1] = nullptr;  //監視カメラの下の部分のポインターの初期化
+		m_pLaser[nCount1] = nullptr;                   //レーザーのポインターの初期化
 	}
 
 	//がれきの最大数分回す

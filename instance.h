@@ -47,6 +47,8 @@ public:
 	CObjectX* CreateBlock(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos);                   //ブロックの生成
 	CObjectX* CreateRubble(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos);                  //がれきの生成
 
+
+	//=======================================
 	//ブロックのインスタンスを取得
 	CManagerBlock* GetFiledBlock(int nNumber) { return m_pFieldBlock[nNumber]; }                  //地面用ブロックの取得
 	CManagerBlock* GetGoUpBlock(int nNumber) { return m_pGoUpBlock[nNumber]; }                    //上がるためのブロックの取得
@@ -59,18 +61,23 @@ public:
 	CManagerBlock* GetWoodenBoard (int nNumber) { return m_pWoodenBoard[nNumber]; }               //木の板群の取得
 	CManagerBlock* GetFinalBlock () { return m_pFinalBlosk; }                                     //ボス戦時の地面の取得
 	CManagerBlock* GetFinalCeiling() { return m_pFinalCeiling; }                                  //ボス戦時の天井の取得
-	CManagerBlock* GetSpeceBattleShip(int nNumber) { return m_pSpeceBattleShip000[nNumber]; }     //次のステージへ行く用のオブジェクトの取得
-																							      
+	CManagerBlock* GetSpeceBattleShip(int nNumber) { return m_pSpeceBattleShip000[nNumber]; }     //次のステージへ行く用のオブジェクトの取得																				      
 	CDebrisX* GetDebrisX(int nNumber) { return m_pDebrisX[nNumber]; }                             //瓦礫の取得
 
+
+	//=======================================
 	//ステージに配置する用のオブジェクトのインスタンスを取得
 	CStageObj* GetTelephonPole(int nNumber) { return m_pTelephonPole[nNumber]; }                  //電柱の取得
 	CStageObj* GetSurveillanceCameraUp(int nNUmber) { return m_pSurveillanceCameraUp[nNUmber]; }  //カメラの上部分の取得
 	CStageObj* GetShop() { return m_pShop; }                                                      //店の取得
 
+
+	//=======================================
 	//パーティクルの取得
 	CParticles001* GetPraticles001(int nNumber) { return m_pPraticles001[nNumber]; }              //円状のパーティクルの取得
 
+
+	//=======================================
 	//エフェクトの取得
 	CEffect* GetEffect() { return m_pEffect; }                                                    //プレイヤーの弾に行くエフェクトの取得
 	CManagerEffect* GetExplosion() { return m_pExplosion; }                                       //爆発エフェクトの取得
@@ -83,6 +90,8 @@ public:
 	CManagerBossEffect* GetBossSpecialAttack() { return m_pBossSpecialAttack; }                   //ボスの必殺技のエフェクトの取得
 	CManagerBossEffect* GetImpact() { return m_pImpact; }                                         //衝撃波エフェクトの取得
 
+
+	//=======================================
 	//敵系の取得
 	CManagerEnemy* GetEnemy000() { return m_pEnemy000; }                                              //通常敵の取得
 	CManagerEnemy* GetEnemy001(int nNumber) { return m_pEnemy001[nNumber]; }                          //通常敵001の取得
@@ -91,14 +100,20 @@ public:
 	CManagerEnemyInMotion* GetEnemyInMotion001(int nNumber) { return m_pEnemyInMotion001[nNumber]; }  //モーション付きの敵001の取得
 	CBoss* GetBoss() { return m_pBoss; }                                                              //ボスの取得
 
+
+	//=======================================
 	//2Dのインスタンス
 	CShopScreen* GetShopScreen() { return m_pShopScreen; }            //SHOP時の背景の情報を取得
 	CManagerGage* GetPlayerHPGage() { return m_pPlayerHPGage; }       //プレイヤーのHPゲージの取得
 	CBossHPGage* GetBossHPGage() { return m_pBossHPGage; }            //ボスのHPゲージの取得
 	CManagerScore* GetGameScore() { return m_pGameScore; }            //ゲーム中のスコアの取得
 
+
+	//=======================================
 	//３Dの取得
 	CFuelGage* GetFuelGage() {return m_pFuelGage; }                   //燃料ゲージの取得
+	CUI* GetLaser(int nNumber) { return m_pLaser[nNumber]; }          //レーザーの取得
+
 																	  
 	//作った数を取得する用の関数									     
 	int& GetFieldBlockCount() {return  m_nNumFiledBlock; }            //床用のブロックの作った数
@@ -110,10 +125,11 @@ public:
 	int& GetSmallBlock001Count() {return  m_nSmallBlock001; }         //小さいブロックの作った数
 	int& GetUpWallBlockCount() {return  m_nUpWallBlock; }             //上がる用のブロックの作った数
 	int& GetWoodenBoardCount() { return m_nWoodenBoard; }             //木の板群の作った数
-	int& GetEnemy001Count() { return m_nEnemy001; }                   //敵の作った数
-	int& GetEnemy002Count() { return m_nEnemy001; }                   //敵の作った数
+	int& GetEnemy001Count() { return m_nEnemy001; }                   //敵001の作った数
+	int& GetEnemy002Count() { return m_nEnemy002; }                   //敵002の作った数
 	int& GetMotionInEnemyCount() { return m_nEnemyInMotion; }         //モーション付きの敵の生成数
 	int& GetMotionInEnemy001Count() { return m_nEnemyInMotion001; }   //モーション付きの敵001の生成数
+	int& GetLaserCount() { return m_nLaser; }                         //レーザーの数
 
 	//マクロ定義 （constexprでコンパイル時に初期化）
 	constexpr static int MAX_ENEMYINMOTION = 10;  //モーション付きの敵の最大数
@@ -188,7 +204,8 @@ private:
 	CManagerScore* m_pGameScore;
 
 	//３Dのインスタンス
-	CFuelGage* m_pFuelGage;
+	CFuelGage* m_pFuelGage;          //燃料ゲージ
+	CUI* m_pLaser[MAX_STAGEOBJECT];  //カメラから出るレーザー
 
 	//作られた数を保管する変数
 	int m_nNumFiledBlock;      //地面用のブロックの数
@@ -206,6 +223,7 @@ private:
 	int m_nWoodenBoard;        //木の板群の数
 	int m_nBreakHouse;         //壊れた家の数
 	int m_nShip;               //スペースシップの数
+	int m_nLaser;              //レーザーの作られた数
 };
 
 #endif
