@@ -473,7 +473,7 @@ HRESULT CPlayerHPGageLeave::Init()
 //===========================
 CBossHPGageLeave::CBossHPGageLeave(int nPriority) : CManagerGage(nPriority)
 {
-	m_fSaveSizeX = GetBossHPSizeX(); //HP‚ð“¯Šú‚³‚¹‚é
+	m_fSaveSizeX = 1; //HP‚ð“¯Šú‚³‚¹‚é
 }
 
 //===========================

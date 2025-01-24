@@ -10,6 +10,7 @@
 //インクルード
 #include "ui.h"
 #include "manager.h"
+#include <time.h>
 
 
 //============================
@@ -246,16 +247,25 @@ HRESULT CLaserCamare::Init()
 void CLaserCamare::Update()
 {
 	//当たり判定
-	if (CObject3D::CollisionPrtsPlayer(SIZEY, SIZEX, SIZEZ) == true)
+	if (CObject3D::CollisionPrtsPlayer(SIZEY* ADDJUST_ADDJUST_SIZE, SIZEX* ADDJUST_ADDJUST_SIZE, SIZEZ* ADDJUST_ADDJUST_SIZE) == true)
 	{
-		SetRandom(1+ rand() % 2); //乱数の生成(範囲指定）
-
+		srand((unsigned)time(NULL));  //乱数系列を初期化
+		SetRandom(1+ rand() % 2);     //乱数の生成(範囲指定）
+		
 		//乱数が１の時
 		if (GetRandom() == 1)
 		{
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMY, 0, D3DXVECTOR3(GetPos().x + ADDJUST_CREATE_POSZ, GetPos().y, 0.0f)); //敵の生成
-			CObject3D::Release(); //自身の削除
-			return;               //処理を抜ける
+			//敵の生成
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADDJUST_CREATE_POSX, GetPos().y, 0.0f));
+			CObject3D::Release();     //自身の削除
+			return;                   //処理を抜ける
+		}
+		else
+		{
+			//敵の生成
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADDJUST_CREATE_POSX, GetPos().y, 0.0f));
+			CObject3D::Release();     //自身の削除
+			return;                   //処理を抜ける
 		}
 	}
 

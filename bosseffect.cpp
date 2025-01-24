@@ -298,34 +298,38 @@ CImpact::~CImpact()
 //============================
 void CImpact::Update()
 {
-	SetAddjustLife()--;                                 //ライフを減らす
-	SetAddjustSizeX() += PLUS_SIZEX;                    //ｘ軸のサイズを大きくする
-	SetAddjustSizeY() += PLUS_SIZEY;                    //ｙ軸のサイズを大きくする
-
-	SetCol(RED, GREEN, BLUE, GetAlpha());               //色の設定
-	SetSize(GetSizeX(), GetSizeY(), MAX_SIZEZ);         //大きさの更新
-
-	//右側に当たった時
-	if (CObject3D::CollisionPrts1Right(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
+	//ボスの情報がある時
+	if (CManager::GetInstance()->GetBoss() != nullptr)
 	{
-		SetHitNumber(0); //当たった方向の番号を設定
-	}
+		SetAddjustLife()--;                                 //ライフを減らす
+		SetAddjustSizeX() += PLUS_SIZEX;                    //ｘ軸のサイズを大きくする
+		SetAddjustSizeY() += PLUS_SIZEY;                    //ｙ軸のサイズを大きくする
 
-	//左側に当たった時
-	else if (CObject3D::CollisionPrts1Left(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
-	{
-		SetHitNumber(1); //当たった方向の番号を設定
-	}
+		SetCol(RED, GREEN, BLUE, GetAlpha());               //色の設定
+		SetSize(GetSizeX(), GetSizeY(), MAX_SIZEZ);         //大きさの更新
 
-	//ライフが尽きた時
-	if (GetLife() <= 0)
-	{
-		CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT); //インスタンスのポインターの情報を無くす
-		CObject3D::Release();                                       //自身を破棄する
-		return;                                                     //処理を抜ける
-	}
+		//右側に当たった時
+		if (CObject3D::CollisionPrts1Right(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
+		{
+			SetHitNumber(0); //当たった方向の番号を設定
+		}
 
-	CObject3D::Update();                                            //更新処理を呼ぶ
+		//左側に当たった時
+		else if (CObject3D::CollisionPrts1Left(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
+		{
+			SetHitNumber(1); //当たった方向の番号を設定
+		}
+
+		//ライフが尽きた時
+		if (GetLife() <= 0)
+		{
+			CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT); //インスタンスのポインターの情報を無くす
+			CObject3D::Release();                                       //自身を破棄する
+			return;                                                     //処理を抜ける
+		}
+
+		CObject3D::Update();                                            //更新処理を呼ぶ
+	}
 }
 
 
@@ -354,57 +358,65 @@ CBossSpecialAttack::~CBossSpecialAttack()
 //============================
 void CBossSpecialAttack::Update()
 {
-	this->GetBossEffectDirection()->Effect(GetTexture(), GetBuffer(), ANIMETION_DLLIFE, MAX_BOSSANIMETION_TEX); //テクスチャのサイズの更新
-
-	SetCol(RED, GREEN, BLUE, GetAlpha());          //色の設定
-
-	//サイズが規定値より小さい時
-	if (GetSizeX() <= MAXIMUM_SIZEX)
+	//ボスの情報がある時
+	if (CManager::GetInstance()->GetBoss() != nullptr)
 	{
-		SetAddjustSizeX() += PLUS_SIZEX;           //サイズを大きくする
-	}
+		this->GetBossEffectDirection()->Effect(GetTexture(), GetBuffer(), ANIMETION_DLLIFE, MAX_BOSSANIMETION_TEX); //テクスチャのサイズの更新
 
-	float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPrtsBoss(17).y * ADJUST_PLAYER_POSY; //プレイヤーのpos.yを計算+調整=当たり判定の一番下を設定
+		SetCol(RED, GREEN, BLUE, GetAlpha());          //色の設定
 
-	//向き番号が１の時
-	if (GetRotNumber() == 1)
-	{
-		SetEffectSize(GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);    //サイズの設定
-
-		//点BXがプレイヤーより大きい判定にしたいからサイズの更新処理を入れる
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), GetPos().x, GetPos().y + PLUS_POS_Y,
-			GetSizeX()*ADJUST_SIZE_X + GetPos().x, fPosY) == true)
+		//サイズが規定値より小さい時
+		if (GetSizeX() <= MAXIMUM_SIZEX)
 		{
-			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
+			SetAddjustSizeX() += PLUS_SIZEX;           //サイズを大きくする
+		}
+
+		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPrtsBoss(17).y * ADJUST_PLAYER_POSY;   //プレイヤーのpos.yを計算+調整=当たり判定の一番下を設定
+
+		//向き番号が１の時
+		if (GetRotNumber() == 1)
+		{
+			SetEffectSize(GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);    //サイズの設定
+
+			//点BXがプレイヤーより大きい判定にしたいからサイズの更新処理を入れる
+			if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), GetPos().x, GetPos().y + PLUS_POS_Y,
+				GetSizeX() * ADJUST_SIZE_X + GetPos().x, fPosY) == true)
+			{
+				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
+			}
+		}
+
+		//向き番号が２の時
+		else if (GetRotNumber() == 2)
+		{
+			SetEffectSize(-GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);   //サイズの設定
+
+			//点SXがプレイヤーより小さい判定にしたいからサイズの更新処理を入れる
+			if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), -GetSizeX() * ADJUST_SIZE_X + GetPos().x, GetPos().y + PLUS_POS_Y,
+				GetPos().x, fPosY) == true)
+			{
+				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
+			}
+		}
+
+		//ライフが０以下の時
+		if (GetLife() <= 0)
+		{
+			SetAddjustAlpha() -= MINUS_ALPHA;          //alpha値を減らす
+			//アルファ値が０以下の時
+			if (GetAlpha() <= 0)
+			{
+				CObject::Release();                    //自身を削除
+				return;                                //処理を抜ける
+			}
+		}
+		else
+		{
+			SetAddjustLife()--;                        //ライフを減らす
 		}
 	}
-
-	//向き番号が２の時
-	else if (GetRotNumber() == 2)
+	else
 	{
-		SetEffectSize(-GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);   //サイズの設定
-
-		//点SXがプレイヤーより小さい判定にしたいからサイズの更新処理を入れる
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), -GetSizeX()* ADJUST_SIZE_X + GetPos().x, GetPos().y + PLUS_POS_Y,
-			GetPos().x, fPosY) == true)
-		{
-			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
-		}
-	}
-
-	//ライフが０以下の時
-	if (GetLife() <= 0)
-	{
-		SetAddjustAlpha() -= MINUS_ALPHA;          //alpha値を減らす
-		//アルファ値が０以下の時
-		if (GetAlpha() <= 0)
-		{
-			CObject::Release();                    //自身を削除
-			return;                                //処理を抜ける
-		}					                       
-	}						                       
-	else					                       
-	{						                       
-		SetAddjustLife()--;                        //ライフを減らす
+		SetAlpha(0);                                   //アルファ値の初期化
 	}
 }
