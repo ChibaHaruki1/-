@@ -104,7 +104,7 @@ CManagerBg* CManagerBg::Create(CScene::MODE mode)
 	else if (mode == CScene::MODE::MODE_RESULT)
 	{
 		pBg = new CResultBg(3);                                           //動的確保
-		pBg->SetFileNamePass("data\\TEXTURE\\UI\\scene\\utyuu.png");      //ファイルパスを設定
+		pBg->SetFileNamePass("data\\TEXTURE\\UI\\scene\\Result.png");      //ファイルパスを設定
 	}
 
 	//死亡時
