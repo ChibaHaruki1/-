@@ -268,24 +268,24 @@ void CBullet3D::CollisionOnObject()
 		}
 	}
 
-	////カメラの上部分の情報がある時
-	//for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
-	//{
-	//	if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
-	//	{
-	//		//カメラとの当たり判定
-	//		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(GetPos(), CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetPos(),
-	//			MAX_BULLET3D_SIZE_X*1.5f, MAX_BULLET3D_SIZE_Y*1.5f, MAX_BULLET3D_SIZE_Z*1.5f,
-	//			CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetModelSize()))
-	//		{
-	//			CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release(); //カメラの上部分の削除
-	//			CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);                                    //ポインターをnullptrにする
+	//カメラの上部分の情報がある時
+	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
+	{
+		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
+		{
+			//カメラとの当たり判定
+			if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(GetPos(), CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetPos(),
+				MAX_BULLET3D_SIZE_X*1.5f, MAX_BULLET3D_SIZE_Y*1.5f, MAX_BULLET3D_SIZE_Z*1.5f,
+				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetModelSize()))
+			{
+				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release(); //カメラの上部分の削除
+				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);                                    //ポインターをnullptrにする
 
-	//			SetLife(0); //ライフを０にする
-	//			return;     //処理を抜ける
-	//		}
-	//	}
-	//}
+				SetLife(0); //ライフを０にする
+				return;     //処理を抜ける
+			}
+		}
+	}
 
 	//モーション付きの敵001の情報がある時
 	for (int nMotionInEnemy001 = 0; nMotionInEnemy001 < CManager::GetInstance()->GetMotionInEnemy001Count()+1; nMotionInEnemy001++)
