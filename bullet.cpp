@@ -269,7 +269,7 @@ void CBullet3D::CollisionOnObject()
 	}
 
 	//ƒJƒƒ‰‚Ìã•”•ª‚Ìî•ñ‚ª‚ ‚é
-	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
+	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount()+1; nCamera++)
 	{
 		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
 		{
