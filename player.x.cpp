@@ -178,6 +178,13 @@ void CPlayerX::Update()
 	{
 		CCharacter::UpdatePlayer();  //モーションの更新
 
+		//重力値が規定値より高い時
+		if (GetGravity() >= MAX_GRAVITY)
+		{
+			GetGravity() = MAX_GRAVITY; //重力の設定
+		}
+
+		//遊べる状態になっている時
 		if (CManager::GetScene()->GetPlay() == true)
 		{
 			HitAttack();                 //特定の攻撃を受けた時の処理関数を呼ぶ

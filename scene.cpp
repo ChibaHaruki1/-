@@ -276,17 +276,17 @@ void CGame01::Update()
 			//フェードの処理が終わったら（完全に暗くなったら）
 			if (m_pFade->GetAlph() >= CFade::FINISH_FADE_OUT)
 			{
-				m_pFade->Release();                                           //情報を消す
-				g_pBG->Release();                                             //情報を消す
-				m_pFade = nullptr;                                            //情報を無くす
-				g_pBG = nullptr;                                              //情報を無くす
-				GetPlayerX()->SetGravityFlag(true);                           //重力ON
-				GetCamera()->GetAdjustmentPosZ() = 800;                       //カメラのZ軸の調整
-				GetCamera()->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));           //カメラの向きの初期化
-				GetPlayerX()->SetRot(D3DXVECTOR3(0.0f, -CObjectX::D3DX_PI_ORI, 0.0f));           //カメラの向きの初期化
-				GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP); //プレイヤーのモーションを設定
-				CompileCreate();                                              //createしたいものを関数化して呼ぶ
-				return;                                                       //処理を抜ける
+				m_pFade->Release();                                                    //情報を消す
+				g_pBG->Release();                                                      //情報を消す
+				m_pFade = nullptr;                                                     //情報を無くす
+				g_pBG = nullptr;                                                       //情報を無くす
+				GetPlayerX()->SetGravityFlag(true);                                    //重力ON
+				GetCamera()->GetAdjustmentPosZ() = 800;                                //カメラのZ軸の調整
+				GetCamera()->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                    //カメラの向きの初期化
+				GetPlayerX()->SetRot(D3DXVECTOR3(0.0f, -CObjectX::D3DX_PI_ORI, 0.0f)); //カメラの向きの初期化
+				GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);          //プレイヤーのモーションを設定
+				CompileCreate();                                                       //createしたいものを関数化して呼ぶ
+				return;                                                                //処理を抜ける
 			}
 		}
 

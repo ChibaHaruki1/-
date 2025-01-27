@@ -67,6 +67,7 @@ private: //アクセス不可能
 	constexpr static int MINUS_ENEMYMOTION001_LIFE = 1;        //モーション付きの敵001のライフを減らす値
 
 	constexpr static float  ADDJUST_HIT_MOTIONENENY001 = 0.5f; //モーション付きの敵001の当たり判定の調整値
+	constexpr static float  ADDJUST_HIT_CAMERA_UP = 1.5f;      //監視カメラ上部分の当たり判定の調整値
 	constexpr static float  MINUS_BOSS_HPGAGE = 0.01f;         //ボスのHPゲージを減らす値
 };
 

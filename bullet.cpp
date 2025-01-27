@@ -275,11 +275,11 @@ void CBullet3D::CollisionOnObject()
 		{
 			//カメラとの当たり判定
 			if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(GetPos(), CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetPos(),
-				MAX_BULLET3D_SIZE_X*1.5f, MAX_BULLET3D_SIZE_Y*1.5f, MAX_BULLET3D_SIZE_Z*1.5f,
+				MAX_BULLET3D_SIZE_X* ADDJUST_HIT_CAMERA_UP, MAX_BULLET3D_SIZE_Y* ADDJUST_HIT_CAMERA_UP, MAX_BULLET3D_SIZE_Z* ADDJUST_HIT_CAMERA_UP,
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetModelSize()))
 			{
-				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release(); //カメラの上部分の削除
-				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);                                    //ポインターをnullptrにする
+				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release();                        //カメラの上部分の削除
+				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);  //ポインターをnullptrにする
 
 				SetLife(0); //ライフを０にする
 				return;     //処理を抜ける
@@ -301,6 +301,7 @@ void CBullet3D::CollisionOnObject()
 				{
 					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->SetAddjustLife() -= MINUS_ENEMYMOTION001_LIFE;
 
+					//ライフが０以下の時
 					if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() <= 0)
 					{                                     
 						CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::ENEMYINMOTION001, nMotionInEnemy001);  //ポインターをnullptrにする

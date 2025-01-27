@@ -178,7 +178,7 @@ CExplotionPillar001::~CExplotionPillar001()
 //========================
 CFormerDebris::CFormerDebris()
 {
-	SetEffectFileNamePass("data\\TEXTURE\\UI\\010.png"); //ファイルパスを設定
+	SetEffectFileNamePass("data\\TEXTURE\\UI\\Effect\\Debris.png"); //ファイルパスを設定
 }
 
 //========================
@@ -595,7 +595,7 @@ void CPillarOfFire::Update()
 //===========================
 CEffect::CEffect(int nPriority) : CObject3D(nPriority)
 {
-	SetFileNamePass("data\\TEXTURE\\UI\\effect000.jpg");  //テクスチャのファイルパスを設定
+	SetFileNamePass("data\\TEXTURE\\UI\\Effect\\effect000.png");  //テクスチャのファイルパスを設定
 }
 
 
