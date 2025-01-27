@@ -94,7 +94,7 @@ void CBossEffectDirection::Effect(LPDIRECT3DTEXTURE9 m_pTexture, LPDIRECT3DVERTE
 //==========================================
 CAttackEffect::CAttackEffect()
 {
-	SetFileNamePass("data\\TEXTURE\\UI\\Impact.png"); //ファイルパスを設定
+	SetFileNamePass("data\\TEXTURE\\UI\\Effect\\Impact.png"); //ファイルパスを設定
 }
 
 //==========================================

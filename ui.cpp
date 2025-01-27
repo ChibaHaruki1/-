@@ -116,7 +116,7 @@ CUI* CUI::Create(CObject3D::TYPE_UI typeui)
 		//初期化に成功した時
 		if (SUCCEEDED(pUI->Init()))
 		{
-			pUI->SetFileNamePass("data\\TEXTURE\\UI\\Laser000.png"); //ファイルパスの設定
+			pUI->SetFileNamePass("data\\TEXTURE\\UI\\Effect\\Laser000.png"); //ファイルパスの設定
 			pUI->CObject3D::Lood();                                  //テクスチャの読み込み
 			return pUI;                                              //情報を返す
 		}

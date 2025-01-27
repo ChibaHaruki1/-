@@ -94,7 +94,7 @@ void CEffectDirection::Effect(LPDIRECT3DTEXTURE9 m_pTexture, LPDIRECT3DVERTEXBUF
 //========================
 CThunder::CThunder()
 {
-	SetEffectFileNamePass("data\\TEXTURE\\UI\\thunder.png"); //ファイルパスを設定
+	SetEffectFileNamePass("data\\TEXTURE\\UI\\Effect\\thunder.png"); //ファイルパスを設定
 }
 
 //========================

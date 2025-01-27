@@ -78,6 +78,6 @@ private:
 	constexpr static float ADDJUST_ROTY = 0.54f;          //Y軸の向きの調整値
 	constexpr static float ADDJUST_ROTZ = 1.54f;          //Z軸の向きの調整値
 	constexpr static float ADDJUST_CREATE_POSX = 300.0f;  //X軸の生成位置の調整値
-	constexpr static float ADDJUST_CREATE_POSY = 500.0f;  //Y軸の生成位置の調整値
+	constexpr static float ADDJUST_CREATE_POSY = 300.0f;  //Y軸の生成位置の調整値
 	constexpr static float ADDJUST_ADDJUST_SIZE = 1.3f;   //プレイヤーとの当たり判定時の乗算値
 };
