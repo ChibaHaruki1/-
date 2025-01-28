@@ -31,6 +31,7 @@ public:
 	HRESULT Init();                                          //初期化処理
 	void Uninit();                                           //破棄処理
 	void UpdateEnemy001();                                   //敵001の更新処理
+	void UpdateEnemy002();                                   //敵002の更新処理
 	void DrawEnemy(int NumPrts, int nNumber);                //描画処理
 	void LoodEnemy(const char* aSelect);                     //モデルを読み込む処理＋情報を取得する処理
 	void MotionInfoEnemy();                                  //ボスモーションの情報を扱う処理
@@ -82,5 +83,8 @@ private:
 	MotionSet MotionSetEnemy[NUM_ENEMYMOTION];                 //各モーションの種類を格納する変数
 
 	int MotionCountEnemy;    //現在のモーションをカウントするための変数(Keyカウント)
+	int m_nNumParts;         //パーツ数
+	int m_nEnemy001Parts;    //敵001のパーツ数
+	int m_nEnemy002Parts;    //敵002のパーツ数
 	bool m_bMotionEnemyType; //特殊なモーションかどうか
 };

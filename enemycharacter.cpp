@@ -27,6 +27,9 @@ CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 	}
 
 	MotionCountEnemy = 0;             //モーション時のカウントを初期化
+	m_nNumParts = 0;                  //パーツ数の初期化
+	m_nEnemy001Parts = 0;             //敵001パーツ数の初期化
+	m_nEnemy002Parts = 0;             //敵002パーツ数の初期化
 	m_bMotionEnemyType = false;       //モーションタイプの初期化
 	m_MotionStateEnemy = ENEMYWALK;   //モーション状態の初期化
 }
@@ -77,14 +80,14 @@ void CEnemyCharacter::Uninit()
 }
 
 //========================
-//敵の更新処理
+//敵001の更新処理
 //========================
 void CEnemyCharacter::UpdateEnemy001()
 {
 	MotionInfoEnemy(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = 0; nCount < MAX_ENEMYPARTS; nCount++)
+	for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
 	{
 		//上半身
 		if (nCount <= 7)
@@ -102,6 +105,14 @@ void CEnemyCharacter::UpdateEnemy001()
 				m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
 		}
 	}
+}
+
+//========================
+//敵002の更新処理
+//========================
+void CEnemyCharacter::UpdateEnemy002()
+{
+	MotionInfoEnemy(); //モーションを行う処理を呼ぶ
 }
 
 //========================
@@ -238,6 +249,12 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 						if (m_aDataSearch[0] == '#')
 						{
 							continue; //続行
+						}
+
+						if (!strcmp(m_aDataSearch, "NUM_PARTS"))
+						{
+							(void)fscanf(m_pFile, "%s", &m_aDataSearch); //検索
+							(void)fscanf(m_pFile,"%d",&m_nNumParts);     //パーツ数の初期化
 						}
 
 						//パーツの情報の読み込み
@@ -434,19 +451,21 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		int RightnCount = 0; //for分用の変数
 		int LeftnCount = 0;  //for分用の変数
 
+		m_nEnemy001Parts = m_nNumParts;
+
 		//最大パーツ数分回す
-		for (int nCount = 0; nCount < MAX_ENEMYPARTS; nCount++)
+		for (int nCount = 0; nCount < m_nNumParts; nCount++)
 		{
 			m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
 		}
 
-		m_pSaveModelPrtUpdateInfo[2].pos += m_pModelPrtsEnemy[0]->GetPos(); //位置を加算する
-		m_pSaveModelPrtUpdateInfo[5].pos += m_pModelPrtsEnemy[0]->GetPos(); //位置を加算する
+		m_pSaveModelPrtUpdateInfo[2].pos += m_pModelPrtsEnemy[0]->GetPos(); //右肩の位置を体の位置分加算する
+		m_pSaveModelPrtUpdateInfo[5].pos += m_pModelPrtsEnemy[0]->GetPos(); //左肩の位置を体の位置分加算する
 
 		//右肩から次のパーツ（２の次＝３）から終わりまで（終わりは武器まで（４番））
 		for (RightnCount = 3; RightnCount < 5; RightnCount++)
 		{
-			//初期値は現在の
+			//初期値は現在の右パーツー１
 			for (int nCount1 = RightnCount -1; nCount1 < RightnCount; nCount1++)
 			{
 				m_pSaveModelPrtUpdateInfo[RightnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount1].pos.x, m_pSaveModelPrtUpdateInfo[nCount1].pos.y, m_pSaveModelPrtUpdateInfo[nCount1].pos.z); //位置を加算する
@@ -456,11 +475,23 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		//左肩から次のパーツ（５の次＝６）から終わりまで（終わりは武器まで（７番））
 		for (LeftnCount = 6; LeftnCount < 8; LeftnCount++)
 		{
+			//初期値は現在の左パーツー１
 			for (int nCount2 = LeftnCount - 1; nCount2 < LeftnCount; nCount2++)
 			{
 				m_pSaveModelPrtUpdateInfo[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount2].pos.x, m_pSaveModelPrtUpdateInfo[nCount2].pos.y, m_pSaveModelPrtUpdateInfo[nCount2].pos.z);  //位置を加算する
 			}
 		}
+	}
+
+	else if (aSelect == "Enemy002")
+	{
+		m_nEnemy002Parts = m_nNumParts;
+		//最大パーツ数分回す
+		for (int nCount = 0; nCount < m_nNumParts; nCount++)
+		{
+			m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
+		}
+
 	}
 }
 
@@ -504,7 +535,7 @@ void CEnemyCharacter::MotionInfoEnemy()
 			if (MotionSetEnemy[ENEMYJUMP].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYJUMP && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+				if (m_MotionStateEnemy == ENEMYJUMP && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey-1)
 				{
 					MotionSetEnemy[ENEMYJUMP].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                          //位置を初期化する
@@ -516,7 +547,7 @@ void CEnemyCharacter::MotionInfoEnemy()
 			if (MotionSetEnemy[ENEMYATTACK].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYATTACK && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+				if (m_MotionStateEnemy == ENEMYATTACK && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey-1)
 				{
 					MotionSetEnemy[ENEMYATTACK].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                            //位置を初期化
@@ -528,7 +559,7 @@ void CEnemyCharacter::MotionInfoEnemy()
 			if (MotionSetEnemy[ENEMYDIE].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYDIE && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+				if (m_MotionStateEnemy == ENEMYDIE && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey - 1)
 				{
 					MotionSetEnemy[ENEMYDIE].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                         //位置を初期化
