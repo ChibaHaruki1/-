@@ -323,7 +323,7 @@ void CImpact::Update()
 		//ライフが尽きた時
 		if (GetLife() <= 0)
 		{
-			CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT); //インスタンスのポインターの情報を無くす
+			CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT,0); //インスタンスのポインターの情報を無くす
 			CObject3D::Release();                                       //自身を破棄する
 			return;                                                     //処理を抜ける
 		}

@@ -18,7 +18,7 @@
 //============================
 CUI::CUI(int nPriority) : CObject3D(nPriority)
 {
-	
+
 }
 
 
@@ -41,7 +41,7 @@ HRESULT CUI::Init()
 	{
 		return E_FAIL; //失敗を返す
 	}
-	
+
 	return S_OK;       //成功を返す
 }
 
@@ -76,26 +76,26 @@ void CUI::Draw()
 //============================
 //生成処理
 //============================
-CUI* CUI::Create(CObject3D::TYPE_UI typeui)
+CUI* CUI::Create(CObject3D::TYPE typeui)
 {
 	CUI* pUI = nullptr; //基底クラスのポインター
 
 	//タイプがくっつくの時
-	if (typeui == CObject3D::TYPE_UI::CLING)
+	if (typeui == CObject3D::TYPE::CLING)
 	{
 		pUI = new CCreateInObject(); //動的確保
 
 		//初期化が成功した時
 		if (SUCCEEDED(pUI->Init()))
 		{
-			pUI->SetFileNamePass("data\\TEXTURE\\UI\\effect000.jpg"); //ファイルパスの設定
+			pUI->SetFileNamePass("data\\TEXTURE\\UI\\Effect\\effect000.jpg"); //ファイルパスの設定
 			pUI->CObject3D::Lood();                                   //テクスチャの読み込み
 			return pUI;                                               //情報を返す
 		}
 	}
 
 	//タイプが話すテキストの時
-	else if (typeui == CObject3D::TYPE_UI::TALKTEXTR)
+	else if (typeui == CObject3D::TYPE::TALKTEXTR)
 	{
 		pUI = new CTalkText(0); //動的確保
 
@@ -109,7 +109,7 @@ CUI* CUI::Create(CObject3D::TYPE_UI typeui)
 	}
 
 	//タイプがレーザーの時
-	else if (typeui == CObject3D::TYPE_UI::LASER)
+	else if (typeui == CObject3D::TYPE::LASER)
 	{
 		pUI = new CLaserCamare(); //動的確保
 
@@ -135,7 +135,7 @@ CUI* CUI::Create(CObject3D::TYPE_UI typeui)
 //============================
 CCreateInObject::CCreateInObject(int nPriority) : CUI(nPriority)
 {
-	
+
 }
 
 
@@ -180,7 +180,7 @@ HRESULT CTalkText::Init()
 	{
 		return E_FAIL; //失敗を返す
 	}
-	
+
 	CObject3D::SetSize(SIZEX, SIZEY, SIZEZ); //大きさの設定
 
 	return S_OK;       //成功を返す
@@ -233,7 +233,7 @@ HRESULT CLaserCamare::Init()
 	SetRot(D3DXVECTOR3(0.0f, ADDJUST_ROTY, ADDJUST_ROTZ)); //向きを設定
 
 	//位置を監視カメラの上部部分に設定する
-	SetPos(D3DXVECTOR3(CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().x, 
+	SetPos(D3DXVECTOR3(CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().x,
 		CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().y - ADDJUST_POSY,
 		CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().z - ADDJUST_POSZ));
 
@@ -247,37 +247,37 @@ HRESULT CLaserCamare::Init()
 void CLaserCamare::Update()
 {
 	//当たり判定
-	if (CObject3D::CollisionPrtsPlayer(SIZEY* ADDJUST_ADDJUST_SIZE, SIZEX* ADDJUST_ADDJUST_SIZE, SIZEZ* ADDJUST_ADDJUST_SIZE) == true)
+	if (CObject3D::CollisionPrtsPlayer(SIZEY * ADDJUST_ADDJUST_SIZE, SIZEX * ADDJUST_ADDJUST_SIZE, SIZEZ * ADDJUST_ADDJUST_SIZE) == true)
 	{
 		srand((unsigned)time(NULL));  //乱数系列を初期化
-		SetRandom(1+ rand() % 2);     //乱数の生成(範囲指定1～２）
-		
+		SetRandom(1 + rand() % 2);     //乱数の生成(範囲指定1～２）
+
 		//乱数が１の時
 		if (GetRandom() == 1)
 		{
 			//敵の生成
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADDJUST_CREATE_POSX, GetPos().y+ ADDJUST_CREATE_POSY, 0.0f));
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADDJUST_CREATE_POSX, GetPos().y + ADDJUST_CREATE_POSY, 0.0f));
 			CObject3D::Release();     //自身の削除
 			return;                   //処理を抜ける
 		}
 		else
 		{
 			//敵の生成
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADDJUST_CREATE_POSX, GetPos().y+ ADDJUST_CREATE_POSY, 0.0f));
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADDJUST_CREATE_POSX, GetPos().y + ADDJUST_CREATE_POSY, 0.0f));
 			CObject3D::Release();     //自身の削除
 			return;                   //処理を抜ける
 		}
 	}
 
-	//カメラの上部分の情報がなくなった時
-	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
-	{
-		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) == nullptr)
-		{
-			CObject3D::Release();
-			return;
-		}
-	}
+	////カメラの上部分の情報がなくなった時
+	//for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
+	//{
+	//	if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) == nullptr)
+	//	{
+	//		CObject3D::Release();
+	//		return;
+	//	}
+	//}
 }
 
 

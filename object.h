@@ -46,13 +46,18 @@ public:
 		BOSSSPECIALATTACK,  //ボスの必殺技
 
 		//UI
+		CLING,           //オブジェクトにつくUI
+		TELEPHONPOLEUI,  //電柱のUI
+		TELEPHONPOLEUI1, //電柱のUI
 		SCREEN,         //背景
 		BUYSENDTEXT,    //買うテキスト
 		HP,             //HPゲージ
 		MP,             //MPゲージ
+		TALKTEXTR,       //話すtext
 		BOSSHP,         //ボスHPゲージ
 		BOSSMP,         //ボスMPゲージ
 		FUELGAGE,       //燃料ゲージ
+		LASER,          //レーザー
 		MAX,            //最大数
 	};
 

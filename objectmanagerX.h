@@ -26,6 +26,7 @@ public:
 		ENEMY002,                    //敵002
 		ENEMYINMOTION,               //モーション付きの敵
 		ENEMYINMOTION001,            //モーション付きの敵001
+		ENEMYINMOTION002,            //モーション付きの敵002
 
 		BOSS,                        //ボス
 		PLAYER,                      //プレイヤー

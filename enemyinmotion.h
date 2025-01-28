@@ -66,7 +66,8 @@ public: //アクセス可能
 	void AdjustmentBulletAndRot();                          //プレイヤーに対する機体と弾の調整処理
 	void WhenCollisionBlock();                              //地面用ブロックに触れている時の処理
 	void Correctionrot();                                   //向きを修正する関数
-	void PlayerBloWwaway();
+	void PlayerBloWwaway();                                 //吹き飛ばす処理
+	void Die();                                             //死亡時の処理
 
 private:
 	//マクロ定義
@@ -87,4 +88,18 @@ private:
 
 	int m_nHitFrame; //プレイヤーと当たった時のリキャストタイム
 	bool m_bHit;     //当たったかどうかの判定用変数
+};
+
+
+//================================================================================
+//モーション付きの敵（通常）
+class CEnemyInMotion002 : public CManagerEnemyInMotion
+{
+public: //アクセス可能
+	CEnemyInMotion002(int nPriority = DEFAULT_PRIORITY1);   //コンストラクタ
+	~CEnemyInMotion002()override;                           //デストラクタ
+	void Update() override;                                 //更新処理
+
+private:
+	
 };

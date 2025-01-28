@@ -176,6 +176,11 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		m_pFile = fopen("data\\motion\\normal_motion\\Enemy001.txt", "r"); //ファイルを開く
 	}
 
+	else if (aSelect == "Enemy002")
+	{
+		m_pFile = fopen("data\\motion\\normal_motion\\Enemy002.txt", "r"); //ファイルを開く
+	}
+
 	//開けなかった時
 	if (m_pFile == nullptr)
 	{
@@ -498,8 +503,8 @@ void CEnemyCharacter::MotionInfoEnemy()
 			//モーションが飛ぶでループがオフの時
 			if (MotionSetEnemy[ENEMYJUMP].Loop == false)
 			{
-				//モーションの状態が歩きで設定されている時とモーションカウントが１の時（キーセットが最後の時）
-				if (m_MotionStateEnemy == ENEMYJUMP && MotionCountEnemy == 1)
+				//モーションの状態が歩きで設定されている時とキーセットが最後の時
+				if (m_MotionStateEnemy == ENEMYJUMP && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
 				{
 					MotionSetEnemy[ENEMYJUMP].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                          //位置を初期化する
@@ -510,8 +515,8 @@ void CEnemyCharacter::MotionInfoEnemy()
 			//モーションが攻撃でループがオフの時
 			if (MotionSetEnemy[ENEMYATTACK].Loop == false)
 			{
-				//モーションの状態が歩きで設定されている時とモーションカウントが２の時（キーセットが最後の時）
-				if (m_MotionStateEnemy == ENEMYATTACK && MotionCountEnemy == 2)
+				//モーションの状態が歩きで設定されている時とキーセットが最後の時
+				if (m_MotionStateEnemy == ENEMYATTACK && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
 				{
 					MotionSetEnemy[ENEMYATTACK].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                            //位置を初期化
@@ -522,8 +527,8 @@ void CEnemyCharacter::MotionInfoEnemy()
 			//モーションが死亡でループがオフの時
 			if (MotionSetEnemy[ENEMYDIE].Loop == false)
 			{
-				//モーションの状態が歩きで設定されている時とモーションカウントが３の時（キーセットが最後の時）
-				if (m_MotionStateEnemy == ENEMYDIE && MotionCountEnemy == 3)
+				//モーションの状態が歩きで設定されている時とキーセットが最後の時
+				if (m_MotionStateEnemy == ENEMYDIE && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
 				{
 					MotionSetEnemy[ENEMYDIE].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                         //位置を初期化

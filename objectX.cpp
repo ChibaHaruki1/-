@@ -226,7 +226,7 @@ void CObjectX::GravityTogether()
 //======================================================================================================================================
 //ジャンプ処理
 //======================================================================================================================================
-void CObjectX::Junp(TYPE type,float fJumpPwer)
+void CObjectX::Junp(TYPE type, float fJumpPwer)
 {
 	//ジャンプフラグONの時
 	if (m_bJumpFlag == true)
@@ -271,7 +271,7 @@ void CObjectX::Junp(TYPE type,float fJumpPwer)
 //======================================================================================================================================
 //引数で指定した目標に向かう処理
 //======================================================================================================================================
-void CObjectX::TargetHeadingTowards(CObjectX*pObject,float MAX_SPEED)
+void CObjectX::TargetHeadingTowards(CObjectX* pObject, float MAX_SPEED)
 {
 	//対角線の角度を算出する（目標ー自機）
 	m_fAngle = atan2f(pObject->m_pos.x - m_pos.x, pObject->m_pos.z - m_pos.z);
@@ -289,7 +289,7 @@ void CObjectX::TargetHeadingTowards(CObjectX*pObject,float MAX_SPEED)
 bool CObjectX::CollisionBossPrts()
 {
 	//プレイヤーの各パーツ毎の当たり判定処理
-	for (int nCount = 0; nCount < MAX_BOSSPARTS-1; nCount++)
+	for (int nCount = 0; nCount < MAX_BOSSPARTS - 1; nCount++)
 	{
 		//当たり判定
 		if (m_pCollision->CircleCollisionAll(m_posPrtsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount), m_ModelSizePrtsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount)) == true)
@@ -297,7 +297,7 @@ bool CObjectX::CollisionBossPrts()
 			return true; //当たった
 		}
 	}
-	
+
 	return false;        //当たっていない
 }
 
@@ -355,11 +355,11 @@ bool CObjectX::CollisionPlayerSelect(CObjectX* pObject)
 //=============================
 //プレイヤーと敵の当たり判定
 //=============================
-bool CObjectX::CollisionPlayerInEnemy(CObjectX* pObject,float fMagnification)
+bool CObjectX::CollisionPlayerInEnemy(CObjectX* pObject, float fMagnification)
 {
 	//プレイヤーと敵の当たり判定
 	if (m_pCollision->CircleCollisionAll(CManager::GetScene()->GetPlayerX()->GetPos(),
-		pObject->GetPos(), CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0) * fMagnification, pObject->GetModelSizePrtsEnemy(0)* fMagnification) == true)
+		pObject->GetPos(), CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0) * fMagnification, pObject->GetModelSizePrtsEnemy(0) * fMagnification) == true)
 	{
 		return true; //当たった
 	}
@@ -389,7 +389,7 @@ void CObjectX::Size()
 	for (int nCount = 0; nCount < nNumVertex; nCount++)
 	{
 		//位置を代入するための変数
-		D3DXVECTOR3 mtx; 
+		D3DXVECTOR3 mtx;
 
 		mtx = *(D3DXVECTOR3*)pVtxByte; //頂点フォーマットをD3DXVECTOR3に変換
 
@@ -475,7 +475,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 		//UIの情報がない時
 		if (pUI == nullptr)
 		{
-			pUI = CCreateInObject::Create(CObject3D::TYPE_UI::CLING); //生成
+			pUI = CCreateInObject::Create(CObject3D::TYPE::CLING); //生成
 			pUI->SetSize(50.0f, 0.0f, 50.0f);                         //大きさの設定
 		}
 
@@ -493,7 +493,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERADOWN, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(m_pos.x + 20.0f, m_pos.y + 170.0f, m_pos.z - 50.0f));
 
 			//レーザーUIの生成と位置を同期させる
-			pUI1 = CLaserCamare::Create(CObject3D::TYPE_UI::LASER);
+			pUI1 = CLaserCamare::Create(CObject3D::TYPE::LASER);
 
 			//生成したオブジェクトの位置に同期
 			pUI->GetPos() = CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos();
@@ -503,21 +503,21 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 		else if (type == CObjectX::TYPE::FIELDBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FIELDBLOCK, D3DXVECTOR3(m_pos.x + 600.0f, m_pos.y, m_pos.z)); 
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FIELDBLOCK, D3DXVECTOR3(m_pos.x + 600.0f, m_pos.y, m_pos.z));
 		}
 
 		//上がる用ブロックの時
 		else if (type == CObjectX::TYPE::GOUPBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::GOUPBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z)); 
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::GOUPBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z));
 		}
 
 		//道用ブロックの時
 		else if (type == CObjectX::TYPE::ROADBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::ROADBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z));  
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::ROADBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z));
 		}
 
 		//壁兼道用ブロックの時
@@ -587,7 +587,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 			if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_M) == true)
 			{
 				//テキストファイルに書き込む処理
-				CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->TextFileWrite(CObjectX::TYPE::TELEPHONPOLE, 
+				CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->TextFileWrite(CObjectX::TYPE::TELEPHONPOLE,
 					CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().x,
 					CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().y,
 					CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().z);
@@ -696,7 +696,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	//道用ブロックの時
 	else if (type == CObjectX::TYPE::ROADBLOCK)
 	{
-	    //道用ブロックのカウントが最大数より低く、ー１より高く、情報がある
+		//道用ブロックのカウントが最大数より低く、ー１より高く、情報がある
 		if (CManager::GetInstance()->GetRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetRoadBlockCount() > -1 && CManager::GetInstance()->GetRoadBlock(CManager::GetInstance()->GetRoadBlockCount()) != nullptr)
 		{
 			//上キーが押された時
@@ -744,7 +744,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	//壁兼道用ブロックの時
 	else if (type == CObjectX::TYPE::WALLROADBLOCK)
 	{
-	    //壁兼道用ブロックのカウントが最大数より低く、ー１より高く、情報がある時
+		//壁兼道用ブロックのカウントが最大数より低く、ー１より高く、情報がある時
 		if (CManager::GetInstance()->GetWallRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlockCount() > -1 && CManager::GetInstance()->GetWallRoadBlock(CManager::GetInstance()->GetWallRoadBlockCount()) != nullptr)
 		{
 			//上キーが押された時
@@ -791,7 +791,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	//壁兼道用ブロック001の時
 	else if (type == CObjectX::TYPE::WALLROADBLOCK_001)
 	{
-	    //壁兼道用ブロック001のカウントが最大数より低く、ー１より高く、情報がある時
+		//壁兼道用ブロック001のカウントが最大数より低く、ー１より高く、情報がある時
 		if (CManager::GetInstance()->GetWallRoadBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlock001Count() > -1 && CManager::GetInstance()->GetWallRoadBlock001(CManager::GetInstance()->GetWallRoadBlock001Count()) != nullptr)
 		{
 			//上キーが押された時
@@ -839,7 +839,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	//小さい用ブロックの時
 	else if (type == CObjectX::TYPE::SMALLBLOCK)
 	{
-	//小さいブロックのカウントが最大数より低く、ー１より高く、情報がある時
+		//小さいブロックのカウントが最大数より低く、ー１より高く、情報がある時
 		if (CManager::GetInstance()->GetSmallBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlockCount() > -1 && CManager::GetInstance()->GetSmallBlock(CManager::GetInstance()->GetSmallBlockCount()) != nullptr)
 		{
 			//上キーが押された時
@@ -887,7 +887,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	//小さい用ブロック001の時
 	else if (type == CObjectX::TYPE::SMALLBLOCK_001)
 	{
-	    //小さいブロック001のカウントが最大数より低く、ー１より高く、情報がある時
+		//小さいブロック001のカウントが最大数より低く、ー１より高く、情報がある時
 		if (CManager::GetInstance()->GetSmallBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlock001Count() > -1 && CManager::GetInstance()->GetSmallBlock001(CManager::GetInstance()->GetSmallBlock001Count()) != nullptr)
 		{
 			//上キーが押された時

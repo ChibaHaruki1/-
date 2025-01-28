@@ -76,7 +76,7 @@ CBlock000::~CBlock000()
 //============================
 CBlock001::CBlock001()
 {
-	SetBlockFileNamePass("data\\XFILE\\BLOCK\\00_Uwa_Ago.x"); //ファイルパスの設定
+	SetBlockFileNamePass("data\\XFILE\\BLOCK\\Block004.x"); //ファイルパスの設定
 }
 
 //============================

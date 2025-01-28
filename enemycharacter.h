@@ -43,8 +43,8 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static int MAX_ENEMYKEYSET = 5;         //モーションに使うキーの数
-	constexpr static int NUM_ENEMYMOTION = 10;        //モーションの数
+	constexpr static int MAX_ENEMYKEYSET = 5;                 //モーションに使うキーの数
+	constexpr static int NUM_ENEMYMOTION = 10;                //モーションの数
 
 	//キーの構造体
 	typedef struct

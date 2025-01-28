@@ -21,7 +21,7 @@
 //=====================
 CManagerBullet::CManagerBullet(int nPriority) :CObject3D(nPriority)
 {
-	
+
 }
 
 //=====================
@@ -70,7 +70,7 @@ void CManagerBullet::Update()
 	CManager::GetInstance()->GetEffect()->SetCol(255, 160, 0, GetAlpha());                  //色の設定
 
 	//アルファ値が０より大きい時
-	if (GetAlpha() >0)
+	if (GetAlpha() > 0)
 	{
 		SetAddjustAlpha() -= MINUS_ALPHA; //アルファ値を減算する
 	}
@@ -187,7 +187,7 @@ CManagerBullet* CManagerBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move, int nL
 //==========================
 CBullet3D::CBullet3D(int nPriority) : CManagerBullet(nPriority)
 {
-	
+
 }
 
 //======================
@@ -227,7 +227,7 @@ void CBullet3D::CollisionOnObject()
 		if (CManager::GetInstance()->GetEnemy001(nCount1) != nullptr)
 		{
 			//当たり判定
- 			if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetEnemy001(nCount1)->GetPos(), MAX_BULLET3D_SIZE_X, MAX_BULLET3D_SIZE_Y, MAX_BULLET3D_SIZE_Z, CManager::GetInstance()->GetEnemy001(nCount1)->GetModelSize() * 0.5f, GetSizeX()) == true)
+			if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetEnemy001(nCount1)->GetPos(), MAX_BULLET3D_SIZE_X, MAX_BULLET3D_SIZE_Y, MAX_BULLET3D_SIZE_Z, CManager::GetInstance()->GetEnemy001(nCount1)->GetModelSize() * 0.5f, GetSizeX()) == true)
 			{
 				CManager::GetInstance()->GetEnemy001(nCount1)->SetAddjustLife() -= MINUS_ENEMY001_LIFE;          //敵のライフを減らす
 
@@ -269,17 +269,19 @@ void CBullet3D::CollisionOnObject()
 	}
 
 	//カメラの上部分の情報がある時
-	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount()+1; nCamera++)
+	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() + 1; nCamera++)
 	{
 		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
 		{
 			//カメラとの当たり判定
 			if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(GetPos(), CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetPos(),
-				MAX_BULLET3D_SIZE_X* ADDJUST_HIT_CAMERA_UP, MAX_BULLET3D_SIZE_Y* ADDJUST_HIT_CAMERA_UP, MAX_BULLET3D_SIZE_Z* ADDJUST_HIT_CAMERA_UP,
+				MAX_BULLET3D_SIZE_X * 1.5f, MAX_BULLET3D_SIZE_Y * 1.5f, MAX_BULLET3D_SIZE_Z * 1.5f,
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetModelSize()))
 			{
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release();                        //カメラの上部分の削除
-				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);  //ポインターをnullptrにする
+				CManager::GetInstance()->GetLaser(nCamera)->Release();                                       //レーザーの削除
+				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);  //カメラポインターをnullptrにする
+				CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nCamera);               //レーザーポインターをnullptrにする
 
 				SetLife(0); //ライフを０にする
 				return;     //処理を抜ける
@@ -288,7 +290,7 @@ void CBullet3D::CollisionOnObject()
 	}
 
 	//モーション付きの敵001の情報がある時
-	for (int nMotionInEnemy001 = 0; nMotionInEnemy001 < CManager::GetInstance()->GetMotionInEnemy001Count()+1; nMotionInEnemy001++)
+	for (int nMotionInEnemy001 = 0; nMotionInEnemy001 < CManager::GetInstance()->GetMotionInEnemy001Count() + 1; nMotionInEnemy001++)
 	{
 		if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001) != nullptr)
 		{
@@ -301,9 +303,8 @@ void CBullet3D::CollisionOnObject()
 				{
 					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->SetAddjustLife() -= MINUS_ENEMYMOTION001_LIFE;
 
-					//ライフが０以下の時
 					if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() <= 0)
-					{                                     
+					{
 						CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::ENEMYINMOTION001, nMotionInEnemy001);  //ポインターをnullptrにする
 					}
 
@@ -332,7 +333,7 @@ void CBullet3D::CollisionOnObject()
 					CManager::GetInstance()->GetBossHPGage()->GetBossHPSizeX() -= CMain::SCREEN_WIDTH * MINUS_BOSS_HPGAGE; //ボスのHPゲージを減らす
 
 					//指定のpartsを描画しない＋処理から外す条件にする(右足先般)
-					if ( nCount2 == 11 || nCount2 == 12 || nCount2 == 13)
+					if (nCount2 == 11 || nCount2 == 12 || nCount2 == 13)
 					{
 						CManager::GetInstance()->GetBoss()->m_pModelPrtsBoss[nCount2]->SetDraw(false); //描画をしないに設定
 					}
@@ -359,7 +360,7 @@ float CEnemyBullet::m_fAdditionPosY = MINUS_ROTY; //位置を初期設定
 //=====================
 CEnemyBullet::CEnemyBullet(int nPriority) :CManagerBullet(nPriority)
 {
-	
+
 }
 
 //=====================
@@ -367,7 +368,7 @@ CEnemyBullet::CEnemyBullet(int nPriority) :CManagerBullet(nPriority)
 //=====================
 CEnemyBullet::~CEnemyBullet()
 {
-	
+
 }
 
 
@@ -407,7 +408,7 @@ void CEnemyBullet::Update()
 //===========================
 void CEnemyBullet::CallEffect(bool bUse)
 {
-	
+
 }
 
 
@@ -477,7 +478,7 @@ void CEnemyBulletBattleShip::Update()
 			SetAddjustAlpha() -= MINUS_ALPHA; //アルファ値を減算
 		}
 	}
-	
+
 	SetAddjustPos().y -= 2.5f;     //Y軸の位置を減らす
 
 	SetAddjustLife()--;            //寿命カウント
@@ -537,7 +538,7 @@ void CEnemyBulletBattleShip::CollisionOnObject()
 //=====================
 CBossBullet::CBossBullet(int nPriority) :CManagerBullet(nPriority)
 {
-	
+
 }
 
 //=====================
@@ -560,7 +561,7 @@ void CBossBullet::Update()
 	SetAddjustPos().y -= MINUS_POSY;                                                        //Y軸の位置を減算する
 
 	//アルファ値が0より大きい時
-	if (GetAlpha() >0)
+	if (GetAlpha() > 0)
 	{
 		SetAddjustAlpha() -= MINUS_ALPHA; //アルファ値を減算
 	}
@@ -605,7 +606,7 @@ void CBossBullet::CollisionOnObject()
 			CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount2), 0.0f))
 		{
 			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -=
-			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MINUS_PLAYER_HPGAGE; //HPゲージを減らす
+				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MINUS_PLAYER_HPGAGE; //HPゲージを減らす
 
 			CallEffect(true);         //エフェクト処理を呼ぶ
 			CObject3D::Release();     //自身の解放

@@ -1299,7 +1299,7 @@ void CPlayerX::BlockJudgement()
 			//˜b‚·text‚Ìî•ñ‚ª‚È‚¢Žž
 			if (m_pTalkText == nullptr)
 			{
-				m_pTalkText = CUI::Create(CObject3D::TYPE_UI::TALKTEXTR); //¶¬
+				m_pTalkText = CUI::Create(CObject3D::TYPE::TALKTEXTR); //¶¬
 
 				//ˆÊ’u‚ÌÝ’è
 				m_pTalkText->GetPos() = D3DXVECTOR3(CManager::GetInstance()->GetShop()->GetPos().x, CManager::GetInstance()->GetShop()->GetPos().y + 150.0f, CManager::GetInstance()->GetShop()->GetPos().z); //ˆÊ’u‚Ì‰Šú‰»

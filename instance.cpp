@@ -54,7 +54,7 @@ CInstance::CInstance()
 	}
 
 	//壊れた家分回す
-	for (int nCount4=0 ;nCount4< MAX_BREAKHOUSE;nCount4++)
+	for (int nCount4 = 0; nCount4 < MAX_BREAKHOUSE; nCount4++)
 	{
 		m_pBreakHouse[nCount4] = nullptr;   //壊れた家のポインターの初期化
 	}
@@ -64,6 +64,7 @@ CInstance::CInstance()
 	{
 		m_pEnemyInMotion000[nCount5] = nullptr; //モーション付きの敵のポインターの初期化
 		m_pEnemyInMotion001[nCount5] = nullptr; //モーション付きの敵001のポインターの初期化
+		m_pEnemyInMotion002[nCount5] = nullptr; //モーション付きの敵002のポインターの初期化
 	}
 
 	//2Dのインスタンスの初期化
@@ -109,9 +110,11 @@ CInstance::CInstance()
 	m_nEnemy002 = -1;                //敵002の数を初期化
 	m_nEnemyInMotion = -1;           //モーション付きの敵の数を初期化
 	m_nEnemyInMotion001 = -1;        //モーション付きの敵001の数を初期化
+	m_nEnemyInMotion002 = -1;        //モーション付きの敵002の数を初期化
 	m_nWoodenBoard = -1;             //木の板群の数を初期化
 	m_nBreakHouse = -1;              //壊れた家の数を初期化
 	m_nShip = -1;                    //スペースシップの数を初期化
+	m_nLaser = -1;                   //レーザーの数を初期化
 }
 
 
@@ -186,6 +189,7 @@ void CInstance::Uninit()
 	{
 		m_pEnemyInMotion000[nCount5] = nullptr; //モーション付きの敵のポインターの初期化
 		m_pEnemyInMotion001[nCount5] = nullptr; //モーション付きの敵001のポインターの初期化
+		m_pEnemyInMotion002[nCount5] = nullptr; //モーション付きの敵002のポインターの初期化
 	}
 
 	//2Dのインスタンスの初期化
@@ -245,7 +249,7 @@ void CInstance::DesignationUninitXEnemy(CObjectX::TYPE type, int nNumber)
 	}
 
 	//タイプがボスの時
-	else if(type==CObjectX::TYPE::BOSS)
+	else if (type == CObjectX::TYPE::BOSS)
 	{
 		m_pBoss = nullptr;               //情報を無くす
 	}
@@ -260,6 +264,12 @@ void CInstance::DesignationUninitXEnemy(CObjectX::TYPE type, int nNumber)
 	else if (type == CObjectX::TYPE::ENEMYINMOTION001)
 	{
 		m_pEnemyInMotion001[nNumber] = nullptr; //情報を無くす
+	}
+
+	//タイプがモーション付きの敵001の時
+	else if (type == CObjectX::TYPE::ENEMYINMOTION002)
+	{
+		m_pEnemyInMotion002[nNumber] = nullptr; //情報を無くす
 	}
 
 }
@@ -312,12 +322,18 @@ void CInstance::DesignationUninit2D(CObject2D::TYPE type)
 //============================================================================================================================
 //３Dのnullptrにしたいものを指定する処理
 //============================================================================================================================
-void CInstance::DesignationUninit3D(CObject3D::TYPE type)
+void CInstance::DesignationUninit3D(CObject3D::TYPE type, int nNumber)
 {
 	//タイプが衝撃波の時
 	if (type == CObject3D::TYPE::IMPACT)
 	{
 		m_pImpact = nullptr; //情報をなくす
+	}
+
+	//タイプがレーザーの時
+	else if (type == CObject3D::TYPE::LASER)
+	{
+		m_pLaser[nNumber] = nullptr;
 	}
 }
 
@@ -334,7 +350,7 @@ CObject2D* CInstance::GetCreateObjectInstnace2D(CObject2D::TYPE type, int nNumbe
 	}
 
 	//タイプがHPの時
-	else if (type==CObject2D::TYPE::HP)
+	else if (type == CObject2D::TYPE::HP)
 	{
 		return m_pPlayerHPGage = CManagerGage::Create(type); //HPゲージの生成
 	}
@@ -382,7 +398,7 @@ CObject3D* CInstance::GetCreateObjectInstnace(CObject3D::TYPE type, int nNumber,
 	//タイプが爆発001の時
 	else if (type == CObject3D::TYPE::EXPLOSION001)
 	{
-		return m_pExplosion001 = CManagerEffect::Create(pos,type);      //爆発エフェクト001の生成
+		return m_pExplosion001 = CManagerEffect::Create(pos, type);      //爆発エフェクト001の生成
 	}
 
 	//タイプが雷の時
@@ -428,9 +444,16 @@ CObject3D* CInstance::GetCreateObjectInstnace(CObject3D::TYPE type, int nNumber,
 	}
 
 	//タイプが燃料ゲージの時
-	else if (type==CObject3D::TYPE::FUELGAGE)
+	else if (type == CObject3D::TYPE::FUELGAGE)
 	{
 		return 	m_pFuelGage = CFuelGage::Create();  //燃料ゲージの生成
+	}
+
+	//タイプがレーザーの時
+	else if (type == CObject3D::TYPE::LASER)
+	{
+		m_nLaser++;
+		return m_pLaser[m_nLaser] = CUI::Create(type);
 	}
 
 	return nullptr; //無を返す
@@ -482,7 +505,7 @@ CObjectX* CInstance::GetCreateObjectInstanceX(CObjectX::TYPE type, int nNumber, 
 	//タイプが敵の時
 	else if (type == CObjectX::TYPE::ENEMY)
 	{
-		return m_pEnemy000 = CManagerEnemy::Create(pos,type); //敵の生成
+		return m_pEnemy000 = CManagerEnemy::Create(pos, type); //敵の生成
 	}
 
 	//タイプが敵001の時
@@ -503,7 +526,7 @@ CObjectX* CInstance::GetCreateObjectInstanceX(CObjectX::TYPE type, int nNumber, 
 	else if (type == CObjectX::TYPE::ENEMYINMOTION)
 	{
 		m_nEnemyInMotion++;
-		return m_pEnemyInMotion000[m_nEnemyInMotion] = CManagerEnemyInMotion::Create(pos,type);      //モーション付きの敵の生成
+		return m_pEnemyInMotion000[m_nEnemyInMotion] = CManagerEnemyInMotion::Create(pos, type);      //モーション付きの敵の生成
 	}
 
 	//タイプがモーション付きの敵001の時
@@ -511,6 +534,13 @@ CObjectX* CInstance::GetCreateObjectInstanceX(CObjectX::TYPE type, int nNumber, 
 	{
 		m_nEnemyInMotion001++;
 		return m_pEnemyInMotion001[m_nEnemyInMotion001] = CManagerEnemyInMotion::Create(pos, type);  //モーション付きの敵001の生成
+	}
+
+	//タイプがモーション付きの敵001の時
+	else if (type == CObjectX::TYPE::ENEMYINMOTION002)
+	{
+		m_nEnemyInMotion002++;
+		return m_pEnemyInMotion002[m_nEnemyInMotion002] = CManagerEnemyInMotion::Create(pos, type);  //モーション付きの敵001の生成
 	}
 
 	//タイプがボスの時
@@ -533,25 +563,25 @@ CObjectX* CInstance::CreateBlock(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos)
 	{
 		m_nNumFiledBlock++;                                                                  //作られた数を増やす
 		return m_pFieldBlock[m_nNumFiledBlock] = CManagerBlock::Create(pos, type);           //地面用のブロックの生成
-	}																			            
-																				            
+	}
+
 	//タイプが上がる用ブロックの時												  	        
-	else if (type == CObjectX::STRATEGYTYPE::GOUPBLOCK)							            
-	{																			            
+	else if (type == CObjectX::STRATEGYTYPE::GOUPBLOCK)
+	{
 		m_nNumGoUpBlock++;                                                                   //作られた数を増やす
 		return m_pGoUpBlock[m_nNumGoUpBlock] = CManagerBlock::Create(pos, type);             //上がるためのブロックの生成
-	}																			            
-																				            
+	}
+
 	//タイプが道用ブロックの時													            
-	else if (type == CObjectX::STRATEGYTYPE::ROADBLOCK)							            
-	{																			            
+	else if (type == CObjectX::STRATEGYTYPE::ROADBLOCK)
+	{
 		m_nRoadBlock++;                                                                      //作られた数を増やす
 		return m_pRoadBlock[m_nRoadBlock] = CManagerBlock::Create(pos, type);                //道用ブロックの生成
-	}																				        
-																					        
+	}
+
 	//タイプが壁兼道用ブロックの時													        
-	else if (type == CObjectX::STRATEGYTYPE::WALLROADBLOCK)							        
-	{																				        
+	else if (type == CObjectX::STRATEGYTYPE::WALLROADBLOCK)
+	{
 		m_nWallRoadBlock++;                                                                  //作られた数を増やす
 		return m_pWallRoadBlock[m_nWallRoadBlock] = CManagerBlock::Create(pos, type);        //壁兼道用ブロックの生成
 	}
@@ -594,7 +624,7 @@ CObjectX* CInstance::CreateBlock(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos)
 	//タイプが最終ステージの地面の時
 	else if (type == CObjectX::STRATEGYTYPE::FINALBLOCK)
 	{
-		return m_pFinalBlosk = CManagerBlock::Create(pos,type);                              //最終ステージの地面の生成
+		return m_pFinalBlosk = CManagerBlock::Create(pos, type);                              //最終ステージの地面の生成
 	}
 
 	//タイプが最終ステージの天井の時
@@ -616,7 +646,7 @@ CObjectX* CInstance::CreateRubble(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos)
 	if (type == CObjectX::STRATEGYTYPE::WODDENBORAD)
 	{
 		m_nWoodenBoard++;                                                         //作られた数を増やす
-		return m_pWoodenBoard[m_nWoodenBoard] = CManagerBlock::Create(pos,type);  //木の板群の生成
+		return m_pWoodenBoard[m_nWoodenBoard] = CManagerBlock::Create(pos, type);  //木の板群の生成
 	}
 
 	return nullptr; //無を返す
