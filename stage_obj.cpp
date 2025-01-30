@@ -353,15 +353,21 @@ void CBreakHouse::Update()
 	if (GetOneFlag() == false)
 	{
 		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::FIRE, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));    //炎エフェクトを呼ぶ
-		CManager::GetInstance()->GetFire()->GetLife() = 60 * 3;                                                       //ライフを設定
-		CManager::GetInstance()->GetFire()->GetAlpha() = 150;                                                         //ライフを設定
-		CManager::GetInstance()->GetFire()->SetSize(920.0f, 700.0f, 0.0f);                                            //大きさを設定
-		CManager::GetInstance()->GetFire()->SetEffect(D3DXVECTOR3(GetPos().x+200.0f, GetPos().y+600.0f, GetPos().z)); //炎エフェクトを呼ぶ
+		CManager::GetInstance()->GetFire()->GetLife() = LIFE;                                                         //ライフを設定
+		CManager::GetInstance()->GetFire()->GetAlpha() = ALPHA;                                                       //アルファ値を設定
+		CManager::GetInstance()->GetFire()->SetSize(FIRE_EFFECT_SIZE_X, FIRE_EFFECT_SIZE_Y, 0.0f);                    //大きさを設定
+
+		//位置の設定
+		CManager::GetInstance()->GetFire()->SetEffect(D3DXVECTOR3(
+			GetPos().x+ FIRE_EFFECT_PLUS_POS_X,
+			GetPos().y+ FIRE_EFFECT_PLUS_POS_Y,
+			GetPos().z)); //炎エフェクトを呼ぶ
+
 		SetOneFlag(true); //二度と通らなくする
 	}
 
-	//エフェクトのライフが既定の数値まで行った時
-	if (CManager::GetInstance()->GetFire()->GetLife() <= 10)
+	//ファイアーエフェクトのライフが０の時
+	if (CManager::GetInstance()->GetFire()->GetLife() <= 0)
 	{
 		SetOneFlag(false); //もう一度通るようにする
 	}

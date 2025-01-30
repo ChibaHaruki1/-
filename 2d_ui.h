@@ -1,11 +1,13 @@
 //===================================
 //
-//背景のプロトタイプ宣言[bg.h]
+//2D_UIのクラス管理[2d_ui.h]
 //Author:chiba haruki
 //
 //===================================
 
+
 #pragma once
+
 
 //======================================
 //インクルード
@@ -27,8 +29,6 @@ public:
 
 	static CManager2DUI* Create(TYPE_UI TypeUI);     //生成処理
 	static CManager2DUI* NowCreate(int nNumber);     //現在作られているオブジェクトUIの生成処理
-
-private:
 };
 
 

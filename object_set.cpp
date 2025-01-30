@@ -81,8 +81,7 @@ HRESULT CObjectSet::Init()
 		//ステージ２の時
 	case CScene::MODE::MODE_GAME02:
 		StageOneInformation("data\\TEXT\\OBJECT\\Block1.txt");       //ブロック1の読み込み
-
-		CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FINALCEILLING, D3DXVECTOR3(4335.0f, 790.0f, 0.0f)); //ボス戦の足場
+		StageOneInformation("data\\TEXT\\OBJECT\\Ceiling.txt");      //天井の読み込み
 
 		return S_OK; //処理を抜ける
 
@@ -134,6 +133,7 @@ void CObjectSet::StageOneInformation(const char* pFileName)
 		LoodBreakHouse(pFile);    //壊れた家の情報を読み取る
 		LoodEnemy(pFile);         //敵の情報を読み込む
 		LoodMotionInEnemy(pFile); //モーション付きの敵の情報を読み込む
+		LoodCeiling(pFile);
 	}
 }
 
@@ -253,6 +253,42 @@ void CObjectSet::LoodBreakHouse(FILE* pFile)
 }
 
 //=================================
+//天井の情報を読み込む処理
+//=================================
+void CObjectSet::LoodCeiling(FILE* pFile)
+{
+	float PosX, PosY, PosZ = 0.0f; //posの位置を保管するための変数
+
+	//これが書かれていた時
+	if (!strcmp(m_aData, "CEILINGSET"))
+	{
+		//ループ(無限月読)
+		while (1)
+		{
+			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+
+			//題名がEND_TELEPHONPOLESETだった時
+			if (!strcmp(m_aData, "END_CEILINGSET"))
+			{
+				break; //処理を抜ける
+			}
+
+			//題名がPOSだった時
+			if (!strcmp(m_aData, "POS"))
+			{
+				(void)fscanf(pFile, "%s", m_aData); //文字を読み取る 個々の場合「＝」を読み取る
+				(void)fscanf(pFile, "%f", &PosX);   //一番目の値を格納
+				(void)fscanf(pFile, "%f", &PosY);   //二番目の値を格納
+				(void)fscanf(pFile, "%f", &PosZ);   //三番目の値を格納
+
+				//生成する
+				CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FINALCEILLING, D3DXVECTOR3(PosX, PosY, PosZ)); //ボス戦の足場
+			}
+		}
+	}
+}
+
+//=================================
 //敵の情報を読み込む処理
 //=================================
 void CObjectSet::LoodEnemy(FILE* pFile)
@@ -336,7 +372,7 @@ void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 
 				switch (nNumber)
 				{
-				case 0:
+				case 1:
 					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(PosX, PosY, PosZ)); //敵001の生成
 					break;
 

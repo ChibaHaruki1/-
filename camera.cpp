@@ -20,8 +20,8 @@
 //========================
 CCamera::CCamera()
 {
-	m_fAdjustmentPosY = 200.0f; //カメラの高さを調整
-	m_fAdjustmentPosZ = 1000;  //カメラを手前に引くよう調整
+	m_fAdjustmentPosY = INIT_POS_Y; //カメラの高さを調整
+	m_fAdjustmentPosZ = INIT_POS_Z; //カメラを手前に引くよう調整
 }
 
 
@@ -39,11 +39,11 @@ CCamera::~CCamera()
 //========================
 HRESULT CCamera::Init()
 {
-	m_posV = D3DXVECTOR3(0.0f, 100.0f, 1000.0f); //視点を調整
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);   //注視点を調整
-	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);   //上方向の調整
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);      //向きの調整
-	m_fSavePosV = m_posV;                     //視点と同期させる
+	m_posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);      //視点を調整
+	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);      //注視点を調整
+	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);      //上方向の調整
+	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //向きの調整
+	m_fSavePosV = m_posV;                        //視点と同期させる
 
 	return S_OK; //成功を返す
 }
@@ -118,15 +118,16 @@ void CCamera::Update()
 	//	rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//}
 
+
 	//カメラがプレイヤーにつく処理
-	m_posR.x = CManager::GetScene()->GetPlayerX()->GetPos().x; //注視点のＸ軸をプレイヤーのＸ軸と同期させる
-	m_posR.y = CManager::GetScene()->GetPlayerX()->GetPos().y; //注視点のＹ軸をプレイヤーのＹ軸と同期させる
-	m_posR.z = CManager::GetScene()->GetPlayerX()->GetPos().z; //注視点のＺ軸をプレイヤーのＺ軸と同期させる
+	m_posR.x = CManager::GetScene()->GetPlayerX()->GetPos().x;                     //注視点のＸ軸をプレイヤーのＸ軸と同期させる
+	m_posR.y = CManager::GetScene()->GetPlayerX()->GetPos().y;                     //注視点のＹ軸をプレイヤーのＹ軸と同期させる
+	m_posR.z = CManager::GetScene()->GetPlayerX()->GetPos().z;                     //注視点のＺ軸をプレイヤーのＺ軸と同期させる
 
 	//カメラ自体もプレイヤーに合わせて動く(直接モデルの値を代入するとカメラ回転時強制的に正面に戻されるため）
-	m_posV.x = m_posR.x + sinf(D3DX_PI + m_rot.y) * m_fAdjustmentPosZ; //視点のＸ軸を注視点のＸ軸と向きとそれをかけた調整用の値と同期させる
+	m_posV.x = m_posR.x + sinf(D3DX_PI + m_rot.y) * m_fAdjustmentPosZ;             //視点のＸ軸を注視点のＸ軸と向きとそれをかけた調整用の値と同期させる
 	m_posV.y = CManager::GetScene()->GetPlayerX()->GetPos().y + m_fAdjustmentPosY; //視点のＹ軸をプレイヤーのＹ軸と調整用の値と同期させる
-	m_posV.z = m_posR.z + cosf(D3DX_PI + m_rot.y) * m_fAdjustmentPosZ; //視点のＺ軸を注視点のＺ軸と向きとそれをかけた調整用の値と同期させる
+	m_posV.z = m_posR.z + cosf(D3DX_PI + m_rot.y) * m_fAdjustmentPosZ;             //視点のＺ軸を注視点のＺ軸と向きとそれをかけた調整用の値と同期させる
 }
 
 
@@ -135,15 +136,15 @@ void CCamera::Update()
 //========================
 void CCamera::SetCamera()
 {
-	CRenderer* pRenderer = CManager::GetRenderer();    //共通したメモリを持つインスタンスを獲得
+	CRenderer* pRenderer = CManager::GetRenderer();     //共通したメモリを持つインスタンスを獲得
 
-	LPDIRECT3DDEVICE9 pDevice= pRenderer->GetDevice(); //デバイスの取得
+	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスの取得
 
 	//プロジェクションマトリックスの初期化
 	D3DXMatrixIdentity(&m_mtxProjection);
 
 	//通常描画処理
-	D3DXMatrixPerspectiveFovLH(&m_mtxProjection, D3DXToRadian(45.0f), (float)CMain::SCREEN_WIDTH / (float)CMain::SCREEN_HEIGHT, 10.0f, 4000.0f);
+	D3DXMatrixPerspectiveFovLH(&m_mtxProjection, D3DXToRadian(RADIAN), (float)CMain::SCREEN_WIDTH / (float)CMain::SCREEN_HEIGHT, DRAW_MIN, DRAW_MAX);
 
 	//平行投影
 	//D3DXMatrixOrthoLH(&m_mtxProjection, (float)CMain::SCREEN_WIDTH * 0.5f, (float)SCREEN_HEIGHT * 0.5f, 10.0f, 2000.0f);

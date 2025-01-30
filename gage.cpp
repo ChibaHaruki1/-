@@ -64,8 +64,8 @@ void CFuelGage::Uninit()
 void CFuelGage::Update()
 {
 	//位置を設定
-	SetPos(D3DXVECTOR3(CManager::GetScene()->GetPlayerX()->GetPos().x - ADDJUST_POSX,
-		CManager::GetScene()->GetPlayerX()->GetPos().y + ADDJUST_POSY,
+	SetPos(D3DXVECTOR3(CManager::GetScene()->GetPlayerX()->GetPos().x - ADJUST_POSX,
+		CManager::GetScene()->GetPlayerX()->GetPos().y + ADJUST_POSY,
 		CManager::GetScene()->GetPlayerX()->GetPos().z));
 
 
@@ -110,7 +110,7 @@ void CFuelGage::Update()
 		//アルファ値が０以上の時
 		if (GetAlpha() > 0)
 		{
-			SetAddjustAlpha() -= MINUS_ALPHA;          //アルファ値を減らす
+			SetAdjustAlpha() -= MINUS_ALPHA;          //アルファ値を減らす
 		}
 
 		//Y軸のサイズが最大値より低い
@@ -400,7 +400,7 @@ HRESULT CBossHPGage::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADDJUST_POSY), CMain::SCREEN_HEIGHT); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(0.0f, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADJUST_POSY), CMain::SCREEN_HEIGHT); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
 
 	return S_OK;       //成功を返す
 }

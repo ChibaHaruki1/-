@@ -5,7 +5,9 @@
 //
 //=============================================================
 
+
 #pragma once
+
 
 //==============================================================
 //インクルード
@@ -27,5 +29,5 @@ public:
 	static CDebrisX* Create(D3DXVECTOR3 pos);     //生成処理
 
 private:
-	constexpr static int MAX_LIFE = 30;
+	constexpr static int MAX_LIFE = 30;           //ライフの最大値
 };

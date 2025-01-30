@@ -273,14 +273,14 @@ void CManagerEffect::Update()
 		m_pEffectDirection000->Effect(GetTexture(), GetBuffer(), m_dLifeCount, m_fMaxTex); //ストラテジーの基底クラスの処理を呼ぶ
 	}
 
-	SetAddjustLife()--;                       //ライフを減らす
+	SetAdjustLife()--;                       //ライフを減らす
 
 	//エフェクトナンバーが１以外の時
 	if (m_nEffectNumber != 1)
 	{
 		if (GetAlpha() > 0)
 		{
-			SetAddjustAlpha() -= MINUS_ALPHA; //アルファ値を減らす
+			SetAdjustAlpha() -= MINUS_ALPHA; //アルファ値を減らす
 		}
 	}
 
@@ -570,7 +570,7 @@ void CPillarOfFire::Update()
 	//ライフが０以下の時
 	if (GetLife() <= 0)
 	{
-		SetAddjustAlpha() -= MINUS_ALPHA;  //アルファ値を減らす
+		SetAdjustAlpha() -= MINUS_ALPHA;  //アルファ値を減らす
 
 		//アルファ値が０以下の時
 		if (GetAlpha() <= 0)
@@ -581,7 +581,7 @@ void CPillarOfFire::Update()
 	}
 	else
 	{
-		SetAddjustLife()--;    //ライフを減らす
+		SetAdjustLife()--;    //ライフを減らす
 	}
 }
 
@@ -638,7 +638,7 @@ void CEffect::Uninit()
 //============================
 void CEffect::Update()
 {
-	SetAddjustLife()--; //ライフを減らす
+	SetAdjustLife()--; //ライフを減らす
 
 	//ライフが０以下の時
 	if (GetLife() <= 0)
@@ -732,7 +732,7 @@ CDebris::~CDebris()
 //===========================
 void CDebris::Update()
 {
-	SetAddjustLife()--;                       //ライフを減らす
+	SetAdjustLife()--;                       //ライフを減らす
 	SetAddjustSizeX() += PLUS_SIZEX;          //ｘ軸のサイズを大きくする
 	SetSize(GetSizeX(), GetSizeX(), 0.0f);    //サイズの設定
 
@@ -796,7 +796,7 @@ void CSpecialAttack::Update()
 	//ライフが０以下の時
 	if (GetLife() <= 0)
 	{
-		SetAddjustAlpha() -= MINUS_ALPHA;                       //アルファ値を減らす
+		SetAdjustAlpha() -= MINUS_ALPHA;                       //アルファ値を減らす
 
 		//アルファ値が０以下の時
 		if (GetAlpha() <= 0)
@@ -807,7 +807,7 @@ void CSpecialAttack::Update()
 	}
 	else
 	{
-		SetAddjustLife()--;     //ライフを減らす
+		SetAdjustLife()--;     //ライフを減らす
 	}
 }
 
@@ -823,9 +823,9 @@ void CSpecialAttack::HitEnemy()
 		for (int nCount2 = 0; nCount2 < CObjectX::MAX_BOSSPARTS; nCount2++)
 		{
 			//当たり判定
-			if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetBoss()->GetPosPrtsBoss(nCount2),
+			if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetBoss()->GetPosPartsBoss(nCount2),
 				m_fSepecialAttackX, m_fSepecialAttackY, CBullet3D::MAX_BULLET3D_SIZE_Z,
-				CManager::GetInstance()->GetBoss()->GetModelSizePrtsBoss(nCount2), GetSizeX()))
+				CManager::GetInstance()->GetBoss()->GetModelSizePartsBoss(nCount2), GetSizeX()))
 			{
 				CManager::GetInstance()->GetBossHPGage()->GetBossHPSizeX() -= CMain::SCREEN_WIDTH * MAX_DAMAGE_BOSS; //ボスのHPゲージを減らす
 			}
@@ -842,9 +842,9 @@ void CSpecialAttack::HitEnemy()
 			for (int nCount1 = 0; nCount1 < CObjectX::MAX_ENEMYPARTS; nCount1++)
 			{
 				//当たり判定
-				if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetPosPrtsEnemy(nCount1),
+				if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetPosPartsEnemy(nCount1),
 					m_fSepecialAttackX, m_fSepecialAttackY, CBullet3D::MAX_BULLET3D_SIZE_Z,
-					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetModelSizePrtsEnemy(nCount1), GetSizeX()))
+					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetModelSizePartsEnemy(nCount1), GetSizeX()))
 				{
 					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() = 0; //ライフを消す
 

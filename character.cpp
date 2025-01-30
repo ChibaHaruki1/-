@@ -108,15 +108,27 @@ void CCharacter::UpdatePlayer()
 	MotionInfo(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = 0; nCount < MAX_PRTS-1; nCount++)
+	for (int nCount = 0; nCount < MAX_PRTS-2; nCount++)
 	{
-		GetPosPrts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x +CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);            //各パーツを保管値＋現在の値で修正
+		GetPosParts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);            //各パーツを保管値＋現在の値で修正
 	}
-	
-	//武器の更新
-	for (int nCount1 = 1; nCount1 < 4; nCount1++)
+
+	//左向きの時
+	if (GetRot().y >= D3DX_PI_ORI_HALF)
 	{
-		GetPosPrts(17) = D3DXVECTOR3(SaveMotionPos[nCount1 + 2].x + GetPos().x, SaveMotionPos[nCount1 + 2].y + GetPos().y, SaveMotionPos[nCount1 + 2].z + GetPos().z); //各パーツを保管値＋現在の値で修正
+		int nRightHand = PLAYER_PARTS_RIGHTHAND_NUMBER; //右手
+
+		//銃の位置を右手と現在の位置で設定
+		GetPosParts(PLAYER_PARTS_GUN_NUMBER) = D3DXVECTOR3(SaveMotionPos[nRightHand].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nRightHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nRightHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
+	}
+
+	//右向きの時
+	else if (GetRot().y <= -D3DX_PI_ORI_HALF)
+	{
+		int nLeftHand = PLAYER_PARTS_LEFTHAND_NUMBER; //左手
+
+		//銃の位置を左手と現在の位置で設定
+		GetPosParts(PLAYER_PARTS_GUN_NUMBER) = D3DXVECTOR3(-SaveMotionPos[nLeftHand].x +CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nLeftHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nLeftHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
 	}
 }
 
@@ -131,21 +143,44 @@ void CCharacter::UpdateBoss()
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
 	for (int nCount = 0; nCount < MAX_BOSSPARTS; nCount++)
 	{
-		if (nCount <= 9)
+		//上半身
+		if (nCount <= PLAYER_PARTS_LEFTHAND_NUMBER)
 		{
-			GetPosPrtsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + GetPos().x, SaveMotionPosBoss[nCount].y + GetPos().y, SaveMotionPosBoss[nCount].z + GetPos().z);           //各パーツを保管値＋現在の値で修正
+			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);           //各パーツを保管値＋現在の値で修正
 		}
-		if (nCount >= 10)
+
+		//下半身
+		else if (nCount >= BOSS_PARTS_WAIST_NUMBER)
 		{
-			GetPosPrtsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + GetPos().x, SaveMotionPosBoss[nCount].y + GetPos().y + 200.0f, SaveMotionPosBoss[nCount].z + GetPos().z);  //各パーツを保管値＋現在の値で修正
+			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y + BOSS_PLUS_POS_Y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);  //各パーツを保管値＋現在の値で修正
 		}
 	}
 
-	//武器の更新
-	for (int nCount1 = 0; nCount1 < 4; nCount1++)
+	//左向きの時
+	if (GetRot().y >= D3DX_PI_ORI_HALF)
 	{
-		GetPosPrtsBoss(17) = D3DXVECTOR3(SaveMotionPosBoss[nCount1 + 2].x + GetPos().x, SaveMotionPosBoss[nCount1 + 2].y + GetPos().y, SaveMotionPosBoss[nCount1 + 2].z + GetPos().z);     //武器パーツを保管値＋現在の値で修正
+		int nRightHand = BOSS_PARTS_RIGHTHAND_NUMBER; //右手
+
+		//銃の位置を右手と現在の位置で設定
+		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(SaveMotionPosBoss[nRightHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nRightHand].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nRightHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
 	}
+
+	//右向きの時
+	else if (GetRot().y <= -D3DX_PI_ORI_HALF)
+	{
+		int nLeftHand = BOSS_PARTS_LEFTHAND_NUMBER;  //左手
+
+		//銃の位置を左手と現在の位置で設定
+		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(-SaveMotionPosBoss[nLeftHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nLeftHand].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nLeftHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
+	}
+
+	/*D3DXVECTOR3 pos = CManager::GetInstance()->GetBoss()->GetPos();
+	D3DXVECTOR3 posq = GetPos();*/
+
+	//武器の更新
+	//int nCount1 = 5;
+	//GetPosPartsBoss(17) = D3DXVECTOR3(SaveMotionPosBoss[nCount1].x + pos.x, SaveMotionPosBoss[nCount1].y + pos.y, SaveMotionPosBoss[nCount1].z + pos.z);     //武器パーツを保管値＋現在の値で修正
+
 }
 
 //========================
@@ -242,16 +277,16 @@ void CCharacter::DrawBoss(int NumPrts)
 //======================
 void CCharacter::Lood()
 {
-	int nCount = 0;              //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;           //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;     //生成するパーツ数のカウントするための変数
-	char aPrtsPass[100];         //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[2024];    //必要な情報を読み取る際の文字列を読みむための変数
+	int nCount = 0;                      //最初のパーツ数をカウントするための変数
+	int nKeyCount = 0;                   //モーションのキーをカウントするための変数
+	int nModelPrtsCount = 0;             //生成するパーツ数のカウントするための変数
+	char aPrtsPass[MAX_PARTS_SEARCH];    //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH]; //必要な情報を読み取る際の文字列を読みむための変数
 
-	int nMotionCount = 0;        //モーションの数をカウントするための変数
-	int nKeySetCount = 0;        //モーションのキーセットの数をカウントするための変数
-
-	FILE* m_pFile=nullptr;       //ファイルポインター
+	int nMotionCount = 0;                //モーションの数をカウントするための変数
+	int nKeySetCount = 0;                //モーションのキーセットの数をカウントするための変数
+								         
+	FILE* m_pFile=nullptr;               //ファイルポインター
 
 	m_pFile = fopen("data\\motion\\normal_motion\\motion_normal.txt", "r"); //ファイルを開く
 
@@ -278,7 +313,7 @@ void CCharacter::Lood()
 				//ｘファイル読み込み
 				if (!strcmp(m_aDataSearch, "MODEL_FILENAME"))
 				{
-					(void)fscanf(m_pFile, "%s %s", &m_aDataSearch, &aPrtsPass[nModelPrtsCount]); //パーツ数取得
+					(void)fscanf(m_pFile, "%s %s", &m_aDataSearch, &aPrtsPass[nModelPrtsCount]); //パーツの取得
 
 					//モデルパーツカウントが最大数より小さい時
 					if (nModelPrtsCount < MAX_PRTS)
@@ -286,7 +321,7 @@ void CCharacter::Lood()
 						if (m_pModelPrts[nModelPrtsCount] == nullptr)
 						{
 							m_pModelPrts[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-							m_pModelPrts[nModelPrtsCount]->BindSize(GetMaxPrts(nModelPrtsCount), GetMinPrts(nModelPrtsCount), GetModelSizePrts(nModelPrtsCount));                                                             //情報を同期させる
+							m_pModelPrts[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizeParts(nModelPrtsCount));                                                             //情報を同期させる
 						}
 						nModelPrtsCount++; //配列を進める
 					}
@@ -512,40 +547,48 @@ void CCharacter::Lood()
 	//各パーツの位置の取得
 	//=================================================================================================================================================================
 
-	//上半身の位置を取得する
-	for (int nCount = 0; nCount < 4; nCount++)
+	//肩から手までの位置を取得する
+	for (int nCount = 0; nCount < PLAYER_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
-		//現在のパーツの次のパーツ分回す
+		//現在のパーツの次のパーツ分回す(手の場合、肩から上腕から下腕から手の順になるが、腕は手の情報までいらないので現在のパーツ＋１で増やしていく)
 		for (int Next = 0; Next < nCount + 1; Next++)
 		{
-			SaveMotionPos[nCount + 2] += m_pModelPrts[Next + 2]->GetPos();  //左側のパーツ数
-			SaveMotionPos[nCount + 6] += m_pModelPrts[Next + 6]->GetPos();  //右側のパーツ数
+			//右側のパーツ数
+			SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrts[Next + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND]->GetPos();
+
+			//左側のパーツ数
+			SaveMotionPos[nCount + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrts[Next + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND]->GetPos(); 
 		}
 
-		SaveMotionPos[nCount + 6] += m_pModelPrts[0]->GetPos(); //位置を加算
-		SaveMotionPos[nCount + 2] += m_pModelPrts[0]->GetPos(); //位置を加算
+		SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrts[PLAYER_PARTS_BODY_NUMBER]->GetPos(); //位置を加算
+		SaveMotionPos[nCount + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrts[PLAYER_PARTS_BODY_NUMBER]->GetPos();  //位置を加算
 	}
 
-	//下半身のpartsの位置を取得
-	for (int nCount1 = 0; nCount1 < 6; nCount1++)
+	//下半身のpartsの位置を取得(腰から下)
+	for (int nCount1 = PLAYER_PARTS_WAIST_NUMBER + 1; nCount1 < PLAYER_PARTS_LOWER_BODY_COUNT + PLAYER_PARTS_WAIST_NUMBER + 1; nCount1++)
 	{
-		SaveMotionPos[nCount1 + 11] += m_pModelPrts[nCount1 + 11]->GetPos(); //下半身の各パーツ
-		SaveMotionPos[nCount1 + 11] -= m_pModelPrts[10]->GetPos();           //腰の分引く
+		SaveMotionPos[nCount1] += m_pModelPrts[nCount1]->GetPos();    //下半身の各パーツ
+
+		//腰と親パーツ分回す
+		for (int PARENT = PLAYER_PARTS_WAIST_NUMBER; PARENT < nCount1; PARENT++)
+		{
+			SaveMotionPos[nCount1].y += m_pModelPrts[PARENT]->GetPos().y;  //腰の分足す(腰の位置ー親パーツ)
+		}
 	}
 
 	//頭と体の位置を取得する
-	for (int nCount2 = 0; nCount2 < 2; nCount2++)
+	for (int nCount2 = 0; nCount2 < PLAYER_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
 	{
 		SaveMotionPos[nCount2] += m_pModelPrts[nCount2]->GetPos(); //位置を加算
-		GetPosPrts(nCount2) = D3DXVECTOR3(SaveMotionPos[nCount2].x + GetPos().x, SaveMotionPos[nCount2].y + GetPos().y + 20.0f, SaveMotionPos[nCount2].z + GetPos().z); //パーツの位置を修正
+		//GetPosParts(nCount2) = D3DXVECTOR3(SaveMotionPos[nCount2].x + GetPos().x, SaveMotionPos[nCount2].y + GetPos().y + 20.0f, SaveMotionPos[nCount2].z + GetPos().z); //パーツの位置を修正
 	}
 
-	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount3 = 0; nCount3 < NUM_RIGHTLEFTPRTS*2; nCount3++)
-	{
-		GetPosPrts(nCount3 + 2) = D3DXVECTOR3(SaveMotionPos[nCount3 + 2].x + GetPos().x, SaveMotionPos[nCount3 + 2].y + GetPos().y+20.0f , SaveMotionPos[nCount3 + 2].z + GetPos().z);      //パーツの位置を修正
-		GetPosPrts(nCount3 + 10) = D3DXVECTOR3(SaveMotionPos[nCount3 + 10].x + GetPos().x, SaveMotionPos[nCount3 + 10].y + GetPos().y+20.0f , SaveMotionPos[nCount3 + 10].z + GetPos().z);  //パーツの位置を修正
-	}
+	////パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
+	//for (int nCount3 = 0; nCount3 < NUM_RIGHTLEFTPRTS*2; nCount3++)
+	//{
+	//	GetPosParts(nCount3 + 2) = D3DXVECTOR3(SaveMotionPos[nCount3 + 2].x + GetPos().x, SaveMotionPos[nCount3 + 2].y + GetPos().y+20.0f , SaveMotionPos[nCount3 + 2].z + GetPos().z);      //パーツの位置を修正
+	//	GetPosParts(nCount3 + 10) = D3DXVECTOR3(SaveMotionPos[nCount3 + 10].x + GetPos().x, SaveMotionPos[nCount3 + 10].y + GetPos().y+20.0f , SaveMotionPos[nCount3 + 10].z + GetPos().z);  //パーツの位置を修正
+	//}
 }
 
 //======================
@@ -553,16 +596,16 @@ void CCharacter::Lood()
 //======================
 void CCharacter::LoodBoss()
 {
-	int nCount = 0;              //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;           //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;     //生成するパーツ数のカウントするための変数
-	char aPrtsPass[100];         //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[2024];    //必要な情報を読み取る際の文字列を読みむための変数
+	int nCount = 0;                       //最初のパーツ数をカウントするための変数
+	int nKeyCount = 0;                    //モーションのキーをカウントするための変数
+	int nModelPrtsCount = 0;              //生成するパーツ数のカウントするための変数
+	char aPrtsPass[MAX_PARTS_SEARCH];     //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH];  //必要な情報を読み取る際の文字列を読みむための変数
 
-	int nMotionCount = 0;        //モーションの数をカウントするための変数
-	int nKeySetCount = 0;        //モーションのキーセットの数をカウントするための変数
-
-	FILE* m_pFile = nullptr;     //ファイルポインター
+	int nMotionCount = 0;                 //モーションの数をカウントするための変数
+	int nKeySetCount = 0;                 //モーションのキーセットの数をカウントするための変数
+								          
+	FILE* m_pFile = nullptr;              //ファイルポインター
 
 	m_pFile = fopen("data\\motion\\normal_motion\\motion_normalBoss.txt", "r"); //ファイルを開く
 
@@ -594,7 +637,7 @@ void CCharacter::LoodBoss()
 					if (nModelPrtsCount < MAX_BOSSPARTS)
 					{
 						m_pModelPrtsBoss[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-						m_pModelPrtsBoss[nModelPrtsCount]->BindSize(GetMaxPrts(nModelPrtsCount), GetMinPrts(nModelPrtsCount), GetModelSizePrtsBoss(nModelPrtsCount));														  //情報を同期させる
+						m_pModelPrtsBoss[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsBoss(nModelPrtsCount));														  //情報を同期させる
 						nModelPrtsCount++; //配列を進める
 					}
 				}
@@ -818,42 +861,51 @@ void CCharacter::LoodBoss()
 	//各パーツの位置の取得
 	//=================================================================================================================================================================
 	
-	//上半身の位置を取得する
-	for (int nCount = 0; nCount < 4; nCount++)
+	//肩から手までの位置を取得する
+	for (int nCount = 0; nCount < BOSS_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
 		//現在のパーツの次のパーツ分回す
 		for (int nNext = 0; nNext < nCount + 1; nNext++)
 		{
 			//各パーツの位置を足し合わせる
-			SaveMotionPosBoss[nCount + 2] += m_pModelPrtsBoss[nNext + 2]->GetPos();  //左側のパーツ数
-			SaveMotionPosBoss[nCount + 6] += m_pModelPrtsBoss[nNext + 6]->GetPos();  //右側のパーツ数
+			 
+			//右側のパーツ数
+			SaveMotionPosBoss[nCount + BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrtsBoss[nNext + BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND]->GetPos(); 
+
+			//左側のパーツ数
+			SaveMotionPosBoss[nCount + BOSS_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrtsBoss[nNext + BOSS_PARTS_LEFT_SHOULDER_FROM_HAND]->GetPos(); 
 		}
 
 		//体の位置を足し合わせる
-		SaveMotionPosBoss[nCount + 2] += m_pModelPrtsBoss[0]->GetPos(); //位置を加算
-		SaveMotionPosBoss[nCount + 6] += m_pModelPrtsBoss[0]->GetPos(); //位置を加算
+		SaveMotionPosBoss[nCount + BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrtsBoss[BOSS_PARTS_BODY_NUMBER]->GetPos(); //位置を加算
+		SaveMotionPosBoss[nCount + BOSS_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrtsBoss[BOSS_PARTS_BODY_NUMBER]->GetPos();  //位置を加算
 	}
 
-	//下半身のpartsの位置を取得
-	for (int nCount1 = 0; nCount1 < 6; nCount1++)
+	//下半身のpartsの位置を取得(腰から下)
+	for (int nCount1 = BOSS_PARTS_WAIST_NUMBER + 1; nCount1 < BOSS_PARTS_LOWER_BODY_COUNT + BOSS_PARTS_WAIST_NUMBER + 1; nCount1++)
 	{
-		SaveMotionPosBoss[nCount1 + 11] += m_pModelPrtsBoss[nCount1 + 11]->GetPos(); //下半身の各パーツ
-		SaveMotionPosBoss[nCount1 + 11] -= m_pModelPrtsBoss[10]->GetPos();           //腰の分引く
+		SaveMotionPosBoss[nCount1] += m_pModelPrtsBoss[nCount1]->GetPos();             //下半身の各パーツ
+
+		//腰と親パーツ分回す
+		for (int PARENT = BOSS_PARTS_WAIST_NUMBER; PARENT < nCount1; PARENT++)
+		{
+			SaveMotionPosBoss[nCount1].y -= m_pModelPrtsBoss[PARENT]->GetPos().y;      //腰の分引く
+		}
 	}
 
 	//頭と体の位置を取得
-	for (int nCount2 = 0; nCount2 < 2; nCount2++)
+	for (int nCount2 = 0; nCount2 < BOSS_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
 	{
 		SaveMotionPosBoss[nCount2] += m_pModelPrtsBoss[nCount2]->GetPos();                                                                  //位置を加算
-		GetPosPrtsBoss(nCount2) = D3DXVECTOR3(SaveMotionPosBoss[nCount2].x, SaveMotionPosBoss[nCount2].y, SaveMotionPosBoss[nCount2].z); //位置を修正
+	//	GetPosPartsBoss(nCount2) = D3DXVECTOR3(SaveMotionPosBoss[nCount2].x, SaveMotionPosBoss[nCount2].y, SaveMotionPosBoss[nCount2].z); //位置を修正
 	}
 
-	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount3 = 0; nCount3 < NUM_RIGHTPRTSBOSS; nCount3++)
-	{
-		GetPosPrtsBoss(nCount3 + 2) = D3DXVECTOR3(SaveMotionPosBoss[nCount3 + 2].x + GetPos().x, SaveMotionPosBoss[nCount3 + 2].y + GetPos().y + 20.0f, SaveMotionPosBoss[nCount3 + 2].z + GetPos().z);      //位置を修正
-		GetPosPrtsBoss(nCount3 + 10) = D3DXVECTOR3(SaveMotionPosBoss[nCount3 + 10].x + GetPos().x, SaveMotionPosBoss[nCount3 + 10].y + GetPos().y + 20.0f, SaveMotionPosBoss[nCount3 + 10].z + GetPos().z);  //位置を修正
-	}
+	////パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
+	//for (int nCount3 = 0; nCount3 < NUM_RIGHTPRTSBOSS; nCount3++)
+	//{
+	//	GetPosPartsBoss(nCount3 + 2) = D3DXVECTOR3(SaveMotionPosBoss[nCount3 + 2].x + GetPos().x, SaveMotionPosBoss[nCount3 + 2].y + GetPos().y + 20.0f, SaveMotionPosBoss[nCount3 + 2].z + GetPos().z);      //位置を修正
+	//	GetPosPartsBoss(nCount3 + 10) = D3DXVECTOR3(SaveMotionPosBoss[nCount3 + 10].x + GetPos().x, SaveMotionPosBoss[nCount3 + 10].y + GetPos().y + 20.0f, SaveMotionPosBoss[nCount3 + 10].z + GetPos().z);  //位置を修正
+	//}
 }
 
 
@@ -877,15 +929,15 @@ void CCharacter::MotionInfo()
 			D3DXVECTOR3 Moverot = MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
 
 			//最初のキーじゃないなら差分を求める
-			if (MotionCount != MotionSetPlayer[m_MotionState].NumKey - 1)
+			if (MotionCount != MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetPlayer[m_MotionState].KeySet[MotionCount + 1].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].pos; //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetPlayer[m_MotionState].KeySet[MotionCount + 1].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].rot; //現在のモーションの次のモーションから現在のモーションの向きを引く
+				Movepos = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].pos;                   //現在のモーションの次のモーションから現在のモーションの位置を引く
+				Moverot = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].rot;                   //現在のモーションの次のモーションから現在のモーションの向きを引く
 			}
 			else
 			{
-				Movepos = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - 1].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - 1].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
 			}
 
 			//差分の分をフレームで割った値で加算
@@ -893,12 +945,12 @@ void CCharacter::MotionInfo()
 			rot = Moverot / (float)MotionSetPlayer[m_MotionState].KeySet[MotionCount].Frame; //向きを代入した向きからフレームを割る
 
 			//差分の分だけ加算
-			m_pModelPrts[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
-			m_pModelPrts[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
+			m_pModelPrts[nModelCount]->GetPos() += pos;                                      //現在の位置を計算でだした位置と加算させる
+			m_pModelPrts[nModelCount]->GetRot() += rot;                                      //向きの位置を計算でだした向きと加算させる
 		}
 	}
 	
-	GetFrame()++; //フレームの加算
+	SetAdjustFrame()++; //フレームの加算
 
 	//終わりのフレームになったらカウントを最初からにする
 	if (GetFrame() == MotionSetPlayer[m_MotionState].KeySet[MotionCount].Frame)
@@ -913,7 +965,7 @@ void CCharacter::MotionInfo()
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCount + 1 == MotionSetPlayer[m_MotionState].NumKey && MotionSetPlayer[m_MotionState].Loop == 0)
+		else if (MotionCount + PLAYER_NEXT_MOTION_COUNT == MotionSetPlayer[m_MotionState].NumKey && MotionSetPlayer[m_MotionState].Loop == 0)
 		{
 			//特殊な行動の終わり
 			m_bMotionType = false; //モーションの判定をoffにする
@@ -942,15 +994,15 @@ void CCharacter::MotionInfoBoss()
 			D3DXVECTOR3 Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
 
 			//最初のキーじゃないなら差分を求める
-			if (MotionCountBoss != MotionSetBoss[m_MotionStateBoss].NumKey - 1)
+			if (MotionCountBoss != MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + 1].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].pos; //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + 1].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].rot; //現在のモーションの次のモーションから現在のモーションの向きを引く
+				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].pos;             //現在のモーションの次のモーションから現在のモーションの位置を引く
+				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].rot;             //現在のモーションの次のモーションから現在のモーションの向きを引く
 			}
 			else
 			{
-				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - 1].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - 1].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
 			}
 
 			//差分の分をフレームで割った値で加算
@@ -1002,7 +1054,7 @@ void CCharacter::MotionInfoBoss()
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCountBoss + 1 == MotionSetBoss[m_MotionStateBoss].NumKey && MotionSetBoss[m_MotionStateBoss].Loop == 0)
+		else if (MotionCountBoss + BOSS_NEXT_MOTION_COUNT == MotionSetBoss[m_MotionStateBoss].NumKey && MotionSetBoss[m_MotionStateBoss].Loop == 0)
 		{
 			//特殊な行動の終わり
 			m_bMotionBossType = false; //モーションの判定をoffにする

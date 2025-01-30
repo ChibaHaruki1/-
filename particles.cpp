@@ -64,9 +64,9 @@ void CParticles001::Update()
 {
 	SetSize(SIZEX, SIZEY, SIZEZ);   //大きさの設定
 
-	SetAddjustLife()--;             //ライフを減らす
+	SetAdjustLife()--;             //ライフを減らす
 
-	SetAddjustPos().y += PLUS_POSY; //Y軸の位置を増やす
+	SetAdjustPos().y += PLUS_POSY; //Y軸の位置を増やす
 
 	//ライフが０より大きい時
 	if (GetLife() <= 0)

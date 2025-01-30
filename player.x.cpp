@@ -178,6 +178,11 @@ void CPlayerX::Update()
 	{
 		CCharacter::UpdatePlayer();  //モーションの更新
 
+		if (GetPos().y <= -DIE_POS_Y)
+		{
+			SetLife(0); //ライフの初期化
+		}
+
 		//重力値が規定値より高い時
 		if (GetGravity() >= MAX_GRAVITY)
 		{
@@ -374,6 +379,11 @@ void CPlayerX::SceneMode(int nType)
 			case CScene::MODE::MODE_GAME02:
 				CManager::SetMode(CScene::MODE::MODE_RESULT); //リザルトに遷移
 				return;                                       //処理を抜ける
+
+				//ステージ３の時
+			case CScene::MODE::MODE_RESULT:
+				CManager::SetMode(CScene::MODE::MODE_GAME01); //ステージ１に遷移
+				return;                                       //処理を抜ける
 			}
 		}
 	}
@@ -512,8 +522,8 @@ void CPlayerX::KeySet()
 				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));  //必殺技のエフェクトの生成
 				m_nMotionFrame = CManager::GetInstance()->GetSpecialAttack()->GetLife();                                             //モーションのライフを同期させる
 				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = 1;                                                     //サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosPrts(17).x + 220.0f,                        //エフェクトの出す位置を設定
-					GetPosPrts(17).y, GetPosPrts(17).z));
+				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosParts(17).x + 220.0f,                        //エフェクトの出す位置を設定
+					GetPosParts(17).y, GetPosParts(17).z));
 			}
 
 			//左向きの時
@@ -522,8 +532,8 @@ void CPlayerX::KeySet()
 				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));  //必殺技のエフェクトの生成
 				m_nMotionFrame001 = CManager::GetInstance()->GetSpecialAttack()->GetLife();                                          //モーションのライフを同期させる
 				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = 2;											         //サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosPrts(17).x - 50.0f, 				         //エフェクトの出す位置を設定
-					GetPosPrts(17).y, GetPosPrts(17).z));
+				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosParts(17).x - 50.0f, 				         //エフェクトの出す位置を設定
+					GetPosParts(17).y, GetPosParts(17).z));
 			}
 		}
 	}
@@ -533,8 +543,8 @@ void CPlayerX::KeySet()
 	if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_A) == true || CManager::GetJyoPad()->GetJoypadPress(CInputJoyPad::JOYKEY::JOYKEY_LEFT) == true)
 	{
 		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI;                                //カメラの向きに合わせて向く
-		SetAddjustMove().x -= sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから減算
-		SetAddjustMove().z -= cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから減算
+		SetAdjustMove().x -= sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから減算
+		SetAdjustMove().z -= cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから減算
 		m_nRotNumber = 1;                                                                                        //向き番号の設定
 
 		//撃ってない時
@@ -584,7 +594,7 @@ void CPlayerX::KeySet()
 			m_nMotionFrame = 60;   //銃を撃つフレームを設定
 
 			//弾の設定
-			CManagerBullet::Create(D3DXVECTOR3(GetPosPrts(17).x + 240.0f, GetPosPrts(17).y, GetPosPrts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, 0.0f), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
+			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(17).x + 240.0f, GetPosParts(17).y, GetPosParts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, 0.0f), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
 		}
 
 		//左向きの時
@@ -593,7 +603,7 @@ void CPlayerX::KeySet()
 			m_nMotionFrame001 = 60; //銃を撃つフレームを設定
 
 			//弾の設定
-			CManagerBullet::Create(D3DXVECTOR3(GetPosPrts(17).x - 50.0f, GetPosPrts(17).y, GetPosPrts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
+			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(17).x - 50.0f, GetPosParts(17).y, GetPosParts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
 		}
 	}
 
@@ -784,7 +794,7 @@ void CPlayerX::ShopKeySet()
 		{
 			if (m_pSelectGage != nullptr)
 			{
-				SelectGageUISizeCalculation("Plus", ADDJUST_SELECT_SIZEY, ADDJUST_SELECT_SIZEY); //サイズを調整する
+				SelectGageUISizeCalculation("Plus", ADJUST_SELECT_SIZEY, ADJUST_SELECT_SIZEY); //サイズを調整する
 
 				//選択ゲージ001の大きさを設定
 				m_pSelectGage001->SetSIze(m_pSelectGage->GetSizeX(), m_pSelectGage->GetSize1X(), m_pSelectGage->GetSizeY(), m_pSelectGage->GetSize1Y());
@@ -809,7 +819,7 @@ void CPlayerX::ShopKeySet()
 			//選択ゲージの情報がある時
 			if (m_pSelectGage != nullptr)
 			{
-				SelectGageUISizeCalculation("Minus", ADDJUST_SELECT_SIZEY, ADDJUST_SELECT_SIZEY); //サイズを調整する
+				SelectGageUISizeCalculation("Minus", ADJUST_SELECT_SIZEY, ADJUST_SELECT_SIZEY); //サイズを調整する
 
 				//選択ゲージ001のサイズを調整
 				m_pSelectGage001->SetSIze(m_pSelectGage->GetSizeX(), m_pSelectGage->GetSize1X(), m_pSelectGage->GetSizeY(), m_pSelectGage->GetSize1Y());
@@ -1258,14 +1268,20 @@ void CPlayerX::BlockJudgement()
 	if (CManager::GetInstance()->GetFinalCeiling() != nullptr)
 	{
 		//下に当たっている時
-		if (GetCollision() ->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetFinalCeiling()->GetPos(), GetModelSize(), CManager::GetInstance()->GetFinalCeiling()->GetModelSize()*5.0f, GetMove()) == true)
+		if (GetCollision()->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetFinalCeiling()->GetPos(), GetModelSize(), CManager::GetInstance()->GetFinalCeiling()->GetModelSize(), GetMove()) == true)
 		{
-			//下に当たっている時
-			if (GetCollision()->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetFinalCeiling()->GetPos(), GetModelSize(), CManager::GetInstance()->GetFinalCeiling()->GetModelSize() * 3.0f, GetMove()) == true)
-			{
-				SetGravityFlag(true);//重力ON
-			}
-			CManager::GetScene()->GetCamera()->GetAdjustmentPosY() = 0.0f;
+			//SetPos(D3DXVECTOR3(GetPos().x,GetPos().y-100.0f,GetPos().z));
+			SetGravityFlag(true);//重力ON
+			////下に当たっている時
+			//if (GetCollision()->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetFinalCeiling()->GetPos(), GetModelSize(), CManager::GetInstance()->GetFinalCeiling()->GetModelSize(), GetMove()) == true)
+			//{
+			//	SetGravityFlag(true);//重力ON
+			//	//CManager::GetScene()->GetCamera()->GetAdjustmentPosY() = 0.0f;
+			//}
+			//else
+			//{
+			//	CManager::GetScene()->GetCamera()->GetAdjustmentPosY() = CEvent::CANERA_POSY;    //カメラのＹ軸の値を設定
+			//}
 		}
 		//else
 		//{
@@ -1348,8 +1364,8 @@ void CPlayerX::NextStageMotion()
 	else if (m_nNextStageFrame <= 60*3)
 	{
 		//X軸の移動
-		CManager::GetInstance()->GetSpeceBattleShip(1)->SetAddjustPos().x += (float)m_nNextStageFrame* MAX_POS_NEXTSTAGE; 
-		SetAddjustPos().x+= (float)m_nNextStageFrame * MAX_POS_NEXTSTAGE;                                                
+		CManager::GetInstance()->GetSpeceBattleShip(1)->SetAdjustPos().x += (float)m_nNextStageFrame* MAX_POS_NEXTSTAGE; 
+		SetAdjustPos().x+= (float)m_nNextStageFrame * MAX_POS_NEXTSTAGE;                                                
 	}
 
 	//終了

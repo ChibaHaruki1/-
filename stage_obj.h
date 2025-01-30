@@ -81,4 +81,14 @@ public:
 	CBreakHouse(int nPriority = DEFAULT_PRIORITY1);             //コンストラクタ
 	~CBreakHouse()override;                                     //デストラクタ
 	void Update()override;                                      //更新処理
+
+private:
+	//マクロ定義
+	static constexpr int LIFE = 180;                            //ライフの最大値
+	static constexpr int ALPHA = 170;                           //アルファ値
+
+	static constexpr float FIRE_EFFECT_SIZE_X = 920.0f;         //炎エフェクトのX軸の大きさ
+	static constexpr float FIRE_EFFECT_SIZE_Y = 700.0f;         //炎エフェクトのY軸の大きさ
+	static constexpr float FIRE_EFFECT_PLUS_POS_X = 200.0f;     //炎エフェクトのX軸の位置
+	static constexpr float FIRE_EFFECT_PLUS_POS_Y = 600.0f;     //炎エフェクトのY軸の位置
 };

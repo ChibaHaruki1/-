@@ -26,12 +26,12 @@ CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 		m_pSaveModelPrtUpdateInfo[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
 	}
 
-	MotionCountEnemy = 0;             //モーション時のカウントを初期化
-	m_nNumParts = 0;                  //パーツ数の初期化
-	m_nEnemy001Parts = 0;             //敵001パーツ数の初期化
-	m_nEnemy002Parts = 0;             //敵002パーツ数の初期化
-	m_bMotionEnemyType = false;       //モーションタイプの初期化
-	m_MotionStateEnemy = ENEMYWALK;   //モーション状態の初期化
+	MotionCountEnemy = 0;                                      //モーション時のカウントを初期化
+	m_nNumParts = 0;                                           //パーツ数の初期化
+	m_nEnemy001Parts = 0;                                      //敵001パーツ数の初期化
+	m_nEnemy002Parts = 0;                                      //敵002パーツ数の初期化
+	m_bMotionEnemyType = false;                                //モーションタイプの初期化
+	m_MotionStateEnemy = ENEMYWALK;                            //モーション状態の初期化
 }
 
 
@@ -84,24 +84,24 @@ void CEnemyCharacter::Uninit()
 //========================
 void CEnemyCharacter::UpdateEnemy001()
 {
-	MotionInfoEnemy(); //モーションを行う処理を呼ぶ
+	MotionInfoEnemy001(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
 	for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
 	{
 		//上半身
-		if (nCount <= 7)
+		if (nCount <= m_nEnemy001Parts / HALF)
 		{
-			GetPosPrtsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
+			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
 				m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
 				m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
 		}
 
 		//下半身
-		if (nCount >= 8)
+		else if (nCount >= m_nEnemy001Parts / HALF)
 		{
-			GetPosPrtsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
-				m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y + 100.0f ,
+			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
+				m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
 				m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
 		}
 	}
@@ -112,7 +112,12 @@ void CEnemyCharacter::UpdateEnemy001()
 //========================
 void CEnemyCharacter::UpdateEnemy002()
 {
-	MotionInfoEnemy(); //モーションを行う処理を呼ぶ
+	MotionInfoEnemy002(); //モーションを行う処理を呼ぶ
+
+	for (int nCount = 0; nCount < m_nEnemy002Parts; nCount++)
+	{
+
+	}
 }
 
 //========================
@@ -220,7 +225,7 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 					if (nModelPrtsCount < MAX_ENEMYPARTS)
 					{
 						m_pModelPrtsEnemy[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-						m_pModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxPrts(nModelPrtsCount), GetMinPrts(nModelPrtsCount), GetModelSizePrtsEnemy(nModelPrtsCount));														   //情報を同期させる
+						m_pModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsEnemy(nModelPrtsCount));														   //情報を同期させる
 						nModelPrtsCount++; //配列を進める
 					}
 				}
@@ -496,12 +501,12 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 }
 
 //===============================
-//モーションを行う
+//敵001のモーションを行う
 //===============================
-void CEnemyCharacter::MotionInfoEnemy()
+void CEnemyCharacter::MotionInfoEnemy001()
 {
 	//モデルのパーツ分繰り返す
-	for (int nModelCount = 0; nModelCount < MAX_ENEMYPARTS; nModelCount++)
+	for (int nModelCount = 0; nModelCount < m_nEnemy001Parts; nModelCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsEnemy[nModelCount] != nullptr)
@@ -595,7 +600,72 @@ void CEnemyCharacter::MotionInfoEnemy()
 			//MotionCountEnemy=1;
 			//SetMotionBoss(NEUTRAL);   //モーションの情報の切り替え
 		}
+	}
+}
 
+//===============================
+//敵001のモーションを行う
+//===============================
+void CEnemyCharacter::MotionInfoEnemy002()
+{
+	//モデルのパーツ分繰り返す
+	for (int nModelCount = 0; nModelCount < m_nEnemy002Parts; nModelCount++)
+	{
+		//パーツの情報がある時
+		if (m_pModelPrtsEnemy[nModelCount] != nullptr)
+		{
+			//移動量の初期化
+			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //位置の初期化
+			D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
+
+			//移動量の変数
+			D3DXVECTOR3 Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
+			D3DXVECTOR3 Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
+
+			//最初のキーじゃないなら差分を求める
+			if (MotionCountEnemy != MotionSetEnemy[m_MotionStateEnemy].NumKey - 1)
+			{
+				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //現在のモーションの次のモーションから現在のモーションの位置を引く
+				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //現在のモーションの次のモーションから現在のモーションの向きを引く
+			}
+			else
+			{
+				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+			}
+
+
+			//差分の分をフレームで割った値で加算
+			pos = Movepos / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //現在の位置を計算でだした位置と加算させる
+			rot = Moverot / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //向きの位置を計算でだした向きと加算させる
+
+
+			//差分の分だけ加算
+			m_pModelPrtsEnemy[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
+			m_pModelPrtsEnemy[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
+		}
+	}
+
+	GetFrame()++; //フレームの加算
+
+	//終わりのフレームになったらカウントを最初からにする
+	if (GetFrame() == MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame)
+	{
+		SetFrame(0);        //フレームを初期化
+		MotionCountEnemy++; //モーションのカウントを増加
+
+		//現在のモーションのカウントが終わりまで回ったら最初からにする
+		if (MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+		{
+			MotionCountEnemy = 0; //カウントを0にする
+		}
+
+		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
+		else if (MotionCountEnemy + 1 == MotionSetEnemy[m_MotionStateEnemy].NumKey && MotionSetEnemy[m_MotionStateEnemy].Loop == 0)
+		{
+			//特殊な行動の終わり
+			m_bMotionEnemyType = false; //モーションの判定をoffにする
+		}
 	}
 }
 

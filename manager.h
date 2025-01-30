@@ -53,13 +53,13 @@ public:
 	static void SetMode(CScene::MODE mode);                      //モードの設定
 
 private:
-	static CRenderer* m_pRenderer;       //レンダラーのポインター
-	static CInputKeyBoard* m_pKeyBoard;  //キーボードのポインター
-	static CInputJoyPad* m_pJyoPad;      //ジョイパットのポインター
-	static CSound* m_pSound;             //音源のポインター
-	static CScene* m_pScene;             //現在のシーンのポインター
-	static CInstance* m_pInstance;       //各クラスのポインター
-	static CObjectSet* m_pObjectSet;     //オブジェクト配置のポインター
-	static CEvent* m_pEvent;             //ステージ毎のイベントポインター
-	static CMain* m_pMain;               //メインのポインター
+	static CRenderer* m_pRenderer;                               //レンダラーのポインター
+	static CInputKeyBoard* m_pKeyBoard;                          //キーボードのポインター
+	static CInputJoyPad* m_pJyoPad;                              //ジョイパットのポインター
+	static CSound* m_pSound;                                     //音源のポインター
+	static CScene* m_pScene;                                     //現在のシーンのポインター
+	static CInstance* m_pInstance;                               //各クラスのポインター
+	static CObjectSet* m_pObjectSet;                             //オブジェクト配置のポインター
+	static CEvent* m_pEvent;                                     //ステージ毎のイベントポインター
+	static CMain* m_pMain;                                       //メインのポインター
 };

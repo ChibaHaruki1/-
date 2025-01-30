@@ -123,7 +123,7 @@ CManagerEnemyInMotion* CManagerEnemyInMotion::Create(D3DXVECTOR3 pos, CObjectX::
 //=============================
 CEnemyInMotion::CEnemyInMotion(int nPriority) : CManagerEnemyInMotion(nPriority)
 {
-	SetAddjustRot().y -= D3DX_PI_ORI; //向きの設定
+	SetAdjustRot().y -= D3DX_PI_ORI; //向きの設定
 }
 
 //=============================
@@ -146,13 +146,13 @@ void CEnemyInMotion::Update()
 	{
 		CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYATTACK);     //モーションの種類を設定
 
-		SetAddjustFrame()++; //フレームを増やす
+		SetAdjustFrame()++; //フレームを増やす
 
 		//フレームが規定値より高い時	
 		if (GetFrame()>= MAX_FRAME_BUULET)
 		{
 			//弾の生成
-			CManagerBullet::Create(D3DXVECTOR3(this->GetPosPrtsEnemy(0).x, this->GetPosPrtsEnemy(0).y, this->GetPosPrtsEnemy(0).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED),
+			CManagerBullet::Create(D3DXVECTOR3(this->GetPosPartsEnemy(0).x, this->GetPosPartsEnemy(0).y, this->GetPosPartsEnemy(0).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED),
 				CManagerBullet:: SET_BULLET_LIFE, CObject3D::TYPE::ENEMYBULLET);
 
 			SetFrame(0); //フレームを０にする
@@ -215,7 +215,7 @@ void CEnemyInMotion::Update()
 						GravityTogether(); //重力を同期させる
 
 						//y軸の位置を設定
-						SetAddjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
+						SetAdjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
 							CManager::GetInstance()->GetFiledBlock(nCount)->GetPos().y;
 					}
 				}
@@ -239,7 +239,7 @@ void CEnemyInMotion::Update()
 						GravityTogether(); //重力を同期させる
 
 						//y軸の位置を設定
-						SetAddjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
+						SetAdjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
 							CManager::GetInstance()->GetFiledBlock(nCount)->GetPos().y;
 					}
 				}
@@ -294,13 +294,13 @@ void CEnemyInMotion001::Update()
 			{
 				CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYATTACK);  //モーションの種類を設定
 
-				SetAddjustFrame()++;     //弾を撃つ際のフレームを増やす
+				SetAdjustFrame()++;     //弾を撃つ際のフレームを増やす
 
 				//フレームが規定数に達した時
-				if (GetFrame()>= 60)
+				if (GetFrame()>= 45)
 				{
 					//弾の生成
-					CManagerBullet::Create(D3DXVECTOR3(this->GetPosPrtsEnemy(4).x + 100.0f, this->GetPosPrtsEnemy(4).y + 30.0f, this->GetPosPrtsEnemy(4).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED),
+					CManagerBullet::Create(D3DXVECTOR3(this->GetPosPartsEnemy(4).x + 100.0f, this->GetPosPartsEnemy(4).y + 30.0f, this->GetPosPartsEnemy(4).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED),
 						CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::ENEMYBULLET);
 
 					SetFrame(0); //フレームを０にする
@@ -357,7 +357,7 @@ void CEnemyInMotion001::Update()
 //===============================================
 void CEnemyInMotion001::Die()
 {
-	SetAddjustDieFrame()++; //死亡フレームを増やす
+	SetAdjustDieFrame()++; //死亡フレームを増やす
 
 	//srand((unsigned)time(NULL));  //乱数系列を初期化
 
@@ -510,38 +510,38 @@ void CEnemyInMotion001::PlayerBloWwaway()
 void CEnemyInMotion001::AdjustmentBulletAndRot()
 {
 	//左向きの時
-	if (GetRot().y >= D3DX_PI_ORI)
+	if (GetRot().y >= D3DX_PI_ORI_HALF)
 	{
 		//プレイヤーの向きが左向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber()==1)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x += ADDJUST_PRTAS_ROTX;         //パーツのX軸の向きを加算する
-			CEnemyBullet::SetAddjustAdditionPosY() -= ADDJUST_BULLET_ROTY;  //弾のX軸の向きを減算する
+			m_pModelPrtsEnemy[0]->GetRot().x += ADJUST_PRTAS_ROTX;         //パーツのX軸の向きを加算する
+			CEnemyBullet::SetAddjustAdditionPosY() -= ADJUST_BULLET_ROTY;  //弾のX軸の向きを減算する
 		}
 
 		//プレイヤーの向きが右向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 2)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x -= ADDJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
-			CEnemyBullet::SetAddjustAdditionPosY() += ADDJUST_BULLET_ROTY; //弾のX軸の向きを加算する
+			m_pModelPrtsEnemy[0]->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
+			CEnemyBullet::SetAddjustAdditionPosY() += ADJUST_BULLET_ROTY; //弾のX軸の向きを加算する
 		}
 	}
 
 	//右向きの時
-	else if (GetRot().y <= -D3DX_PI_ORI)
+	else if (GetRot().y <= -D3DX_PI_ORI_HALF)
 	{
 		//プレイヤーの向きが左向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 1)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x -= ADDJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
-			CEnemyBullet::SetAddjustAdditionPosY() += ADDJUST_BULLET_ROTY; //弾のX軸の向きを加算する
+			m_pModelPrtsEnemy[0]->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
+			CEnemyBullet::SetAddjustAdditionPosY() += ADJUST_BULLET_ROTY; //弾のX軸の向きを加算する
 		}
 
 		//プレイヤーの向きが右向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 2)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x += ADDJUST_PRTAS_ROTX;        //パーツのX軸の向きを加算する
-			CEnemyBullet::SetAddjustAdditionPosY() -= ADDJUST_BULLET_ROTY; //弾のX軸の向きを減算する
+			m_pModelPrtsEnemy[0]->GetRot().x += ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを加算する
+			CEnemyBullet::SetAddjustAdditionPosY() -= ADJUST_BULLET_ROTY; //弾のX軸の向きを減算する
 		}
 	}
 
@@ -721,13 +721,13 @@ void CEnemyInMotion001::Correctionrot()
 	{
 		GetRot().y = -D3DX_PI_ORI;                                                                     //向きを逆に設定
 		m_pModelPrtsEnemy[0]->SetRot(D3DXVECTOR3(0.0f,0.0f,0.0f));                                     //向きの初期化
-		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADDJUST_BULLET_ROTY);  //弾の出る向きを調整
+		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADJUST_BULLET_ROTY);   //弾の出る向きを調整
 	}
-	else if (CEnemyBullet::GetAdditionPosY() >= CEnemyBullet::MINUS_ROTY * IF_ADDJUST_BULLET_ROTY && CEnemyBullet::GetAdditionPosY() <= CEnemyBullet::MINUS_ROTY * IF_ADDJUST_BULLET_ROTY+1.0f)
+	else if (CEnemyBullet::GetAdditionPosY() >= CEnemyBullet::MINUS_ROTY * IF_ADJUST_BULLET_ROTY && CEnemyBullet::GetAdditionPosY() <= CEnemyBullet::MINUS_ROTY * IF_ADJUST_BULLET_ROTY+1.0f)
 	{
 		GetRot().y = D3DX_PI_ORI;                                                                      //向きを逆に設定
 		m_pModelPrtsEnemy[0]->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                                   //向きの初期化
-		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADDJUST_BULLET_ROTY);  //弾の出る向きを調整
+		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADJUST_BULLET_ROTY);   //弾の出る向きを調整
 	}
 }
 

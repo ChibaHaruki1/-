@@ -36,6 +36,7 @@ public:
 	void LoodResultScore(FILE* pFile);         //リザルトの情報読み込み生成
 	void LoodEnemy(FILE* pFile);               //敵の読み込み処理
 	void LoodMotionInEnemy(FILE* pFile);       //モーション付きの敵の読み込み処理
+	void LoodCeiling(FILE* pFile);             //天井の読み込み処理
 
 	static CObjectSet* Create();               //情報の生成
 

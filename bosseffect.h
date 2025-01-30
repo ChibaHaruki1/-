@@ -1,6 +1,6 @@
 //=========================================
 //
-//ボス用エフェクトのクラス管理[efect.h]
+//ボス用エフェクトのクラス管理[bossefect.h]
 //Auther:Chiba Haruki
 //
 //=========================================
@@ -27,12 +27,12 @@ public:
 
 	//===========================
 	//情報の取得
-	const char* GetFileNamePass() { return m_aEffectFileName; }
+	const char* GetFileNamePass() { return m_aEffectFileName; }                                                       //ファイルパスの取得
 
 
 	//===========================
 	//情報の設定
-	void SetFileNamePass(const char* aFilePass) { m_aEffectFileName = aFilePass; }
+	void SetFileNamePass(const char* aFilePass) { m_aEffectFileName = aFilePass; }                                    //ファイルパスの設定
 
 private:
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffMine; //自身のバッファ

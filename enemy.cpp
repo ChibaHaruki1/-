@@ -100,7 +100,7 @@ CManagerEnemy* CManagerEnemy::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 		if (SUCCEEDED(pManagerEnemy->Init()))
 		{
 			pManagerEnemy->SetFileName("data\\XFILE\\ENEMY\\Enemy001.x"); //ファイルパスの設定
-			pManagerEnemy->SetLife(CEnemy001X::MAX__ENEMY001_LIFE);       //ライフの設定
+			pManagerEnemy->SetLife(CEnemy001X::MAX_ENEMY001_LIFE);        //ライフの設定
 		}
 	}
 
@@ -113,7 +113,7 @@ CManagerEnemy* CManagerEnemy::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 		if (SUCCEEDED(pManagerEnemy->Init()))
 		{
 			pManagerEnemy->SetFileName("data\\XFILE\\ENEMY\\Enemy002.x"); //ファイルパスの設定
-			pManagerEnemy->SetLife(CEnemy002X::MAX__ENEMY002_LIFE);       //ライフの設定
+			pManagerEnemy->SetLife(CEnemy002X::MAX_ENEMY002_LIFE);       //ライフの設定
 		}
 	}
 
@@ -160,7 +160,7 @@ void CEnemyX::Update()
 	//プレイヤーと当たった時
 	if (CollisionPlayerInEnemy(this,65.0f) == true)
 	{
-		SetAddjustFrame()++;     //弾を撃つ際のフレームを増やす
+		SetAdjustFrame()++;     //弾を撃つ際のフレームを増やす
 
 		//フレームを
 		if (GetFrame() >= 60)
@@ -216,7 +216,7 @@ CEnemy001X::~CEnemy001X()
 //=========================
 void CEnemy001X::Update()
 {
-	SetAddjustRot().y += PLUS_ROTY; //Y軸の向きを加算
+	SetAdjustRot().y += PLUS_ROTY; //Y軸の向きを加算
 
 	//プレイヤーと当たった時
 	if (CollisionPlayerSelect(this) == true)
@@ -262,7 +262,7 @@ CEnemy002X::~CEnemy002X()
 //=========================
 void CEnemy002X::Update()
 {
-	SetAddjustRot().x += PLUS_ROTY; //Y軸の向きを加算
+	SetAdjustRot().x += PLUS_ROTY; //Y軸の向きを加算
 
 	Move();                         //行動処理関数を呼ぶ
 
@@ -291,18 +291,18 @@ void CEnemy002X::Update()
 //=========================
 void CEnemy002X::Move()
 {
-	SetAddjustFrame()++; //フレームを増やす
+	SetAdjustFrame()++; //フレームを増やす
 
 	//第一行動
 	if (GetFrame() <= 30)
 	{
-		GetPos().y += ADDJUST_POSY; //Y軸の位置を加算
+		GetPos().y += ADJUST_POSY; //Y軸の位置を加算
 	}
 
 	//第二行動
 	else if (GetFrame() <= 60)
 	{
-		GetPos().y -= ADDJUST_POSY; //Y軸の位置を減算
+		GetPos().y -= ADJUST_POSY; //Y軸の位置を減算
 	}
 
 	//終了

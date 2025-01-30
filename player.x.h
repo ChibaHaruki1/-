@@ -5,7 +5,9 @@
 //
 //========================================
 
+
 #pragma once
+
 
 //========================================
 //インクルード
@@ -17,6 +19,7 @@
 #include "ui.h"
 #include "2d_ui.h"
 #include "character.h"
+
 
 class CPlayerX : public CCharacter
 {
@@ -69,8 +72,9 @@ private:
 	constexpr static int   MAX_TEXT_OBJECT = 2;               //今配置ツールに設定されてるオブジェクトの数ー１（０スタートだから）
 	constexpr static int   MAX_BUULET_SPEED = 30;             //弾の速さ
 	constexpr static int   MAX_DIE_COUNT = 180;               //死亡時のカウント
-	constexpr static float   ADDJUST_SELECT_SIZEY = 160.0f;   //選択ゲージのY軸の位置を加算する値
+	constexpr static float   ADJUST_SELECT_SIZEY = 160.0f;    //選択ゲージのY軸の位置を加算する値
 	constexpr static float   MAX_GRAVITY = 50.0f;             //重力の最大値
+	constexpr static float   DIE_POS_Y = 4000.0f;             //死亡位置の設定値
 
 	//ぶっ飛び処理時マクロ定義
 	constexpr static int   BLOWAWAY_FRAME_1 = 40;             //第一行動時のフレーム

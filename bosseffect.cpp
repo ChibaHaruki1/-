@@ -301,7 +301,7 @@ void CImpact::Update()
 	//ボスの情報がある時
 	if (CManager::GetInstance()->GetBoss() != nullptr)
 	{
-		SetAddjustLife()--;                                 //ライフを減らす
+		SetAdjustLife()--;                                 //ライフを減らす
 		SetAddjustSizeX() += PLUS_SIZEX;                    //ｘ軸のサイズを大きくする
 		SetAddjustSizeY() += PLUS_SIZEY;                    //ｙ軸のサイズを大きくする
 
@@ -371,7 +371,7 @@ void CBossSpecialAttack::Update()
 			SetAddjustSizeX() += PLUS_SIZEX;           //サイズを大きくする
 		}
 
-		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPrtsBoss(17).y * ADJUST_PLAYER_POSY;   //プレイヤーのpos.yを計算+調整=当たり判定の一番下を設定
+		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPartsBoss(17).y * ADJUST_PLAYER_POSY;   //プレイヤーのpos.yを計算+調整=当たり判定の一番下を設定
 
 		//向き番号が１の時
 		if (GetRotNumber() == 1)
@@ -402,7 +402,7 @@ void CBossSpecialAttack::Update()
 		//ライフが０以下の時
 		if (GetLife() <= 0)
 		{
-			SetAddjustAlpha() -= MINUS_ALPHA;          //alpha値を減らす
+			SetAdjustAlpha() -= MINUS_ALPHA;          //alpha値を減らす
 			//アルファ値が０以下の時
 			if (GetAlpha() <= 0)
 			{
@@ -412,7 +412,7 @@ void CBossSpecialAttack::Update()
 		}
 		else
 		{
-			SetAddjustLife()--;                        //ライフを減らす
+			SetAdjustLife()--;                        //ライフを減らす
 		}
 	}
 	else

@@ -58,7 +58,7 @@ void CDebrisX::Uninit()
 //========================
 void CDebrisX::Update()
 {
-	SetAddjustLife()--; //ライフを減らす
+	SetAdjustLife()--; //ライフを減らす
 
 	//ライフが尽きた時
 	if (GetLife()<=0)

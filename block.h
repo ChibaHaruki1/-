@@ -23,8 +23,9 @@ public:
 
 	const char* GetBlockFileNamePass() { return m_aBlockFile; }                               //ファイルパスを取得
 	void SetBlockFileNamePass(const char* aBlockFileName) { m_aBlockFile = aBlockFileName; }  //ファイルパスを設定
+
 private:
-	const char* m_aBlockFile; //ファイルパスを保管する用の変数
+	const char* m_aBlockFile;  //ファイルパスを保管する用の変数
 };
 
 
@@ -152,7 +153,7 @@ public:
 	void Draw()override;
 	void TextFileWrite(float m_fPosX, float m_fPosY, float m_fPosZ,CObjectX::TYPE type); //テキストファイルに情報を書き込む処理
 
-	static CManagerBlock* Create(D3DXVECTOR3 pos, STRATEGYTYPE type); //生成処理
+	static CManagerBlock* Create(D3DXVECTOR3 pos, STRATEGYTYPE type);                    //生成処理
 
 private:
 	static int m_nCreateCount;          //作られた数を保管する
@@ -205,8 +206,8 @@ public:
 class CSmallBlock : public CManagerBlock
 {
 public:
-	CSmallBlock(int nPriority = DEFAULT_PRIORITY1);//コンストラクタ
-	~CSmallBlock()override;                        //デストラクタ
+	CSmallBlock(int nPriority = DEFAULT_PRIORITY1); //コンストラクタ
+	~CSmallBlock()override;                         //デストラクタ
 };
 
 

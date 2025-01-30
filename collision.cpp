@@ -37,48 +37,48 @@ CCollision::~CCollision()
 bool CCollision::ColiisionBox(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1, D3DXVECTOR3& move) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
 	//‰E‚Ì“–‚½‚è”»’è
-	if (pos.x - (Size.x / 2) >= pos1.x + (Size1.x / 2) - 10.0f
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+	if (pos.x - (Size.x *ADJUST_HALF) >= pos1.x + (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		move.x = move.x + CPlayerX::MAX_MOVESPEED; //‰E‘¤‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
 	//¶‚Ì“–‚½‚è”»’è
-	else if (pos.x + (Size.x / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x + (Size.x / 2) <= pos1.x - (Size1.x / 2) + 10.0f
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+	else if (pos.x + (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x + (Size.x *ADJUST_HALF) <= pos1.x - (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		move.x = move.x - CPlayerX::MAX_MOVESPEED; //¶‘¤‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
 	//Žè‘O‚©‚ç‚Ì”»’è
-	else  if (pos.x + (Size.x / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z + Size.z / 2 <= pos1.z - (Size1.z / 2) + 10.0f)
+	else  if (pos.x + (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF <= pos1.z - (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z)
 	{
 		move.z = move.z - CPlayerX::MAX_MOVESPEED; //Žè‘O‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
 	//Œã‚ë‚©‚ç‚Ì”»’è
-	else  if (pos.x + (Size.x / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2) + 10.0f
-		&& pos.z - Size.z / 2 >= pos1.z + (Size1.z / 2))
+	else  if (pos.x + (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z
+		&& pos.z - Size.z *ADJUST_HALF >= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		move.z = move.z + CPlayerX::MAX_MOVESPEED; //‰œ‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
@@ -94,19 +94,19 @@ bool CCollision::ColiisionBox(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Siz
 bool CCollision::ColiisionBox1(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1, D3DXVECTOR3& move) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
 	//‰E‚Ì“–‚½‚è”»’è
-	if (pos.x - (Size.x / 2) >= pos1.x + (Size1.x / 2) - 10.0f
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+	if (pos.x - (Size.x *ADJUST_HALF) >= pos1.x + (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
 	//¶‚Ì“–‚½‚è”»’è
-	else if (pos.x + (Size.x / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x + (Size.x / 2) <= pos1.x - (Size1.x / 2) + 10.0f
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+	else if (pos.x + (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x + (Size.x *ADJUST_HALF) <= pos1.x - (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -120,27 +120,28 @@ bool CCollision::ColiisionBox1(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Si
 //==============================
 bool CCollision::ColiisionBoxRoadBlock001(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1, D3DXVECTOR3& move) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
-	//¶‚Ì“–‚½‚è”»’è
-	if (pos.x + (Size.x / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x + (Size.x / 2) <= pos1.x - (Size1.x / 2) + 10.0f
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+
+	//‰E‚Ì“–‚½‚è”»’è
+	if (pos.x - (Size.x *ADJUST_HALF) >= pos1.x + (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
-		move.x = move.x - CPlayerX::MAX_MOVESPEED; //¶‘¤‚É‰Ÿ‚·
+		move.x = move.x + CPlayerX::MAX_MOVESPEED; //‰E‘¤‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
-	//‰E‚Ì“–‚½‚è”»’è
-	if (pos.x - (Size.x / 2) >= pos1.x + (Size1.x / 2) - 10.0f
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2)
-		&& pos.z + Size.z / 2 >= pos1.z - (Size1.z / 2)
-		&& pos.z - Size.z / 2 <= pos1.z + (Size1.z / 2))
+	//¶‚Ì“–‚½‚è”»’è
+	else if (pos.x + (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x + (Size.x *ADJUST_HALF) <= pos1.x - (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + Size.z *ADJUST_HALF >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - Size.z *ADJUST_HALF <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
-		move.x = move.x + CPlayerX::MAX_MOVESPEED; //‰E‘¤‚É‰Ÿ‚·
+		move.x = move.x - CPlayerX::MAX_MOVESPEED; //¶‘¤‚É‰Ÿ‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
 
@@ -153,12 +154,12 @@ bool CCollision::ColiisionBoxRoadBlock001(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3D
 //======================
 bool CCollision::AnyColiisionBoxAll(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
-	if (pos.x + (Size.x / 2) <= pos1.x + (Size1.x / 2) + 10.0f
-		&& pos.x - (Size.x / 2) >= pos1.x - (Size1.x / 2) - 10.0f
-		&& pos.y + (Size.y / 2) >= pos1.y - (Size1.y / 2) - 10.0f
-		&& pos.y - (Size.y / 2) <= pos1.y + (Size1.y / 2) + 10.0f
-		&& pos.z + (Size.z / 2) >= pos1.z - (Size1.z / 2) - 10.0f
-		&& pos.z - (Size.z / 2) <= pos1.z + (Size1.z / 2) + 10.0f)
+	if (pos.x + (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.y + (Size.y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Size.y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Y
+		&& pos.z + (Size.z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Z
+		&& pos.z - (Size.z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z)
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -172,8 +173,8 @@ bool CCollision::AnyColiisionBoxAll(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTO
 bool CCollision::ColiisionBoxRight(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1)
 {
 	//^‚ñ’†‚©‚ç‰E”¼•ª‚Ì“–‚½‚è”»’èi‚‚³–³‚µj
-	if (pos.x <=pos1.x + (Size1.x / 2) 
-		&& pos.x + (Size.x / 2)>=pos1.x + (Size1.x / 2))
+	if (pos.x <=pos1.x + (Size1.x *ADJUST_HALF) 
+		&& pos.x + (Size.x *ADJUST_HALF)>=pos1.x + (Size1.x *ADJUST_HALF))
 		
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
@@ -188,8 +189,8 @@ bool CCollision::ColiisionBoxRight(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR
 bool CCollision::ColiisionBoxLeft(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1)
 {
 	//^‚ñ’†‚©‚ç¶”¼•ª‚Ì“–‚½‚è”»’èi‚‚³–³‚µj
-	if (pos.x >= pos1.x + (Size1.x / 2)
-		&& pos.x - (Size.x / 2) <= pos1.x + (Size1.x / 2))
+	if (pos.x >= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.x - (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF))
 
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
@@ -205,12 +206,12 @@ bool CCollision::ColiisionBoxLeft(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3
 bool CCollision::ColiisionBoxInside(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1, D3DXVECTOR3& move) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
 	//ã‘¤‚Ì”»’è
-	if (pos.x + (Size.x / 2) <= pos1.x + (Size1.x / 2) + 1.0f
-		&& pos.x - (Size.x / 2) >= pos1.x - (Size1.x / 2) - 1.0f
+	if (pos.x + (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
 		&& pos.y >= pos1.y
 		&& pos.y <= pos1.y + (Size1.y)
-		&& pos.z + (Size.z / 2) >= pos1.z - (Size1.z / 2) + 5.0f
-		&& pos.z - (Size.z / 2) <= pos1.z + (Size1.z / 2) - 5.0f)
+		&& pos.z + (Size.z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z
+		&& pos.z - (Size.z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Z)
 	{
 		return true;  //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -224,12 +225,12 @@ bool CCollision::ColiisionBoxInside(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTO
 bool CCollision::ColiisionBoxOutside(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, D3DXVECTOR3 Size, D3DXVECTOR3 Size1, D3DXVECTOR3& move) //ŽQÆ“n‚µ‚¾‚ª•Ï‚¦‚é’l‚Ì‚ÝŽQÆ‚µ‚È‚¢‚Æstaic‚Æ“¯‚¶‚É‚È‚é
 {
 	//‰º‘¤‚Ì”»’è
-	if (pos.x + (Size.x / 2) <= pos1.x + (Size1.x / 2) + 5.0f
-		&& pos.x - (Size.x / 2) >= pos1.x - (Size1.x / 2) - 5.0f
+	if (pos.x + (Size.x *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (Size.x *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
 		&& pos.y <= pos1.y
-		&& pos.y >= pos1.y - (Size1.y*0.1f)
-		&& pos.z + (Size.z / 2) >= pos1.z - (Size1.z / 2) + 5.0f
-		&& pos.z - (Size.z / 2) <= pos1.z + (Size1.z / 2) - 5.0f)
+		&& pos.y >= pos1.y - (Size1.y* ADJUST_HALF)
+		&& pos.z + (Size.z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z
+		&& pos.z - (Size.z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Z)
 	{
 		move.y -= CPlayerX::MAX_MOVESPEED * 2.0f; //‰º‘¤‚É–ß‚·
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
@@ -249,8 +250,8 @@ bool CCollision::CircleCollisionAll(D3DXVECTOR3& pos, D3DXVECTOR3& pos1, D3DXVEC
 
 	float CenterDistance = sqrtf(lengthX * lengthX + lengthY * lengthY + lengthZ * lengthZ);//pos‚Æpos1‚Ì‹——£‚ðŒvŽZ
 
-	float radiuSum = (Size.x * 0.5f + Size.y * 0.5f + Size.z * 0.5f)*0.5f;      //‚P‚Â–Ú‚Ì”¼Œa
-	float radiuSum1 = (Size1.x * 0.5f + Size1.y * 0.5f + Size1.z * 0.5f)*0.5f;  //‚Q‚Â–Ú‚Ì”¼Œa
+	float radiuSum = (Size.x * ADJUST_SEMICIRCLE + Size.y * ADJUST_SEMICIRCLE + Size.z * ADJUST_SEMICIRCLE)* ADJUST_SEMICIRCLE;      //‚P‚Â–Ú‚Ì”¼Œa
+	float radiuSum1 = (Size1.x * ADJUST_SEMICIRCLE + Size1.y * ADJUST_SEMICIRCLE + Size1.z * ADJUST_SEMICIRCLE)* ADJUST_SEMICIRCLE;  //‚Q‚Â–Ú‚Ì”¼Œa
 
 	//‹——£‚ª‘ÎÛ‚Ì”¼Œa‚æ‚è¬‚³‚¢iG‚ê‚Ä‚¢‚éjŽž
 	if (CenterDistance <= radiuSum + radiuSum1)
@@ -271,12 +272,12 @@ bool CCollision::CircleCollisionAll(D3DXVECTOR3& pos, D3DXVECTOR3& pos1, D3DXVEC
 //======================
 bool CCollision::ColiisionBox3D(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, float X, float Y, float Z, D3DXVECTOR3 Size1)
 {
-	if (pos.x - (X / 2) <= pos1.x + (Size1.x / 2) + 5.0f
-		&& pos.x + (X / 2) >= pos1.x - (Size1.x / 2) - 5.0f
-		&& pos.y + (Y / 2) >= pos1.y - (Size1.y / 2) - 5.0f
-		&& pos.y - (Y / 2) <= pos1.y + (Size1.y / 2) + 5.0f
-		&& pos.z + (Z / 2) >= pos1.z - (Size1.z / 2) - 5.0f
-		&& pos.z - (Z / 2) <= pos1.z + (Size1.z / 2) + 5.0f)
+	if (pos.x - (X *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.x + (X *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.y + (Y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Y
+		&& pos.z + (Z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Z
+		&& pos.z - (Z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_Z)
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -291,12 +292,12 @@ bool CCollision::ColiisionBox3D(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, float X, floa
 bool CCollision::ColiisionBox3DRight(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, float X, float Y, float Z, D3DXVECTOR3 Size1)
 {
 	//‰E‘¤‚Ì“–‚½‚è”»’è‚ð‘‚â‚·
-	if (pos.x + (X / 2) >= pos1.x - (Size1.x / 2)
-		&& pos.x + (X / 2) <= pos1.x - (Size1.x / 2) + 10.0f
-		&& pos.y + (Y / 2) >= pos1.y - (Size1.y / 2) - 1.0f
-		&& pos.y - (Y / 2) <= pos1.y + (Size1.y / 2) + 1.0f
-		&& pos.z + (Z / 2) >= pos1.z - (Size1.z / 2) - 1.0f
-		&& pos.z - (Z / 2) <= pos1.z + (Size1.z / 2) + 1.0f)
+	if (pos.x + (X *ADJUST_HALF) >= pos1.x - (Size1.x *ADJUST_HALF)
+		&& pos.x + (X *ADJUST_HALF) <= pos1.x - (Size1.x *ADJUST_HALF) + ADJUST_DIFFERENCE_POS_X
+		&& pos.y + (Y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + (Z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF) 
+		&& pos.z - (Z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -311,12 +312,12 @@ bool CCollision::ColiisionBox3DRight(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, float X,
 bool CCollision::ColiisionBox3DLeft(D3DXVECTOR3 pos, D3DXVECTOR3 pos1, float X, float Y, float Z, D3DXVECTOR3 Size1)
 {
 	//‰E‘¤‚Ì“–‚½‚è”»’è‚ð‘‚â‚·
-	if (pos.x - (X / 2) >= pos1.x + (Size1.x / 2) - 10.0f
-		&& pos.x - (X / 2) <= pos1.x + (Size1.x / 2)
-		&& pos.y + (Y / 2) >= pos1.y - (Size1.y / 2) - 1.0f
-		&& pos.y - (Y / 2) <= pos1.y + (Size1.y / 2) + 1.0f
-		&& pos.z + (Z / 2) >= pos1.z - (Size1.z / 2) - 1.0f
-		&& pos.z - (Z / 2) <= pos1.z + (Size1.z / 2) + 1.0f)
+	if (pos.x - (X *ADJUST_HALF) >= pos1.x + (Size1.x *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_X
+		&& pos.x - (X *ADJUST_HALF) <= pos1.x + (Size1.x *ADJUST_HALF)
+		&& pos.y + (Y *ADJUST_HALF) >= pos1.y - (Size1.y *ADJUST_HALF) - ADJUST_DIFFERENCE_POS_Y
+		&& pos.y - (Y *ADJUST_HALF) <= pos1.y + (Size1.y *ADJUST_HALF)
+		&& pos.z + (Z *ADJUST_HALF) >= pos1.z - (Size1.z *ADJUST_HALF)
+		&& pos.z - (Z *ADJUST_HALF) <= pos1.z + (Size1.z *ADJUST_HALF))
 	{
 		return true; //“–‚½‚Á‚Ä‚¢‚é”»’è‚ð•Ô‚·
 	}
@@ -336,8 +337,8 @@ bool CCollision::Coliision3DcircleBoss(D3DXVECTOR3 pos, D3DXVECTOR3& pos1, float
 
 	float CenterDistance = sqrtf(lengthX * lengthX + lengthY * lengthY + lengthZ * lengthZ);//pos‚Æpos1‚Ì‹——£‚ðŒvŽZ
 
-	float radiuSum = (X * 0.5f + m_fSizeX + Y * 0.5f + Z * 0.5f) * 0.5f;          //‚P‚Â–Ú‚Ì”¼Œa
-	float radiuSum1 = (Size1.x * 0.5f + Size1.y * 0.5f + Size1.z * 0.5f) * 0.5f;  //‚Q‚Â–Ú‚Ì”¼Œa
+	float radiuSum = (X * ADJUST_SEMICIRCLE + m_fSizeX + Y * ADJUST_SEMICIRCLE + Z * ADJUST_SEMICIRCLE) * ADJUST_SEMICIRCLE;          //‚P‚Â–Ú‚Ì”¼Œa
+	float radiuSum1 = (Size1.x * ADJUST_SEMICIRCLE + Size1.y * ADJUST_SEMICIRCLE + Size1.z * ADJUST_SEMICIRCLE) * ADJUST_SEMICIRCLE;  //‚Q‚Â–Ú‚Ì”¼Œa
 
 	//‹——£‚ª‘ÎÛ‚Ì”¼Œa‚æ‚è¬‚³‚¢iG‚ê‚Ä‚¢‚éjŽž
 	if (CenterDistance <= radiuSum + radiuSum1)
@@ -360,8 +361,8 @@ bool CCollision::Coliision3Dcircle(D3DXVECTOR3& pos, D3DXVECTOR3& pos1, float X,
 
 	float CenterDistance = sqrtf(lengthX * lengthX + lengthY * lengthY + lengthZ * lengthZ);//pos‚Æpos1‚Ì‹——£‚ðŒvŽZ
 
-	float radiuSum = (X * 0.5f + m_fSizeX + Y * 0.5f + Z * 0.5f) * 0.5f;          //‚P‚Â–Ú‚Ì”¼Œa
-	float radiuSum1 = (Size1.x * 0.5f + Size1.y * 0.5f + Size1.z * 0.5f) * 0.5f;  //‚Q‚Â–Ú‚Ì”¼Œa
+	float radiuSum = (X * ADJUST_SEMICIRCLE + m_fSizeX + Y * ADJUST_SEMICIRCLE + Z * ADJUST_SEMICIRCLE) * ADJUST_SEMICIRCLE;          //‚P‚Â–Ú‚Ì”¼Œa
+	float radiuSum1 = (Size1.x * ADJUST_SEMICIRCLE + Size1.y * ADJUST_SEMICIRCLE + Size1.z * ADJUST_SEMICIRCLE) * ADJUST_SEMICIRCLE;  //‚Q‚Â–Ú‚Ì”¼Œa
 
 	//‹——£‚ª‘ÎÛ‚Ì”¼Œa‚æ‚è¬‚³‚¢iG‚ê‚Ä‚¢‚éjŽž
 	if (CenterDistance <= radiuSum + radiuSum1)

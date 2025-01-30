@@ -5,7 +5,9 @@
 //
 //================================================
 
+
 #pragma once
+
 
 //================================================
 //インクルード
@@ -33,9 +35,8 @@ public: //アクセス可能
 	void Collision();                           //当たり判定処理関数
 	void SpecialAttack();                       //必殺技
 
-	float PopX(); //値を削除
-	float PopY(); //値を削除
-	float PopZ(); //値を削除
+	float PopX();                               //値を削除
+	float PopY();                               //値を削除
 
 	static CBoss* Create(D3DXVECTOR3 pos);
 
@@ -55,7 +56,7 @@ private: //アクセス不可
 	constexpr static int ATTACKPATTEN1_FRAME_3 = 141;           //第三行動時のフレーム
 	constexpr static int ATTACKPATTEN1_FRAME_4 = 162;           //第四行動時のフレーム
 	constexpr static int ATTACKPATTEN1_FRAME_5 = 170;           //第五行動時のフレーム
-	constexpr static float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;       //Y軸のボスの落ちる移動速度を設定
+	constexpr static float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;     //Y軸のボスの落ちる移動速度を設定
 	constexpr static float MAX_MOVE_SPEED_IN_PLAYER_1 = 12.0f;  //落下攻撃時プレイヤーに向かう速さ
 
 
@@ -77,15 +78,14 @@ private: //アクセス不可
 	constexpr static float MAX_MOVE_SPEED = 0.25f;              //ボスの移動速度を設定
 	constexpr static float MAX_TOUCH_DAMAGE = 0.0005f;          //ボスに触れている時のダメージ数
 
-
-	int m_nCoolTime;        //攻撃終了後次の攻撃に行くまでの時間
-	int m_nSize;            //vectorの配列数を取得するための変数
-	int m_nWhichSideNumber; //左右のどちらに居るかを数字で渡すための変数
-
-	bool m_bOneCreateFlag;  //衝撃波を１回のみ呼ぶための
+	int m_nCoolTime;                                            //攻撃終了後次の攻撃に行くまでの時間
+	int m_nSize;                                                //vectorの配列数を取得するための変数
+	int m_nWhichSideNumber;                                     //左右のどちらに居るかを数字で渡すための変数
+						                                        
+	bool m_bOneCreateFlag;                                      //衝撃波を１回のみ呼ぶための
 
 	//vectorに関する変数
-	std::vector<float> m_nSaveData; //配列情報を確保する為の変数
-	std::vector<float> m_nDataX;    //X軸用のデータを保管する用の変数
-	std::vector<float> m_nDataY;    //Y軸用のデータを保管する用の変数
+	std::vector<float> m_nSaveData;                             //配列情報を確保する為の変数
+	std::vector<float> m_nDataX;                                //X軸用のデータを保管する用の変数
+	std::vector<float> m_nDataY;                                //Y軸用のデータを保管する用の変数
 };

@@ -31,9 +31,9 @@ private:
 	//マクロ定義
 	constexpr static float MAX_EXPLOSION_LIFE = 8;        //アニメーションの更新する時のライフ
 
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffMine; //自身のバッファー
-	int m_nLife;                            //テクスチャのライフ（アニメーション用の）
-	const char* m_aEffectFileName;          //テクスチャのファイルパス
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffMine;               //自身のバッファー
+	int m_nLife;                                          //テクスチャのライフ（アニメーション用の）
+	const char* m_aEffectFileName;                        //テクスチャのファイルパス
 
 };
 
@@ -118,11 +118,6 @@ public:
 	//============================
 	//情報の取得
 	CEffectDirection* GetEffectDirection() { return m_pEffectDirection000; } //ストラテジー基底クラスのポインターを取得
-
-
-	//============================
-	//情報の設定
-	void SetMaxTex(float fMaxTex) { m_fMaxTex = fMaxTex; }
 
 
 protected://継承クラスのみアクセス可能

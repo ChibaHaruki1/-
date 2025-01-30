@@ -245,7 +245,7 @@ HRESULT CGame01::Init()
 	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING); //プレイヤーのモーションを探すに設定
 	GetPlayerX()->SetRot(D3DXVECTOR3(0.0f,0.57f,0.0f));       //プレイヤーの向きを設定
 	
-	GetPlayerX()->SetAddjustPos().y = 2050.0f;                //プレイヤーのY軸の位置を設定
+	GetPlayerX()->SetAdjustPos().y = 2050.0f;                //プレイヤーのY軸の位置を設定
 										                      
 	return S_OK;                                              //成功を返す
 }
@@ -293,7 +293,7 @@ void CGame01::Update()
 		//スペースシップ０番目の情報がある時
 		if (CManager::GetInstance()->GetSpeceBattleShip(0) != nullptr)
 		{
-			SetAddjustFrame()++; //フレームを増やす
+			SetAdjustFrame()++; //フレームを増やす
 
 			//フレームが規定値より高い時
 			if (GetFrame() >= 180)
@@ -413,13 +413,13 @@ void CGame02::Update()
 	//シーンの処理が通った時
 	if (GetOneScene() == false)
 	{
-		SetAddjustFrame()++;
+		SetAdjustFrame()++;
 
 		if (GetFrame() <= 80)
 		{
 			GetPlayerX()->SetGravityFlag(false);                                                //プレイヤーの重力Off
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAddjustPos().x += PLUS_POS_X;    //X軸の位置の増加
-			GetPlayerX()->SetAddjustPos().x += PLUS_POS_X;                                      //X軸の位置の増加
+			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X軸の位置の増加
+			GetPlayerX()->SetAdjustPos().x += PLUS_POS_X;                                      //X軸の位置の増加
 		}																					   
 		else if(GetFrame ()<=81)															   
 		{																					   
@@ -428,8 +428,8 @@ void CGame02::Update()
 		}																					   
 		else if (GetFrame() <= 300)															   
 		{																					   
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAddjustPos().x += PLUS_POS_X;    //X軸の位置の増加
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAddjustPos().y += 3.0f;         //X軸の位置の増加
+			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X軸の位置の増加
+			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().y += 3.0f;         //X軸の位置の増加
 		}																					   
 		else																				   
 		{

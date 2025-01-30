@@ -67,14 +67,14 @@ void CSkyDoom::Update()
 	if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_D) == true)
 	{
 		GetRot().y += 0.0001f; //動いた方向と同じ向きに傾く
-		SetAddjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
+		SetAdjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
 	}
 
 	//Aキーが押された時
 	else if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_A) == true)
 	{
 		GetRot().y -= 0.0001f; //動いた方向と同じ向きに傾く
-		SetAddjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
+		SetAdjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
 	}
 
 	GetPos().y = CManager::GetScene()->GetPlayerX()->GetPos().y; //プレイヤーのｙ軸と常に同期させる＝落ちた時に自然に見せれる

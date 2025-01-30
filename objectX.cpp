@@ -27,17 +27,23 @@ CObjectX::CObjectX(int nPriority) : CObjectManagerX(nPriority)
 	//プレイヤーのパーツ数分回す
 	for (int nCount = 0; nCount < MAX_PRTS; nCount++)
 	{
-		m_minPrts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの大きさの最小値
-		m_maxPrts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの大きさの最大値
-		m_ModelSizePrts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //パーツの大きさ
-		m_posPrts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの位置
+		m_minParts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);        //パーツの大きさの最小値
+		m_maxParts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);        //パーツの大きさの最大値
+		m_ModelSizeParts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //パーツの大きさ
+		m_posParts[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの位置
 	}
 
 	//ボスのパーツ数分回す
 	for (int nCount1 = 0; nCount1 < MAX_BOSSPARTS; nCount1++)
 	{
-		m_ModelSizePrtsBoss[nCount1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //パーツの大きさ
-		m_posPrtsBoss[nCount1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの位置
+		m_ModelSizePartsBoss[nCount1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //パーツの大きさ
+		m_posPartsBoss[nCount1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの位置
+	}
+
+	for (int nCount2 = 0; nCount2 < MAX_ENEMYPARTS; nCount2++)
+	{
+		m_ModelSizePartsEnemy[nCount2] = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //パーツの大きさ
+		m_posPartsEnemy[nCount2] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //パーツの位置
 	}
 
 	m_pMesh = nullptr;                      //メッシュポインターの初期化
@@ -292,7 +298,7 @@ bool CObjectX::CollisionBossPrts()
 	for (int nCount = 0; nCount < MAX_BOSSPARTS - 1; nCount++)
 	{
 		//当たり判定
-		if (m_pCollision->CircleCollisionAll(m_posPrtsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount), m_ModelSizePrtsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount)) == true)
+		if (m_pCollision->CircleCollisionAll(m_posPartsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetPosParts(nCount), m_ModelSizePartsBoss[nCount], CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount)) == true)
 		{
 			return true; //当たった
 		}
@@ -309,8 +315,8 @@ bool CObjectX::CollisionRightSelectPlayer(CObjectX* pObject)
 	for (int nCount = 0; nCount < MAX_PRTS - 1; nCount++)
 	{
 		//右側の当たり判定
-		if (m_pCollision->ColiisionBoxRight(pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount),
-			pObject->m_ModelSize, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount)) == true)
+		if (m_pCollision->ColiisionBoxRight(pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount),
+			pObject->m_ModelSize, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount)) == true)
 		{
 			return true; //当たった
 		}
@@ -327,8 +333,8 @@ bool CObjectX::CollisionLeftSelectPlayer(CObjectX* pObject)
 	for (int nCount = 0; nCount < MAX_PRTS - 1; nCount++)
 	{
 		//左側の当たり判定
-		if (m_pCollision->ColiisionBoxLeft(pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount),
-			pObject->m_ModelSize, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount)) == true)
+		if (m_pCollision->ColiisionBoxLeft(pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount),
+			pObject->m_ModelSize, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount)) == true)
 		{
 			return true; //当たっている
 		}
@@ -344,7 +350,7 @@ bool CObjectX::CollisionPlayerSelect(CObjectX* pObject)
 {
 	//当たり判定
 	if (m_pCollision->CircleCollisionAll(CManager::GetScene()->GetPlayerX()->GetPos(),
-		pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0), pObject->m_ModelSize) == true)
+		pObject->m_pos, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(0), pObject->m_ModelSize) == true)
 	{
 		return true; //当たった
 	}
@@ -359,7 +365,7 @@ bool CObjectX::CollisionPlayerInEnemy(CObjectX* pObject, float fMagnification)
 {
 	//プレイヤーと敵の当たり判定
 	if (m_pCollision->CircleCollisionAll(CManager::GetScene()->GetPlayerX()->GetPos(),
-		pObject->GetPos(), CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0) * fMagnification, pObject->GetModelSizePrtsEnemy(0) * fMagnification) == true)
+		pObject->GetPos(), CManager::GetScene()->GetPlayerX()->GetModelSizeParts(0) * fMagnification, pObject->GetModelSizePartsEnemy(0) * fMagnification) == true)
 	{
 		return true; //当たった
 	}

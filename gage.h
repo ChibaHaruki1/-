@@ -1,16 +1,18 @@
 //=====================================
 //
-//ゲージに関するクラス[gage.h]
+//ゲージに関するクラス管理[gage.h]
 //Auther:Haruki Chiba
 //
 //=====================================
 
 #pragma once
 
+
 //=====================================
 //インクルード
 #include "object2D.h"
 #include "object3D.h"
+
 
 //==================================================
 //燃料ゲージ
@@ -42,8 +44,8 @@ private:
 	constexpr static float MAX_SIZEY = 100.0f;            //Y軸の大きさ
 	constexpr static float MAX_SIZEZ = 20.0f;             //Z軸の大きさ
 	constexpr static float MIN_SIZEY = 10.0f;             //Y軸の最小値
-	constexpr static float ADDJUST_POSX = 50.0f;          //X軸の位置の調整値
-	constexpr static float ADDJUST_POSY = 80.0f;          //Y軸の位置の調整値
+	constexpr static float ADJUST_POSX = 50.0f;          //X軸の位置の調整値
+	constexpr static float ADJUST_POSY = 80.0f;          //Y軸の位置の調整値
 	constexpr static float MAX_MAINAS_GAGESPEED = 0.5f;   //ゲージの減る速さ
 	constexpr static float MAX_PLUS_GAGESPEED = 0.5f;     //ゲージの増える速さ
 	constexpr static float MAX_PLUS_PLAYER_MOVE = 1.0f;   //プレイヤー移動量の増える速さ
@@ -128,7 +130,7 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float ADDJUST_POSY = 40.0f;       //Y軸の位置の調整値
+	constexpr static float ADJUST_POSY = 40.0f;       //Y軸の位置の調整値
 	constexpr static float MINUS_HPSIZEX = 1.3f;       //HPゲージの減算値
 };
 

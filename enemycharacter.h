@@ -1,6 +1,6 @@
 //==============================================
 //
-//敵のcharacterクラス管理[character.h]
+//敵のcharacterクラス管理[enemycharacter.h]
 //Ajther: Chiba haruki
 //
 //==============================================
@@ -26,18 +26,28 @@ public:
 
 	}ENEMYMOTIONSTATE;
 
-	CEnemyCharacter(int nPriority = DEFAULT_PRIORITY1);      //コンストラクタ
-	~CEnemyCharacter();                                      //デストラクタ
-	HRESULT Init();                                          //初期化処理
-	void Uninit();                                           //破棄処理
-	void UpdateEnemy001();                                   //敵001の更新処理
-	void UpdateEnemy002();                                   //敵002の更新処理
-	void DrawEnemy(int NumPrts, int nNumber);                //描画処理
-	void LoodEnemy(const char* aSelect);                     //モデルを読み込む処理＋情報を取得する処理
-	void MotionInfoEnemy();                                  //ボスモーションの情報を扱う処理
-	void SetMotionEnemy(ENEMYMOTIONSTATE motiontype);        //ボスモーションごとの処理
+	CEnemyCharacter(int nPriority = DEFAULT_PRIORITY1);        //コンストラクタ
+	~CEnemyCharacter();                                        //デストラクタ
+	HRESULT Init();                                            //初期化処理
+	void Uninit();                                             //破棄処理
+	void UpdateEnemy001();                                     //敵001の更新処理
+	void UpdateEnemy002();                                     //敵002の更新処理
+	void DrawEnemy(int NumPrts, int nNumber);                  //描画処理
+	void LoodEnemy(const char* aSelect);                       //モデルを読み込む処理＋情報を取得する処理
+	void MotionInfoEnemy001();                                 //敵001のモーションの情報を扱う処理
+	void MotionInfoEnemy002();                                 //敵002のモーションの情報を扱う処理
 
+
+	//===========================
+	//情報の取得
+	int& GetEnemy001PartsNumber() { return m_nEnemy001Parts; } //敵001のパーツ数の取得
+
+
+	//===========================
+	//情報の設定
+	void SetMotionEnemy(ENEMYMOTIONSTATE motiontype);                          //ボスモーションごとの処理
 	void SetMotionType(bool bMotionType) { m_bMotionEnemyType = bMotionType; } //モーションタイプの設定
+
 
 	ENEMYMOTIONSTATE m_MotionStateEnemy;                      //ボスのモーションの種類の情報を持つ
 	CModelPrts* m_pModelPrtsEnemy[MAX_ENEMYPARTS];            //モデルパーツの情報のポインター
@@ -46,6 +56,8 @@ private:
 	//マクロ定義
 	constexpr static int MAX_ENEMYKEYSET = 5;                 //モーションに使うキーの数
 	constexpr static int NUM_ENEMYMOTION = 10;                //モーションの数
+	constexpr static int HALF = 2;                            //int型の時の半分
+
 
 	//キーの構造体
 	typedef struct

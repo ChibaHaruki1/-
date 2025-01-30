@@ -29,10 +29,10 @@ public:
 	bool& GetDrawShader() { return m_bDrawShader; }              //シェーダーを使うかどうかの判定を取得
 
 private:
-	LPDIRECT3D9 m_pD3D;             //Direct3Dの主要情報
-	LPDIRECT3DDEVICE9 m_pD3DDevice; //Direct3Dデバイス
-	LPD3DXFONT m_pFont;             //フォントの情報
-	bool m_bPause;                  //ポーズ中かどうかの判定をする用の変数
-	bool m_bDrawShader;             //シェーダーを描画するかどうか
+	LPDIRECT3D9 m_pD3D;                                          //Direct3Dの主要情報
+	LPDIRECT3DDEVICE9 m_pD3DDevice;                              //Direct3Dデバイス
+	LPD3DXFONT m_pFont;                                          //フォントの情報
+	bool m_bPause;                                               //ポーズ中かどうかの判定をする用の変数
+	bool m_bDrawShader;                                          //シェーダーを描画するかどうか
 };
 

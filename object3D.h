@@ -5,7 +5,9 @@
 //
 //=======================================
 
+
 #pragma once
+
 
 //=======================================
 //インクルード
@@ -27,7 +29,7 @@ public:
 	void SetSize(float SIZE_X, float SIZE_Y, float SIZE_Z);                  //サイズを調整する処理
 	void SetEffectSize(float SIZE_X, float SIZE_Y, float SIZE_Z);            //エフェクト用polygonのサイズを調整する処理
 	void SetAdjustmentSizeY(float SIZE_X, float SIZE_Y, float SIZE_Z);       //Y軸用のサイズを調整する処理
-	void SetCol(int Red, int Green, int Blue, int& Alpha);                     //色に関する設定
+	void SetCol(int Red, int Green, int Blue, int& Alpha);                   //色に関する設定
 	void SetTexture(float SizeX, float Size1X);                              //テクスチャのサイズを設定する
 
 	//当たり判定処理(ポリゴンとの当たり判定)
@@ -70,34 +72,35 @@ public:
 	void SetSizeY(float fSizeY) { m_fSizeY = fSizeY; }                        //X軸の大きさを引数と同期させる
 	void SetFileNamePass(const char* aFileName) { m_aFileName = aFileName; }  //ファイルパスを引数と同期させる
 	
+
 	//==================================================
 	//情報の値を計して設定
-	D3DXVECTOR3& SetAddjustPos() { return m_pos; }                     //位置の値を変更したいときの設定
-
-	int& SetAddjustLife() { return m_nLife; }                          //ライフの値を変更したいときの設定
-	int& SetAddjustAlpha() { return m_nAlpha; }                        //アルファ値の変更したいときの設定
-	int& SetAddjustFrame() { return m_nFrame; }                        //フレームの値を変更したいときの設定
-
-	float& SetAddjustSizeX() { return m_fSizeX; }                      //X軸の値を変更したいときの設定
-	float& SetAddjustSizeY() { return m_fSizeY; }                      //Y軸の値を変更したいときの設定
+	D3DXVECTOR3& SetAdjustPos() { return m_pos; }                             //位置の値を変更したいときの設定
+																	          
+	int& SetAdjustLife() { return m_nLife; }                                  //ライフの値を変更したいときの設定
+	int& SetAdjustAlpha() { return m_nAlpha; }                                //アルファ値の変更したいときの設定
+	int& SetAdjustFrame() { return m_nFrame; }                                //フレームの値を変更したいときの設定
+																	          
+	float& SetAddjustSizeX() { return m_fSizeX; }                             //X軸の値を変更したいときの設定
+	float& SetAddjustSizeY() { return m_fSizeY; }                             //Y軸の値を変更したいときの設定
 
 private:
-	LPDIRECT3DTEXTURE9 m_pTexture;      //テクスチャへのポインタ
-	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff; //頂点バッファのポインタ
-
-	D3DXVECTOR3 m_pos;      //位置
-	D3DXVECTOR3 m_move;     //移動量
-	D3DXVECTOR3 m_rot;      //向き
-	D3DXMATRIX m_mtxWorld;  //マトリックス
-
-	int m_nLife;     //ライフを保管する用の変数
-	int m_nAlpha;    //アルファ値を保管する用の変数
-	int m_nFrame;    //フレームを保管する用の変数
-	int m_nRandom;   //乱数を保管する用の変数
-
-	float m_fSizeX;  //ｘ軸のサイズの調整用変数
-	float m_fSizeY;  //ｙ軸のサイズの調整用変数
-
-	const char* m_aFileName;
+	LPDIRECT3DTEXTURE9 m_pTexture;                                            //テクスチャへのポインタ
+	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;                                       //頂点バッファのポインタ
+										                                      
+	D3DXVECTOR3 m_pos;                                                        //位置
+	D3DXVECTOR3 m_move;                                                       //移動量
+	D3DXVECTOR3 m_rot;                                                        //向き
+	D3DXMATRIX m_mtxWorld;                                                    //マトリックス
+						                                                      
+	int m_nLife;                                                              //ライフを保管する用の変数
+	int m_nAlpha;                                                             //アルファ値を保管する用の変数
+	int m_nFrame;                                                             //フレームを保管する用の変数
+	int m_nRandom;                                                            //乱数を保管する用の変数
+					                                                          
+	float m_fSizeX;                                                           //ｘ軸のサイズの調整用変数
+	float m_fSizeY;                                                           //ｙ軸のサイズの調整用変数
+							                                                  
+	const char* m_aFileName;                                                  //ファイルパスを保管する用の変数
 };
 

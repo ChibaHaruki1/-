@@ -66,7 +66,7 @@ void CFade::Update()
 		//アルファ地が規定値以上の時
 		if (GetAlph() >= MAX_FADE_SPEED)
 		{
-			SetAddjustAlpha() -= MAX_FADE_SPEED;  //アルファ値を減らす
+			SetAdjustAlpha() -= MAX_FADE_SPEED;  //アルファ値を減らす
 		}
 
 		SetCol(RED, GREEN, BLUE, GetAlph());      //色の設定
@@ -78,7 +78,7 @@ void CFade::Update()
 		//アルファ値が規定値以下の時
 		if (GetAlph() <= FINISH_FADE_OUT)
 		{
-			SetAddjustAlpha() += MAX_FADE_SPEED;  //アルファ値を増やす
+			SetAdjustAlpha() += MAX_FADE_SPEED;  //アルファ値を増やす
 		}
 
 		SetCol(RED, GREEN, BLUE, GetAlph());      //色の設定

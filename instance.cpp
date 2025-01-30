@@ -233,25 +233,25 @@ void CInstance::DesignationUninitXEnemy(CObjectX::TYPE type, int nNumber)
 	//タイプが敵の時
 	if (type == CObjectX::TYPE::ENEMY)
 	{
-		m_pEnemy000 = nullptr;           //情報を無くす
+		m_pEnemy000 = nullptr;                  //情報を無くす
 	}
 
 	//タイプが敵001の時
 	else if (type == CObjectX::TYPE::ENEMY001)
 	{
-		m_pEnemy001[nNumber] = nullptr; //指定した番号の情報を無くす
+		m_pEnemy001[nNumber] = nullptr;         //指定した番号の情報を無くす
 	}
 
 	//タイプが敵002の時
 	else if (type == CObjectX::TYPE::ENEMY002)
 	{
-		m_pEnemy002[nNumber] = nullptr; //指定した番号の情報を無くす
+		m_pEnemy002[nNumber] = nullptr;         //指定した番号の情報を無くす
 	}
 
 	//タイプがボスの時
 	else if (type == CObjectX::TYPE::BOSS)
 	{
-		m_pBoss = nullptr;               //情報を無くす
+		m_pBoss = nullptr;                      //情報を無くす
 	}
 
 	//タイプがモーション付きの敵の時
@@ -283,7 +283,7 @@ void CInstance::DesignationUninitX(CObjectX::TYPE type, int nNumber)
 	//タイプが監視カメラの上部分の時
 	if (type == CObjectX::TYPE::SURVEILLANCECAMERAUP)
 	{
-		m_pSurveillanceCameraUp[nNumber] = nullptr; //指定した番号の情報をなくす
+		m_pSurveillanceCameraUp[nNumber] = nullptr;   //指定した番号の情報をなくす
 	}
 
 	//タイプが破片の時
@@ -291,7 +291,7 @@ void CInstance::DesignationUninitX(CObjectX::TYPE type, int nNumber)
 	{
 		if (m_pDebrisX[nNumber] != nullptr)
 		{
-			m_pDebrisX[nNumber] = nullptr;          //指定した番号の情報をなくす
+			m_pDebrisX[nNumber] = nullptr;            //指定した番号の情報をなくす
 		}
 	}
 
@@ -300,7 +300,7 @@ void CInstance::DesignationUninitX(CObjectX::TYPE type, int nNumber)
 	{
 		if (m_pSpeceBattleShip000[nNumber] != nullptr)
 		{
-			m_pSpeceBattleShip000[nNumber] = nullptr; //指定した番号の情報をなくす
+			m_pSpeceBattleShip000[nNumber] = nullptr; //指定した番号の情報を無くす
 		}
 	}
 }
@@ -314,7 +314,7 @@ void CInstance::DesignationUninit2D(CObject2D::TYPE type)
 	//タイプが背景の時
 	if (type == CObject2D::TYPE::SCREEN)
 	{
-		m_pShopScreen = nullptr; //情報をなくす
+		m_pShopScreen = nullptr;     //情報を無くす
 	}
 }
 
@@ -327,13 +327,13 @@ void CInstance::DesignationUninit3D(CObject3D::TYPE type, int nNumber)
 	//タイプが衝撃波の時
 	if (type == CObject3D::TYPE::IMPACT)
 	{
-		m_pImpact = nullptr; //情報をなくす
+		m_pImpact = nullptr;         //情報を無くす
 	}
 
 	//タイプがレーザーの時
 	else if (type == CObject3D::TYPE::LASER)
 	{
-		m_pLaser[nNumber] = nullptr;
+		m_pLaser[nNumber] = nullptr; //情報を無くす
 	}
 }
 
@@ -346,13 +346,13 @@ CObject2D* CInstance::GetCreateObjectInstnace2D(CObject2D::TYPE type, int nNumbe
 	//タイプが背景の時
 	if (type == CObject2D::TYPE::SCREEN)
 	{
-		return m_pShopScreen = CShopScreen::Create(); //背景を生成
-	}
-
-	//タイプがHPの時
-	else if (type == CObject2D::TYPE::HP)
-	{
-		return m_pPlayerHPGage = CManagerGage::Create(type); //HPゲージの生成
+		return m_pShopScreen = CShopScreen::Create();                                  //背景を生成
+	}														                           
+															                           
+	//タイプがHPの時										                             
+	else if (type == CObject2D::TYPE::HP)					                           
+	{														                           
+		return m_pPlayerHPGage = CManagerGage::Create(type);                           //HPゲージの生成
 	}
 
 	//タイプがボスのHPの時
@@ -398,7 +398,7 @@ CObject3D* CInstance::GetCreateObjectInstnace(CObject3D::TYPE type, int nNumber,
 	//タイプが爆発001の時
 	else if (type == CObject3D::TYPE::EXPLOSION001)
 	{
-		return m_pExplosion001 = CManagerEffect::Create(pos, type);      //爆発エフェクト001の生成
+		return m_pExplosion001 = CManagerEffect::Create(pos, type);     //爆発エフェクト001の生成
 	}
 
 	//タイプが雷の時
@@ -446,14 +446,14 @@ CObject3D* CInstance::GetCreateObjectInstnace(CObject3D::TYPE type, int nNumber,
 	//タイプが燃料ゲージの時
 	else if (type == CObject3D::TYPE::FUELGAGE)
 	{
-		return 	m_pFuelGage = CFuelGage::Create();  //燃料ゲージの生成
+		return 	m_pFuelGage = CFuelGage::Create();                            //燃料ゲージの生成
 	}
 
 	//タイプがレーザーの時
 	else if (type == CObject3D::TYPE::LASER)
 	{
 		m_nLaser++;
-		return m_pLaser[m_nLaser] = CUI::Create(type);
+		return m_pLaser[m_nLaser] = CUI::Create(type);                        //レーザーの生成
 	}
 
 	return nullptr; //無を返す
@@ -468,13 +468,13 @@ CObjectX* CInstance::GetCreateObjectInstanceX(CObjectX::TYPE type, int nNumber, 
 	//タイプが破片の時
 	if (type == CObjectX::TYPE::DEBRIS)
 	{
-		return m_pDebrisX[nNumber] = CDebrisX::Create(pos); //破片の生成
-	}
-
-	//タイプが電柱の時
-	else if (type == CObjectX::TYPE::TELEPHONPOLE)
-	{
-		return m_pTelephonPole[nNumber] = CStageObj::Create(pos, type); //電柱の生成
+		return m_pDebrisX[nNumber] = CDebrisX::Create(pos);                      //破片の生成
+	}																	         
+																		         
+	//タイプが電柱の時													         
+	else if (type == CObjectX::TYPE::TELEPHONPOLE)						         
+	{																	         
+		return m_pTelephonPole[nNumber] = CStageObj::Create(pos, type);          //電柱の生成
 	}
 
 	//タイプが監視カメラの上の部分の時
@@ -492,41 +492,41 @@ CObjectX* CInstance::GetCreateObjectInstanceX(CObjectX::TYPE type, int nNumber, 
 	//タイプが壊れた家の時
 	else if (type == CObjectX::TYPE::BREAKHOUSE)
 	{
-		m_nBreakHouse++;                                                    //作られた数を増やす
-		return m_pBreakHouse[m_nBreakHouse] = CStageObj::Create(pos, type); //壊れた家の生成
-	}
-
-	//タイプが店の時
-	else if (type == CObjectX::TYPE::SHOP)
-	{
-		return m_pShop = CStageObj::Create(pos, type); //店の生成
-	}
-
-	//タイプが敵の時
-	else if (type == CObjectX::TYPE::ENEMY)
-	{
-		return m_pEnemy000 = CManagerEnemy::Create(pos, type); //敵の生成
-	}
-
-	//タイプが敵001の時
-	else if (type == CObjectX::TYPE::ENEMY001)
-	{
-		m_nEnemy001++;
-		return m_pEnemy001[m_nEnemy001] = CManagerEnemy::Create(pos, type); //敵001の生成
-	}
-
-	//タイプが敵001の時
-	else if (type == CObjectX::TYPE::ENEMY002)
-	{
-		m_nEnemy002++;
-		return m_pEnemy002[m_nEnemy002] = CManagerEnemy::Create(pos, type); //敵002の生成
+		m_nBreakHouse++;                                                           //作られた数を増やす
+		return m_pBreakHouse[m_nBreakHouse] = CStageObj::Create(pos, type);        //壊れた家の生成
+	}																		       
+																			       
+	//タイプが店の時														        
+	else if (type == CObjectX::TYPE::SHOP)									       
+	{																		       
+		return m_pShop = CStageObj::Create(pos, type);                             //店の生成
+	}																		       
+																			       
+	//タイプが敵の時														        
+	else if (type == CObjectX::TYPE::ENEMY)									       
+	{																		       
+		return m_pEnemy000 = CManagerEnemy::Create(pos, type);                     //敵の生成
+	}																		       
+																			       
+	//タイプが敵001の時													  	       
+	else if (type == CObjectX::TYPE::ENEMY001)								       
+	{																		       
+		m_nEnemy001++;														       
+		return m_pEnemy001[m_nEnemy001] = CManagerEnemy::Create(pos, type);        //敵001の生成
+	}																		       
+																			       
+	//タイプが敵001の時													  	       
+	else if (type == CObjectX::TYPE::ENEMY002)								       
+	{																		       
+		m_nEnemy002++;														       
+		return m_pEnemy002[m_nEnemy002] = CManagerEnemy::Create(pos, type);        //敵002の生成
 	}
 
 	//タイプがモーション付きの時
 	else if (type == CObjectX::TYPE::ENEMYINMOTION)
 	{
 		m_nEnemyInMotion++;
-		return m_pEnemyInMotion000[m_nEnemyInMotion] = CManagerEnemyInMotion::Create(pos, type);      //モーション付きの敵の生成
+		return m_pEnemyInMotion000[m_nEnemyInMotion] = CManagerEnemyInMotion::Create(pos, type);     //モーション付きの敵の生成
 	}
 
 	//タイプがモーション付きの敵001の時
@@ -618,7 +618,7 @@ CObjectX* CInstance::CreateBlock(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos)
 	else if (type == CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000)
 	{
 		m_nShip++;
-		return m_pSpeceBattleShip000[m_nShip] = CManagerBlock::Create(pos, type);                     //スペースシップの生成
+		return m_pSpeceBattleShip000[m_nShip] = CManagerBlock::Create(pos, type);            //スペースシップの生成
 	}
 
 	//タイプが最終ステージの地面の時

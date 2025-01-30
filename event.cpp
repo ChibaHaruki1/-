@@ -20,17 +20,17 @@ CEvent::CEvent()
 	//生成できる最大数分回す
 	for (int nCount = 0; nCount < CInstance::MAX_RUBBLE; nCount++)
 	{
-		m_fDropSpeed[nCount] = 0.0f;                             //落とすスピードの初期化
-		m_fDropPosY[nCount] = (float)(nCount * INIT_DROP_POS);   //落とす位置をどんどん高くする（積みあがらせる為）
-	}
-
-	m_nCreateWoodenBoradsCounter = 0;       //生成した数の初期化
-	m_nRandomRotX = 0;                      //ｘ軸の向きの乱数の初期化
-	m_nRandomRotY = 0;                      //ｙ軸の向きの乱数の初期化
-	m_nPosY = CREATE_WOODENBOARD_POSY;      //生成するY軸のposの初期化
-	m_bOneflag = false;                     //一回だけ通すフラグの初期化（使われてない）
-	m_bBossDirection = false;               //ボス演出を一回だけするフラグの初期化（使われてない）
-	m_bOneCreate = false;                   //生成フラグをOffに設定
+		m_fDropSpeed[nCount] = 0.0f;                                              //落とすスピードの初期化
+		m_fDropPosY[nCount] = (float)(nCount * INIT_DROP_POS);                    //落とす位置をどんどん高くする（積みあがらせる為）
+	}															                  
+																                  
+	m_nCreateWoodenBoradsCounter = 0;                                             //生成した数の初期化
+	m_nRandomRotX = 0;                                                            //ｘ軸の向きの乱数の初期化
+	m_nRandomRotY = 0;                                                            //ｙ軸の向きの乱数の初期化
+	m_nPosY = CREATE_WOODENBOARD_POSY;                                            //生成するY軸のposの初期化
+	m_bOneflag = false;                                                           //一回だけ通すフラグの初期化（使われてない）
+	m_bBossDirection = false;                                                     //ボス演出を一回だけするフラグの初期化（使われてない）
+	m_bOneCreate = false;                                                         //生成フラグをOffに設定
 
 	mciSendStringA("open data\\BGM\\Bossbgm-Short.wav alias BGM", NULL, 0, NULL); //設定した音源を開く（再生は別）
 }
@@ -129,7 +129,7 @@ void CEvent::DropObj()
 		if (CManager::GetInstance()->GetWoodenBoard(nCount)->GetPos().y >= m_fDropPosY[nCount])
 		{
 			m_fDropSpeed[nCount] += WOODENBOARD_PLUSY;                                             //落とす速度を増やす
-			CManager::GetInstance()->GetWoodenBoard(nCount)->SetAddjustMove().y -= m_fDropSpeed[nCount];  //木の板群を落とす
+			CManager::GetInstance()->GetWoodenBoard(nCount)->SetAdjustMove().y -= m_fDropSpeed[nCount];  //木の板群を落とす
 		}
 
 		//生成した木の板群の位置が設定した位置より小さい時
@@ -165,8 +165,8 @@ void CEvent::CreateEnemy()
 		//生成フラグがOffの時
 		if (m_bOneCreate == false)
 		{
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(CREATE_MOTIONINENEMY_POSX, 5000.0f, 0.0f));        //モーション付きの敵の生成
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(CREATE_MOTIONINENEMY_POSX+500.0f, 5000.0f, 0.0f)); //モーション付きの敵の生成
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(CREATE_MOTIONINENEMY_POSX, CREATE_MOTIONINENEMY_POSY, 0.0f));             //モーション付きの敵の生成
+			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(CREATE_MOTIONINENEMY_POSX+ PLUS_POS_X, CREATE_MOTIONINENEMY_POSY, 0.0f)); //モーション付きの敵の生成
 			m_bOneCreate = true; //Onにさせる
 		}
 	}

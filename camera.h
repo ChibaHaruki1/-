@@ -41,10 +41,16 @@ public:
 
 private:
 	//マクロ定義
+	static constexpr int INIT_POS_Z = 1000;        //カメラの前後
 	static constexpr float MAX_ROTSPEED = 0.01f;   //カメラの回転の速さを調整する
 	static constexpr float MAX_CAMERASPEED = 1.0f; //カメラの移動の速さを調整
+	static constexpr float INIT_POS_Y = 200.0f;    //カメラの高さ
+	static constexpr float RADIAN = 45.0f;         //カメラの角度
+	static constexpr float DRAW_MIN = 10.0f;       //描画する最小距離
+	static constexpr float DRAW_MAX = 4000.0f;     //描画する最小距離
 
-	D3DXVECTOR3 m_rot;                  //向き
+
+	D3DXVECTOR3 m_rot;                //向き
 	D3DXVECTOR3 m_fSavePosV;          //Y軸の位置を保管する用の変数
 	D3DXVECTOR3 m_posV;               //視点
 	D3DXVECTOR3 m_posR;               //注視点

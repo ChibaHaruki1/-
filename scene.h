@@ -5,6 +5,7 @@
 //
 //=====================================
 
+
 #pragma once
 
 
@@ -31,27 +32,27 @@ public:
 	//画面の種類
 	enum class MODE
 	{
-		MODE_TITLE = 0, //タイトル
-		MODE_GAME01,    //ステージ１
-		MODE_GAME02,    //ステージ２
-		MODE_RESULT,    //リザルト
-		MODE_GAMEOVER,  //ゲームオーバー
-		MODE_MAX        //最大数
-	};
+		MODE_TITLE = 0,                 //タイトル
+		MODE_GAME01,                    //ステージ１
+		MODE_GAME02,                    //ステージ２
+		MODE_RESULT,                    //リザルト
+		MODE_GAMEOVER,                  //ゲームオーバー
+		MODE_MAX                        //最大数
+	};						            
+							            
+	CScene();                           //コンストラクタ
+	virtual ~CScene();                  //デストラクタ
+	virtual HRESULT Init();             //初期化処理
+	virtual void Uninit();              //終了処理
+	virtual void Update();              //継承クラス更新処理
+	void AnyUpdate();                   //このクラスだけの処理の更新処理
 
-	CScene();                  //コンストラクタ
-	virtual ~CScene();         //デストラクタ
-	virtual HRESULT Init();    //初期化処理
-	virtual void Uninit();     //終了処理
-	virtual void Update();     //継承クラス更新処理
-	void AnyUpdate();          //このクラスだけの処理の更新処理
-	MODE& GetMode() { return m_Mode; } //現在モードの取得
-
-	static CScene* Create(MODE mode);  //modeに合わせて生成をする
+	static CScene* Create(MODE mode);   //modeに合わせて生成をする
 
 
 	//==================================
 	//情報の取得
+	MODE& GetMode() { return m_Mode; }               //現在モードの取得
 	CCamera* GetCamera() { return m_pCamera; }       //カメラの情報を取得
 	CLight* GetLight() { return m_pLight; }          //光源の情報を取得
 	CPlayerX*& GetPlayerX() { return m_pPlayerX; }   //プレイヤーの情報を取得する
@@ -62,14 +63,14 @@ public:
 	//==================================
 	//情報の設定
 	void SetFrame(int nFrame) { m_nFrame = nFrame; } //フレームの設定
-	int& SetAddjustFrame() { return m_nFrame; }      //フレームの調整
+	int& SetAdjustFrame() { return m_nFrame; }       //フレームの調整
 
 
 	//===========================================================
 	//情報の取得
-	bool& GetOneSound() { return m_bOneSound; }    //音源が再生されているかどうかの判定を取得
-	bool& GetOneScene() { return m_bOneScene; }    //シーンの移動するかどうかの情報を取得
-	bool& GetPlay() { return m_bPlay; }            //遊べるかどうかの情報を取得
+	bool& GetOneSound() { return m_bOneSound; }      //音源が再生されているかどうかの判定を取得
+	bool& GetOneScene() { return m_bOneScene; }      //シーンの移動するかどうかの情報を取得
+	bool& GetPlay() { return m_bPlay; }              //遊べるかどうかの情報を取得
 
 
 	//===========================================================
@@ -84,7 +85,7 @@ private:
 	CPlayerX* m_pPlayerX;      //プレイヤーのポインター
 	MODE m_Mode;               //現在のモードの管理変数
 
-	int m_nFrame;
+	int m_nFrame;              //フレームを保管する用の変数
 
 	bool m_bOneSound;          //１回だけ音源を流す為の変数
 	bool m_bOneScene;          //１回だけシーン移動する為の変数
@@ -106,7 +107,7 @@ public:                      //アクセス可能
 	void CompileCreate();    //create関数をまとめる関数
 
 private:          
-	CFade* m_pFade;  //フェードのポインター
+	CFade* m_pFade;          //フェードのポインター
 };
 
 
@@ -124,8 +125,8 @@ public:                       //アクセス可能
 
 private:
 	//マクロ定義
-	static constexpr float POS_X = 1500.0f;
-	static constexpr float PLUS_POS_X = 20.0f;
+	static constexpr float POS_X = 1500.0f;      //X軸の生成位置
+	static constexpr float PLUS_POS_X = 20.0f;   //X軸の加算値
 
 };
 

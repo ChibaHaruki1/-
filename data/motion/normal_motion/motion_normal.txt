@@ -164,15 +164,15 @@ CHARACTERSET
 	END_PARTSSET
 	
 	PARTSSET
-		INDEX = 17					# 左足
-		PARENT = 5					# 左ひざ
+		INDEX = 17					# 銃１
+		PARENT = 5					# 右手
 		POS = 0.0 0.0 0.0
 		ROT = 0.0 0.0 0.0
 	END_PARTSSET
 	
 	PARTSSET
-		INDEX = 18					# 左足
-		PARENT = 9					# 左ひざ
+		INDEX = 18					# 銃２
+		PARENT = 9					# 左手
 		POS = 0.0 0.0 0.0
 		ROT = 0.0 3.14 0.0
 	END_PARTSSET

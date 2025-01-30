@@ -293,7 +293,7 @@ bool CObject3D::CollisionPrtsPlayer(float X, float Y, float Z)
 	for (int nCount = 0; nCount < CObjectX::MAX_PRTS; nCount++)
 	{
 		//プレイヤーのパーツと引数との当たり判定
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount)) == true)
+		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount)) == true)
 		{
 			return true; //成功
 		}
@@ -310,20 +310,20 @@ bool CObject3D::CollisionPrts1Left(float X, float Y, float Z)
 	for (int nCount = 0; nCount < CCharacter::NUM_RIGHTLEFTPRTS; nCount++)
 	{
 		//左肩～の左パーツの当たり判定
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DLeft(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount + 6), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount + 6)) == true)
+		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DLeft(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount + 6), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount + 6)) == true)
 		{
 			return true; //当たった       
 		}
 
 		//左ふともも～の左パーツの当たり判定
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DLeft(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount + 14), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount + 14)) == true)
+		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DLeft(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount + 14), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount + 14)) == true)
 		{
 			return true; //当たった        
 		}
 	}
 
 	//胴体
-	if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(0), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0)) == true)
+	if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(0), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(0)) == true)
 	{
 		return true;     //当たった         
 	}
@@ -340,20 +340,20 @@ bool CObject3D::CollisionPrts1Right(float X, float Y, float Z)
 	for (int nCount = 0; nCount < CCharacter::NUM_RIGHTLEFTPRTS; nCount++)
 	{
 		//右肩からの右パーツの当たり判定
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DRight(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount + 2), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount + 2)) == true)
+		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DRight(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount + 2), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount + 2)) == true)
 		{
 			return true; //当たった
 		}
 
 		//右ふともも～の右パーツの当たり判定
-		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DRight(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(nCount + 11), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(nCount + 10)) == true)
+		if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3DRight(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(nCount + 11), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount + 10)) == true)
 		{
 			return true; //当たった
 		}
 	}
 
 	//胴体
-	if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosPrts(0), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizePrts(0)) == true)
+	if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(m_pos, CManager::GetScene()->GetPlayerX()->GetPosParts(0), X, Y, Z, CManager::GetScene()->GetPlayerX()->GetModelSizeParts(0)) == true)
 	{
 		return true;     //当たった
 	}

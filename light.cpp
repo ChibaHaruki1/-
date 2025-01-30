@@ -58,10 +58,10 @@ HRESULT CLight::Init()
 		m_aLight[LightCount].Type = D3DLIGHT_DIRECTIONAL;
 
 		//ライトの方向を設定
-		vecDir[0] = D3DXVECTOR3(0.0f, -1.0f, 1.2f);
-		vecDir[1] = D3DXVECTOR3(0.0f, -1.0f, -0.8f);
-		vecDir[2] = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
-		vecDir[3] = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
+		vecDir[0] = D3DXVECTOR3(0.0f, -ALL_LIGHT_POS_Y, ZERO_LIGHT_POS_Z);
+		vecDir[1] = D3DXVECTOR3(0.0f, -ALL_LIGHT_POS_Y, -ONE_LIGHT_POS_Z);
+		vecDir[2] = D3DXVECTOR3(-TWO_LIGHT_POS_X, -ALL_LIGHT_POS_Y, 0.0f);
+		vecDir[3] = D3DXVECTOR3(THREE_LIGHT_POS_X, -ALL_LIGHT_POS_Y, 0.0f);
 
 		//ベクトルを正規化する
 		D3DXVec3Normalize(&vecDir[LightCount], &vecDir[LightCount]);
@@ -70,7 +70,7 @@ HRESULT CLight::Init()
 		m_aLight[LightCount].Direction = vecDir[LightCount];
 
 		//色
-		m_aLight[LightCount].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		m_aLight[LightCount].Diffuse = D3DXCOLOR(RED, GREEN,BLUE, ALPHA);
 
 		//ライトを設定する
 		pDevice->SetLight(LightCount, &m_aLight[LightCount]);

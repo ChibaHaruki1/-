@@ -66,8 +66,8 @@ private: //アクセス不可能
 	constexpr static int MINUS_ENEMY001_LIFE = 1;              //敵001のライフを減らす値
 	constexpr static int MINUS_ENEMYMOTION001_LIFE = 1;        //モーション付きの敵001のライフを減らす値
 
-	constexpr static float  ADDJUST_HIT_MOTIONENENY001 = 0.5f; //モーション付きの敵001の当たり判定の調整値
-	constexpr static float  ADDJUST_HIT_CAMERA_UP = 1.5f;      //監視カメラ上部分の当たり判定の調整値
+	constexpr static float  ADJUST_HIT_MOTIONENENY001 = 0.5f;  //モーション付きの敵001の当たり判定の調整値
+	constexpr static float  ADJUST_HIT_CAMERA_UP = 1.5f;       //監視カメラ上部分の当たり判定の調整値
 	constexpr static float  MINUS_BOSS_HPGAGE = 0.01f;         //ボスのHPゲージを減らす値
 };
 
@@ -107,7 +107,7 @@ private: //外部からアクセス不可能
 	constexpr static int BLUE = 200;                     //青色
 	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
 													     
-	constexpr static float ADDJUST_HIT = 0.5;            //当たり判定の調整値
+	constexpr static float ADJUST_HIT = 0.5;             //当たり判定の調整値
 	constexpr static float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
 
 	static float m_fAdditionPosY;                         //rot.yに値を追加していくための変数
@@ -137,7 +137,7 @@ private: //外部からアクセス不可能
 	//マクロ定義
 	constexpr static int BLUE = 200;                     //青色
 	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
-	constexpr static int SET_BULLET_LIFE = 90;          //ライフの最大値
+	constexpr static int SET_BULLET_LIFE = 90;           //ライフの最大値
 
 	constexpr static float ADDJUST_HIT = 1.0;            //当たり判定の調整値
 	constexpr static float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
@@ -168,6 +168,6 @@ private: //外部からアクセス不可能
 	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
 
 	constexpr static float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
-	constexpr static float  MINUS_POSY = 5.0f;           //Y軸の位置を減算する値
+	constexpr static float  MINUS_POSY = 2.0f;           //Y軸の位置を減算する値
 };
 
