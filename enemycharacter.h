@@ -54,6 +54,9 @@ public:
 
 private:
 	//マクロ定義
+	static constexpr int MAX_PARTS_SEARCH = 100;              //パーツの取得時の配列の最大数
+	static constexpr int MAX_DATA_SEARCH = 512;               //テキストファイルの読み込み時の配列の最大数
+
 	constexpr static int MAX_ENEMYKEYSET = 5;                 //モーションに使うキーの数
 	constexpr static int NUM_ENEMYMOTION = 10;                //モーションの数
 	constexpr static int HALF = 2;                            //int型の時の半分

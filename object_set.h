@@ -38,6 +38,8 @@ public:
 	void LoodMotionInEnemy(FILE* pFile);       //モーション付きの敵の読み込み処理
 	void LoodCeiling(FILE* pFile);             //天井の読み込み処理
 
+	void SetCreateCountInPlayer();             //生成数をプレイヤーに渡す処理関数
+
 	static CObjectSet* Create();               //情報の生成
 
 	//取得用の関数
@@ -73,4 +75,11 @@ private:
 	const char* m_aSmallBlockEndName;    		//小さいブロックの終了用の名前変数
 	const char* m_aSmallBlock001EndName;    	//小さいブロック001の終了用の名前変数
 	const char* m_aUpWallBlockEndName;     		//上壁ブロックの終了用の名前変数
+
+
+	//=====================================
+	//生成数のカウント
+	int m_nFieldBlockCount;
+	int m_nGoUpBlock;
+	int m_nRoadBlock;
 };

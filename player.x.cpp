@@ -73,6 +73,10 @@ CPlayerX::CPlayerX(int nPriority) : CCharacter(nPriority)
 	m_nLandingFrame = 0;                                  //着地時の次の動きへのフレームの初期化
 
 	m_pNowCreateUI = CManager2DUI::Create(CObject::TYPE_UI::NOWCREATE); //現在の配置オブジェクトのUIの生成
+
+	//生成数の保管用変数の初期化
+	m_nFieldBlockCount = 0;
+	m_nLaserCount = 0;
 }
 
 
@@ -415,6 +419,7 @@ void CPlayerX::NormalStateSummarizeFunction()
 		}
 	}
 	BlockJudgement();              //オブジェクトとの当たり判定処理関数を呼ぶ
+	UIJudgement();                 //UIとの当たり判定処理関数を呼ぶ
 						           
 	NowCreateNumberObj();          //配置オブジェクトのUIを生成する処理関数
 	NowCreateObjectUI();           //現在作っているオブジェクトのUIを出す処理
@@ -937,12 +942,12 @@ void CPlayerX::Draw()
 }
 
 //===============================================================================================================================================================================
-//様々な物の当たり判定
+//ブロックの当たり判定
 //===============================================================================================================================================================================
 void CPlayerX::BlockJudgement()
 {
 	//地面用のブロックの生成数分回す
-	for (int nCount = 0; nCount <CManager::GetInstance()->GetFieldBlockCount()+1; nCount++)
+	for (int nCount = 0; nCount < m_nFieldBlockCount; nCount++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetFiledBlock(nCount) != nullptr)
@@ -996,7 +1001,7 @@ void CPlayerX::BlockJudgement()
 	}
 
 	//上がる用のブロックの生成数分回す
-	for (int nCount1 = 0; nCount1 < CManager::GetInstance()->GetGoUpBlockCount() + 1; nCount1++)
+	for (int nCount1 = 0; nCount1 < m_nGoUpBlock; nCount1++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetGoUpBlock(nCount1) != nullptr)
@@ -1336,6 +1341,32 @@ void CPlayerX::BlockJudgement()
 			{
 				m_pTalkText->Release(); //情報を消す
 				m_pTalkText = nullptr;  //情報を無くす
+			}
+		}
+	}
+}
+
+//===============================================================================================================================================================================
+//UIの当たり判定
+//===============================================================================================================================================================================
+void CPlayerX::UIJudgement()
+{
+	//レーザーの数分回す
+	for (int nLaser = 0; nLaser < m_nLaserCount+1; nLaser++)
+	{
+		//情報がある時
+		if (CManager::GetInstance()->GetLaser(nLaser) != nullptr)
+		{
+			//プレイヤーの各パーツ毎の当たり判定処理
+			for (int nCount = 0; nCount < CObjectX::MAX_PRTS; nCount++)
+			{
+				if (GetCollision()->ColiisionBox3D(CManager::GetInstance()->GetLaser(nLaser)->GetPos(), GetPosParts(nCount),
+					CLaserCamare::TOTALVALUE_X, CLaserCamare::TOTALVALUE_Y, CLaserCamare::TOTALVALUE_Z, GetModelSizeParts(nCount)) == true)
+				{
+					CManager::GetInstance()->GetLaser(nLaser)->Release();                         //レーザーを削除する
+					CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nLaser); //レーザーポインターをnullptrにする
+					return;                                                                       //処理を抜ける
+				}
 			}
 		}
 	}

@@ -35,6 +35,7 @@ public: //アクセス可能
 	void KeySet();                                               //キーごとの処理をまとめる関数
 	void ShopKeySet();                                           //モードがSHOP時のキーごとの処理をまとめる関数
 	void BlockJudgement();                                       //ブロックとの判定
+	void UIJudgement();                                          //UIとの判定
 	void Random();                                               //ランダム処理
 	void Praticles();                                            //パーティクルを出す処理
 	void NormalStateSummarizeFunction();                         //通常時の関数をまとめる関数
@@ -60,6 +61,13 @@ public: //アクセス可能
 	int& GetTelephonPoleCount() { return m_nTelephonCount; }             //電柱の配列を取得
 	int& GetAllTelephonPoleCount() { return m_nAllTelephonPoleCount; }   //全ての電柱の配列を取得
 	int& GetRotNumber() { return m_nRotNumber; }                         //プレイヤーの向きの番号を取得
+
+
+	//=====================================
+	//生成数を何度も取得しなくていいように保管する用の変数の設定
+	void SetFieldBlockCount(int nFieldBlockCount) { m_nFieldBlockCount= nFieldBlockCount; } //地面用ブロックの生成数の設定
+	void SetGoUpBlockCount(int nGoUpBlock) { m_nGoUpBlock = nGoUpBlock; }                   //地面用ブロックの生成数の設定
+	void SetLaserCount(int nLaserCount) { m_nLaserCount= nLaserCount; }                     //レーザーの生成数の設定
 
 
 	//=====================================
@@ -155,8 +163,15 @@ private:
 	bool m_bFly;               //自機が吹っ飛んでいるかどうかの判定の為の変数（モーションの混雑を避けるため）
 	bool m_bOneCreate;         //一回だけ作る為の変数
 
-	int m_nNextStageFrame;        //次のステージに行くまでのフレーム
+	int m_nNextStageFrame;     //次のステージに行くまでのフレーム
 	int m_nLandingFrame;       //着地時のフレーム
 	bool m_bLandingFlag;       //着地したかどうかの判定用変数
+
+
+	//===========================================
+	//生成数の取得用
+	int m_nFieldBlockCount; //地面用ブロックの生成数を保管する用の変数
+	int m_nGoUpBlock;       //上がる用のブロックの生成数を保管する用の変数
+	int	m_nLaserCount;
 };
 

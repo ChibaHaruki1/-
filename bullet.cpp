@@ -281,9 +281,7 @@ void CBullet3D::CollisionOnObject()
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->GetModelSize()))
 			{
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release();                        //カメラの上部分の削除
-				CManager::GetInstance()->GetLaser(nCamera)->Release();                                       //レーザーの削除
 				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);  //カメラポインターをnullptrにする
-				CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nCamera);               //レーザーポインターをnullptrにする
 
 				SetLife(0); //ライフを０にする
 				return;     //処理を抜ける

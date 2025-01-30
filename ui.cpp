@@ -249,7 +249,7 @@ void CLaserCamare::Update()
 	//当たり判定
 	if (CObject3D::CollisionPrtsPlayer(SIZEY * ADJUST_ADDJUST_SIZE, SIZEX * ADJUST_ADDJUST_SIZE, SIZEZ * ADJUST_ADDJUST_SIZE) == true)
 	{
-		srand((unsigned)time(NULL));  //乱数系列を初期化
+		srand((unsigned)time(NULL));   //乱数系列を初期化
 		SetRandom(1 + rand() % 2);     //乱数の生成(範囲指定1～２）
 
 		//乱数が１の時
@@ -257,27 +257,17 @@ void CLaserCamare::Update()
 		{
 			//敵の生成
 			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
-			CObject3D::Release();     //自身の削除
-			return;                   //処理を抜ける
+			//CObject3D::Release();     //自身の削除
+			//return;                   //処理を抜ける
 		}
 		else
 		{
 			//敵の生成
 			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
-			CObject3D::Release();     //自身の削除
-			return;                   //処理を抜ける
+			//CObject3D::Release();     //自身の削除
+			//return;                   //処理を抜ける
 		}
 	}
-
-	////カメラの上部分の情報がなくなった時
-	//for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(); nCamera++)
-	//{
-	//	if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) == nullptr)
-	//	{
-	//		CObject3D::Release();
-	//		return;
-	//	}
-	//}
 }
 
 

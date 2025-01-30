@@ -554,10 +554,10 @@ void CCharacter::Lood()
 		for (int Next = 0; Next < nCount + 1; Next++)
 		{
 			//右側のパーツ数
-			SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrts[Next + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND]->GetPos();
+			SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pSaveModelPrtInfo[Next + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND].pos;
 
 			//左側のパーツ数
-			SaveMotionPos[nCount + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrts[Next + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND]->GetPos(); 
+			SaveMotionPos[nCount + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pSaveModelPrtInfo[Next + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND].pos;
 		}
 
 		SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pModelPrts[PLAYER_PARTS_BODY_NUMBER]->GetPos(); //位置を加算

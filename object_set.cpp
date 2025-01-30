@@ -48,6 +48,10 @@ CObjectSet::CObjectSet()
 	{
 		m_aData[nCount] = {}; //文字の読み取り配列の初期化
 	}
+
+	m_nFieldBlockCount = 0;
+	m_nGoUpBlock = 0;
+	m_nRoadBlock = 0;
 }
 
 
@@ -75,6 +79,8 @@ HRESULT CObjectSet::Init()
 		StageOneInformation("data\\TEXT\\OBJECT\\BreakHouse.txt");   //壊れた家の読み込み
 		StageOneInformation("data\\TEXT\\OBJECT\\Enemy.txt");        //敵の読み込み
 		StageOneInformation("data\\TEXT\\OBJECT\\MotionEnemy.txt");  //モーション付きの敵の読み込み
+
+		SetCreateCountInPlayer();                                    //生成数をプレイヤーに渡す処理関数を呼ぶ
 
 		return S_OK;  //処理を抜ける
 
@@ -192,6 +198,7 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, "END_TELEPHONPOLESET"))
 			{
+				CManager::GetScene()->GetPlayerX()->SetLaserCount(CManager::GetInstance()->GetLaserCount());
 				break; //処理を抜ける
 			}
 
@@ -370,15 +377,16 @@ void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 				(void)fscanf(pFile, "%f", &PosZ);      //三番目の値を格納
 				(void)fscanf(pFile, "%d", &nNumber);   //生成する敵の週類を番号で取得
 
+				//番号で判定
 				switch (nNumber)
 				{
 				case 1:
 					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(PosX, PosY, PosZ)); //敵001の生成
-					break;
+					break; //処理を抜ける
 
 				case 2:
-					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION002, 0, D3DXVECTOR3(PosX, PosY, PosZ)); //敵001の生成
-					break;
+					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION002, 0, D3DXVECTOR3(PosX, PosY, PosZ)); //敵002の生成
+					break; //処理を抜ける
 				}
 			}
 		}
@@ -392,18 +400,19 @@ void CObjectSet::LoodBlock(FILE* pFile)
 {
 	float PosX, PosY, PosZ = 0.0f; //posの位置を保管するための変数
 
-	//これが書かれていた時
+	//地面用ブロックの読み込み
 	if (!strcmp(m_aData, m_aFieldBlockStratName))
 	{
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aFieldBlockEndName))
 			{
-				break; //処理を抜ける
+				m_nFieldBlockCount++;               //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -426,12 +435,13 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aGoUpBlockEndName))
 			{
-				break; //処理を抜ける
+				m_nGoUpBlock++;                     //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -454,12 +464,13 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aRoadBlockEndName))
 			{
-				break; //処理を抜ける
+				m_nRoadBlock++;                     //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -628,23 +639,6 @@ void CObjectSet::LoodResultScore(FILE* pFile)
 }
 
 
-//========================================
-//textファイルの情報を生成
-//========================================
-CObjectSet* CObjectSet::Create()
-{
-	CObjectSet* m_pObjectSet = new CObjectSet(); //動的確保
-
-	//初期化に成功
-	if (SUCCEEDED(m_pObjectSet->Init()))
-	{
-		return m_pObjectSet; //情報を返す
-	}
-
-	return nullptr; //無を返す
-}
-
-
 //==========================================
 //ブロックの読み込む名前のパスの取得処理
 //==========================================
@@ -753,6 +747,34 @@ const char* CObjectSet::GetEndBlockName(CObjectX::TYPE type)
 	else if (type == CObjectX::TYPE::UPWALLBLOCK)
 	{
 		return m_aUpWallBlockEndName;          //名前を返す
+	}
+
+	return nullptr; //無を返す
+}
+
+
+//========================================
+//生成数をプレイヤーに渡す処理関数
+//========================================
+void CObjectSet::SetCreateCountInPlayer()
+{
+	CManager::GetScene()->GetPlayerX()->SetFieldBlockCount(m_nFieldBlockCount); //地面用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetGoUpBlockCount(m_nGoUpBlock);        //上がる用ブロックの生成数を取得
+
+}
+
+
+//========================================
+//textファイルの情報を生成
+//========================================
+CObjectSet* CObjectSet::Create()
+{
+	CObjectSet* m_pObjectSet = new CObjectSet(); //動的確保
+
+	//初期化に成功
+	if (SUCCEEDED(m_pObjectSet->Init()))
+	{
+		return m_pObjectSet; //情報を返す
 	}
 
 	return nullptr; //無を返す

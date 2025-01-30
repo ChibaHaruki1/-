@@ -89,21 +89,10 @@ void CEnemyCharacter::UpdateEnemy001()
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
 	for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
 	{
-		//上半身
-		if (nCount <= m_nEnemy001Parts / HALF)
-		{
-			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
-				m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
-				m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
-		}
-
-		//下半身
-		else if (nCount >= m_nEnemy001Parts / HALF)
-		{
-			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
-				m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
-				m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
-		}
+		//パーツの位置の更新
+		GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
+			m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
+			m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
 	}
 }
 
@@ -169,16 +158,16 @@ void CEnemyCharacter::DrawEnemy(int NumPrts, int nNumber)
 //======================
 void CEnemyCharacter::LoodEnemy(const char* aSelect)
 {
-	int nCount = 0;              //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;           //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;     //生成するパーツ数のカウントするための変数
-	char aPrtsPass[100];         //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[2024];    //必要な情報を読み取る際の文字列を読みむための変数
-
-	int nMotionCount = 0;        //モーションの数をカウントするための変数
-	int nKeySetCount = 0;        //モーションのキーセットの数をカウントするための変数
-
-	FILE* m_pFile = nullptr;       //ファイルポインター
+	int nCount = 0;                      //最初のパーツ数をカウントするための変数
+	int nKeyCount = 0;                   //モーションのキーをカウントするための変数
+	int nModelPrtsCount = 0;             //生成するパーツ数のカウントするための変数
+	char aPrtsPass[MAX_PARTS_SEARCH];    //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH]; //必要な情報を読み取る際の文字列を読みむための変数
+								       
+	int nMotionCount = 0;                //モーションの数をカウントするための変数
+	int nKeySetCount = 0;                //モーションのキーセットの数をカウントするための変数
+								         
+	FILE* m_pFile = nullptr;             //ファイルポインター
 
 	//敵０番目を選択
 	if (aSelect == "Enemy000")
@@ -456,7 +445,7 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		int RightnCount = 0; //for分用の変数
 		int LeftnCount = 0;  //for分用の変数
 
-		m_nEnemy001Parts = m_nNumParts;
+		m_nEnemy001Parts = m_nNumParts; //パーツ数の取得
 
 		//最大パーツ数分回す
 		for (int nCount = 0; nCount < m_nNumParts; nCount++)
@@ -484,6 +473,16 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 			for (int nCount2 = LeftnCount - 1; nCount2 < LeftnCount; nCount2++)
 			{
 				m_pSaveModelPrtUpdateInfo[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount2].pos.x, m_pSaveModelPrtUpdateInfo[nCount2].pos.y, m_pSaveModelPrtUpdateInfo[nCount2].pos.z);  //位置を加算する
+			}
+		}
+
+		for (int a = 9; a < 16; a++)
+		{
+			//m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
+
+			for (int b = 8; b < a; b++)
+			{
+				m_pSaveModelPrtUpdateInfo[a].pos.y += m_pSaveModelPrtInfo[b].pos.y;
 			}
 		}
 	}
