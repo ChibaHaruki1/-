@@ -23,7 +23,8 @@ CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 	{
 		m_pModelPrtsEnemy[nCount] = nullptr;                   //敵のパーツの初期化
 		m_pSaveModelPrtInfo[nCount] = {};					   //モデルパーツの保管情報の初期化
-		m_pSaveModelPrtUpdateInfo[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
+		m_pSaveModelPrtUpdateInfo001[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
+		m_pSaveModelPrtUpdateInfo002[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
 	}
 
 	MotionCountEnemy = 0;                                      //モーション時のカウントを初期化
@@ -90,9 +91,9 @@ void CEnemyCharacter::UpdateEnemy001()
 	for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
 	{
 		//パーツの位置の更新
-		GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount].pos.x + GetPos().x,
-			m_pSaveModelPrtUpdateInfo[nCount].pos.y + GetPos().y,
-			m_pSaveModelPrtUpdateInfo[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
+		GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount].pos.x + GetPos().x,
+			m_pSaveModelPrtUpdateInfo001[nCount].pos.y + GetPos().y,
+			m_pSaveModelPrtUpdateInfo001[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
 	}
 }
 
@@ -105,7 +106,14 @@ void CEnemyCharacter::UpdateEnemy002()
 
 	for (int nCount = 0; nCount < m_nEnemy002Parts; nCount++)
 	{
-
+		//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
+		for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
+		{
+			//パーツの位置の更新
+			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo002[nCount].pos.x + GetPos().x,
+				m_pSaveModelPrtUpdateInfo002[nCount].pos.y + GetPos().y,
+				m_pSaveModelPrtUpdateInfo002[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
+		}
 	}
 }
 
@@ -450,50 +458,58 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		//最大パーツ数分回す
 		for (int nCount = 0; nCount < m_nNumParts; nCount++)
 		{
-			m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
+			m_pSaveModelPrtUpdateInfo001[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
 		}
 
-		m_pSaveModelPrtUpdateInfo[2].pos += m_pModelPrtsEnemy[0]->GetPos(); //右肩の位置を体の位置分加算する
-		m_pSaveModelPrtUpdateInfo[5].pos += m_pModelPrtsEnemy[0]->GetPos(); //左肩の位置を体の位置分加算する
+		//右肩の位置を体の位置分加算する
+		m_pSaveModelPrtUpdateInfo001[PARTS_RIGHT_SHOLDER_NUMBER].pos += m_pModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
 
-		//右肩から次のパーツ（２の次＝３）から終わりまで（終わりは武器まで（４番））
-		for (RightnCount = 3; RightnCount < 5; RightnCount++)
+		//左肩の位置を体の位置分加算する
+		m_pSaveModelPrtUpdateInfo001[PARTS_LEFT_SHOLDER_NUMBER].pos += m_pModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
+
+		//右肩から右肩の武器まで
+		for (RightnCount = PARTS_RIGHT_SHOLDER_NUMBER; RightnCount <= PARTS_RIGHT_SHOLDER_WEAPON_NUMBER; RightnCount++)
 		{
 			//初期値は現在の右パーツー１
-			for (int nCount1 = RightnCount -1; nCount1 < RightnCount; nCount1++)
+			for (int nCount1 = RightnCount-1; nCount1 < RightnCount; nCount1++)
 			{
-				m_pSaveModelPrtUpdateInfo[RightnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount1].pos.x, m_pSaveModelPrtUpdateInfo[nCount1].pos.y, m_pSaveModelPrtUpdateInfo[nCount1].pos.z); //位置を加算する
+				//位置を加算する,
+				m_pSaveModelPrtUpdateInfo001[RightnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount1].pos.x, m_pSaveModelPrtUpdateInfo001[nCount1].pos.y, m_pSaveModelPrtUpdateInfo001[nCount1].pos.z);
 			}
 		}
 
 		//左肩から次のパーツ（５の次＝６）から終わりまで（終わりは武器まで（７番））
-		for (LeftnCount = 6; LeftnCount < 8; LeftnCount++)
+		for (LeftnCount = PARTS_LEFT_SHOLDER_NUMBER; LeftnCount <= PARTS_LEFT_SHOLDER_WEAPON_NUMBER; LeftnCount++)
 		{
 			//初期値は現在の左パーツー１
-			for (int nCount2 = LeftnCount - 1; nCount2 < LeftnCount; nCount2++)
+			for (int nCount2 = LeftnCount; nCount2 < LeftnCount; nCount2++)
 			{
-				m_pSaveModelPrtUpdateInfo[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo[nCount2].pos.x, m_pSaveModelPrtUpdateInfo[nCount2].pos.y, m_pSaveModelPrtUpdateInfo[nCount2].pos.z);  //位置を加算する
+				m_pSaveModelPrtUpdateInfo001[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount2].pos.x, m_pSaveModelPrtUpdateInfo001[nCount2].pos.y, m_pSaveModelPrtUpdateInfo001[nCount2].pos.z);  //位置を加算する
 			}
 		}
 
-		for (int a = 9; a < 16; a++)
+		//下半身分回す（腰から下なので腰の番号＋１）
+		for (int nLowBody = PARTS_LEFT_WAIST_NUMBER + 1; nLowBody <= PARTS_LEFT_WAIST_NUMBER + PARTS_LOWER_BODY_COUNT; nLowBody++)
 		{
 			//m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
 
-			for (int b = 8; b < a; b++)
+			//腰から親パーツ分回す
+			for (int nWaist = PARTS_LEFT_WAIST_NUMBER; nWaist < nLowBody; nWaist++)
 			{
-				m_pSaveModelPrtUpdateInfo[a].pos.y += m_pSaveModelPrtInfo[b].pos.y;
+				m_pSaveModelPrtUpdateInfo001[nLowBody].pos.y += m_pSaveModelPrtInfo[nWaist].pos.y; ////腰の分足す(腰の位置ー親パーツ)
 			}
 		}
 	}
 
+	//敵002が選択された時
 	else if (aSelect == "Enemy002")
 	{
-		m_nEnemy002Parts = m_nNumParts;
+		m_nEnemy002Parts = m_nNumParts; //パーツ数の取得
+
 		//最大パーツ数分回す
 		for (int nCount = 0; nCount < m_nNumParts; nCount++)
 		{
-			m_pSaveModelPrtUpdateInfo[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
+			m_pSaveModelPrtUpdateInfo002[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
 		}
 
 	}

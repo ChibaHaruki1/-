@@ -79,7 +79,13 @@ private:
 
 	//=====================================
 	//生成数のカウント
-	int m_nFieldBlockCount;
-	int m_nGoUpBlock;
-	int m_nRoadBlock;
+	int m_nFieldBlockCount;        //地面用ブロックの生成数をカウントする用の変数
+	int m_nGoUpBlockCount;         //上がる用ブロックの生成数をカウントする用の変数
+	int m_nRoadBlockCount;         //道用ブロックの生成数をカウントする用の変数
+	int m_nWallRoadBlockCount;     //壁兼道用ブロックの生成数をカウントする用の変数
+	int m_nWallRoadBlock001Count;  //壁兼道用ブロック001の生成数をカウントする用の変数
+	int m_nSmalBlockCount;         //小さいブロックの生成数をカウントする用の変数
+	int m_nSmalBlock001Count;      //小さいブロック001の生成数をカウントする用の変数
+
+	int m_nLaserCount;             //レーザーの生成数をカウントする用の変数
 };

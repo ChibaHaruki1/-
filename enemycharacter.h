@@ -49,17 +49,25 @@ public:
 	void SetMotionType(bool bMotionType) { m_bMotionEnemyType = bMotionType; } //モーションタイプの設定
 
 
-	ENEMYMOTIONSTATE m_MotionStateEnemy;                      //ボスのモーションの種類の情報を持つ
-	CModelPrts* m_pModelPrtsEnemy[MAX_ENEMYPARTS];            //モデルパーツの情報のポインター
-
-private:
-	//マクロ定義
-	static constexpr int MAX_PARTS_SEARCH = 100;              //パーツの取得時の配列の最大数
-	static constexpr int MAX_DATA_SEARCH = 512;               //テキストファイルの読み込み時の配列の最大数
-
-	constexpr static int MAX_ENEMYKEYSET = 5;                 //モーションに使うキーの数
-	constexpr static int NUM_ENEMYMOTION = 10;                //モーションの数
-	constexpr static int HALF = 2;                            //int型の時の半分
+	ENEMYMOTIONSTATE m_MotionStateEnemy;                         //ボスのモーションの種類の情報を持つ
+	CModelPrts* m_pModelPrtsEnemy[MAX_ENEMYPARTS];               //モデルパーツの情報のポインター
+															     
+private:													     
+	//マクロ定義												    
+	static constexpr int MAX_PARTS_SEARCH = 100;                 //パーツの取得時の配列の最大数
+	static constexpr int MAX_DATA_SEARCH = 512;                  //テキストファイルの読み込み時の配列の最大数
+															     
+	constexpr static int MAX_ENEMYKEYSET = 5;                    //モーションに使うキーの数
+	constexpr static int NUM_ENEMYMOTION = 10;                   //モーションの数
+	constexpr static int HALF = 2;                               //int型の時の半分
+															     
+	constexpr static int PARTS_BODY_NUMBER = 0;                  //体の番号
+	constexpr static int PARTS_RIGHT_SHOLDER_NUMBER = 2;         //右肩の番号
+	constexpr static int PARTS_RIGHT_SHOLDER_WEAPON_NUMBER = 4;  //右肩の武器の番号
+	constexpr static int PARTS_LEFT_SHOLDER_NUMBER = 5;          //左肩の番号
+	constexpr static int PARTS_LEFT_SHOLDER_WEAPON_NUMBER = 7;   //左肩の武器の番号
+	constexpr static int PARTS_LEFT_WAIST_NUMBER = 8;            //腰の番号
+	constexpr static int PARTS_LOWER_BODY_COUNT = 7;             //腰の番号
 
 
 	//キーの構造体
@@ -92,7 +100,7 @@ private:
 	}SAVEMODELINFO;
 
 	//キャラクターの情報を保管する変数
-	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo[MAX_ENEMYPARTS]; //モデルパーツの情報のポインター
+	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo001[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo002[MAX_ENEMYPARTS]; //モデルパーツの情報のポインター
 	D3DXVECTOR3 SaveMotionPos[MAX_ENEMYPARTS];                 //各パーツの位置情報を確保する変数
 	D3DXVECTOR3 SaveMotionRot[MAX_ENEMYPARTS];                 //各パーツの向き情報を獲得する変数
 	MotionSet MotionSetEnemy[NUM_ENEMYMOTION];                 //各モーションの種類を格納する変数

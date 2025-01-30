@@ -26,6 +26,7 @@ public:
 	void Uninit()override;					    //破棄処理
 	void Update()override;					    //更新処理
 	void Draw()override;					    //描画処理
+	virtual void Hit() = 0;                     //当たり判定処理
 
 	static CUI* Create(CObject3D::TYPE typeui); //生成処理
 };
@@ -38,6 +39,7 @@ class CCreateInObject : public CUI
 public:
 	CCreateInObject(int nPriority = DEFAULT_PRIORITY);  //コンストラクタ
 	~CCreateInObject()override;                         //デストラクタ
+	void Hit()override {};                              //当たり判定処理
 };
 
 
@@ -50,6 +52,7 @@ public:
 	~CTalkText()override;                         //デストラクタ
 	HRESULT Init()override;                       //初期化処理
 	void Draw()override;                          //描画処理
+	void Hit()override {};                        //当たり判定処理
 
 private:
 	//マクロ定義
@@ -69,6 +72,7 @@ public:
 	HRESULT Init()override;                               //初期化処理
 	void Update()override;                                //更新処理
 	void Draw()override;                                  //描画処理
+	void Hit()override;                                   //当たり判定処理
 
 
 	//===========================

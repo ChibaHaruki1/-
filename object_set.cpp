@@ -49,9 +49,14 @@ CObjectSet::CObjectSet()
 		m_aData[nCount] = {}; //文字の読み取り配列の初期化
 	}
 
-	m_nFieldBlockCount = 0;
-	m_nGoUpBlock = 0;
-	m_nRoadBlock = 0;
+	m_nFieldBlockCount = 0;       //地面用ブロックの生成数の初期化
+	m_nGoUpBlockCount = 0;        //上がる用ブロックの生成数の初期化
+	m_nRoadBlockCount = 0;        //道用ブロックの生成数の初期化
+	m_nWallRoadBlockCount = 0;    //壁兼道用ブロックの生成数を初期化
+	m_nWallRoadBlock001Count = 0; //壁兼道用ブロック001の生成数を初期化
+	m_nSmalBlockCount = 0;        //小さいブロックの生成数を初期化
+	m_nSmalBlock001Count = 0;     //小さいブロック001の生成数を初期化
+	m_nLaserCount = 0;            //レーザーの生成数の初期化
 }
 
 
@@ -193,13 +198,13 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, "END_TELEPHONPOLESET"))
 			{
-				CManager::GetScene()->GetPlayerX()->SetLaserCount(CManager::GetInstance()->GetLaserCount());
-				break; //処理を抜ける
+				m_nLaserCount++;                    //レーザーの生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -400,6 +405,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 {
 	float PosX, PosY, PosZ = 0.0f; //posの位置を保管するための変数
 
+	//===========================================
 	//地面用ブロックの読み込み
 	if (!strcmp(m_aData, m_aFieldBlockStratName))
 	{
@@ -429,6 +435,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
+	//===========================================
 	//上がる用ブロックの情報を読み込む
 	else if (!strcmp(m_aData, m_aGoUpBlockStratName))
 	{
@@ -440,7 +447,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aGoUpBlockEndName))
 			{
-				m_nGoUpBlock++;                     //生成数を増やす
+				m_nGoUpBlockCount++;                     //生成数を増やす
 				break;                              //処理を抜ける
 			}
 
@@ -458,6 +465,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
+	//===========================================
 	//道用ブロックの情報を読み込む
 	else if (!strcmp(m_aData, m_aRoadBlockStratName))
 	{
@@ -469,7 +477,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aRoadBlockEndName))
 			{
-				m_nRoadBlock++;                     //生成数を増やす
+				m_nRoadBlockCount++;                     //生成数を増やす
 				break;                              //処理を抜ける
 			}
 
@@ -487,18 +495,20 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
+	//===========================================
 	//壁兼道用ブロックの情報を読み込む
 	else if (!strcmp(m_aData, m_aWallRoadBlockStratName))
 	{
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aWallRoadBlockEndName))
 			{
-				break; //処理を抜ける
+				m_nWallRoadBlockCount++;            //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -515,18 +525,20 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
-	// 道用ブロックの情報を読み込む
+	//===========================================
+	//壁兼道用ブロック001の情報を読み込む
 	else if (!strcmp(m_aData, m_aWallRoadBlock001StratName))
 	{
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aWallRoadBlock001EndName))
 			{
-				break; //処理を抜ける
+				m_nWallRoadBlock001Count++;         //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -543,18 +555,20 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
-	// 道用ブロックの情報を読み込む
+	//===========================================
+	//小さいブロックの情報を読み込む
 	else if (!strcmp(m_aData, m_aSmallBlockStratName))
 	{
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aSmallBlockEndName))
 			{
-				break; //処理を抜ける
+				m_nSmalBlockCount++;                //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -571,18 +585,20 @@ void CObjectSet::LoodBlock(FILE* pFile)
 		}
 	}
 
-	// 道用ブロックの情報を読み込む
+	//===========================================
+	//小さいブロック001の情報を読み込む
 	else if (!strcmp(m_aData, m_aSmallBlock001StratName))
 	{
 		//ループ(無限月読)
 		while (1)
 		{
-			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
+			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
 			//題名がEND_TELEPHONPOLESETだった時
 			if (!strcmp(m_aData, m_aSmallBlock001EndName))
 			{
-				break; //処理を抜ける
+				m_nSmalBlock001Count++;             //生成数を増やす
+				break;                              //処理を抜ける
 			}
 
 			//題名がPOSだった時
@@ -598,7 +614,9 @@ void CObjectSet::LoodBlock(FILE* pFile)
 			}
 		}
 	}
-	// 上の壁用ブロックの情報を読み込む
+
+	//===========================================
+	//上の壁用ブロックの情報を読み込む
 	else if (!strcmp(m_aData, m_aUpWallBlockStratName))
 	{
 		//ループ(無限月読)
@@ -758,9 +776,15 @@ const char* CObjectSet::GetEndBlockName(CObjectX::TYPE type)
 //========================================
 void CObjectSet::SetCreateCountInPlayer()
 {
-	CManager::GetScene()->GetPlayerX()->SetFieldBlockCount(m_nFieldBlockCount); //地面用ブロックの生成数を取得
-	CManager::GetScene()->GetPlayerX()->SetGoUpBlockCount(m_nGoUpBlock);        //上がる用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetFieldBlockCount(m_nFieldBlockCount);               //地面用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetGoUpBlockCount(m_nGoUpBlockCount);                 //上がる用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetRoadBlockCount(m_nRoadBlockCount);                 //道用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetWallRoadBlockCount(m_nWallRoadBlockCount);         //壁兼道用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetWallRoadBlock001Count(m_nWallRoadBlock001Count);   //壁兼道用ブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetSmalBlockCount(m_nSmalBlockCount);                 //小さいブロックの生成数を取得
+	CManager::GetScene()->GetPlayerX()->SetSmalBlock001Count(m_nSmalBlock001Count);           //小さいブロック001の生成数を取得
 
+	CManager::GetScene()->GetPlayerX()->SetLaserCount(m_nLaserCount);                         //レーザーの生成数を取得
 }
 
 

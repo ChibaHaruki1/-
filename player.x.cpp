@@ -66,7 +66,6 @@ CPlayerX::CPlayerX(int nPriority) : CCharacter(nPriority)
 	m_nDieRandom = 0;                                     //死亡時の方向乱数の初期化
 	m_nRotNumber = 0;                                     //向き番号の初期化
 	m_nSpecialAttackCount = 0;                            //必殺技のカウントの初期化
-	m_bOneCreate = false;                                 //一度だけ生成するフラグの初期化
 
 	m_nNextStageFrame = 0;                                   //次のステージに行くまでのフレームの初期化
 	m_bLandingFlag = false;                               //着地してない
@@ -75,7 +74,12 @@ CPlayerX::CPlayerX(int nPriority) : CCharacter(nPriority)
 	m_pNowCreateUI = CManager2DUI::Create(CObject::TYPE_UI::NOWCREATE); //現在の配置オブジェクトのUIの生成
 
 	//生成数の保管用変数の初期化
-	m_nFieldBlockCount = 0;
+	m_nFieldBlock = 0;
+	m_nGoUpBlock = 0;
+	m_nRoadBlock = 0;
+	m_nWallRoadBlock = 0;
+	m_nWallRoadBlock001 = 0;
+	m_nSmalBlock = 0;
 	m_nLaserCount = 0;
 }
 
@@ -946,8 +950,9 @@ void CPlayerX::Draw()
 //===============================================================================================================================================================================
 void CPlayerX::BlockJudgement()
 {
+	//=================================
 	//地面用のブロックの生成数分回す
-	for (int nCount = 0; nCount < m_nFieldBlockCount; nCount++)
+	for (int nCount = 0; nCount < m_nFieldBlock; nCount++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetFiledBlock(nCount) != nullptr)
@@ -1000,6 +1005,7 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//上がる用のブロックの生成数分回す
 	for (int nCount1 = 0; nCount1 < m_nGoUpBlock; nCount1++)
 	{
@@ -1037,8 +1043,9 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//道用ブロック分回す
-	for (int nCount2 = 0; nCount2 < CManager::GetInstance()->GetRoadBlockCount() + 1; nCount2++)
+	for (int nCount2 = 0; nCount2 < m_nRoadBlock; nCount2++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetRoadBlock(nCount2) != nullptr)
@@ -1074,8 +1081,9 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//壁兼道用ブロック分回す
-	for (int nCount3 = 0; nCount3 < CManager::GetInstance()->GetWallRoadBlockCount() + 1; nCount3++)
+	for (int nCount3 = 0; nCount3 < m_nWallRoadBlock; nCount3++)
 	{
 		if (CManager::GetInstance()->GetWallRoadBlock(nCount3) != nullptr)
 		{
@@ -1108,8 +1116,9 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//壁兼道001用ブロック分回す
-	for (int nCount4 = 0; nCount4 < CManager::GetInstance()->GetWallRoadBlock001Count() + 1; nCount4++)
+	for (int nCount4 = 0; nCount4 < m_nWallRoadBlock001; nCount4++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetWallRoadBlock001(nCount4) != nullptr)
@@ -1137,8 +1146,9 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//小さいブロック分回す
-	for (int nCount5 = 0; nCount5 < CManager::GetInstance()->GetSmallBlockCount() + 1; nCount5++)
+	for (int nCount5 = 0; nCount5 < m_nSmalBlock; nCount5++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetSmallBlock(nCount5) != nullptr)
@@ -1173,39 +1183,9 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
-	////上壁ブロック分回す
-	//for (int nCount6 = 0; nCount6 < CManager::GetInstance()->GetUpWallBlockCount() + 1; nCount6++)
-	//{
-	//	if (CManager::GetInstance()->GetUpBlock(nCount6) != nullptr)
-	//	{
-	//		if (GetCollision() ->ColiisionBox(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
-	//		{
-	//			//GetPos().x = 100.0f;
-	//		}
-	//		else
-	//		{
-	//			if (GetCollision() ->ColiisionBoxInside(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
-	//			{
-	//				CManager::GetInstance()->GetFuelGage()->GetUse() = false;
-	//				GravityTogether();
-	//				GetPos().y = CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize().y + CManager::GetInstance()->GetUpBlock(nCount6)->GetPos().y;//y軸の位置を設定
-	//				if (GetJumpFlag() == true)
-	//				{
-	//					SetJumpFlag(false); //飛んでいないに設定
-	//				}
-	//			}
-	//			else if (GetCollision() ->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
-	//			{
-	//				CManager::GetInstance()->GetFuelGage()->GetUse() = false;
-	//				GravityTogether();
-	//				SetJumpFlag(false); //飛んでいないに設定
-	//			}
-	//		}
-	//	}
-	//}
-
+	//=================================
 	//小さいブロック001分回す
-	for (int nCount7 = 0; nCount7 < CManager::GetInstance()->GetSmallBlock001Count() + 1; nCount7++)
+	for (int nCount7 = 0; nCount7 < m_nSmalBlock001; nCount7++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetSmallBlock001(nCount7) != nullptr)
@@ -1243,7 +1223,40 @@ void CPlayerX::BlockJudgement()
 			}
 		}
 	}
+
+	////上壁ブロック分回す
+	//for (int nCount6 = 0; nCount6 < CManager::GetInstance()->GetUpWallBlockCount() + 1; nCount6++)
+	//{
+	//	if (CManager::GetInstance()->GetUpBlock(nCount6) != nullptr)
+	//	{
+	//		if (GetCollision() ->ColiisionBox(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
+	//		{
+	//			//GetPos().x = 100.0f;
+	//		}
+	//		else
+	//		{
+	//			if (GetCollision() ->ColiisionBoxInside(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
+	//			{
+	//				CManager::GetInstance()->GetFuelGage()->GetUse() = false;
+	//				GravityTogether();
+	//				GetPos().y = CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize().y + CManager::GetInstance()->GetUpBlock(nCount6)->GetPos().y;//y軸の位置を設定
+	//				if (GetJumpFlag() == true)
+	//				{
+	//					SetJumpFlag(false); //飛んでいないに設定
+	//				}
+	//			}
+	//			else if (GetCollision() ->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetUpBlock(nCount6)->GetPos(), GetModelSize(), CManager::GetInstance()->GetUpBlock(nCount6)->GetModelSize(), GetMove()) == true)
+	//			{
+	//				CManager::GetInstance()->GetFuelGage()->GetUse() = false;
+	//				GravityTogether();
+	//				SetJumpFlag(false); //飛んでいないに設定
+	//			}
+	//		}
+	//	}
+	//}
+
 	
+	//=================================
 	//ボス戦の足場
 	if (CManager::GetInstance()->GetFinalBlock() != nullptr)
 	{
@@ -1269,6 +1282,7 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//ボス戦の天井
 	if (CManager::GetInstance()->GetFinalCeiling() != nullptr)
 	{
@@ -1294,6 +1308,7 @@ void CPlayerX::BlockJudgement()
 		//}
 	}
 
+	//=================================
 	//バトルシップとの当たり判定
 	if (CManager::GetInstance()->GetSpeceBattleShip(1) != nullptr)
 	{
@@ -1305,6 +1320,7 @@ void CPlayerX::BlockJudgement()
 		}
 	}
 
+	//=================================
 	//SHOPとの当たり判定
 	if (CManager::GetInstance()->GetShop() != nullptr)
 	{
@@ -1352,7 +1368,7 @@ void CPlayerX::BlockJudgement()
 void CPlayerX::UIJudgement()
 {
 	//レーザーの数分回す
-	for (int nLaser = 0; nLaser < m_nLaserCount+1; nLaser++)
+	for (int nLaser = 0; nLaser < m_nLaserCount; nLaser++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetLaser(nLaser) != nullptr)
@@ -1360,9 +1376,11 @@ void CPlayerX::UIJudgement()
 			//プレイヤーの各パーツ毎の当たり判定処理
 			for (int nCount = 0; nCount < CObjectX::MAX_PRTS; nCount++)
 			{
+				//当たり判定処理
 				if (GetCollision()->ColiisionBox3D(CManager::GetInstance()->GetLaser(nLaser)->GetPos(), GetPosParts(nCount),
 					CLaserCamare::TOTALVALUE_X, CLaserCamare::TOTALVALUE_Y, CLaserCamare::TOTALVALUE_Z, GetModelSizeParts(nCount)) == true)
 				{
+					CManager::GetInstance()->GetLaser(nLaser)->Hit();                             //レーザーの当たった時の処理を呼ぶ
 					CManager::GetInstance()->GetLaser(nLaser)->Release();                         //レーザーを削除する
 					CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nLaser); //レーザーポインターをnullptrにする
 					return;                                                                       //処理を抜ける

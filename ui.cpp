@@ -72,6 +72,14 @@ void CUI::Draw()
 	CObject3D::Draw(); //•`‰æˆ—
 }
 
+//============================
+//“–‚½‚è”»’èˆ—
+//============================
+void CUI::Hit()
+{
+
+}
+
 
 //============================
 //¶¬ˆ—
@@ -246,27 +254,35 @@ HRESULT CLaserCamare::Init()
 //============================
 void CLaserCamare::Update()
 {
-	//“–‚½‚è”»’è
-	if (CObject3D::CollisionPrtsPlayer(SIZEY * ADJUST_ADDJUST_SIZE, SIZEX * ADJUST_ADDJUST_SIZE, SIZEZ * ADJUST_ADDJUST_SIZE) == true)
-	{
-		srand((unsigned)time(NULL));   //—”Œn—ñ‚ğ‰Šú‰»
-		SetRandom(1 + rand() % 2);     //—”‚Ì¶¬(”ÍˆÍw’è1`‚Qj
+	
+}
 
-		//—”‚ª‚P‚Ì
-		if (GetRandom() == 1)
-		{
-			//“G‚Ì¶¬
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
-			//CObject3D::Release();     //©g‚Ìíœ
-			//return;                   //ˆ—‚ğ”²‚¯‚é
-		}
-		else
-		{
-			//“G‚Ì¶¬
-			CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
-			//CObject3D::Release();     //©g‚Ìíœ
-			//return;                   //ˆ—‚ğ”²‚¯‚é
-		}
+
+//============================
+//“–‚½‚è”»’èˆ—
+//============================
+void CLaserCamare::Hit()
+{
+	//“–‚½‚è”»’è
+	//if (CObject3D::CollisionPrtsPlayer(SIZEY * ADJUST_ADDJUST_SIZE, SIZEX * ADJUST_ADDJUST_SIZE, SIZEZ * ADJUST_ADDJUST_SIZE) == true)
+
+	srand((unsigned)time(NULL));   //—”Œn—ñ‚ğ‰Šú‰»
+	SetRandom(1 + rand() % 2);     //—”‚Ì¶¬(”ÍˆÍw’è1`‚Qj
+
+	//—”‚ª‚P‚Ì
+	if (GetRandom() == 1)
+	{
+		//“G‚Ì¶¬
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
+		//CObject3D::Release();     //©g‚Ìíœ
+		//return;                   //ˆ—‚ğ”²‚¯‚é
+	}
+	else
+	{
+		//“G‚Ì¶¬
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
+		//CObject3D::Release();     //©g‚Ìíœ
+		//return;                   //ˆ—‚ğ”²‚¯‚é
 	}
 }
 

@@ -220,8 +220,14 @@ void CBullet3D::CallEffect(bool bUse)
 //===============================
 void CBullet3D::CollisionOnObject()
 {
+	int SaveEnemy001Count = CManager::GetInstance()->GetEnemy001Count() + 1;               //敵001の生成数を取得
+	int SaveEnemy002Count = CManager::GetInstance()->GetEnemy002Count() + 1;               //敵002の生成数を取得
+	int SaveCameraUP = CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() + 1;     //カメラの上の生成数を取得
+	int SaveMotionEnemy001Count = CManager::GetInstance()->GetMotionInEnemy001Count() + 1; //モーション付きの敵001の生成数を取得
+
+
 	//敵001の作られた数分回す
-	for (int nCount1 = 0; nCount1 < CManager::GetInstance()->GetEnemy001Count() + 1; nCount1++)
+	for (int nCount1 = 0; nCount1 < SaveEnemy001Count; nCount1++)
 	{
 		//敵001の情報がある時
 		if (CManager::GetInstance()->GetEnemy001(nCount1) != nullptr)
@@ -245,7 +251,7 @@ void CBullet3D::CollisionOnObject()
 	}
 
 	//敵002の作られた数分回す
-	for (int nCount2 = 0; nCount2 < CManager::GetInstance()->GetEnemy002Count() + 1; nCount2++)
+	for (int nCount2 = 0; nCount2 < SaveEnemy002Count; nCount2++)
 	{
 		//敵002の情報がある時
 		if (CManager::GetInstance()->GetEnemy002(nCount2) != nullptr)
@@ -270,7 +276,7 @@ void CBullet3D::CollisionOnObject()
 
 	
 	//カメラの上部分の作られた数分回す
-	for (int nCamera = 0; nCamera < CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() + 1; nCamera++)
+	for (int nCamera = 0; nCamera < SaveCameraUP; nCamera++)
 	{
 		//カメラの上部分の情報がある時
 		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
@@ -283,6 +289,13 @@ void CBullet3D::CollisionOnObject()
 				CManager::GetInstance()->GetSurveillanceCameraUp(nCamera)->Release();                        //カメラの上部分の削除
 				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SURVEILLANCECAMERAUP, nCamera);  //カメラポインターをnullptrにする
 
+				//レーザーの情報がある時
+				if (CManager::GetInstance()->GetLaser(nCamera) != nullptr)
+				{
+					CManager::GetInstance()->GetLaser(nCamera)->Release();                                   //レーザーを消す
+					CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nCamera);           //レーザーポインターをnullptrにする
+				}
+
 				SetLife(0); //ライフを０にする
 				return;     //処理を抜ける
 			}
@@ -291,7 +304,7 @@ void CBullet3D::CollisionOnObject()
 
 	
 	//モーション付きの敵の001の作られた数分回す
-	for (int nMotionInEnemy001 = 0; nMotionInEnemy001 < CManager::GetInstance()->GetMotionInEnemy001Count() + 1; nMotionInEnemy001++)
+	for (int nMotionInEnemy001 = 0; nMotionInEnemy001 < SaveMotionEnemy001Count; nMotionInEnemy001++)
 	{
 		//モーション付きの敵001の情報がある時
 		if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001) != nullptr)
@@ -307,7 +320,7 @@ void CBullet3D::CollisionOnObject()
 					CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->SetAdjustLife() -= MINUS_ENEMYMOTION001_LIFE; //ライフを減らす
 
 					//D3DXVECTOR3 Pos = CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetPosPrtsEnemy(nMotionEnemy001);
-					 
+
 					//死亡した時
 					if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() <= 0)
 					{

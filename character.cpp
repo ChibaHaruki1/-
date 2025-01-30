@@ -564,10 +564,10 @@ void CCharacter::Lood()
 		SaveMotionPos[nCount + PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND] += m_pModelPrts[PLAYER_PARTS_BODY_NUMBER]->GetPos();  //位置を加算
 	}
 
-	//下半身のpartsの位置を取得(腰から下)
-	for (int nCount1 = PLAYER_PARTS_WAIST_NUMBER + 1; nCount1 < PLAYER_PARTS_LOWER_BODY_COUNT + PLAYER_PARTS_WAIST_NUMBER + 1; nCount1++)
+	//下半身のpartsの位置を取得(腰から下なので腰番号＋１)
+	for (int nCount1 = PLAYER_PARTS_WAIST_NUMBER + 1; nCount1 <= PLAYER_PARTS_LOWER_BODY_COUNT + PLAYER_PARTS_WAIST_NUMBER ; nCount1++)
 	{
-		SaveMotionPos[nCount1] += m_pModelPrts[nCount1]->GetPos();    //下半身の各パーツ
+		SaveMotionPos[nCount1] += m_pModelPrts[nCount1]->GetPos();         //下半身の各パーツ
 
 		//腰と親パーツ分回す
 		for (int PARENT = PLAYER_PARTS_WAIST_NUMBER; PARENT < nCount1; PARENT++)
