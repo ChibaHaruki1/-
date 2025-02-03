@@ -62,6 +62,8 @@ private:
 	D3DXMATRIX m_mtxView;             //ビュー行列
 	int m_fAdjustmentPosZ;            //Z軸用の位置を調整する用の変数
 	float m_fAdjustmentPosY;          //Y軸用の位置を調整する用の変数
+
+
 };
 
 #endif // !_CAMERA_H_

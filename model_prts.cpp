@@ -18,19 +18,19 @@
 //======================
 CModelPrts::CModelPrts()
 {
-	m_nIndexPrts = 0;         //パーツ番号の初期化
-	m_nIndexModelPrts = 0;    //親パーツ番号の初期化
-	m_bDraw = true;           //描画をする
-	m_nNumMat = 0;            //マテリアルの数の初期化
-	m_pMesh = nullptr;        //メッシュの初期化
-	m_pBuffMat = nullptr;     //バッファの初期化
-	m_pParentlPrts = nullptr; //自身のポインターの初期化
-
 	//テクスチャの最大数分回す
 	for (int nCount = 0; nCount < MAX_MODEL_TEXTURE; nCount++)
 	{
-		m_pTexture[nCount] = nullptr; //テクスチャの初期化
+		m_pTexture[nCount] = nullptr;     //テクスチャの初期化
 	}
+
+	m_nIndexPrts = N_INIT_NUMBER;         //パーツ番号の初期化
+	m_nIndexModelPrts = N_INIT_NUMBER;    //親パーツ番号の初期化
+	m_bDraw = true;                       //描画をする
+	m_nNumMat = 0;                        //マテリアルの数の初期化
+	m_pMesh = nullptr;                    //メッシュの初期化
+	m_pBuffMat = nullptr;                 //バッファの初期化
+	m_pParentlPrts = nullptr;             //自身のポインターの初期化
 }
 
 //=======================
@@ -69,7 +69,7 @@ void CModelPrts::Uninit()
 	}
 
 	//テクスチャの最大数分回す
-	for (int nCntMat = 0; nCntMat < MAX_MODEL_TEXTURE; nCntMat++)
+	for (int nCntMat = N_INIT_NUMBER; nCntMat < MAX_MODEL_TEXTURE; nCntMat++)
 	{
 		//テクスチャの情報がある時
 		if (m_pTexture[nCntMat] != nullptr)
@@ -182,10 +182,10 @@ void CModelPrts::Lood(const char* Filepass, LPD3DXMESH pMesh, LPD3DXBUFFER pBuff
 	//マテリアルデータへのポインタを収得
 	pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
-	int nNumTexture = 0; //テクスチャの数をカウントするための変数
+	int nNumTexture = N_INIT_NUMBER; //テクスチャの数をカウントするための変数
 
 	//マテリアルの数分回す
-	for (int nCntMat = 0; nCntMat < (int)m_nNumMat; nCntMat++)
+	for (int nCntMat = N_INIT_NUMBER; nCntMat < (int)m_nNumMat; nCntMat++)
 	{
 		//テクスチャファイルが存在する
 		if (pMat[nCntMat].pTextureFilename != nullptr)
@@ -238,7 +238,7 @@ void CModelPrts::Size()
 	m_pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxByte);
 
 	//頂点数分回す
-	for (int nCount = 0; nCount < nNumVertex; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < nNumVertex; nCount++)
 	{
 		//位置を代入するための変数
 		D3DXVECTOR3 mtx;
@@ -301,14 +301,14 @@ void CModelPrts::Size()
 	}
 
 	//最小値が０より小さい時
-	if (m_min.y < 0)
+	if (m_min.y < N_INIT_NUMBER)
 	{
 		//最小値が最大値より大きい時
 		if (m_max.y < m_min.y)
 		{
 			m_max.y = m_min.y * -1.0f; //最小値のプラス値を代入する
 		}
-		m_min.y = 0; //最小値の初期化
+		m_min.y = N_INIT_NUMBER; //最小値の初期化
 	}
 
 	//オブジェクトのサイズを計算する

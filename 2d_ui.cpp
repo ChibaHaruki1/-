@@ -5,6 +5,7 @@
 //
 //===================================
 
+
 //===================================
 //インクルード
 #include "2d_ui.h"
@@ -82,7 +83,7 @@ CManager2DUI* CManager2DUI::Create(TYPE_UI TypeUI)
 	//タイプが店のメニューの時
 	if (TypeUI== TYPE_UI::SHOPMENU)
 	{
-		pManager2DUI = new CShopMenu(0); //動的確保
+		pManager2DUI = new CShopMenu(INIT_PRIORITY); //動的確保
 
 		//初期化に成功した時
 		if (SUCCEEDED(pManager2DUI->Init()))
@@ -106,13 +107,13 @@ CManager2DUI* CManager2DUI::NowCreate(int nNumber)
 	if (SUCCEEDED(pManager2DUI->Init()))
 	{
 		//番号が０番の時
-		if (nNumber == 0)
+		if (nNumber == CRETAE_NUMBER_0)
 		{
 			pManager2DUI->SetFileNamePass("data\\TEXTURE\\StageObj\\SHOP.png");    //ファイルパスを設定
 		}
 
 		//番号が１番の時
-		else if (nNumber == 1)
+		else if (nNumber == CRETAE_NUMBER_1)
 		{
 			pManager2DUI->SetFileNamePass("data\\TEXTURE\\StageObj\\images.jpg");  //ファイルパスを設定
 		}
@@ -159,7 +160,7 @@ HRESULT CNowCreateUI::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, SIZEX, 0.0f, SIZEY); //サイズの設定
+	CObject2D::SetSIze(F_INIT_NUMBER, SIZEX, F_INIT_NUMBER, SIZEY); //サイズの設定
 
 	return S_OK; //成功を返す
 }
@@ -198,7 +199,7 @@ HRESULT CShopMenu::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, SIZEX, 0.0f, SIZEY); //サイズの取得
+	CObject2D::SetSIze(F_INIT_NUMBER, SIZEX, F_INIT_NUMBER, SIZEY); //サイズの取得
 
 	return S_OK; //成功を返す
 }
@@ -237,8 +238,8 @@ HRESULT CBuyText::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, SIZEX, 0.0f, CMain::SCREEN_HEIGHT); //サイズの設定
-	SetCol(RED, GREEN, BLUE, ALPHA);                             //色の設定
+	CObject2D::SetSIze(F_INIT_NUMBER, SIZEX, F_INIT_NUMBER, CMain::SCREEN_HEIGHT);  //サイズの設定
+	SetCol(RED, GREEN, BLUE, ALPHA);                                                //色の設定
 
 	return S_OK; //成功を返す
 }
@@ -248,7 +249,7 @@ HRESULT CBuyText::Init()
 //========================
 CBuyText* CBuyText::Create()
 {
-	CBuyText* pText = new CBuyText(0); //動的確保
+	CBuyText* pText = new CBuyText(INIT_PRIORITY); //動的確保
 
 	//情報がある時
 	if (pText != nullptr)
@@ -275,7 +276,7 @@ CBuyText* CBuyText::Create()
 CSelectGage::CSelectGage(int nPriority) : CObject2D(nPriority)
 {
 	SetFileNamePass("data\\TEXTURE\\UI\\Text\\SelectGage.png"); //ファイルパスを設定
-	m_fSizeX = 0.0f;                                            //１番目のサイズのX軸の初期化
+	m_fSizeX = F_INIT_NUMBER;                                   //１番目のサイズのX軸の初期化
 	m_fSize1X = SIZE1X;                                         //２番目のサイズのX軸の初期化
 	m_fSizeY = SIZEY;                                           //１番目のサイズのY軸の初期化
 	m_fSize1Y = SIZE1Y;                                         //２番目のサイズのY軸の初期化
@@ -302,8 +303,8 @@ HRESULT CSelectGage::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, m_fSizeX, 0.0f,m_fSizeY); //サイズの設定
-	SetCol(RED, GREEN, BLUE, ALPHA);                   //色の設定
+	CObject2D::SetSIze(F_INIT_NUMBER, m_fSizeX, F_INIT_NUMBER,m_fSizeY); //サイズの設定
+	SetCol(RED, GREEN, BLUE, ALPHA);                                     //色の設定
 
 	return S_OK; //成功を返す
 }
@@ -340,7 +341,7 @@ void CSelectGage::Draw()
 //========================
 CSelectGage* CSelectGage::Create()
 {
-	CSelectGage* pSelectGage = new CSelectGage(3); //動的確保
+	CSelectGage* pSelectGage = new CSelectGage(); //動的確保
 
 	//情報がある時
 	if (pSelectGage != nullptr)
@@ -391,7 +392,7 @@ HRESULT CSelectGage001::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetSizeX(), 0.0f, GetSizeY()); //サイズの設定
+	CObject2D::SetSIze(F_INIT_NUMBER, GetSizeX(), F_INIT_NUMBER, GetSizeY()); //サイズの設定
 
 	return S_OK; //成功を返す
 }
@@ -409,7 +410,7 @@ void CSelectGage001::Update()
 //========================
 CSelectGage001* CSelectGage001::Create()
 {
-	CSelectGage001* pSelectGage = new CSelectGage001(3); //動的確保
+	CSelectGage001* pSelectGage = new CSelectGage001(); //動的確保
 
     //初期化が成功した時
 	if (SUCCEEDED(pSelectGage->Init()))
