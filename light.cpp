@@ -19,7 +19,7 @@
 CLight::CLight()
 {
 	//光源の最大数分回す
-	for (int Light = 0; Light < MAX_LIGHT; Light++)
+	for (int Light = N_INIT_NUMBER; Light < MAX_LIGHT; Light++)
 	{
 		//ライトの情報をクリアする
 		ZeroMemory(&m_aLight[Light], sizeof(D3DLIGHT9));
@@ -52,16 +52,16 @@ HRESULT CLight::Init()
 	D3DXVECTOR3 vecDir[MAX_LIGHT];
 
 	//光源の最大数分回す
-	for (int LightCount = 0; LightCount < MAX_LIGHT; LightCount++)
+	for (int LightCount = N_INIT_NUMBER; LightCount < MAX_LIGHT; LightCount++)
 	{
 		//ライトの種類を設定
 		m_aLight[LightCount].Type = D3DLIGHT_DIRECTIONAL;
 
 		//ライトの方向を設定
-		vecDir[0] = D3DXVECTOR3(0.0f, -ALL_LIGHT_POS_Y, ZERO_LIGHT_POS_Z);
-		vecDir[1] = D3DXVECTOR3(0.0f, -ALL_LIGHT_POS_Y, -ONE_LIGHT_POS_Z);
-		vecDir[2] = D3DXVECTOR3(-TWO_LIGHT_POS_X, -ALL_LIGHT_POS_Y, 0.0f);
-		vecDir[3] = D3DXVECTOR3(THREE_LIGHT_POS_X, -ALL_LIGHT_POS_Y, 0.0f);
+		vecDir[0] = D3DXVECTOR3(F_INIT_NUMBER, -ALL_LIGHT_POS_Y, ZERO_LIGHT_POS_Z);
+		vecDir[1] = D3DXVECTOR3(F_INIT_NUMBER, -ALL_LIGHT_POS_Y, -ONE_LIGHT_POS_Z);
+		vecDir[2] = D3DXVECTOR3(-TWO_LIGHT_POS_X, -ALL_LIGHT_POS_Y, F_INIT_NUMBER);
+		vecDir[3] = D3DXVECTOR3(THREE_LIGHT_POS_X, -ALL_LIGHT_POS_Y, F_INIT_NUMBER);
 
 		//ベクトルを正規化する
 		D3DXVec3Normalize(&vecDir[LightCount], &vecDir[LightCount]);

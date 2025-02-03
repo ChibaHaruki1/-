@@ -56,7 +56,10 @@ public:
 
 
 private:
-	//マクロ定義												     
+	//マクロ定義		
+	static constexpr int N_INIT_NUMBER = 0;                       //int型の初期化の値  
+	static constexpr float F_INIT_NUMBER = 0.0f;                  //float型の初期化の値
+
 	static constexpr int MAX_PARTS_SEARCH = 100;                  //パーツの取得時の配列の最大数
 	static constexpr int MAX_DATA_SEARCH = 512;                   //テキストファイルの読み込み時の配列の最大数
 

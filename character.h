@@ -109,6 +109,9 @@ public:
 
 private:
 	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0;                          //int型の初期化の値  
+	static constexpr float F_INIT_NUMBER = 0.0f;                     //float型の初期化の値
+
 	static constexpr int MAX_PARTS_SEARCH = 100;                     //パーツの取得時の配列の最大数
 	static constexpr int MAX_DATA_SEARCH = 512;                      //テキストファイルの読み込み時の配列の最大数
 		
@@ -125,6 +128,7 @@ private:
 	static constexpr int PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND = 6;   //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
 	static constexpr int PLAYER_PARTS_LOWER_BODY_COUNT = 6;          //下半身のパーツ数
 	static constexpr int PLAYER_PARTS_HEAD_AND_BODY_COUNT = 2;       //頭と体の数
+	static constexpr int PLAYER_NEXT_PARTS_COUNT = 1;                //次のパーツカウント
 	static constexpr int PLAYER_NEXT_MOTION_COUNT = 1;               //モーション時の差分を求める時の次のモーションカウント
 	static constexpr int PLAYER_BEFORE_MOTION_COUNT = 1;             //モーション時の差分が同じ時の前のモーションカウント
 	static constexpr int PLAYER_FIRST_KEYSET_NUMBER = 0;             //最初のキーセットの初めの番号
@@ -142,6 +146,7 @@ private:
 	static constexpr int BOSS_PARTS_LEFT_SHOULDER_FROM_HAND = 6;     //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
 	static constexpr int BOSS_PARTS_LOWER_BODY_COUNT = 6;            //下半身のパーツ数
 	static constexpr int BOSS_PARTS_HEAD_AND_BODY_COUNT = 2;         //頭と体の数
+	static constexpr int BOSS_NEXT_PARTS_COUNT = 1;                  //次のパーツカウント
 	static constexpr int BOSS_NEXT_MOTION_COUNT = 1;                 //モーション時の差分を求める時の次のモーションカウント
 	static constexpr int BOSS_BEFORE_MOTION_COUNT = 1;               //モーション時の差分が同じ時の前のモーションカウント
 	static constexpr int BOSS_FIRST_KEYSET_NUMBER = 0;               //最初のキーセットの初めの番号

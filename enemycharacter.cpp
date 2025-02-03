@@ -19,7 +19,7 @@
 CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 {
 	//敵のパーツ数分回す
-	for (int nCount = 0; nCount < MAX_ENEMYPARTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_ENEMYPARTS; nCount++)
 	{
 		m_pLoodModelPrtsEnemy[nCount] = nullptr;               //読み込み用の敵のパーツの初期化
 		m_pModelPrtsEnemy001[nCount] = nullptr;                //敵001のパーツの初期化
@@ -29,13 +29,13 @@ CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 		m_pSaveModelPrtUpdateInfo002[nCount] = {};			   //更新用モデルパーツの保管情報の初期化
 	}
 
-	MotionCountEnemy001 = 0;                                   //敵001モーション時のカウントを初期化
-	MotionCountEnemy002 = 0;                                   //敵002モーション時のカウントを初期化
-	m_nNumParts = 0;                                           //パーツ数の初期化
-	m_nEnemy001Parts = 0;                                      //敵001パーツ数の初期化
-	m_nEnemy002Parts = 0;                                      //敵002パーツ数の初期化
-	m_nEnemy002Frame = 0;
-	m_nEnemy001Frame = 0;
+	MotionCountEnemy001 = N_INIT_NUMBER;                       //敵001モーション時のカウントを初期化
+	MotionCountEnemy002 = N_INIT_NUMBER;                       //敵002モーション時のカウントを初期化
+	m_nNumParts = N_INIT_NUMBER;                               //パーツ数の初期化
+	m_nEnemy001Parts = N_INIT_NUMBER;                          //敵001のパーツ数の初期化
+	m_nEnemy002Parts = N_INIT_NUMBER;                          //敵002のパーツ数の初期化
+	m_nEnemy001Frame = N_INIT_NUMBER;                          //敵001のモーション時のフレーム
+	m_nEnemy002Frame = N_INIT_NUMBER;                          //敵002のモーション時のフレーム
 	m_bMotionEnemyType = false;                                //モーションタイプの初期化
 	m_MotionStateEnemy001 = ENEMYWALK;                         //モーション状態の初期化
 	m_MotionStateEnemy002 = ENEMYWALK;                         //モーション状態の初期化
@@ -74,7 +74,7 @@ void CEnemyCharacter::Uninit()
 	CObjectX::Uninit(); //破棄処理を呼ぶ
 	
 	//最大パーツ数分回す
-	for (int nCount1 = 0; nCount1 < MAX_ENEMYPARTS; nCount1++)
+	for (int nCount1 = N_INIT_NUMBER; nCount1 < MAX_ENEMYPARTS; nCount1++)
 	{
 		//=====================================================================================
 		//元がm_pLoodModelPrtsEnemyで読み取り、コピーしただけなのでUninit()&deleteはこれだけ呼ぶ
@@ -111,7 +111,7 @@ void CEnemyCharacter::UpdateEnemy001()
 	MotionInfoEnemy001(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < m_nEnemy001Parts; nCount++)
 	{
 		//パーツの位置の更新
 		GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount].pos.x + GetPos().x,
@@ -127,7 +127,7 @@ void CEnemyCharacter::UpdateEnemy002()
 {
 	MotionInfoEnemy002(); //モーションを行う処理を呼ぶ
 
-	for (int nCount = 0; nCount < m_nEnemy002Parts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < m_nEnemy002Parts; nCount++)
 	{
 		//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
 		for (int nCount = 0; nCount < m_nEnemy001Parts; nCount++)
@@ -148,9 +148,9 @@ void CEnemyCharacter::DrawEnemy001(int NumPrts, int nNumber)
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	
 
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;      //計算用マトリックス
-	D3DXMATRIX pMtx = CObjectX::GetmtxWorld();  //マトリックスを取得する
-	D3DXVECTOR3 pos, rot;                       //位置と向きを取得する為の変数
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;              //計算用マトリックス
+	D3DXMATRIX pMtx = CObjectX::GetmtxWorld();          //マトリックスを取得する
+	D3DXVECTOR3 pos, rot;                               //位置と向きを取得する為の変数
 
 	pos = GetPos(); //位置を取得する
 	rot = GetRot(); //向きを取得する
@@ -174,7 +174,7 @@ void CEnemyCharacter::DrawEnemy001(int NumPrts, int nNumber)
 	//pDevice->SetTransform(D3DTS_WORLD, &pMtx);
 
 	//パーツ数分回す
-	for (int nCount = 0; nCount < NumPrts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < NumPrts; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsEnemy001[nCount] != nullptr)
@@ -192,9 +192,9 @@ void CEnemyCharacter::DrawEnemy002(int NumPrts, int nNumber)
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	
 
-	D3DXMATRIX mtxRot, mtxTrans, mtxScale;      //計算用マトリックス
-	D3DXMATRIX pMtx = CObjectX::GetmtxWorld();  //マトリックスを取得する
-	D3DXVECTOR3 pos, rot;                       //位置と向きを取得する為の変数
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;              //計算用マトリックス
+	D3DXMATRIX pMtx = CObjectX::GetmtxWorld();          //マトリックスを取得する
+	D3DXVECTOR3 pos, rot;                               //位置と向きを取得する為の変数
 
 	pos = GetPos(); //位置を取得する
 	rot = GetRot(); //向きを取得する
@@ -218,7 +218,7 @@ void CEnemyCharacter::DrawEnemy002(int NumPrts, int nNumber)
 	//pDevice->SetTransform(D3DTS_WORLD, &pMtx);
 
 	//パーツ数分回す
-	for (int nCount = 0; nCount < NumPrts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < NumPrts; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsEnemy002[nCount] != nullptr)
@@ -233,16 +233,17 @@ void CEnemyCharacter::DrawEnemy002(int NumPrts, int nNumber)
 //======================
 void CEnemyCharacter::LoodEnemy(const char* aSelect)
 {
-	int nCount = 0;                      //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;                   //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;             //生成するパーツ数のカウントするための変数
-	char aPrtsPass[MAX_PARTS_SEARCH];    //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[MAX_DATA_SEARCH]; //必要な情報を読み取る際の文字列を読みむための変数
-								       
-	int nMotionCount = 0;                //モーションの数をカウントするための変数
-	int nKeySetCount = 0;                //モーションのキーセットの数をカウントするための変数
-								         
-	FILE* m_pFile = nullptr;             //ファイルポインター
+	int nCount = N_INIT_NUMBER;                      //最初のパーツ数をカウントするための変数
+	int nKeyCount = N_INIT_NUMBER;                   //モーションのキーをカウントするための変数
+	int nModelPrtsCount = N_INIT_NUMBER;             //生成するパーツ数のカウントするための変数
+	int nMotionCount = N_INIT_NUMBER;                //モーションの数をカウントするための変数
+	int nKeySetCount = N_INIT_NUMBER;                //モーションのキーセットの数をカウントするための変数
+
+	char aPrtsPass[MAX_PARTS_SEARCH];                //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH];             //必要な情報を読み取る際の文字列を読みむための変数
+								      	             
+								                     
+	FILE* m_pFile = nullptr;                         //ファイルポインター
 
 	//敵０番目を選択
 	if (aSelect == "Enemy000")
@@ -288,8 +289,14 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 					//モデルパーツカウントが最大数より小さい時
 					if (nModelPrtsCount < MAX_ENEMYPARTS)
 					{
-						m_pLoodModelPrtsEnemy[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-						m_pLoodModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsEnemy(nModelPrtsCount));													   //情報を同期させる
+						//パーツの生成
+						m_pLoodModelPrtsEnemy[nModelPrtsCount] = CModelPrts::Create(
+							D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER),
+							D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER), 
+							&aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat()); 
+
+						//情報を同期させる
+						m_pLoodModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsEnemy(nModelPrtsCount));	
 						nModelPrtsCount++; //配列を進める
 					}
 				}
@@ -343,13 +350,15 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 								//インデックスを読み取る条件
 								if (!strcmp(m_aDataSearch, "INDEX"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexPrts()); //パーツのインデックスを読み取る
+									//パーツのインデックスを読み取る
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexPrts());
 								}
 
 								//親パーツかどうかを読み取る条件
 								else if (!strcmp(m_aDataSearch, "PARENT"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts()); //親パーツかを読み取る
+									//親パーツかを読み取る
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts());
 
 									//読み込んだ値がー１の時
 									if (m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts() == -1)
@@ -360,7 +369,8 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 									//その他
 									else
 									{
-										m_pLoodModelPrtsEnemy[nCount]->SetParent(m_pLoodModelPrtsEnemy[m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts()]); //親である情報を入れる
+										//親である情報を入れる
+										m_pLoodModelPrtsEnemy[nCount]->SetParent(m_pLoodModelPrtsEnemy[m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts()]);
 									}
 								}
 

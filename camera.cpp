@@ -39,10 +39,10 @@ CCamera::~CCamera()
 //========================
 HRESULT CCamera::Init()
 {
-	m_posV = D3DXVECTOR3(0.0f, 0.0f, 0.0f);      //視点を調整
-	m_posR = D3DXVECTOR3(0.0f, 0.0f, 0.0f);      //注視点を調整
-	m_vecU = D3DXVECTOR3(0.0f, 1.0f, 0.0f);      //上方向の調整
-	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);       //向きの調整
+	m_posV = D3DXVECTOR3(F_INIT_NUNBER, F_INIT_NUNBER, F_INIT_NUNBER);      //視点を調整
+	m_posR = D3DXVECTOR3(F_INIT_NUNBER, F_INIT_NUNBER, F_INIT_NUNBER);      //注視点を調整
+	m_vecU = D3DXVECTOR3(F_INIT_NUNBER, F_INIT_NUNBER_VECU_Y, F_INIT_NUNBER);      //上方向の調整
+	m_rot = D3DXVECTOR3(F_INIT_NUNBER, F_INIT_NUNBER, F_INIT_NUNBER);       //向きの調整
 	m_fSavePosV = m_posV;                        //視点と同期させる
 
 	return S_OK; //成功を返す
@@ -115,7 +115,7 @@ void CCamera::Update()
 
 	//else if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_V) == true)
 	//{
-	//	rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	//	rot = D3DXVECTOR3(F_INIT_NUNBER, F_INIT_NUNBER, F_INIT_NUNBER);
 	//}
 
 

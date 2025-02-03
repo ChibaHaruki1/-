@@ -195,7 +195,7 @@ CGameOverBg::~CGameOverBg()
 //=================================
 void CGameOverBg::Update()
 {
-	SetRandom(1 + rand() % MAX_RAND);  //乱数を生成
+	SetRandom(FIRST_NUMBER + rand() % MAX_RAND);  //乱数を生成
 	GetFrame()++;                      //フレームを増やす
 
 	//フレームが規定数以上行った時
@@ -205,23 +205,23 @@ void CGameOverBg::Update()
 		//個数で分割（４つあるから４分割の値で計算）
 		//===============================================
 
-		if (GetRandom() >= 1 && GetRandom() <= MAX_RAND*0.25)
+		if (GetRandom() >= FIRST_NUMBER && GetRandom() <= MAX_RAND* ONE_QUARTER)
 		{
-			SetSIze(0.0f, CMain::SCREEN_WIDTH, 100.0f, CMain::SCREEN_HEIGHT + 100.0f); //大きさの設定
+			SetSIze(0.0f, CMain::SCREEN_WIDTH, FIRST_SIZE_Y, CMain::SCREEN_HEIGHT + FIRST_PLUS_SIZE1_Y); //大きさの設定
 			SetAlph(255);  //alpha値の初期化
 			SetFrame(0);   //フレームの初期化
 		}
 
-		else if (GetRandom() >= MAX_RAND * 0.25+1 && GetRandom() <= MAX_RAND*0.5)
+		else if (GetRandom() >= MAX_RAND * ONE_QUARTER + NEXT_PLUS && GetRandom() <= MAX_RAND* TWO_QUARTER)
 		{
-			SetSIze(0.0f, CMain::SCREEN_WIDTH, -100.0f, CMain::SCREEN_HEIGHT - 100.0f); //大きさの設定
+			SetSIze(0.0f, CMain::SCREEN_WIDTH, -SECOND_SIZE1_Y, CMain::SCREEN_HEIGHT - SECOND_MINUS_SIZE1_Y); //大きさの設定
 			SetAlph(255);  //alpha値の初期化
 			SetFrame(0);   //フレームの初期化
 		}
 
-		else if (GetRandom() >= MAX_RAND * 0.5+1 && GetRandom() <= MAX_RAND*0.75)
+		else if (GetRandom() >= MAX_RAND * TWO_QUARTER + NEXT_PLUS && GetRandom() <= MAX_RAND* THREE_QUARTER)
 		{
-			SetSIze(-200.0f, CMain::SCREEN_WIDTH - 200.0f, 0.0f, CMain::SCREEN_HEIGHT);
+			SetSIze(-THIRD_SIZE_X, CMain::SCREEN_WIDTH - THIRD_MINUS_SIZE1_X, 0.0f, CMain::SCREEN_HEIGHT);
 			SetAlph(155);  //alpha値を下げる
 			SetFrame(0);   //フレームの初期化
 		}

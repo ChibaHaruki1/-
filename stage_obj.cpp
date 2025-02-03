@@ -22,7 +22,7 @@ std::string u8TelephonPoleNumberText = u8"番目の";   //日本語対応
 
 //===========================
 //static変数の初期化
-int CStageObj::m_nTelephonPoleCount = 0; //電柱のファイルに書き込む数を初期化
+int CStageObj::m_nTelephonPoleCount = N_INIT_NUMBER; //電柱のファイルに書き込む数を初期化
 
 
 //============================
@@ -126,7 +126,7 @@ CStageObj* CStageObj::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 	//タイプが電柱の時
 	if (type == CObjectX::TYPE::TELEPHONPOLE)
 	{
-		pStageObj = new CTelephonPole(3); //動的確保
+		pStageObj = new CTelephonPole(); //動的確保
 
 		//情報がある時
 		if (pStageObj != nullptr)
@@ -139,7 +139,7 @@ CStageObj* CStageObj::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 	//タイプが監視カメラの上部分の時
 	else if (type == CObjectX::TYPE::SURVEILLANCECAMERAUP)
 	{
-		pStageObj = new CSurveillanceCameraUP(3); //動的確保
+		pStageObj = new CSurveillanceCameraUP(); //動的確保
 
 		//情報がある時
 		if (pStageObj != nullptr)
@@ -151,7 +151,7 @@ CStageObj* CStageObj::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 	//タイプが監視カメラの下部分の時
 	else if (type == CObjectX::TYPE::SURVEILLANCECAMERADOWN)
 	{
-		pStageObj = new CSurveillanceCameraDown(3); //動的確保
+		pStageObj = new CSurveillanceCameraDown(); //動的確保
 
 		//情報がある時
 		if (pStageObj != nullptr)
@@ -163,7 +163,7 @@ CStageObj* CStageObj::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 	//タイプが監視カメラの下部分の時
 	else if (type == CObjectX::TYPE::SHOP)
 	{
-		pStageObj = new CShop(3); //動的確保
+		pStageObj = new CShop(); //動的確保
 
 		//情報がある時
 		if (pStageObj != nullptr)
@@ -175,7 +175,7 @@ CStageObj* CStageObj::Create(D3DXVECTOR3 pos, CObjectX::TYPE type)
 	//タイプが壊れた家の時
 	else if (type == CObjectX::TYPE::BREAKHOUSE)
 	{
-		pStageObj = new CBreakHouse(3); //動的確保
+		pStageObj = new CBreakHouse(); //動的確保
 
 		//情報がある時
 		if (pStageObj != nullptr)
@@ -352,10 +352,11 @@ void CBreakHouse::Update()
 	//一回だけ処理を通す
 	if (GetOneFlag() == false)
 	{
-		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::FIRE, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));    //炎エフェクトを呼ぶ
+		//炎エフェクトを呼ぶ
+		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::FIRE, N_INIT_NUMBER, D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER)); 
 		CManager::GetInstance()->GetFire()->GetLife() = LIFE;                                                         //ライフを設定
 		CManager::GetInstance()->GetFire()->GetAlpha() = ALPHA;                                                       //アルファ値を設定
-		CManager::GetInstance()->GetFire()->SetSize(FIRE_EFFECT_SIZE_X, FIRE_EFFECT_SIZE_Y, 0.0f);                    //大きさを設定
+		CManager::GetInstance()->GetFire()->SetSize(FIRE_EFFECT_SIZE_X, FIRE_EFFECT_SIZE_Y, F_INIT_NUMBER);           //大きさを設定
 
 		//位置の設定
 		CManager::GetInstance()->GetFire()->SetEffect(D3DXVECTOR3(
@@ -367,7 +368,7 @@ void CBreakHouse::Update()
 	}
 
 	//ファイアーエフェクトのライフが０の時
-	if (CManager::GetInstance()->GetFire()->GetLife() <= 0)
+	if (CManager::GetInstance()->GetFire()->GetLife() <= N_INIT_NUMBER)
 	{
 		SetOneFlag(false); //もう一度通るようにする
 	}

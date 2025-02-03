@@ -49,6 +49,9 @@ private:
 	static constexpr float DRAW_MIN = 10.0f;       //描画する最小距離
 	static constexpr float DRAW_MAX = 4000.0f;     //描画する最小距離
 
+	static constexpr float F_INIT_NUNBER = 0.0f;         //float型の初期化の値
+	static constexpr float F_INIT_NUNBER_VECU_Y = 1.0f;  //上方向ベクトルのY軸の初期化の値
+
 
 	D3DXVECTOR3 m_rot;                //向き
 	D3DXVECTOR3 m_fSavePosV;          //Y軸の位置を保管する用の変数

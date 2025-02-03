@@ -25,6 +25,9 @@ public:
 
 private:
 	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0;          //int型の初期化の値  
+	static constexpr float F_INIT_NUMBER = 0.0f;     //float型の初期化の値
+
 	static constexpr float ZERO_LIGHT_POS_Z = 1.2f;  //０番目のZ軸の位置
 	static constexpr float ONE_LIGHT_POS_Z = 0.8f;   //１番目のZ軸の位置
 	static constexpr float TWO_LIGHT_POS_X = 1.0f;   //２番目のX軸の位置

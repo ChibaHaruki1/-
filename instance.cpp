@@ -17,7 +17,7 @@
 CInstance::CInstance()
 {
 	//オブジェクトの最大数分回す
-	for (int nCount = 0; nCount < MAX_OBJECT_DATA; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECT_DATA; nCount++)
 	{
 		m_pFieldBlock[nCount] = nullptr;         //地面用ブロックのポインターの初期化
 		m_pGoUpBlock[nCount] = nullptr;          //上がるためのブロックのポインターの初期化
@@ -32,7 +32,7 @@ CInstance::CInstance()
 	}
 
 	//ステージオブジェクトの最大数分回す
-	for (int nCount1 = 0; nCount1 < MAX_STAGEOBJECT; nCount1++)
+	for (int nCount1 = N_INIT_NUMBER; nCount1 < MAX_STAGEOBJECT; nCount1++)
 	{
 		m_pTelephonPole[nCount1] = nullptr;            //電柱のポインターの初期化
 		m_pSurveillanceCameraUp[nCount1] = nullptr;    //監視カメラの上の部分のポインターの初期化
@@ -41,44 +41,46 @@ CInstance::CInstance()
 	}
 
 	//がれきの最大数分回す
-	for (int nCount2 = 0; nCount2 < MAX_RUBBLE; nCount2++)
+	for (int nCount2 = N_INIT_NUMBER; nCount2 < MAX_RUBBLE; nCount2++)
 	{
 		m_pWoodenBoard[nCount2] = nullptr;  //木の板群のポインターの初期化
 	}
 
 	//敵の最大数分回す
-	for (int nCount3 = 0; nCount3 < MAX_ENEMY; nCount3++)
+	for (int nCount3 = N_INIT_NUMBER; nCount3 < MAX_ENEMY; nCount3++)
 	{
 		m_pEnemy001[nCount3] = nullptr;     //敵001のポインターの初期化
 		m_pEnemy002[nCount3] = nullptr;     //敵001のポインターの初期化
 	}
 
 	//壊れた家分回す
-	for (int nCount4 = 0; nCount4 < MAX_BREAKHOUSE; nCount4++)
+	for (int nCount4 = N_INIT_NUMBER; nCount4 < MAX_BREAKHOUSE; nCount4++)
 	{
 		m_pBreakHouse[nCount4] = nullptr;   //壊れた家のポインターの初期化
 	}
 
 	//モーション付きの敵の分回す
-	for (int nCount5 = 0; nCount5 < MAX_ENEMYINMOTION; nCount5++)
+	for (int nCount5 = N_INIT_NUMBER; nCount5 < MAX_ENEMYINMOTION; nCount5++)
 	{
 		m_pEnemyInMotion000[nCount5] = nullptr; //モーション付きの敵のポインターの初期化
 		m_pEnemyInMotion001[nCount5] = nullptr; //モーション付きの敵001のポインターの初期化
 		m_pEnemyInMotion002[nCount5] = nullptr; //モーション付きの敵002のポインターの初期化
 	}
 
-	//2Dのインスタンスの初期化
-	m_pShopScreen = nullptr;    //ショップ時の背景のポインターの初期化
-	m_pPlayerHPGage = nullptr;  //
-	m_pBossHPGage = nullptr;
-	m_pGameScore = nullptr;
-
-	//３Dの初期化
-	m_pFuelGage = nullptr;
-	for (int nShip = 0; nShip < MAX_SHIP; nShip++)
+	//スペースシップの数分回す
+	for (int nShip = N_INIT_NUMBER; nShip < MAX_SHIP; nShip++)
 	{
 		m_pSpeceBattleShip000[nShip] = nullptr; //次のステージへ行くオブジェクトの初期化
 	}
+
+	//2Dのインスタンスの初期化
+	m_pShopScreen = nullptr;    //ショップ時の背景のポインターの初期化
+	m_pPlayerHPGage = nullptr;  //プレイヤーのHPゲージのポインターの初期化
+	m_pBossHPGage = nullptr;    //ボスのHPゲージのポインターの初期化
+	m_pGameScore = nullptr;     //スコアのポインターの初期化
+
+	//３Dの初期化
+	m_pFuelGage = nullptr;
 	m_pShop = nullptr;               //店の初期化
 	m_pEffect = nullptr;             //プレイヤーの弾につくエフェクトの初期化
 	m_pExplosion = nullptr;          //爆発エフェクトの初期化
@@ -98,23 +100,23 @@ CInstance::CInstance()
 	m_pFinalCeiling = nullptr;       //最終ステージの天井ブロックのポインターの初期化
 
 	//作られた数の初期化（作る前にインクリメントするためー１で初期化）
-	m_nNumFiledBlock = -1;           //地面用ブロックの数を初期化
-	m_nNumGoUpBlock = -1;            //上がる用ブロックの数を初期化
-	m_nRoadBlock = -1;               //道用ブロックの数を初期化
-	m_nWallRoadBlock = -1;           //壁兼道用ブロックの数を初期化
-	m_nWallRoadBlock001 = -1;        //壁兼道用ブロック001の数を初期化
-	m_nSmallBlock = -1;              //小さいブロックの数を初期化
-	m_nSmallBlock001 = -1;           //小さいブロック001の数を初期化
-	m_nUpWallBlock = -1;             //上壁用ブロックの数を初期化
-	m_nEnemy001 = -1;                //敵001の数を初期化
-	m_nEnemy002 = -1;                //敵002の数を初期化
-	m_nEnemyInMotion = -1;           //モーション付きの敵の数を初期化
-	m_nEnemyInMotion001 = -1;        //モーション付きの敵001の数を初期化
-	m_nEnemyInMotion002 = -1;        //モーション付きの敵002の数を初期化
-	m_nWoodenBoard = -1;             //木の板群の数を初期化
-	m_nBreakHouse = -1;              //壊れた家の数を初期化
-	m_nShip = -1;                    //スペースシップの数を初期化
-	m_nLaser = -1;                   //レーザーの数を初期化
+	m_nNumFiledBlock = N_INIT_CREATE_NUMBER;           //地面用ブロックの数を初期化
+	m_nNumGoUpBlock = N_INIT_CREATE_NUMBER;            //上がる用ブロックの数を初期化
+	m_nRoadBlock = N_INIT_CREATE_NUMBER;               //道用ブロックの数を初期化
+	m_nWallRoadBlock = N_INIT_CREATE_NUMBER;           //壁兼道用ブロックの数を初期化
+	m_nWallRoadBlock001 = N_INIT_CREATE_NUMBER;        //壁兼道用ブロック001の数を初期化
+	m_nSmallBlock = N_INIT_CREATE_NUMBER;              //小さいブロックの数を初期化
+	m_nSmallBlock001 = N_INIT_CREATE_NUMBER;           //小さいブロック001の数を初期化
+	m_nUpWallBlock = N_INIT_CREATE_NUMBER;             //上壁用ブロックの数を初期化
+	m_nEnemy001 = N_INIT_CREATE_NUMBER;                //敵001の数を初期化
+	m_nEnemy002 = N_INIT_CREATE_NUMBER;                //敵002の数を初期化
+	m_nEnemyInMotion = N_INIT_CREATE_NUMBER;           //モーション付きの敵の数を初期化
+	m_nEnemyInMotion001 = N_INIT_CREATE_NUMBER;        //モーション付きの敵001の数を初期化
+	m_nEnemyInMotion002 = N_INIT_CREATE_NUMBER;        //モーション付きの敵002の数を初期化
+	m_nWoodenBoard = N_INIT_CREATE_NUMBER;             //木の板群の数を初期化
+	m_nBreakHouse = N_INIT_CREATE_NUMBER;              //壊れた家の数を初期化
+	m_nShip = N_INIT_CREATE_NUMBER;                    //スペースシップの数を初期化
+	m_nLaser = N_INIT_CREATE_NUMBER;                   //レーザーの数を初期化
 }
 
 
@@ -142,7 +144,7 @@ HRESULT CInstance::Init()
 void CInstance::Uninit()
 {
 	//オブジェクトの最大数分回す
-	for (int nCount = 0; nCount < MAX_OBJECT_DATA; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECT_DATA; nCount++)
 	{
 		m_pFieldBlock[nCount] = nullptr;         //地面用ブロックのポインターの初期化
 		m_pGoUpBlock[nCount] = nullptr;          //上がるためのブロックのポインターの初期化
@@ -157,7 +159,7 @@ void CInstance::Uninit()
 	}
 
 	//ステージオブジェクトの最大数分回す
-	for (int nCount1 = 0; nCount1 < MAX_STAGEOBJECT; nCount1++)
+	for (int nCount1 = N_INIT_NUMBER; nCount1 < MAX_STAGEOBJECT; nCount1++)
 	{
 		m_pTelephonPole[nCount1] = nullptr;            //電柱のポインターの初期化
 		m_pSurveillanceCameraUp[nCount1] = nullptr;    //監視カメラの上の部分のポインターの初期化
@@ -166,30 +168,36 @@ void CInstance::Uninit()
 	}
 
 	//がれきの最大数分回す
-	for (int nCount2 = 0; nCount2 < MAX_RUBBLE; nCount2++)
+	for (int nCount2 = N_INIT_NUMBER; nCount2 < MAX_RUBBLE; nCount2++)
 	{
 		m_pWoodenBoard[nCount2] = nullptr;  //木の板群のポインターの初期化
 	}
 
 	//敵の最大数分回す
-	for (int nCount3 = 0; nCount3 < MAX_ENEMY; nCount3++)
+	for (int nCount3 = N_INIT_NUMBER; nCount3 < MAX_ENEMY; nCount3++)
 	{
 		m_pEnemy001[nCount3] = nullptr;     //敵001のポインターの初期化
 		m_pEnemy002[nCount3] = nullptr;     //敵001のポインターの初期化
 	}
 
 	//壊れた家分回す
-	for (int nCount4 = 0; nCount4 < MAX_BREAKHOUSE; nCount4++)
+	for (int nCount4 = N_INIT_NUMBER; nCount4 < MAX_BREAKHOUSE; nCount4++)
 	{
 		m_pBreakHouse[nCount4] = nullptr;   //壊れた家のポインターの初期化
 	}
 
 	//モーション付きの敵の分回す
-	for (int nCount5 = 0; nCount5 < MAX_ENEMYINMOTION; nCount5++)
+	for (int nCount5 = N_INIT_NUMBER; nCount5 < MAX_ENEMYINMOTION; nCount5++)
 	{
 		m_pEnemyInMotion000[nCount5] = nullptr; //モーション付きの敵のポインターの初期化
 		m_pEnemyInMotion001[nCount5] = nullptr; //モーション付きの敵001のポインターの初期化
 		m_pEnemyInMotion002[nCount5] = nullptr; //モーション付きの敵002のポインターの初期化
+	}
+
+	//スペースシップの数分回す
+	for (int nShip = N_INIT_NUMBER; nShip < MAX_SHIP; nShip++)
+	{
+		m_pSpeceBattleShip000[nShip] = nullptr; //次のステージへ行くオブジェクトの初期化
 	}
 
 	//2Dのインスタンスの初期化
@@ -200,11 +208,6 @@ void CInstance::Uninit()
 
 	//３Dの初期化
 	m_pFuelGage = nullptr;
-
-	for (int nShip = 0; nShip < MAX_SHIP; nShip++)
-	{
-		m_pSpeceBattleShip000[nShip] = nullptr; //次のステージへ行くオブジェクトの初期化
-	}
 	m_pShop = nullptr;               //店の初期化
 	m_pEffect = nullptr;             //プレイヤーの弾につくエフェクトの初期化
 	m_pExplosion = nullptr;          //爆発エフェクトの初期化
@@ -645,7 +648,7 @@ CObjectX* CInstance::CreateRubble(CObjectX::STRATEGYTYPE type, D3DXVECTOR3 pos)
 	//タイプが木の板群の時
 	if (type == CObjectX::STRATEGYTYPE::WODDENBORAD)
 	{
-		m_nWoodenBoard++;                                                         //作られた数を増やす
+		m_nWoodenBoard++;                                                          //作られた数を増やす
 		return m_pWoodenBoard[m_nWoodenBoard] = CManagerBlock::Create(pos, type);  //木の板群の生成
 	}
 

@@ -49,13 +49,21 @@ public:
 	int& GetClearScore() { return m_nClearScore; }      //現在のスコアを保管する用の変数を取得
 
 private:
-
 	//マクロ定義
-	constexpr static int MAX_DATAMOJI = 200; //文字列の配列の最大数
+	static constexpr int N_INIT_NUMBER = 0;                 //int型の初期化の値  
+	static constexpr float F_INIT_NUMBER = 0.0f;            //float型の初期化の値
+												            
+	static constexpr  int MAX_DATAMOJI = 200;               //文字列の配列の最大数
+
+	static constexpr float CAMERA_PLUS_POS_X = 20.0f;       //カメラのX軸の位置
+	static constexpr float CAMERA_MINUS_POS_Z = 50.0f;      //カメラのZ軸の位置
+	static constexpr float CAMERA_UP_PLUS_POS_Y = 180.0f;   //カメラの上部分のY軸の値を加算する値
+	static constexpr float CAMERA_DOWN_PLUS_POS_Y = 170.0f; //カメラの下部分のY軸の値を加算する値
+
 
 	//テキストファイルから読み込む時に使うメンバ変数
-	char m_aData[MAX_DATAMOJI];  //文字列を読み取る　
-	static int m_nClearScore;    //現在のスコアを保管する用の変数
+	static int m_nClearScore;                   //現在のスコアを保管する用の変数
+	char m_aData[MAX_DATAMOJI];                 //文字列を読み取る　
 
 	//テキストファイルの読み書きに使うメンバ変数
 	const char* m_aFieldBlockStratName;         //地面用のブロックの読み込み用の名前変数

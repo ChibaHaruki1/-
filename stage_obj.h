@@ -26,7 +26,10 @@ public:
 	static CStageObj* Create(D3DXVECTOR3 pos,CObjectX::TYPE type);                       //継承クラスをタイプごとに生成
 
 private:
-	static int m_nTelephonPoleCount;  //電柱の作られた数をカウントする為の変数
+	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0; //int型の初期化の値
+
+	static int m_nTelephonPoleCount;        //電柱の作られた数をカウントする為の変数
 };
 
 
@@ -84,6 +87,9 @@ public:
 
 private:
 	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0;                     //int型の初期化の値
+	static constexpr float F_INIT_NUMBER = 0.0f;                //float型の初期化の値
+
 	static constexpr int LIFE = 180;                            //ライフの最大値
 	static constexpr int ALPHA = 170;                           //アルファ値
 

@@ -136,6 +136,11 @@ public:
 	}*/
 
 private:
+	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0;         //int型の初期化の値
+	static constexpr int N_INIT_CREATE_NUMBER = -1; //生成数の初期値
+
+
 	//ブロックのインスタンスを生成
 	CManagerBlock* m_pFieldBlock[MAX_OBJECT_DATA];       //地面用ブロックのインスタンス
 	CManagerBlock* m_pGoUpBlock[MAX_OBJECT_DATA];        //上がるためのブロックのインスタンス

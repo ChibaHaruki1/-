@@ -19,24 +19,24 @@
 CCharacter::CCharacter(int nPriority) : CObjectX(nPriority)
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount = 0; nCount < MAX_PRTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS; nCount++)
 	{
-		m_pModelPrts[nCount] = nullptr;                         //プレイヤーのパーツの初期化
-		SaveMotionPos[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);  //各パーツの場所の保管場所の初期化
-		m_pSaveModelPrtInfo[nCount] = {};                       //モデルパーツの保管情報の初期化
+		m_pModelPrts[nCount] = nullptr;                                                   //プレイヤーのパーツの初期化
+		SaveMotionPos[nCount] = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //各パーツの場所の保管場所の初期化
+		m_pSaveModelPrtInfo[nCount] = {};                                                 //モデルパーツの保管情報の初期化
 	}
 
 	//ボスのパーツ数分回す
-	for (int nCount1 = 0; nCount1 < MAX_BOSSPARTS; nCount1++)
+	for (int nCount1 = N_INIT_NUMBER; nCount1 < MAX_BOSSPARTS; nCount1++)
 	{
-		m_pModelPrtsBoss[nCount1] = nullptr;                         //ボスのパーツの初期化
-		SaveMotionPosBoss[nCount1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);	 //各パーツの場所の保管場所の初期化
-		m_pSaveModelPrtInfoBoss[nCount1] = {};						 //モデルパーツの保管情報の初期化
+		m_pModelPrtsBoss[nCount1] = nullptr;                                                   //ボスのパーツの初期化
+		SaveMotionPosBoss[nCount1] = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //各パーツの場所の保管場所の初期化
+		m_pSaveModelPrtInfoBoss[nCount1] = {};						                           //モデルパーツの保管情報の初期化
 	}
 
-	m_nMotionFrameBoss = 0;              //ボスのモーション時のフレームを初期化
-	MotionCount = 0;                     //プレイヤーのモーションカウントの初期化
-	MotionCountBoss = 0;                 //ボスのモーションカウントの初期化
+	m_nMotionFrameBoss = N_INIT_NUMBER;  //ボスのモーション時のフレームを初期化
+	MotionCount = N_INIT_NUMBER;         //プレイヤーのモーションカウントの初期化
+	MotionCountBoss = N_INIT_NUMBER;     //ボスのモーションカウントの初期化
 	m_bMotionType = false;               //プレイヤーのモーション判定の初期化
 	m_bMotionBossType = false;           //ボスのモーション判定の初期化
 	m_MotionState = NEUTRAL;             //プレイヤーのモーションの状態の初期化
@@ -76,7 +76,7 @@ void CCharacter::Uninit()
 	CObjectX::Uninit(); //破棄処理を呼ぶ
 
 	//プレイヤーのパーツ分回す
-	for (int nCount = 0; nCount < MAX_PRTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrts[nCount] != nullptr)
@@ -88,7 +88,7 @@ void CCharacter::Uninit()
 	}
 
 	//ボスのパーツ分回す
-	for (int nCount1 = 0; nCount1 < MAX_BOSSPARTS; nCount1++)
+	for (int nCount1 = N_INIT_NUMBER; nCount1 < MAX_BOSSPARTS; nCount1++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsBoss[nCount1] != nullptr)
@@ -108,9 +108,10 @@ void CCharacter::UpdatePlayer()
 	MotionInfo(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = 0; nCount < MAX_PRTS-2; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS-2; nCount++)
 	{
-		GetPosParts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);            //各パーツを保管値＋現在の値で修正
+		//各パーツを保管値＋現在の値で修正
+		GetPosParts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);  
 	}
 
 	//左向きの時
@@ -141,18 +142,20 @@ void CCharacter::UpdateBoss()
 	MotionInfoBoss(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = 0; nCount < MAX_BOSSPARTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_BOSSPARTS; nCount++)
 	{
 		//上半身
 		if (nCount <= PLAYER_PARTS_LEFTHAND_NUMBER)
 		{
-			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);           //各パーツを保管値＋現在の値で修正
+			//各パーツを保管値＋現在の値で修正
+			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z); 
 		}
 
 		//下半身
 		else if (nCount >= BOSS_PARTS_WAIST_NUMBER)
 		{
-			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y + BOSS_PLUS_POS_Y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);  //各パーツを保管値＋現在の値で修正
+			//各パーツを保管値＋現在の値で修正
+			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y + BOSS_PLUS_POS_Y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);
 		}
 	}
 
@@ -217,7 +220,7 @@ void CCharacter::DrawPlayer(int NumPrts)
 	//pDevice->SetTransform(D3DTS_WORLD, &pMtx);
 
 	//パーツ数分回す
-	for (int nCount = 0; nCount < NumPrts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < NumPrts; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrts[nCount] != nullptr)
@@ -261,7 +264,7 @@ void CCharacter::DrawBoss(int NumPrts)
 	//pDevice->SetTransform(D3DTS_WORLD, &pMtx);
 
 	//パーツ数分回す
-	for (int nCount = 0; nCount < NumPrts; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < NumPrts; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsBoss[nCount] != nullptr)
@@ -277,16 +280,16 @@ void CCharacter::DrawBoss(int NumPrts)
 //======================
 void CCharacter::Lood()
 {
-	int nCount = 0;                      //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;                   //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;             //生成するパーツ数のカウントするための変数
-	char aPrtsPass[MAX_PARTS_SEARCH];    //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[MAX_DATA_SEARCH]; //必要な情報を読み取る際の文字列を読みむための変数
+	int nCount = N_INIT_NUMBER;                      //最初のパーツ数をカウントするための変数
+	int nKeyCount = N_INIT_NUMBER;                   //モーションのキーをカウントするための変数
+	int nModelPrtsCount = N_INIT_NUMBER;             //生成するパーツ数のカウントするための変数
+	int nMotionCount = N_INIT_NUMBER;                //モーションの数をカウントするための変数
+	int nKeySetCount = N_INIT_NUMBER;                //モーションのキーセットの数をカウントするための変数
 
-	int nMotionCount = 0;                //モーションの数をカウントするための変数
-	int nKeySetCount = 0;                //モーションのキーセットの数をカウントするための変数
+	char aPrtsPass[MAX_PARTS_SEARCH];                //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH];             //必要な情報を読み取る際の文字列を読みむための変数
 								         
-	FILE* m_pFile=nullptr;               //ファイルポインター
+	FILE* m_pFile = nullptr;                         //ファイルポインター
 
 	m_pFile = fopen("data\\motion\\normal_motion\\motion_normal.txt", "r"); //ファイルを開く
 
@@ -318,10 +321,16 @@ void CCharacter::Lood()
 					//モデルパーツカウントが最大数より小さい時
 					if (nModelPrtsCount < MAX_PRTS)
 					{
+						//情報がない時
 						if (m_pModelPrts[nModelPrtsCount] == nullptr)
 						{
-							m_pModelPrts[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-							m_pModelPrts[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizeParts(nModelPrtsCount));                                                             //情報を同期させる
+							//パーツの生成
+							m_pModelPrts[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER), 
+								D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER),
+								&aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());
+
+							//情報を同期させる
+							m_pModelPrts[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizeParts(nModelPrtsCount));                                                        
 						}
 						nModelPrtsCount++; //配列を進める
 					}
@@ -394,7 +403,8 @@ void CCharacter::Lood()
 								//位置の読み込み条件
 								else if (!strcmp(m_aDataSearch, "POS"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrts[nCount]->GetPos().x, &m_pModelPrts[nCount]->GetPos().y, &m_pModelPrts[nCount]->GetPos().z); //位置の同期
+									//位置の同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrts[nCount]->GetPos().x, &m_pModelPrts[nCount]->GetPos().y, &m_pModelPrts[nCount]->GetPos().z);
 									m_pSaveModelPrtInfo[nCount].pos = m_pModelPrts[nCount]->GetPos();                     //位置を保管する
 									//m_pSaveModelPrtInfo[nCount].pos += MotionSetPlayer[0].KeySet[0].aKey[nCount].pos;  
 								}
@@ -402,7 +412,8 @@ void CCharacter::Lood()
 								//向きの読み込み条件
 								else if (!strcmp(m_aDataSearch, "ROT"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrts[nCount]->GetRot().x, &m_pModelPrts[nCount]->GetRot().y, &m_pModelPrts[nCount]->GetRot().z); //位置の同期
+									//向きの同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrts[nCount]->GetRot().x, &m_pModelPrts[nCount]->GetRot().y, &m_pModelPrts[nCount]->GetRot().z);
 									m_pSaveModelPrtInfo[nCount].rot = m_pModelPrts[nCount]->GetRot();                     //向きを保管する
 									//m_pSaveModelPrtInfo[nCount].rot += MotionSetPlayer[0].KeySet[0].aKey[nCount].rot;
 								}
@@ -416,7 +427,7 @@ void CCharacter::Lood()
 				//モーションの情報を読み込む処理
 				if (!strcmp(m_aDataSearch, "MOTIONSET"))
 				{
-					int LoopType = 0; //ループするかどうかの判定用変数
+					int LoopType = N_INIT_NUMBER; //ループするかどうかの判定用変数
 
 					//ループ
 					while (1)
@@ -486,7 +497,8 @@ void CCharacter::Lood()
 								//フレームを読み取る条件
 								if (!strcmp(m_aDataSearch, "FRAME"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].Frame); //フレーム数を検索
+									//フレーム数を検索
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].Frame);
 								}
 									
 								//キーの中身の情報を読み取る条件
@@ -507,18 +519,20 @@ void CCharacter::Lood()
 										//位置の情報を読み取る条件
 										if (!strcmp(m_aDataSearch, "POS"))
 										{
+											//位置の同期
 											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.x,
 												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.y,
-												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z); //位置の同期
+												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z);
 											//GetPos() = MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nCount].pos;
 										}
 
 										//向きの情報を読み取る条件
 										else if (!strcmp(m_aDataSearch, "ROT"))
 										{
+											//向きの同期
 											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.x,
 												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.y,
-												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z); //向きの同期
+												                                       &MotionSetPlayer[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z);
 										}
 
 										//終了条件
@@ -551,7 +565,7 @@ void CCharacter::Lood()
 	for (int nCount = 0; nCount < PLAYER_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
 		//現在のパーツの次のパーツ分回す(手の場合、肩から上腕から下腕から手の順になるが、腕は手の情報までいらないので現在のパーツ＋１で増やしていく)
-		for (int Next = 0; Next < nCount + 1; Next++)
+		for (int Next = 0; Next < nCount + PLAYER_NEXT_PARTS_COUNT; Next++)
 		{
 			//右側のパーツ数
 			SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pSaveModelPrtInfo[Next + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND].pos;
@@ -565,7 +579,7 @@ void CCharacter::Lood()
 	}
 
 	//下半身のpartsの位置を取得(腰から下なので腰番号＋１)
-	for (int nCount1 = PLAYER_PARTS_WAIST_NUMBER + 1; nCount1 <= PLAYER_PARTS_LOWER_BODY_COUNT + PLAYER_PARTS_WAIST_NUMBER ; nCount1++)
+	for (int nCount1 = PLAYER_PARTS_WAIST_NUMBER + PLAYER_NEXT_PARTS_COUNT; nCount1 <= PLAYER_PARTS_LOWER_BODY_COUNT + PLAYER_PARTS_WAIST_NUMBER ; nCount1++)
 	{
 		SaveMotionPos[nCount1] += m_pModelPrts[nCount1]->GetPos();         //下半身の各パーツ
 
@@ -596,16 +610,16 @@ void CCharacter::Lood()
 //======================
 void CCharacter::LoodBoss()
 {
-	int nCount = 0;                       //最初のパーツ数をカウントするための変数
-	int nKeyCount = 0;                    //モーションのキーをカウントするための変数
-	int nModelPrtsCount = 0;              //生成するパーツ数のカウントするための変数
-	char aPrtsPass[MAX_PARTS_SEARCH];     //各パーツを読み取る際のパスを読み込むための変数
-	char m_aDataSearch[MAX_DATA_SEARCH];  //必要な情報を読み取る際の文字列を読みむための変数
+	int nCount = N_INIT_NUMBER;                       //最初のパーツ数をカウントするための変数
+	int nKeyCount = N_INIT_NUMBER;                    //モーションのキーをカウントするための変数
+	int nModelPrtsCount = N_INIT_NUMBER;              //生成するパーツ数のカウントするための変数
+	int nMotionCount = N_INIT_NUMBER;                 //モーションの数をカウントするための変数
+	int nKeySetCount = N_INIT_NUMBER;                 //モーションのキーセットの数をカウントするための変数
 
-	int nMotionCount = 0;                 //モーションの数をカウントするための変数
-	int nKeySetCount = 0;                 //モーションのキーセットの数をカウントするための変数
-								          
-	FILE* m_pFile = nullptr;              //ファイルポインター
+	char aPrtsPass[MAX_PARTS_SEARCH];                 //各パーツを読み取る際のパスを読み込むための変数
+	char m_aDataSearch[MAX_DATA_SEARCH];              //必要な情報を読み取る際の文字列を読みむための変数
+								                      
+	FILE* m_pFile = nullptr;                          //ファイルポインター
 
 	m_pFile = fopen("data\\motion\\normal_motion\\motion_normalBoss.txt", "r"); //ファイルを開く
 
@@ -636,8 +650,14 @@ void CCharacter::LoodBoss()
 					//モデルパーツカウントが最大数より小さいとき
 					if (nModelPrtsCount < MAX_BOSSPARTS)
 					{
-						m_pModelPrtsBoss[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-						m_pModelPrtsBoss[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsBoss(nModelPrtsCount));														  //情報を同期させる
+						//パーツの生成
+						m_pModelPrtsBoss[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER),
+							D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER), 
+							&aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());
+
+						//情報を同期させる
+						m_pModelPrtsBoss[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsBoss(nModelPrtsCount));		
+
 						nModelPrtsCount++; //配列を進める
 					}
 				}
@@ -709,7 +729,8 @@ void CCharacter::LoodBoss()
 								//位置の読み取る条件
 								else if (!strcmp(m_aDataSearch, "POS"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsBoss[nCount]->GetPos().x, &m_pModelPrtsBoss[nCount]->GetPos().y, &m_pModelPrtsBoss[nCount]->GetPos().z); //位置の同期
+									//位置の同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsBoss[nCount]->GetPos().x, &m_pModelPrtsBoss[nCount]->GetPos().y, &m_pModelPrtsBoss[nCount]->GetPos().z);
 									m_pSaveModelPrtInfoBoss[nCount].pos = m_pModelPrtsBoss[nCount]->GetPos();                //位置を保管する
 									//m_pSaveModelPrtInfoBoss[nCount].pos += MotionSetBoss[0].KeySet[0].aKey[nCount].pos;
 								}
@@ -717,8 +738,9 @@ void CCharacter::LoodBoss()
 								//向きの情報を読み取る条件
 								else if (!strcmp(m_aDataSearch, "ROT"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsBoss[nCount]->GetRot().x, &m_pModelPrtsBoss[nCount]->GetRot().y, &m_pModelPrtsBoss[nCount]->GetRot().z); //位置の同期
-									m_pSaveModelPrtInfoBoss[nCount].rot = m_pModelPrtsBoss[nCount]->GetRot();                //位置を保管する
+									//向きの同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsBoss[nCount]->GetRot().x, &m_pModelPrtsBoss[nCount]->GetRot().y, &m_pModelPrtsBoss[nCount]->GetRot().z);
+									m_pSaveModelPrtInfoBoss[nCount].rot = m_pModelPrtsBoss[nCount]->GetRot();                //向きを保管する
 									//m_pSaveModelPrtInfoBoss[nCount].rot += MotionSetBoss[0].KeySet[0].aKey[nCount].rot;
 								}
 							}
@@ -731,7 +753,7 @@ void CCharacter::LoodBoss()
 				//モーションの情報を読み込む処理
 				if (!strcmp(m_aDataSearch, "MOTIONSET"))
 				{
-					int LoopType = 0; //ループするかどうかの判定用変数
+					int LoopType = N_INIT_NUMBER; //ループするかどうかの判定用変数
 
 					//ループ
 					while (1)
@@ -801,7 +823,8 @@ void CCharacter::LoodBoss()
 								//フレームを読み込む条件
 								if (!strcmp(m_aDataSearch, "FRAME"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &MotionSetBoss[nMotionCount].KeySet[nKeySetCount].Frame); //フレーム数を検索
+									//フレーム数を検索
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &MotionSetBoss[nMotionCount].KeySet[nKeySetCount].Frame); 
 								}
 
 								//キーの中身の情報を読み取る条件
@@ -822,17 +845,19 @@ void CCharacter::LoodBoss()
 										//位置を読み取る条件
 										if (!strcmp(m_aDataSearch, "POS"))
 										{
+											//位置の同期
 											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.x,
 												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.y,
-												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z); //位置の同期
+												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z); 
 										}
 
 										//向きを読み取る条件
 										else if (!strcmp(m_aDataSearch, "ROT"))
 										{
+											//向きの同期
 											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.x,
 												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.y,
-												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z); //向きの同期
+												&MotionSetBoss[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z); 
 										}
 
 										//終了条件
@@ -865,7 +890,7 @@ void CCharacter::LoodBoss()
 	for (int nCount = 0; nCount < BOSS_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
 		//現在のパーツの次のパーツ分回す
-		for (int nNext = 0; nNext < nCount + 1; nNext++)
+		for (int nNext = 0; nNext < nCount + BOSS_NEXT_PARTS_COUNT; nNext++)
 		{
 			//各パーツの位置を足し合わせる
 			 
@@ -882,7 +907,7 @@ void CCharacter::LoodBoss()
 	}
 
 	//下半身のpartsの位置を取得(腰から下)
-	for (int nCount1 = BOSS_PARTS_WAIST_NUMBER + 1; nCount1 < BOSS_PARTS_LOWER_BODY_COUNT + BOSS_PARTS_WAIST_NUMBER + 1; nCount1++)
+	for (int nCount1 = BOSS_PARTS_WAIST_NUMBER + BOSS_NEXT_PARTS_COUNT; nCount1 <= BOSS_PARTS_LOWER_BODY_COUNT + BOSS_PARTS_WAIST_NUMBER; nCount1++)
 	{
 		SaveMotionPosBoss[nCount1] += m_pModelPrtsBoss[nCount1]->GetPos();             //下半身の各パーツ
 
@@ -915,14 +940,14 @@ void CCharacter::LoodBoss()
 void CCharacter::MotionInfo()
 {
 	//モデルのパーツ分繰り返す
-	for (int nModelCount = 0; nModelCount < MAX_PRTS; nModelCount++)
+	for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PRTS; nModelCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrts[nModelCount] != nullptr)
 		{
 			//移動量の初期化
-			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //位置の初期化
-			D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
+			D3DXVECTOR3 pos = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //位置の初期化
+			D3DXVECTOR3 rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //向きの初期化
 
 			//移動量の変数
 			D3DXVECTOR3 Movepos = MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
@@ -961,17 +986,17 @@ void CCharacter::MotionInfo()
 	//終わりのフレームになったらカウントを最初からにする
 	if (GetFrame() == MotionSetPlayer[m_MotionState].KeySet[MotionCount].Frame)
 	{
-		SetFrame(0);   //フレームを初期化
+		SetFrame(N_INIT_NUMBER);   //フレームを初期化
 		MotionCount++; //モーションのカウントを増加
 
 		//現在のモーションのカウントが終わりまで回ったら最初からにする
 		if (MotionCount == MotionSetPlayer[m_MotionState].NumKey)
 		{
-			MotionCount = 0; //カウントを0にする
+			MotionCount = N_INIT_NUMBER; //カウントを初期化
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCount + PLAYER_NEXT_MOTION_COUNT == MotionSetPlayer[m_MotionState].NumKey && MotionSetPlayer[m_MotionState].Loop == 0)
+		else if (MotionCount + PLAYER_NEXT_MOTION_COUNT == MotionSetPlayer[m_MotionState].NumKey && MotionSetPlayer[m_MotionState].Loop == N_INIT_NUMBER)
 		{
 			//特殊な行動の終わり
 			m_bMotionType = false; //モーションの判定をoffにする
@@ -986,14 +1011,14 @@ void CCharacter::MotionInfo()
 void CCharacter::MotionInfoBoss()
 {
 	//モデルのパーツ分繰り返す
-	for (int nModelCount = 0; nModelCount < MAX_BOSSPARTS; nModelCount++)
+	for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_BOSSPARTS; nModelCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrtsBoss[nModelCount] != nullptr)
 		{
 			//移動量の初期化
-			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //位置の初期化
-			D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
+			D3DXVECTOR3 pos = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //位置の初期化
+			D3DXVECTOR3 rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //向きの初期化
 
 			//移動量の変数
 			D3DXVECTOR3 Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
@@ -1027,9 +1052,9 @@ void CCharacter::MotionInfoBoss()
 				//モーションの状態が歩きで設定されている時とモーションカウントがキーセットが最後の時
 				if (m_MotionStateBoss == BOSSWALK && MotionCountBoss == MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 				{
-					MotionSetBoss[BOSSWALK].KeySet[MotionCountBoss].Frame = 0; //モーションフレームを初期化
-					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                       //位置を初期化
-					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                       //向きを初期化
+					MotionSetBoss[BOSSWALK].KeySet[MotionCountBoss].Frame = N_INIT_NUMBER;  //モーションフレームを初期化
+					pos = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER);         //位置を初期化
+					rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER);         //向きを初期化
 				}
 			}
 
@@ -1039,9 +1064,9 @@ void CCharacter::MotionInfoBoss()
 				//モーションの状態が死亡で設定されている時とモーションカウントキーセットが最後の時
 				if (m_MotionStateBoss == BOSSDIE && MotionCountBoss == MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 				{
-					MotionSetBoss[BOSSDIE].KeySet[MotionCountBoss].Frame = 0; //モーションフレームを初期化
-					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                      //位置を初期化
-					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                      //向きを初期化
+					MotionSetBoss[BOSSDIE].KeySet[MotionCountBoss].Frame = N_INIT_NUMBER;   //モーションフレームを初期化
+					pos = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER);         //位置を初期化
+					rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER);         //向きを初期化
 				}
 			}
 
@@ -1056,17 +1081,17 @@ void CCharacter::MotionInfoBoss()
 	//終わりのフレームになったらカウントを最初からにする
 	if (m_nMotionFrameBoss == MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].Frame)
 	{
-		m_nMotionFrameBoss = 0; //カウントを初期化
-		MotionCountBoss++;      //モーションのカウントを増加
+		m_nMotionFrameBoss = N_INIT_NUMBER; //カウントを初期化
+		MotionCountBoss++;                  //モーションのカウントを増加
 
 		//現在のモーションのカウントが終わりまで回ったら最初からにする
 		if (MotionCountBoss == MotionSetBoss[m_MotionStateBoss].NumKey)
 		{
-			MotionCountBoss = 0; //カウントを0にする
+			MotionCountBoss = N_INIT_NUMBER; //カウントを0にする
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCountBoss + BOSS_NEXT_MOTION_COUNT == MotionSetBoss[m_MotionStateBoss].NumKey && MotionSetBoss[m_MotionStateBoss].Loop == 0)
+		else if (MotionCountBoss + BOSS_NEXT_MOTION_COUNT == MotionSetBoss[m_MotionStateBoss].NumKey && MotionSetBoss[m_MotionStateBoss].Loop == N_INIT_NUMBER)
 		{
 			//特殊な行動の終わり
 			m_bMotionBossType = false; //モーションの判定をoffにする
@@ -1084,12 +1109,12 @@ void CCharacter::SetMotion(MOTIONSTATE motiontype)
 	//現在のモーションと違ったら
 	if (m_MotionState != motiontype && m_bMotionType == false)
 	{
-		m_MotionState = motiontype; //モーションを設定
-		MotionCount = 0;            //モーションのカウントを初期化
-		SetFrame(0);                //フレームを初期化
+		m_MotionState = motiontype;      //モーションを設定
+		MotionCount = N_INIT_NUMBER;     //モーションのカウントを初期化
+		SetFrame(N_INIT_NUMBER);         //フレームを初期化
 
 		//モデルのパーツ分繰り返す
-		for (int nModelCount = 0; nModelCount < MAX_PRTS; nModelCount++)
+		for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PRTS; nModelCount++)
 		{
 			//モデルパーツの情報がある時
 			if (m_pModelPrts[nModelCount] != nullptr)
@@ -1112,12 +1137,12 @@ void CCharacter::SetMotionBoss(BOSSMOTIONSTATE motiontype)
 	//現在のモーションと違ったら
 	if (m_MotionStateBoss != motiontype && m_bMotionBossType == false)
 	{
-		m_MotionStateBoss = motiontype; //モーションを設定
-		MotionCountBoss = 0;            //モーションのカウントを初期化
-		m_nMotionFrameBoss = 0;         //フレームのカウントの初期化
+		m_MotionStateBoss = motiontype;       //モーションを設定
+		MotionCountBoss = N_INIT_NUMBER;      //モーションのカウントを初期化
+		m_nMotionFrameBoss = N_INIT_NUMBER;   //フレームのカウントの初期化
 		
 		//モデルのパーツ分繰り返す
-		for (int nModelCount = 0; nModelCount < MAX_BOSSPARTS; nModelCount++)
+		for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_BOSSPARTS; nModelCount++)
 		{
 			//モデルパーツの情報がある時
 			if (m_pModelPrtsBoss[nModelCount] != nullptr)
