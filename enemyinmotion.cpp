@@ -43,7 +43,7 @@ HRESULT CManagerEnemyInMotion::Init()
 	}
 
 	CEnemyCharacter::LoodEnemy(GetFileName());   //読み込むファイルパスを設定
-	CEnemyCharacter::SetMotionEnemy(ENEMYWALK);  //モーションの初期化
+	//CEnemyCharacter::SetMotionEnemy(ENEMYWALK);  //モーションの初期化
 
 	return S_OK;                                 //成功を返す
 }
@@ -69,7 +69,7 @@ void CManagerEnemyInMotion::Update()
 //==============================
 void CManagerEnemyInMotion::Draw()
 {
-	CEnemyCharacter::DrawEnemy(MAX_ENEMYPARTS, 1); //描画処理
+	//CEnemyCharacter::DrawEnemy(MAX_ENEMYPARTS, 1); //描画処理
 }
 
 //==============================
@@ -79,20 +79,13 @@ CManagerEnemyInMotion* CManagerEnemyInMotion::Create(D3DXVECTOR3 pos, CObjectX::
 {
 	CManagerEnemyInMotion* pEnemyInMotion = nullptr; //基底クラスのポインター
 
-	//タイプがモーション付きの敵の時
-	if (type == CObjectX::TYPE::ENEMYINMOTION)
-	{
-		pEnemyInMotion = new CEnemyInMotion();   //動的確保
-		pEnemyInMotion->SetFileName("Enemy000"); //ファイルパスの設定
-	}
-
-	//タイプがモーション付きの敵001の時
-	else if (type == CObjectX::TYPE::ENEMYINMOTION001)
+	if (type == CObjectX::TYPE::ENEMYINMOTION001)
 	{
 		pEnemyInMotion = new CEnemyInMotion001(); //動的確保
 		pEnemyInMotion->SetFileName("Enemy001");  //ファイルパスの設定
 	}
 
+	//タイプがモーション付きの敵002の時
 	else if (type == CObjectX::TYPE::ENEMYINMOTION002)
 	{
 		pEnemyInMotion = new CEnemyInMotion002(); //動的確保
@@ -111,144 +104,6 @@ CManagerEnemyInMotion* CManagerEnemyInMotion::Create(D3DXVECTOR3 pos, CObjectX::
 	}
 
 	return nullptr; //無を返す
-}
-
-
-//====================================================================================================================================
-//敵の処理
-//====================================================================================================================================
-
-//=============================
-//コンストラクタ
-//=============================
-CEnemyInMotion::CEnemyInMotion(int nPriority) : CManagerEnemyInMotion(nPriority)
-{
-	SetAdjustRot().y -= D3DX_PI_ORI; //向きの設定
-}
-
-//=============================
-//デストラクタ
-//=============================
-CEnemyInMotion::~CEnemyInMotion()
-{
-
-}
-
-//==============================
-//更新処理
-//==============================
-void CEnemyInMotion::Update()
-{
-	CEnemyCharacter::UpdateEnemy001();                                                       //モーションの情報を更新する
-
-	//プレイヤーと当たっている時
-	if (CObjectX::CollisionPlayerInEnemy(this,4.0f)==true)
-	{
-		CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYATTACK);     //モーションの種類を設定
-
-		SetAdjustFrame()++; //フレームを増やす
-
-		//フレームが規定値より高い時	
-		if (GetFrame()>= MAX_FRAME_BUULET)
-		{
-			//弾の生成
-			CManagerBullet::Create(D3DXVECTOR3(this->GetPosPartsEnemy(0).x, this->GetPosPartsEnemy(0).y, this->GetPosPartsEnemy(0).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED),
-				CManagerBullet:: SET_BULLET_LIFE, CObject3D::TYPE::ENEMYBULLET);
-
-			SetFrame(0); //フレームを０にする
-		}
-	}
-
-	//当たっていない時
-	else
-	{
-		//飛んでいない時
-		if (GetJumpFlag() == false)
-		{
-			CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYWALK);  //モーションの種類を設定
-			TargetHeadingTowards(CManager::GetScene()->GetPlayerX(), MAX_SPEED);            //プレイヤーに向かうように設定
-		}
-	}
-
-	Junp(TYPE::ENEMYINMOTION, 15.0f);                          //ジャンプと重力処理関数を呼ぶ
-
-	//地面用のブロックの生成数分回す
-	for (int nCount = 0; nCount < CManager::GetInstance()->GetFieldBlockCount() + 1; nCount++)
-	{
-		//地面用ブロックの情報がある時
-		if (CManager::GetInstance()->GetFiledBlock(nCount) != nullptr)
-		{
-			//飛ぶ
-			if (JumpNumber == -1)
-			{
-				//自機と地面用ブロックが当たったら
-				if (GetCollision() ->ColiisionBox1(GetPos(), CManager::GetInstance()->GetFiledBlock(nCount)->GetPos(), GetModelSize(), CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize() * 1.1f, GetMove()) == true)
-				{
-					//飛ぶ時のリキャストタイムが０以下の時
-					if (JumpRecastTime <= 0)
-					{
-						m_nJumpFrame++; //飛ぶまでの時間を増やす
-
-						//飛ぶまでの時間が規定値より高い時
-						if (m_nJumpFrame >= MAX_FRAME_JUMP)
-						{
-							SetJumpFlag(true); //飛ぶフラグをOnにする
-
-							m_nJumpFrame = 0;  //飛ぶまでの時間の初期化
-							JumpNumber++;      //飛ぶ番号の増加
-							return;            //処理を抜ける
-						}
-					}
-
-					//飛ぶ時間のリキャストタイムが０以上の時
-					else if (JumpRecastTime >= 0)
-					{
-						JumpRecastTime--; //減らす
-					}
-
-				}
-				else
-				{
-					//地面用ブロックの上に乗っている時
-					if (GetCollision() ->ColiisionBoxInside(GetPos(), CManager::GetInstance()->GetFiledBlock(nCount)->GetPos(), GetModelSize(), CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize(), GetMove()) == true)
-					{
-						GravityTogether(); //重力を同期させる
-
-						//y軸の位置を設定
-						SetAdjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
-							CManager::GetInstance()->GetFiledBlock(nCount)->GetPos().y;
-					}
-				}
-			}
-
-			//飛ばない
-			else if (JumpNumber == 0)
-			{
-				//自機と地面用ブロックが当たったら
-				if (GetCollision() ->ColiisionBox1(GetPos(), CManager::GetInstance()->GetFiledBlock(nCount)->GetPos(), GetModelSize(), CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize() * 1.0f, GetMove()) == true)
-				{
-					JumpRecastTime = 5; //リキャストタイムの設定
-					JumpNumber = -1;    //飛ぶ番号の次は飛ぶに設定
-					return;             //処理を抜ける
-				}
-				else
-				{
-					//地面用ブロックの上に乗っている時
-					if (GetCollision() ->ColiisionBoxInside(GetPos(), CManager::GetInstance()->GetFiledBlock(nCount)->GetPos(), GetModelSize(), CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize(), GetMove()) == true)
-					{
-						GravityTogether(); //重力を同期させる
-
-						//y軸の位置を設定
-						SetAdjustPos().y = CManager::GetInstance()->GetFiledBlock(nCount)->GetModelSize().y +
-							CManager::GetInstance()->GetFiledBlock(nCount)->GetPos().y;
-					}
-				}
-			}
-
-		}
-	}
-
-	CObjectX::Update(); //位置の更新
 }
 
 
@@ -292,7 +147,7 @@ void CEnemyInMotion001::Update()
 			//プレイヤーと当たっている時
 			if (CObjectX::CollisionPlayerInEnemy(this, 4.0f) == true)
 			{
-				CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYATTACK);  //モーションの種類を設定
+				CEnemyCharacter::SetMotionEnemy001(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYATTACK);  //モーションの種類を設定
 
 				SetAdjustFrame()++;     //弾を撃つ際のフレームを増やす
 
@@ -317,13 +172,13 @@ void CEnemyInMotion001::Update()
 			else
 			{
 				//向きの初期化
-				m_pModelPrtsEnemy[0]->GetRot().x = 0.0f;                  //パーツの向きの初期化
-				CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY);  //弾の向きの初期化
+				GetEnemy001ModelParts(0)->GetRot().x = 0.0f;                  //パーツの向きの初期化
+				CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY);     //弾の向きの初期化
 
 				//飛んでいないとき
 				if (GetJumpFlag() == false)
 				{
-					CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYWALK);  //モーションの種類を設定
+					CEnemyCharacter::SetMotionEnemy001(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYWALK);  //モーションの種類を設定
 
 					//ジャンプのリキャストタイムが切れた時
 					if (m_nJumpFrame == 0)
@@ -515,14 +370,14 @@ void CEnemyInMotion001::AdjustmentBulletAndRot()
 		//プレイヤーの向きが左向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber()==1)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x += ADJUST_PRTAS_ROTX;         //パーツのX軸の向きを加算する
+			GetEnemy001ModelParts(0)->GetRot().x += ADJUST_PRTAS_ROTX;         //パーツのX軸の向きを加算する
 			CEnemyBullet::SetAddjustAdditionPosY() -= ADJUST_BULLET_ROTY;  //弾のX軸の向きを減算する
 		}
 
 		//プレイヤーの向きが右向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 2)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
+			GetEnemy001ModelParts(0)->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
 			CEnemyBullet::SetAddjustAdditionPosY() += ADJUST_BULLET_ROTY; //弾のX軸の向きを加算する
 		}
 	}
@@ -533,14 +388,14 @@ void CEnemyInMotion001::AdjustmentBulletAndRot()
 		//プレイヤーの向きが左向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 1)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
+			GetEnemy001ModelParts(0)->GetRot().x -= ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを減算する
 			CEnemyBullet::SetAddjustAdditionPosY() += ADJUST_BULLET_ROTY; //弾のX軸の向きを加算する
 		}
 
 		//プレイヤーの向きが右向きの時
 		if (CManager::GetScene()->GetPlayerX()->GetRotNumber() == 2)
 		{
-			m_pModelPrtsEnemy[0]->GetRot().x += ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを加算する
+			GetEnemy001ModelParts(0)->GetRot().x += ADJUST_PRTAS_ROTX;        //パーツのX軸の向きを加算する
 			CEnemyBullet::SetAddjustAdditionPosY() -= ADJUST_BULLET_ROTY; //弾のX軸の向きを減算する
 		}
 	}
@@ -573,7 +428,7 @@ void CEnemyInMotion001::WhenCollisionBlock()
 						{
 							m_nJumpFrame++;             //飛ぶフレームを増やす
 
-							SetMotionEnemy(ENEMYJUMP);  //ジャンプモーションの設定
+							SetMotionEnemy001(ENEMYJUMP);  //ジャンプモーションの設定
 
 							//ジャンプフレームが規定値より高い時
 							if (m_nJumpFrame >= 40)
@@ -720,15 +575,24 @@ void CEnemyInMotion001::Correctionrot()
 	if (CEnemyBullet::GetAdditionPosY() <= -CEnemyBullet::MINUS_ROTY && CEnemyBullet::GetAdditionPosY() >= -CEnemyBullet::MINUS_ROTY+1.0f)
 	{
 		GetRot().y = -D3DX_PI_ORI;                                                                     //向きを逆に設定
-		m_pModelPrtsEnemy[0]->SetRot(D3DXVECTOR3(0.0f,0.0f,0.0f));                                     //向きの初期化
+		GetEnemy001ModelParts(0)->SetRot(D3DXVECTOR3(0.0f,0.0f,0.0f));                                 //向きの初期化
 		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADJUST_BULLET_ROTY);   //弾の出る向きを調整
 	}
 	else if (CEnemyBullet::GetAdditionPosY() >= CEnemyBullet::MINUS_ROTY * IF_ADJUST_BULLET_ROTY && CEnemyBullet::GetAdditionPosY() <= CEnemyBullet::MINUS_ROTY * IF_ADJUST_BULLET_ROTY+1.0f)
 	{
 		GetRot().y = D3DX_PI_ORI;                                                                      //向きを逆に設定
-		m_pModelPrtsEnemy[0]->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                                   //向きの初期化
+		GetEnemy001ModelParts(0)->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                               //向きの初期化
 		CEnemyBullet::SetAdditionPosY(CEnemyBullet::MINUS_ROTY * MULTIPLICATIOB_ADJUST_BULLET_ROTY);   //弾の出る向きを調整
 	}
+}
+
+
+//==============================
+//描画処理
+//==============================
+void CEnemyInMotion001::Draw()
+{
+	CEnemyCharacter::DrawEnemy001(MAX_ENEMYPARTS, 1); //描画処理
 }
 
 
@@ -775,7 +639,7 @@ void CEnemyInMotion002::Update()
 			//当たっていない時
 			else
 			{
-				CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYWALK);  //モーションの種類を設定
+				//CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYWALK);  //モーションの種類を設定
 
 				TargetHeadingTowards(CManager::GetScene()->GetPlayerX(), MAX_SPEED);            //プレイヤーに向かうように設定
 			}
@@ -783,4 +647,12 @@ void CEnemyInMotion002::Update()
 			CObjectX::Update();                                                                 //move値の更新
 		}
 	}
+}
+
+//==============================
+//描画処理
+//==============================
+void CEnemyInMotion002::Draw()
+{
+	CEnemyCharacter::DrawEnemy002(MAX_ENEMYPARTS, 1); //描画処理
 }

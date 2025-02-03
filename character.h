@@ -17,7 +17,7 @@
 //キャラクターの各パーツクラス
 class CCharacter : public CObjectX
 {
-public://外部からのアクセス可能
+public:
 	////共通化でもいいかも
 	//typedef enum
 	//{
@@ -107,38 +107,44 @@ public://外部からのアクセス可能
 	constexpr static int NUM_MOTIONBOSS = 10;   //ボスのモーションの総数
 	constexpr static int NUM_RIGHTPRTSBOSS = 8; //ボスの側のパーツ数
 
-private://外部からのアクセス不可能
+private:
 	//マクロ定義
 	static constexpr int MAX_PARTS_SEARCH = 100;                     //パーツの取得時の配列の最大数
 	static constexpr int MAX_DATA_SEARCH = 512;                      //テキストファイルの読み込み時の配列の最大数
-															         
-	static constexpr int PLAYER_PARTS_BODY_NUMBER = 0;               //プレイヤーの体の番号
-	static constexpr int PLAYER_PARTS_RIGHTHAND_NUMBER = 5;          //プレイヤーの右手の番号
-	static constexpr int PLAYER_PARTS_LEFTHAND_NUMBER = 9;           //プレイヤーの左手の番号
-	static constexpr int PLAYER_PARTS_WAIST_NUMBER = 10;             //プレイヤーの腰の番号
-	static constexpr int PLAYER_PARTS_GUN_NUMBER = 17;               //プレイヤーの銃の番号
-	static constexpr int PLAYER_PARTS_SHOULDER_FROM_HAND = 4;        //プレイヤーの肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
-	static constexpr int PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;  //プレイヤーの右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
-	static constexpr int PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND = 6;   //プレイヤーの左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
-	static constexpr int PLAYER_PARTS_LOWER_BODY_COUNT = 6;          //プレイヤーの下半身のパーツ数
-	static constexpr int PLAYER_PARTS_HEAD_AND_BODY_COUNT = 2;       //プレイヤーの頭と体の数
-	static constexpr int PLAYER_NEXT_MOTION_COUNT = 1;               //プレイヤーのモーション時の差分を求める時の次のモーションカウント
-	static constexpr int PLAYER_BEFORE_MOTION_COUNT = 1;             //プレイヤーのモーション時の差分が同じ時の前のモーションカウント
+		
 
+	//========================================================
+	//プレイヤーに関するマクロ定義
+	static constexpr int PLAYER_PARTS_BODY_NUMBER = 0;               //体の番号
+	static constexpr int PLAYER_PARTS_RIGHTHAND_NUMBER = 5;          //右手の番号
+	static constexpr int PLAYER_PARTS_LEFTHAND_NUMBER = 9;           //左手の番号
+	static constexpr int PLAYER_PARTS_WAIST_NUMBER = 10;             //腰の番号
+	static constexpr int PLAYER_PARTS_GUN_NUMBER = 17;               //銃の番号
+	static constexpr int PLAYER_PARTS_SHOULDER_FROM_HAND = 4;        //肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
+	static constexpr int PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;  //右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
+	static constexpr int PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND = 6;   //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
+	static constexpr int PLAYER_PARTS_LOWER_BODY_COUNT = 6;          //下半身のパーツ数
+	static constexpr int PLAYER_PARTS_HEAD_AND_BODY_COUNT = 2;       //頭と体の数
+	static constexpr int PLAYER_NEXT_MOTION_COUNT = 1;               //モーション時の差分を求める時の次のモーションカウント
+	static constexpr int PLAYER_BEFORE_MOTION_COUNT = 1;             //モーション時の差分が同じ時の前のモーションカウント
+	static constexpr int PLAYER_FIRST_KEYSET_NUMBER = 0;             //最初のキーセットの初めの番号
+	 
 
-	static constexpr int BOSS_PARTS_BODY_NUMBER = 0;                 //ボスの体の番号
-	static constexpr int BOSS_PARTS_RIGHTHAND_NUMBER = 5;            //ボスの右手の番号
-	static constexpr int BOSS_PARTS_LEFTHAND_NUMBER = 9;             //ボスの左手の番号
-	static constexpr int BOSS_PARTS_WAIST_NUMBER = 10;               //ボスの腰の番号
-	static constexpr int BOSS_PARTS_GUN_NUMBER = 17;                 //ボスの銃の番号
-	static constexpr int BOSS_PARTS_SHOULDER_FROM_HAND = 4;          //ボスの肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
-	static constexpr int BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;    //ボスの右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
-	static constexpr int BOSS_PARTS_LEFT_SHOULDER_FROM_HAND = 6;     //ボスの左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
-	static constexpr int BOSS_PARTS_LOWER_BODY_COUNT = 6;            //ボスの下半身のパーツ数
-	static constexpr int BOSS_PARTS_HEAD_AND_BODY_COUNT = 2;         //ボスの頭と体の数
-	static constexpr int BOSS_NEXT_MOTION_COUNT = 1;                 //ボスのモーション時の差分を求める時の次のモーションカウント
-	static constexpr int BOSS_BEFORE_MOTION_COUNT = 1;               //ボスのモーション時の差分が同じ時の前のモーションカウント
-
+	//========================================================
+	//ボスに関するマクロ定義
+	static constexpr int BOSS_PARTS_BODY_NUMBER = 0;                 //体の番号
+	static constexpr int BOSS_PARTS_RIGHTHAND_NUMBER = 5;            //右手の番号
+	static constexpr int BOSS_PARTS_LEFTHAND_NUMBER = 9;             //左手の番号
+	static constexpr int BOSS_PARTS_WAIST_NUMBER = 10;               //腰の番号
+	static constexpr int BOSS_PARTS_GUN_NUMBER = 17;                 //銃の番号
+	static constexpr int BOSS_PARTS_SHOULDER_FROM_HAND = 4;          //肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
+	static constexpr int BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;    //右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
+	static constexpr int BOSS_PARTS_LEFT_SHOULDER_FROM_HAND = 6;     //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
+	static constexpr int BOSS_PARTS_LOWER_BODY_COUNT = 6;            //下半身のパーツ数
+	static constexpr int BOSS_PARTS_HEAD_AND_BODY_COUNT = 2;         //頭と体の数
+	static constexpr int BOSS_NEXT_MOTION_COUNT = 1;                 //モーション時の差分を求める時の次のモーションカウント
+	static constexpr int BOSS_BEFORE_MOTION_COUNT = 1;               //モーション時の差分が同じ時の前のモーションカウント
+	static constexpr int BOSS_FIRST_KEYSET_NUMBER = 0;               //最初のキーセットの初めの番号
 	static constexpr float BOSS_PLUS_POS_Y= 200.0f;                  //ボスのパーツのY軸の位置を上に上げる為の値
 
 

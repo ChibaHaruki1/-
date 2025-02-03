@@ -30,44 +30,49 @@ public:
 	~CEnemyCharacter();                                        //デストラクタ
 	HRESULT Init();                                            //初期化処理
 	void Uninit();                                             //破棄処理
+
 	void UpdateEnemy001();                                     //敵001の更新処理
-	void UpdateEnemy002();                                     //敵002の更新処理
-	void DrawEnemy(int NumPrts, int nNumber);                  //描画処理
-	void LoodEnemy(const char* aSelect);                       //モデルを読み込む処理＋情報を取得する処理
+	void DrawEnemy001(int NumPrts, int nNumber);               //敵001の描画処理
 	void MotionInfoEnemy001();                                 //敵001のモーションの情報を扱う処理
+
+	void UpdateEnemy002();                                     //敵002の更新処理
+	void DrawEnemy002(int NumPrts, int nNumber);               //敵002の描画処理
 	void MotionInfoEnemy002();                                 //敵002のモーションの情報を扱う処理
+
+	void LoodEnemy(const char* aSelect);                       //モデルを読み込む処理＋情報を取得する処理
 
 
 	//===========================
 	//情報の取得
+	CModelPrts* GetEnemy001ModelParts(int nNumber) { return m_pModelPrtsEnemy001[nNumber]; }
 	int& GetEnemy001PartsNumber() { return m_nEnemy001Parts; } //敵001のパーツ数の取得
 
 
 	//===========================
 	//情報の設定
-	void SetMotionEnemy(ENEMYMOTIONSTATE motiontype);                          //ボスモーションごとの処理
+	void SetMotionEnemy001(ENEMYMOTIONSTATE motiontype);                       //敵001モーションごとの処理
+	void SetMotionEnemy002(ENEMYMOTIONSTATE motiontype);                       //敵002モーションごとの処理
 	void SetMotionType(bool bMotionType) { m_bMotionEnemyType = bMotionType; } //モーションタイプの設定
 
 
-	ENEMYMOTIONSTATE m_MotionStateEnemy;                         //ボスのモーションの種類の情報を持つ
-	CModelPrts* m_pModelPrtsEnemy[MAX_ENEMYPARTS];               //モデルパーツの情報のポインター
-															     
-private:													     
-	//マクロ定義												    
-	static constexpr int MAX_PARTS_SEARCH = 100;                 //パーツの取得時の配列の最大数
-	static constexpr int MAX_DATA_SEARCH = 512;                  //テキストファイルの読み込み時の配列の最大数
-															     
-	constexpr static int MAX_ENEMYKEYSET = 5;                    //モーションに使うキーの数
-	constexpr static int NUM_ENEMYMOTION = 10;                   //モーションの数
-	constexpr static int HALF = 2;                               //int型の時の半分
-															     
-	constexpr static int PARTS_BODY_NUMBER = 0;                  //体の番号
-	constexpr static int PARTS_RIGHT_SHOLDER_NUMBER = 2;         //右肩の番号
-	constexpr static int PARTS_RIGHT_SHOLDER_WEAPON_NUMBER = 4;  //右肩の武器の番号
-	constexpr static int PARTS_LEFT_SHOLDER_NUMBER = 5;          //左肩の番号
-	constexpr static int PARTS_LEFT_SHOLDER_WEAPON_NUMBER = 7;   //左肩の武器の番号
-	constexpr static int PARTS_LEFT_WAIST_NUMBER = 8;            //腰の番号
-	constexpr static int PARTS_LOWER_BODY_COUNT = 7;             //腰の番号
+private:
+	//マクロ定義												     
+	static constexpr int MAX_PARTS_SEARCH = 100;                  //パーツの取得時の配列の最大数
+	static constexpr int MAX_DATA_SEARCH = 512;                   //テキストファイルの読み込み時の配列の最大数
+
+	static constexpr int MAX_ENEMYKEYSET = 5;                     //モーションに使うキーの数
+	static constexpr int NUM_ENEMYMOTION = 10;                    //モーションの数
+	static constexpr int HALF = 2;                                //int型の時の半分
+
+	static constexpr  int PARTS_BODY_NUMBER = 0;                  //体の番号
+	static constexpr  int PARTS_RIGHT_SHOLDER_NUMBER = 2;         //右肩の番号
+	static constexpr  int PARTS_RIGHT_SHOLDER_WEAPON_NUMBER = 4;  //右肩の武器の番号
+	static constexpr  int PARTS_LEFT_SHOLDER_NUMBER = 5;          //左肩の番号
+	static constexpr  int PARTS_LEFT_SHOLDER_WEAPON_NUMBER = 7;   //左肩の武器の番号
+	static constexpr  int PARTS_LEFT_WAIST_NUMBER = 8;            //腰の番号
+	static constexpr  int PARTS_LOWER_BODY_COUNT = 7;             //腰の番号
+	static constexpr  int NEXT_MOTION_COUNT = 1;                  //モーション時の差分を求める時の次のモーションカウント
+	static constexpr  int BEFORE_MOTION_COUNT = 1;                //モーション時の差分が同じ時の前のモーションカウント
 
 
 	//キーの構造体
@@ -99,15 +104,28 @@ private:
 		D3DXVECTOR3 rot; //向き
 	}SAVEMODELINFO;
 
-	//キャラクターの情報を保管する変数
-	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo001[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo002[MAX_ENEMYPARTS]; //モデルパーツの情報のポインター
-	D3DXVECTOR3 SaveMotionPos[MAX_ENEMYPARTS];                 //各パーツの位置情報を確保する変数
-	D3DXVECTOR3 SaveMotionRot[MAX_ENEMYPARTS];                 //各パーツの向き情報を獲得する変数
-	MotionSet MotionSetEnemy[NUM_ENEMYMOTION];                 //各モーションの種類を格納する変数
 
-	int MotionCountEnemy;    //現在のモーションをカウントするための変数(Keyカウント)
-	int m_nNumParts;         //パーツ数
-	int m_nEnemy001Parts;    //敵001のパーツ数
-	int m_nEnemy002Parts;    //敵002のパーツ数
-	bool m_bMotionEnemyType; //特殊なモーションかどうか
+	//==============================================
+	//キャラクターの情報を保管する変数
+	ENEMYMOTIONSTATE m_MotionStateEnemy001, m_MotionStateEnemy002; //敵のモーションの種類の情報を持つ
+
+	//モデルパーツの情報のポインター
+	CModelPrts* m_pLoodModelPrtsEnemy[MAX_ENEMYPARTS], * m_pModelPrtsEnemy001[MAX_ENEMYPARTS], * m_pModelPrtsEnemy002[MAX_ENEMYPARTS];
+
+	//モデルパーツの保管用情報の変数
+	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo001[MAX_ENEMYPARTS], m_pSaveModelPrtUpdateInfo002[MAX_ENEMYPARTS];
+
+	//各モーションの種類を格納する変数
+	MotionSet LoodMotionSetEnemy[NUM_ENEMYMOTION],MotionSetEnemy001[NUM_ENEMYMOTION], MotionSetEnemy002[NUM_ENEMYMOTION];
+
+	int MotionCountEnemy001;    //敵001現在のモーションをカウントするための変数(Keyカウント)
+	int m_nEnemy001Parts;       //敵001のパーツ数
+	int m_nEnemy001Frame;       //敵001のモーション時のフレーム
+
+	int MotionCountEnemy002;    //敵002現在のモーションをカウントするための変数(Keyカウント)
+	int m_nEnemy002Parts;       //敵002のパーツ数
+	int m_nEnemy002Frame;       //敵002のモーション時のフレーム
+
+	int m_nNumParts;            //パーツ数
+	bool m_bMotionEnemyType;    //特殊なモーションかどうか
 };

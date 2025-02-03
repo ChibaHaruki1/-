@@ -21,18 +21,24 @@ CEnemyCharacter::CEnemyCharacter(int nPriority) : CObjectX(nPriority)
 	//敵のパーツ数分回す
 	for (int nCount = 0; nCount < MAX_ENEMYPARTS; nCount++)
 	{
-		m_pModelPrtsEnemy[nCount] = nullptr;                   //敵のパーツの初期化
+		m_pLoodModelPrtsEnemy[nCount] = nullptr;               //読み込み用の敵のパーツの初期化
+		m_pModelPrtsEnemy001[nCount] = nullptr;                //敵001のパーツの初期化
+		m_pModelPrtsEnemy002[nCount] = nullptr;                //敵002のパーツの初期化
 		m_pSaveModelPrtInfo[nCount] = {};					   //モデルパーツの保管情報の初期化
-		m_pSaveModelPrtUpdateInfo001[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
-		m_pSaveModelPrtUpdateInfo002[nCount] = {};				   //更新用モデルパーツの保管情報の初期化
+		m_pSaveModelPrtUpdateInfo001[nCount] = {};			   //更新用モデルパーツの保管情報の初期化
+		m_pSaveModelPrtUpdateInfo002[nCount] = {};			   //更新用モデルパーツの保管情報の初期化
 	}
 
-	MotionCountEnemy = 0;                                      //モーション時のカウントを初期化
+	MotionCountEnemy001 = 0;                                   //敵001モーション時のカウントを初期化
+	MotionCountEnemy002 = 0;                                   //敵002モーション時のカウントを初期化
 	m_nNumParts = 0;                                           //パーツ数の初期化
 	m_nEnemy001Parts = 0;                                      //敵001パーツ数の初期化
 	m_nEnemy002Parts = 0;                                      //敵002パーツ数の初期化
+	m_nEnemy002Frame = 0;
+	m_nEnemy001Frame = 0;
 	m_bMotionEnemyType = false;                                //モーションタイプの初期化
-	m_MotionStateEnemy = ENEMYWALK;                            //モーション状態の初期化
+	m_MotionStateEnemy001 = ENEMYWALK;                         //モーション状態の初期化
+	m_MotionStateEnemy002 = ENEMYWALK;                         //モーション状態の初期化
 }
 
 
@@ -70,12 +76,29 @@ void CEnemyCharacter::Uninit()
 	//最大パーツ数分回す
 	for (int nCount1 = 0; nCount1 < MAX_ENEMYPARTS; nCount1++)
 	{
+		//=====================================================================================
+		//元がm_pLoodModelPrtsEnemyで読み取り、コピーしただけなのでUninit()&deleteはこれだけ呼ぶ
+
 		//パーツの情報がある時
-		if (m_pModelPrtsEnemy[nCount1] != nullptr)
+		if (m_pLoodModelPrtsEnemy[nCount1] != nullptr)
 		{
-			m_pModelPrtsEnemy[nCount1]->Uninit(); //破棄処理
-			delete m_pModelPrtsEnemy[nCount1];    //情報を消す
-			m_pModelPrtsEnemy[nCount1] = nullptr; //情報を無くす
+			m_pLoodModelPrtsEnemy[nCount1]->Uninit(); //破棄処理
+			delete m_pLoodModelPrtsEnemy[nCount1];    //情報を消す
+			m_pLoodModelPrtsEnemy[nCount1] = nullptr; //情報を無くす
+		}
+
+		//パーツの情報がある時
+		if (m_pModelPrtsEnemy001[nCount1] != nullptr)
+		{
+			//delete m_pModelPrtsEnemy001[nCount1];    //情報を消す
+			m_pModelPrtsEnemy001[nCount1] = nullptr; //情報を無くす
+		}
+
+		//パーツの情報がある時
+		if (m_pModelPrtsEnemy002[nCount1] != nullptr)
+		{
+			//delete m_pModelPrtsEnemy002[nCount1];    //情報を消す
+			m_pModelPrtsEnemy002[nCount1] = nullptr; //情報を無くす
 		}
 	}
 }
@@ -120,7 +143,7 @@ void CEnemyCharacter::UpdateEnemy002()
 //========================
 //敵の描画処理
 //========================
-void CEnemyCharacter::DrawEnemy(int NumPrts, int nNumber)
+void CEnemyCharacter::DrawEnemy001(int NumPrts, int nNumber)
 {
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	
@@ -154,15 +177,59 @@ void CEnemyCharacter::DrawEnemy(int NumPrts, int nNumber)
 	for (int nCount = 0; nCount < NumPrts; nCount++)
 	{
 		//パーツの情報がある時
-		if (m_pModelPrtsEnemy[nCount] != nullptr)
+		if (m_pModelPrtsEnemy001[nCount] != nullptr)
 		{
-			m_pModelPrtsEnemy[nCount]->Draw(pMtx); //各パーツの描画処理
+			m_pModelPrtsEnemy001[nCount]->Draw(pMtx); //各パーツの描画処理
+		}
+	}
+}
+
+//========================
+//敵の描画処理
+//========================
+void CEnemyCharacter::DrawEnemy002(int NumPrts, int nNumber)
+{
+	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
+	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	
+
+	D3DXMATRIX mtxRot, mtxTrans, mtxScale;      //計算用マトリックス
+	D3DXMATRIX pMtx = CObjectX::GetmtxWorld();  //マトリックスを取得する
+	D3DXVECTOR3 pos, rot;                       //位置と向きを取得する為の変数
+
+	pos = GetPos(); //位置を取得する
+	rot = GetRot(); //向きを取得する
+
+	//ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&pMtx);
+
+	//-----向きを反映-----
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, rot.y, rot.x, rot.z);
+
+	//マトリックスに代入
+	D3DXMatrixMultiply(&pMtx, &pMtx, &mtxRot);
+
+	//-----位置を反映-----
+	D3DXMatrixTranslation(&mtxTrans, pos.x, pos.y, pos.z);
+
+	//マトリックスに代入
+	D3DXMatrixMultiply(&pMtx, &pMtx, &mtxTrans);
+
+	////ワールドマトリックスの設定
+	//pDevice->SetTransform(D3DTS_WORLD, &pMtx);
+
+	//パーツ数分回す
+	for (int nCount = 0; nCount < NumPrts; nCount++)
+	{
+		//パーツの情報がある時
+		if (m_pModelPrtsEnemy002[nCount] != nullptr)
+		{
+			m_pModelPrtsEnemy002[nCount]->Draw(pMtx); //各パーツの描画処理
 		}
 	}
 }
 
 //======================
-//ボスのロード処理
+//敵のロード処理
 //======================
 void CEnemyCharacter::LoodEnemy(const char* aSelect)
 {
@@ -221,8 +288,8 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 					//モデルパーツカウントが最大数より小さい時
 					if (nModelPrtsCount < MAX_ENEMYPARTS)
 					{
-						m_pModelPrtsEnemy[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
-						m_pModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsEnemy(nModelPrtsCount));														   //情報を同期させる
+						m_pLoodModelPrtsEnemy[nModelPrtsCount] = CModelPrts::Create(D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), &aPrtsPass[nModelPrtsCount], GetMesh(), GetBuffMat(), GetdwNumMat(), GetMat());  //パーツの生成
+						m_pLoodModelPrtsEnemy[nModelPrtsCount]->BindSize(GetMaxParts(nModelPrtsCount), GetMinParts(nModelPrtsCount), GetModelSizePartsEnemy(nModelPrtsCount));													   //情報を同期させる
 						nModelPrtsCount++; //配列を進める
 					}
 				}
@@ -276,40 +343,42 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 								//インデックスを読み取る条件
 								if (!strcmp(m_aDataSearch, "INDEX"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pModelPrtsEnemy[nCount]->GetIndexPrts()); //パーツのインデックスを読み取る
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexPrts()); //パーツのインデックスを読み取る
 								}
 
 								//親パーツかどうかを読み取る条件
 								else if (!strcmp(m_aDataSearch, "PARENT"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pModelPrtsEnemy[nCount]->GetIndexModelPrts()); //親パーツかを読み取る
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts()); //親パーツかを読み取る
 
 									//読み込んだ値がー１の時
-									if (m_pModelPrtsEnemy[nCount]->GetIndexModelPrts() == -1)
+									if (m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts() == -1)
 									{
-										m_pModelPrtsEnemy[nCount]->SetParent(nullptr); //情報なし
+										m_pLoodModelPrtsEnemy[nCount]->SetParent(nullptr); //情報なし
 									}
 
 									//その他
 									else
 									{
-										m_pModelPrtsEnemy[nCount]->SetParent(m_pModelPrtsEnemy[m_pModelPrtsEnemy[nCount]->GetIndexModelPrts()]); //親である情報を入れる
+										m_pLoodModelPrtsEnemy[nCount]->SetParent(m_pLoodModelPrtsEnemy[m_pLoodModelPrtsEnemy[nCount]->GetIndexModelPrts()]); //親である情報を入れる
 									}
 								}
 
 								//位置を読み取る条件
 								else if (!strcmp(m_aDataSearch, "POS"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsEnemy[nCount]->GetPos().x, &m_pModelPrtsEnemy[nCount]->GetPos().y, &m_pModelPrtsEnemy[nCount]->GetPos().z); //位置の同期
-									m_pSaveModelPrtInfo[nCount].pos = m_pModelPrtsEnemy[nCount]->GetPos();                //位置を保管する
-									//m_pSaveModelPrtInfo[nCount].pos += MotionSetEnemy[0].KeySet[0].aKey[nCount].pos;
+									//位置の同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetPos().x, &m_pLoodModelPrtsEnemy[nCount]->GetPos().y, &m_pLoodModelPrtsEnemy[nCount]->GetPos().z);
+									m_pSaveModelPrtInfo[nCount].pos = m_pLoodModelPrtsEnemy[nCount]->GetPos();                //位置を保管する
+									//m_pSaveModelPrtInfo[nCount].pos += LoodMotionSetEnemy[0].KeySet[0].aKey[nCount].pos;
 								}
 
 								else if (!strcmp(m_aDataSearch, "ROT"))
 								{
-									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pModelPrtsEnemy[nCount]->GetRot().x, &m_pModelPrtsEnemy[nCount]->GetRot().y, &m_pModelPrtsEnemy[nCount]->GetRot().z); //位置の同期
-									m_pSaveModelPrtInfo[nCount].rot = m_pModelPrtsEnemy[nCount]->GetRot();                //向きを保管する
-									//m_pSaveModelPrtInfo[nCount].rot += MotionSetEnemy[0].KeySet[0].aKey[nCount].rot;
+									//向きの同期
+									(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &m_pLoodModelPrtsEnemy[nCount]->GetRot().x, &m_pLoodModelPrtsEnemy[nCount]->GetRot().y, &m_pLoodModelPrtsEnemy[nCount]->GetRot().z);
+									m_pSaveModelPrtInfo[nCount].rot = m_pLoodModelPrtsEnemy[nCount]->GetRot();                //向きを保管する
+									//m_pSaveModelPrtInfo[nCount].rot += LoodMotionSetEnemy[0].KeySet[0].aKey[nCount].rot;
 								}
 							}
 							nCount++; //読み取るパーツの番号を増やす
@@ -349,13 +418,13 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 							//読み込んだ値が０の時
 							if (LoopType == 0)
 							{
-								MotionSetEnemy[nMotionCount].Loop = false; //ループしない
+								LoodMotionSetEnemy[nMotionCount].Loop = false; //ループしない
 							}
 
 							//その他
 							else
 							{
-								MotionSetEnemy[nMotionCount].Loop = true;  //ループする
+								LoodMotionSetEnemy[nMotionCount].Loop = true;  //ループする
 							}
 						}
 
@@ -363,7 +432,7 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 						else if (!strcmp(m_aDataSearch, "NUM_KEY")) 
 						{
 							(void)fscanf(m_pFile, "%s", &m_aDataSearch);                        //検索
-							(void)fscanf(m_pFile, "%d", &MotionSetEnemy[nMotionCount].NumKey);	//キーの数を検索
+							(void)fscanf(m_pFile, "%d", &LoodMotionSetEnemy[nMotionCount].NumKey);	//キーの数を検索
 						}
 
 						//パーツごとの位置関係を読み取る
@@ -391,7 +460,7 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 								//フレームを読み取る条件
 								if (!strcmp(m_aDataSearch, "FRAME"))
 								{
-									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].Frame); //フレーム数を検索
+									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].Frame); //フレーム数を検索
 								}
 
 								//キーの中身の情報を読み取る条件
@@ -412,17 +481,19 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 										//位置を読み取る条件
 										if (!strcmp(m_aDataSearch, "POS"))
 										{
-											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.x,
-												&MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.y,
-												&MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z); //位置の同期
+											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, 
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.x,
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.y,
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].pos.z); //位置の同期
 										}
 
 										//向きを読み取る条件
 										else if (!strcmp(m_aDataSearch, "ROT"))
 										{
-											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, &MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.x,
-												&MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.y,
-												&MotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z); //向きの同期
+											(void)fscanf(m_pFile, "%s %f %f %f", &m_aDataSearch, 
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.x,
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.y,
+												&LoodMotionSetEnemy[nMotionCount].KeySet[nKeySetCount].aKey[nKeyCount].rot.z); //向きの同期
 										}
 
 										//終了条件
@@ -455,6 +526,16 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 
 		m_nEnemy001Parts = m_nNumParts; //パーツ数の取得
 
+		for (int nLoodMotionSetEnemy = 0;nLoodMotionSetEnemy< NUM_ENEMYMOTION; nLoodMotionSetEnemy++)
+		{
+			MotionSetEnemy001[nLoodMotionSetEnemy] = LoodMotionSetEnemy[nLoodMotionSetEnemy];
+		}
+
+		for (int nLoodModelPrtsEnemy = 0; nLoodModelPrtsEnemy < MAX_ENEMYPARTS; nLoodModelPrtsEnemy++)
+		{
+			m_pModelPrtsEnemy001[nLoodModelPrtsEnemy] = m_pLoodModelPrtsEnemy[nLoodModelPrtsEnemy];
+		}
+
 		//最大パーツ数分回す
 		for (int nCount = 0; nCount < m_nNumParts; nCount++)
 		{
@@ -462,10 +543,10 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		}
 
 		//右肩の位置を体の位置分加算する
-		m_pSaveModelPrtUpdateInfo001[PARTS_RIGHT_SHOLDER_NUMBER].pos += m_pModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
+		m_pSaveModelPrtUpdateInfo001[PARTS_RIGHT_SHOLDER_NUMBER].pos += m_pLoodModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
 
 		//左肩の位置を体の位置分加算する
-		m_pSaveModelPrtUpdateInfo001[PARTS_LEFT_SHOLDER_NUMBER].pos += m_pModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
+		m_pSaveModelPrtUpdateInfo001[PARTS_LEFT_SHOLDER_NUMBER].pos += m_pLoodModelPrtsEnemy[PARTS_BODY_NUMBER]->GetPos();
 
 		//右肩から右肩の武器まで
 		for (RightnCount = PARTS_RIGHT_SHOLDER_NUMBER; RightnCount <= PARTS_RIGHT_SHOLDER_WEAPON_NUMBER; RightnCount++)
@@ -478,7 +559,7 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 			}
 		}
 
-		//左肩から次のパーツ（５の次＝６）から終わりまで（終わりは武器まで（７番））
+		//左肩から左肩の武器まで
 		for (LeftnCount = PARTS_LEFT_SHOLDER_NUMBER; LeftnCount <= PARTS_LEFT_SHOLDER_WEAPON_NUMBER; LeftnCount++)
 		{
 			//初期値は現在の左パーツー１
@@ -524,102 +605,108 @@ void CEnemyCharacter::MotionInfoEnemy001()
 	for (int nModelCount = 0; nModelCount < m_nEnemy001Parts; nModelCount++)
 	{
 		//パーツの情報がある時
-		if (m_pModelPrtsEnemy[nModelCount] != nullptr)
+		if (m_pModelPrtsEnemy001[nModelCount] != nullptr)
 		{
 			//移動量の初期化
 			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //位置の初期化
 			D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
 
 			//移動量の変数
-			D3DXVECTOR3 Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
-			D3DXVECTOR3 Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
+			D3DXVECTOR3 Movepos = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
+			D3DXVECTOR3 Moverot = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
 
 			//最初のキーじゃないなら差分を求める
-			if (MotionCountEnemy != MotionSetEnemy[m_MotionStateEnemy].NumKey - 1)
+			if (MotionCountEnemy001 != MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //現在のモーションの次のモーションから現在のモーションの向きを引く
+				//現在のモーションの次のモーションから現在のモーションの位置を引く
+				Movepos = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001 + NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].aKey[nModelCount].pos;
+
+				//現在のモーションの次のモーションから現在のモーションの向きを引く
+				Moverot = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001 + NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].aKey[nModelCount].rot;
 			}
 			else
 			{
-				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[0].aKey[nModelCount].pos - MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT].aKey[nModelCount].pos;
+
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetEnemy001[m_MotionStateEnemy001].KeySet[0].aKey[nModelCount].rot - MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT].aKey[nModelCount].rot;
 			}
 
 
 			//差分の分をフレームで割った値で加算
-			pos = Movepos / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //現在の位置を計算でだした位置と加算させる
-			rot = Moverot / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //向きの位置を計算でだした向きと加算させる
+			pos = Movepos / (float)MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].Frame; //現在の位置を計算でだした位置と加算させる
+			rot = Moverot / (float)MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].Frame; //向きの位置を計算でだした向きと加算させる
 
 			//モーションが飛ぶでループがオフの時
-			if (MotionSetEnemy[ENEMYJUMP].Loop == false)
+			if (MotionSetEnemy001[ENEMYJUMP].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYJUMP && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey-1)
+				if (m_MotionStateEnemy001 == ENEMYJUMP && MotionCountEnemy001 == MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT)
 				{
-					MotionSetEnemy[ENEMYJUMP].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
-					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                          //位置を初期化する
-					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                          //向きを初期化する
+					MotionSetEnemy001[ENEMYJUMP].KeySet[MotionCountEnemy001].Frame = 0; //モーションフレームを初期化する
+					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                                //位置を初期化する
+					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                                //向きを初期化する
 				}
 			}
 
 			//モーションが攻撃でループがオフの時
-			if (MotionSetEnemy[ENEMYATTACK].Loop == false)
+			if (MotionSetEnemy001[ENEMYATTACK].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYATTACK && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey-1)
+				if (m_MotionStateEnemy001 == ENEMYATTACK && MotionCountEnemy001 == MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT)
 				{
-					MotionSetEnemy[ENEMYATTACK].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化する
-					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                            //位置を初期化
-					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                            //向きを初期化
+					MotionSetEnemy001[ENEMYATTACK].KeySet[MotionCountEnemy001].Frame = 0; //モーションフレームを初期化する
+					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                                  //位置を初期化
+					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                                  //向きを初期化
 				}
 			}
 
 			//モーションが死亡でループがオフの時
-			if (MotionSetEnemy[ENEMYDIE].Loop == false)
+			if (MotionSetEnemy001[ENEMYDIE].Loop == false)
 			{
 				//モーションの状態が歩きで設定されている時とキーセットが最後の時
-				if (m_MotionStateEnemy == ENEMYDIE && MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey - 1)
+				if (m_MotionStateEnemy001 == ENEMYDIE && MotionCountEnemy001 == MotionSetEnemy001[m_MotionStateEnemy001].NumKey - BEFORE_MOTION_COUNT)
 				{
-					MotionSetEnemy[ENEMYDIE].KeySet[MotionCountEnemy].Frame = 0; //モーションフレームを初期化
-					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                         //位置を初期化
-					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                         //向きを初期化
+					MotionSetEnemy001[ENEMYDIE].KeySet[MotionCountEnemy001].Frame = 0; //モーションフレームを初期化
+					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                               //位置を初期化
+					rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                               //向きを初期化
 				}
 			}
 
 			//差分の分だけ加算
-			m_pModelPrtsEnemy[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
-			m_pModelPrtsEnemy[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
+			m_pModelPrtsEnemy001[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
+			m_pModelPrtsEnemy001[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
 		}
 	}
 	
-	GetFrame()++; //フレームの加算
+	m_nEnemy001Frame++; //フレームの加算
 
 	//終わりのフレームになったらカウントを最初からにする
-	if (GetFrame() == MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame)
+	if (m_nEnemy001Frame == MotionSetEnemy001[m_MotionStateEnemy001].KeySet[MotionCountEnemy001].Frame)
 	{
-		SetFrame(0);        //フレームを初期化
-		MotionCountEnemy++; //モーションのカウントを増加
+		m_nEnemy001Frame = 0;    //フレームを初期化
+		MotionCountEnemy001++;   //モーションのカウントを増加
 
 	    //現在のモーションのカウントが終わりまで回ったら最初からにする
-		if (MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+		if (MotionCountEnemy001 == MotionSetEnemy001[m_MotionStateEnemy001].NumKey)
 		{
-			MotionCountEnemy = 0; //カウントを0にする
+			MotionCountEnemy001 = 0; //カウントを0にする
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCountEnemy + 1 == MotionSetEnemy[m_MotionStateEnemy].NumKey && MotionSetEnemy[m_MotionStateEnemy].Loop == 0)
+		else if (MotionCountEnemy001 + NEXT_MOTION_COUNT == MotionSetEnemy001[m_MotionStateEnemy001].NumKey && MotionSetEnemy001[m_MotionStateEnemy001].Loop == 0)
 		{
 			//特殊な行動の終わり
 			m_bMotionEnemyType = false; //モーションの判定をoffにする
-			//MotionCountEnemy=1;
+			//MotionCountEnemy001=1;
 			//SetMotionBoss(NEUTRAL);   //モーションの情報の切り替え
 		}
 	}
 }
 
 //===============================
-//敵001のモーションを行う
+//敵002のモーションを行う
 //===============================
 void CEnemyCharacter::MotionInfoEnemy002()
 {
@@ -627,56 +714,62 @@ void CEnemyCharacter::MotionInfoEnemy002()
 	for (int nModelCount = 0; nModelCount < m_nEnemy002Parts; nModelCount++)
 	{
 		//パーツの情報がある時
-		if (m_pModelPrtsEnemy[nModelCount] != nullptr)
+		if (m_pModelPrtsEnemy002[nModelCount] != nullptr)
 		{
 			//移動量の初期化
 			D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //位置の初期化
 			D3DXVECTOR3 rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
 
 			//移動量の変数
-			D3DXVECTOR3 Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
-			D3DXVECTOR3 Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
+			D3DXVECTOR3 Movepos = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].aKey[nModelCount].pos; //位置を現在のモーションの位置と同期
+			D3DXVECTOR3 Moverot = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].aKey[nModelCount].rot; //向きを現在のモーションの向きと同期
 
 			//最初のキーじゃないなら差分を求める
-			if (MotionCountEnemy != MotionSetEnemy[m_MotionStateEnemy].NumKey - 1)
+			if (MotionCountEnemy002 != MotionSetEnemy002[m_MotionStateEnemy002].NumKey - BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].pos; //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy + 1].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].aKey[nModelCount].rot; //現在のモーションの次のモーションから現在のモーションの向きを引く
+				//現在のモーションの次のモーションから現在のモーションの位置を引く
+				Movepos = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002 + NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].aKey[nModelCount].pos;
+
+				//現在のモーションの次のモーションから現在のモーションの向きを引く
+				Moverot = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002 + NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].aKey[nModelCount].rot;
 			}
 			else
 			{
-				Movepos = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].pos - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetEnemy[m_MotionStateEnemy].KeySet[0].aKey[nModelCount].rot - MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionSetEnemy[m_MotionStateEnemy].NumKey - 1].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[0].aKey[nModelCount].pos - MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionSetEnemy002[m_MotionStateEnemy002].NumKey - BEFORE_MOTION_COUNT].aKey[nModelCount].pos;
+
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetEnemy002[m_MotionStateEnemy002].KeySet[0].aKey[nModelCount].rot - MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionSetEnemy002[m_MotionStateEnemy002].NumKey - BEFORE_MOTION_COUNT].aKey[nModelCount].rot;
 			}
 
 
 			//差分の分をフレームで割った値で加算
-			pos = Movepos / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //現在の位置を計算でだした位置と加算させる
-			rot = Moverot / (float)MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame; //向きの位置を計算でだした向きと加算させる
+			pos = Movepos / (float)MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].Frame; //現在の位置を計算でだした位置と加算させる
+			rot = Moverot / (float)MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].Frame; //向きの位置を計算でだした向きと加算させる
 
 
 			//差分の分だけ加算
-			m_pModelPrtsEnemy[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
-			m_pModelPrtsEnemy[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
+			m_pModelPrtsEnemy002[nModelCount]->GetPos() += pos; //現在の位置を計算でだした位置と加算させる
+			m_pModelPrtsEnemy002[nModelCount]->GetRot() += rot; //向きの位置を計算でだした向きと加算させる
 		}
 	}
 
-	GetFrame()++; //フレームの加算
+	m_nEnemy002Frame++; //フレームの加算
 
 	//終わりのフレームになったらカウントを最初からにする
-	if (GetFrame() == MotionSetEnemy[m_MotionStateEnemy].KeySet[MotionCountEnemy].Frame)
+	if (m_nEnemy002Frame == MotionSetEnemy002[m_MotionStateEnemy002].KeySet[MotionCountEnemy002].Frame)
 	{
-		SetFrame(0);        //フレームを初期化
-		MotionCountEnemy++; //モーションのカウントを増加
+		m_nEnemy002Frame = 0;    //フレームを初期化
+		MotionCountEnemy002++;   //モーションのカウントを増加
 
 		//現在のモーションのカウントが終わりまで回ったら最初からにする
-		if (MotionCountEnemy == MotionSetEnemy[m_MotionStateEnemy].NumKey)
+		if (MotionCountEnemy002 == MotionSetEnemy002[m_MotionStateEnemy002].NumKey)
 		{
-			MotionCountEnemy = 0; //カウントを0にする
+			MotionCountEnemy002 = 0; //カウントを0にする
 		}
 
 		//現在のモーションのカウントが回り切ってループが無かったらノーマルモーションにする
-		else if (MotionCountEnemy + 1 == MotionSetEnemy[m_MotionStateEnemy].NumKey && MotionSetEnemy[m_MotionStateEnemy].Loop == 0)
+		else if (MotionCountEnemy002 + NEXT_MOTION_COUNT == MotionSetEnemy002[m_MotionStateEnemy002].NumKey && MotionSetEnemy002[m_MotionStateEnemy002].Loop == 0)
 		{
 			//特殊な行動の終わり
 			m_bMotionEnemyType = false; //モーションの判定をoffにする
@@ -687,24 +780,51 @@ void CEnemyCharacter::MotionInfoEnemy002()
 //==============================
 //モーションの設定
 //==============================
-void CEnemyCharacter::SetMotionEnemy(ENEMYMOTIONSTATE motiontype)
+void CEnemyCharacter::SetMotionEnemy001(ENEMYMOTIONSTATE motiontype)
 {
-	if (m_MotionStateEnemy != motiontype && m_bMotionEnemyType == false) //現在のモーションと違ったら
+	if (m_MotionStateEnemy001 != motiontype && m_bMotionEnemyType == false) //現在のモーションと違ったら
 	{
-		m_MotionStateEnemy = motiontype; //モーションを設定
-		MotionCountEnemy = 0;            //モーションのカウントを初期化
-		SetFrame(0);                     //フレームのカウントの初期化
+		m_MotionStateEnemy001 = motiontype; //モーションを設定
+		MotionCountEnemy001 = 0;            //モーションのカウントを初期化
+		m_nEnemy001Frame = 0;               //フレームのカウントの初期化
 
 		//モデルのパーツ分繰り返す
 		for (int nModelCount = 0; nModelCount < MAX_ENEMYPARTS; nModelCount++)
 		{
 			//パーツの情報がある時
-			if (m_pModelPrtsEnemy[nModelCount] != nullptr)
+			if (m_pModelPrtsEnemy001[nModelCount] != nullptr)
 			{
-				m_pModelPrtsEnemy[nModelCount]->SetPos(m_pSaveModelPrtInfo[nModelCount].pos);                             //現在の位置を読み取った値にする
-				m_pModelPrtsEnemy[nModelCount]->SetRot(m_pSaveModelPrtInfo[nModelCount].rot);						      //現在の向きを読み取った値にする
-				m_pModelPrtsEnemy[nModelCount]->GetPos() += MotionSetEnemy[motiontype].KeySet[0].aKey[nModelCount].pos;   //現在の位置を設定したモーションの位置と加算
-				m_pModelPrtsEnemy[nModelCount]->GetRot() += MotionSetEnemy[motiontype].KeySet[0].aKey[nModelCount].rot;   //現在の向きを設定したモーションの向きと加算
+				m_pModelPrtsEnemy001[nModelCount]->SetPos(m_pSaveModelPrtInfo[nModelCount].pos);                                //現在の位置を読み取った値にする
+				m_pModelPrtsEnemy001[nModelCount]->SetRot(m_pSaveModelPrtInfo[nModelCount].rot);						        //現在の向きを読み取った値にする
+				m_pModelPrtsEnemy001[nModelCount]->GetPos() += MotionSetEnemy001[motiontype].KeySet[0].aKey[nModelCount].pos;   //現在の位置を設定したモーションの位置と加算
+				m_pModelPrtsEnemy001[nModelCount]->GetRot() += MotionSetEnemy001[motiontype].KeySet[0].aKey[nModelCount].rot;   //現在の向きを設定したモーションの向きと加算
+			}
+		}
+	}
+}
+
+
+//==============================
+//モーションの設定
+//==============================
+void CEnemyCharacter::SetMotionEnemy002(ENEMYMOTIONSTATE motiontype)
+{
+	if (m_MotionStateEnemy002 != motiontype && m_bMotionEnemyType == false) //現在のモーションと違ったら
+	{
+		m_MotionStateEnemy002 = motiontype; //モーションを設定
+		MotionCountEnemy002 = 0;            //モーションのカウントを初期化
+		m_nEnemy002Frame = 0;               //フレームのカウントの初期化
+
+		//モデルのパーツ分繰り返す
+		for (int nModelCount = 0; nModelCount < MAX_ENEMYPARTS; nModelCount++)
+		{
+			//パーツの情報がある時
+			if (m_pModelPrtsEnemy002[nModelCount] != nullptr)
+			{
+				m_pModelPrtsEnemy002[nModelCount]->SetPos(m_pSaveModelPrtInfo[nModelCount].pos);                                //現在の位置を読み取った値にする
+				m_pModelPrtsEnemy002[nModelCount]->SetRot(m_pSaveModelPrtInfo[nModelCount].rot);						        //現在の向きを読み取った値にする
+				m_pModelPrtsEnemy002[nModelCount]->GetPos() += MotionSetEnemy002[motiontype].KeySet[0].aKey[nModelCount].pos;   //現在の位置を設定したモーションの位置と加算
+				m_pModelPrtsEnemy002[nModelCount]->GetRot() += MotionSetEnemy002[motiontype].KeySet[0].aKey[nModelCount].rot;   //現在の向きを設定したモーションの向きと加算
 			}
 		}
 	}

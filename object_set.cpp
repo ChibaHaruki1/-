@@ -94,6 +94,8 @@ HRESULT CObjectSet::Init()
 		StageOneInformation("data\\TEXT\\OBJECT\\Block1.txt");       //ブロック1の読み込み
 		StageOneInformation("data\\TEXT\\OBJECT\\Ceiling.txt");      //天井の読み込み
 
+		SetCreateCountInPlayer();                                    //生成数をプレイヤーに渡す処理関数を呼ぶ
+
 		return S_OK; //処理を抜ける
 
 		//リザルト時の時

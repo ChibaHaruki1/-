@@ -931,13 +931,19 @@ void CCharacter::MotionInfo()
 			//最初のキーじゃないなら差分を求める
 			if (MotionCount != MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].pos;                   //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].rot;                   //現在のモーションの次のモーションから現在のモーションの向きを引く
+				//現在のモーションの次のモーションから現在のモーションの位置を引く
+				Movepos = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].pos; 
+
+				//現在のモーションの次のモーションから現在のモーションの向きを引く
+				Moverot = MotionSetPlayer[m_MotionState].KeySet[MotionCount + PLAYER_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionCount].aKey[nModelCount].rot;                 
 			}
 			else
 			{
-				Movepos = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetPlayer[m_MotionState].KeySet[0].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetPlayer[m_MotionState].KeySet[PLAYER_FIRST_KEYSET_NUMBER].aKey[nModelCount].pos - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].pos;
+
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetPlayer[m_MotionState].KeySet[PLAYER_FIRST_KEYSET_NUMBER].aKey[nModelCount].rot - MotionSetPlayer[m_MotionState].KeySet[MotionSetPlayer[m_MotionState].NumKey - PLAYER_BEFORE_MOTION_COUNT].aKey[nModelCount].rot;
 			}
 
 			//差分の分をフレームで割った値で加算
@@ -996,13 +1002,19 @@ void CCharacter::MotionInfoBoss()
 			//最初のキーじゃないなら差分を求める
 			if (MotionCountBoss != MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 			{
-				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].pos;             //現在のモーションの次のモーションから現在のモーションの位置を引く
-				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].rot;             //現在のモーションの次のモーションから現在のモーションの向きを引く
+				//現在のモーションの次のモーションから現在のモーションの位置を引く
+				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].pos;
+
+				//現在のモーションの次のモーションから現在のモーションの向きを引く
+				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss + BOSS_NEXT_MOTION_COUNT].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionCountBoss].aKey[nModelCount].rot;
 			}
 			else
 			{
-				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].pos; //最初のモーションのキーから現在のモーションの総数ー１を引く
-				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[0].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].rot; //最初のモーションのキーから現在のモーションの総数ー１を引く
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Movepos = MotionSetBoss[m_MotionStateBoss].KeySet[BOSS_FIRST_KEYSET_NUMBER].aKey[nModelCount].pos - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].pos;
+
+				//最初のモーションのキーから現在のモーションの総数ー１を引く
+				Moverot = MotionSetBoss[m_MotionStateBoss].KeySet[BOSS_FIRST_KEYSET_NUMBER].aKey[nModelCount].rot - MotionSetBoss[m_MotionStateBoss].KeySet[MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT].aKey[nModelCount].rot;
 			}
 
 			//差分の分をフレームで割った値で加算
@@ -1012,8 +1024,8 @@ void CCharacter::MotionInfoBoss()
 			//モーションが歩きでループがオフの時
 			if (MotionSetBoss[BOSSWALK].Loop == false)
 			{
-				//モーションの状態が歩きで設定されている時とモーションカウントが１の時（キーセットが最後の時）
-				if (m_MotionStateBoss == BOSSWALK && MotionCountBoss == 1)
+				//モーションの状態が歩きで設定されている時とモーションカウントがキーセットが最後の時
+				if (m_MotionStateBoss == BOSSWALK && MotionCountBoss == MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 				{
 					MotionSetBoss[BOSSWALK].KeySet[MotionCountBoss].Frame = 0; //モーションフレームを初期化
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                       //位置を初期化
@@ -1024,8 +1036,8 @@ void CCharacter::MotionInfoBoss()
 			//モーションが死亡でループがオフの時
 			if (MotionSetBoss[BOSSDIE].Loop == false)
 			{
-				//モーションの状態が死亡で設定されている時とモーションカウントが３の時（キーセットが最後の時）
-				if (m_MotionStateBoss == BOSSDIE && MotionCountBoss == 3)
+				//モーションの状態が死亡で設定されている時とモーションカウントキーセットが最後の時
+				if (m_MotionStateBoss == BOSSDIE && MotionCountBoss == MotionSetBoss[m_MotionStateBoss].NumKey - BOSS_BEFORE_MOTION_COUNT)
 				{
 					MotionSetBoss[BOSSDIE].KeySet[MotionCountBoss].Frame = 0; //モーションフレームを初期化
 					pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);                      //位置を初期化

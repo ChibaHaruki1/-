@@ -41,19 +41,7 @@ protected:
 };
 
 
-//================================================================================
-//モーション付きの敵（通常）
-class CEnemyInMotion : public CManagerEnemyInMotion
-{
-public: //アクセス可能
-	CEnemyInMotion(int nPriority = DEFAULT_PRIORITY1);   //コンストラクタ
-	~CEnemyInMotion()override;                           //デストラクタ
-	void Update() override;                              //更新処理
 
-private:
-	constexpr static int MAX_FRAME_BUULET = 60;          //弾を撃つまでの時間
-	constexpr static int MAX_FRAME_JUMP = 20;            //飛ぶまでの時間
-};
 
 
 //================================================================================
@@ -64,6 +52,7 @@ public: //アクセス可能
 	CEnemyInMotion001(int nPriority = DEFAULT_PRIORITY1);              //コンストラクタ
 	~CEnemyInMotion001()override;                                      //デストラクタ
 	void Update() override;                                            //更新処理
+	void Draw()override;                                               //描画処理
 	void AdjustmentBulletAndRot();                                     //プレイヤーに対する機体と弾の調整処理
 	void WhenCollisionBlock();                                         //地面用ブロックに触れている時の処理
 	void Correctionrot();                                              //向きを修正する関数
@@ -100,4 +89,5 @@ public: //アクセス可能
 	CEnemyInMotion002(int nPriority = DEFAULT_PRIORITY1);   //コンストラクタ
 	~CEnemyInMotion002()override;                           //デストラクタ
 	void Update() override;                                 //更新処理	
+	void Draw()override;                                    //描画処理
 };

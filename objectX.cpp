@@ -250,14 +250,14 @@ void CObjectX::Junp(TYPE type, float fJumpPwer)
 		else if (type == TYPE::ENEMYINMOTION)
 		{
 			//ジャンプモーションに設定
-			CManager::GetInstance()->GetEnemyInMotion(0)->CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYJUMP);
+			CManager::GetInstance()->GetEnemyInMotion(0)->CEnemyCharacter::SetMotionEnemy001(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYJUMP);
 			//CManager::GetInstance()->GetEnemyInMotion(0)->SetMotionType(true); //モーションタイプの設定（特殊モーション）
 			m_pos.x += 3.0f;                                                   //X軸の位置を増やす
 		}
 		else if (type == TYPE::ENEMYINMOTION001)
 		{
 			//ジャンプモーションに設定
-			CManager::GetInstance()->GetEnemyInMotion001(0)->CEnemyCharacter::SetMotionEnemy(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYJUMP);
+			CManager::GetInstance()->GetEnemyInMotion001(0)->CEnemyCharacter::SetMotionEnemy001(CEnemyCharacter::ENEMYMOTIONSTATE::ENEMYJUMP);
 			//CManager::GetInstance()->GetEnemyInMotion001(0)->SetMotionType(true);
 			m_pos.x += 3.0f;                                                   //X軸の位置を増やす
 		}
