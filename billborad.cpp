@@ -43,8 +43,7 @@ HRESULT CBillboard::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	SetPos(D3DXVECTOR3(MAX_BILLBOARD_SIZE_X, MAX_BILLBOARD_SIZE_Y, 0.0f)); //位置の設定
-	SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                                 //向きの設定
+	SetPos(D3DXVECTOR3(MAX_BILLBOARD_SIZE_X, MAX_BILLBOARD_SIZE_Y, F_INIT_NUMBER)); //位置の設定
 
 	return S_OK;       //成功を返す
 }
@@ -81,7 +80,7 @@ void CBillboard::Draw()
 //=========================
 CBillboard* CBillboard::Create()
 {
-	CBillboard* pBillboard = new CBillboard(3); //動的確保
+	CBillboard* pBillboard = new CBillboard(); //動的確保
 
     //初期化に成功した時
 	if (SUCCEEDED(pBillboard->Init()))
@@ -90,5 +89,5 @@ CBillboard* CBillboard::Create()
 		return pBillboard;  //情報を返す
 	}
 
-	return nullptr;             //無を返す
+	return nullptr;         //無を返す
 }

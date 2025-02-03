@@ -19,7 +19,7 @@
 //==========================
 CManagerBg::CManagerBg(int nPriority) : CObject2D(nPriority)
 {
-	SetAlph(255); //アルファ値を設定
+	SetAlph(CObject2D::N_INIT_ALPHA_NUMBER); //アルファ値を設定
 }
 
 
@@ -67,10 +67,10 @@ void CManagerBg::Update()
 	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, 0);
 
 	//頂点カラーの設定
-	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, GetAlph());
-	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, GetAlph());
-	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, GetAlph());
-	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, GetAlph());
+	pVtx[0].col = D3DCOLOR_RGBA(CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, GetAlph());
+	pVtx[1].col = D3DCOLOR_RGBA(CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, GetAlph());
+	pVtx[2].col = D3DCOLOR_RGBA(CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, GetAlph());
+	pVtx[3].col = D3DCOLOR_RGBA(CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, CObject2D::N_INIT_COL_NUMBER, GetAlph());
 
 	//頂点バッファをアンロック
 	GetBuffer()->Unlock();
@@ -96,21 +96,21 @@ CManagerBg* CManagerBg::Create(CScene::MODE mode)
 	//タイトル時
 	if (mode == CScene::MODE::MODE_TITLE)
 	{
-		pBg = new CTitleBg(0);                                            //動的確保
+		pBg = new CTitleBg(INIT_PRIORITY);                                //動的確保
 		pBg->SetFileNamePass("data\\TEXTURE\\UI\\scene\\Title001.png");   //ファイルパスを設定
 	}
 
 	//リザルト時														     
 	else if (mode == CScene::MODE::MODE_RESULT)
 	{
-		pBg = new CResultBg(3);                                           //動的確保
-		pBg->SetFileNamePass("data\\TEXTURE\\UI\\scene\\Result.png");      //ファイルパスを設定
+		pBg = new CResultBg();                                            //動的確保
+		pBg->SetFileNamePass("data\\TEXTURE\\UI\\scene\\Result.png");     //ファイルパスを設定
 	}
 
 	//死亡時
 	else if (mode == CScene::MODE::MODE_GAMEOVER)
 	{
-		pBg = new CGameOverBg(3);                                         //動的確保
+		pBg = new CGameOverBg();                                          //動的確保
 		pBg->SetFileNamePass("data\\TEXTURE\\UI\\SCREEN\\GameOver.jpg");  //ファイルパスを設定
 	}
 
@@ -196,7 +196,7 @@ CGameOverBg::~CGameOverBg()
 void CGameOverBg::Update()
 {
 	SetRandom(FIRST_NUMBER + rand() % MAX_RAND);  //乱数を生成
-	GetFrame()++;                      //フレームを増やす
+	GetFrame()++;                                 //フレームを増やす
 
 	//フレームが規定数以上行った時
 	if (GetFrame() >= PROCESS_FRAME)
@@ -207,39 +207,40 @@ void CGameOverBg::Update()
 
 		if (GetRandom() >= FIRST_NUMBER && GetRandom() <= MAX_RAND* ONE_QUARTER)
 		{
-			SetSIze(0.0f, CMain::SCREEN_WIDTH, FIRST_SIZE_Y, CMain::SCREEN_HEIGHT + FIRST_PLUS_SIZE1_Y); //大きさの設定
-			SetAlph(255);  //alpha値の初期化
-			SetFrame(0);   //フレームの初期化
+			SetSIze(F_INIT_NUMBER, CMain::SCREEN_WIDTH, FIRST_SIZE_Y, CMain::SCREEN_HEIGHT + FIRST_PLUS_SIZE1_Y); //大きさの設定
+			SetAlph(N_INIT_ALPHA_NUMBER);  //alpha値の初期化
+			SetFrame(N_INIT_NUMBER);       //フレームの初期化
 		}
 
 		else if (GetRandom() >= MAX_RAND * ONE_QUARTER + NEXT_PLUS && GetRandom() <= MAX_RAND* TWO_QUARTER)
 		{
-			SetSIze(0.0f, CMain::SCREEN_WIDTH, -SECOND_SIZE1_Y, CMain::SCREEN_HEIGHT - SECOND_MINUS_SIZE1_Y); //大きさの設定
-			SetAlph(255);  //alpha値の初期化
-			SetFrame(0);   //フレームの初期化
+			SetSIze(F_INIT_NUMBER, CMain::SCREEN_WIDTH, -SECOND_SIZE1_Y, CMain::SCREEN_HEIGHT - SECOND_MINUS_SIZE1_Y); //大きさの設定
+			SetAlph(N_INIT_ALPHA_NUMBER);  //アルファ値の初期化
+			SetFrame(N_INIT_NUMBER);       //フレームの初期化
 		}
 
 		else if (GetRandom() >= MAX_RAND * TWO_QUARTER + NEXT_PLUS && GetRandom() <= MAX_RAND* THREE_QUARTER)
 		{
-			SetSIze(-THIRD_SIZE_X, CMain::SCREEN_WIDTH - THIRD_MINUS_SIZE1_X, 0.0f, CMain::SCREEN_HEIGHT);
-			SetAlph(155);  //alpha値を下げる
-			SetFrame(0);   //フレームの初期化
+			SetSIze(-THIRD_SIZE_X, CMain::SCREEN_WIDTH - THIRD_MINUS_SIZE1_X, F_INIT_NUMBER, CMain::SCREEN_HEIGHT);
+			SetAlph(ALPHA_0);          //アルファ値を下げる
+			SetFrame(N_INIT_NUMBER);   //フレームの初期化
 		}
 
 		else
 		{
-			SetSIze(200.0f, CMain::SCREEN_WIDTH + 200.0f, 0.0f, CMain::SCREEN_HEIGHT);
-			SetAlph(55);   //alpha値を下げる
-			SetFrame(0);   //フレームの初期化
+			SetSIze(FOURTH_SIZE_X, CMain::SCREEN_WIDTH + FOURTH_THIRD_PLUS_SIZE1_X, F_INIT_NUMBER, CMain::SCREEN_HEIGHT);
+			SetAlph(ALPHA_1);          //アルファ値を下げる
+			SetFrame(N_INIT_NUMBER);   //フレームの初期化
 		}
 	}
 
 	//フレームが規定値以上へ行った時
 	else if (GetFrame() >= ADJUSTMENT_FRAME)
 	{
-		SetSIze(0.0f, CMain::SCREEN_WIDTH, 0.0f, CMain::SCREEN_HEIGHT); //大きさの設定
+		SetSIze(F_INIT_NUMBER, CMain::SCREEN_WIDTH, F_INIT_NUMBER, CMain::SCREEN_HEIGHT);  //大きさの設定
 	}
-	SetCol(RED,GREEN,BLUE,GetAlph());                                   //色設定する
+
+	SetCol(CObject2D::RED, CObject2D::GREEN, CObject2D::BLUE,GetAlph());                   //色設定する
 }
 
 
@@ -276,8 +277,8 @@ HRESULT CShopScreen::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, CMain::SCREEN_WIDTH, 0.0f, CMain::SCREEN_HEIGHT); //大きさを設定
-	SetCol(RED, GREEN, BLUE, ALPHA);                                           //色設定する
+	CObject2D::SetSIze(F_INIT_NUMBER, CMain::SCREEN_WIDTH, F_INIT_NUMBER, CMain::SCREEN_HEIGHT); //大きさを設定
+	SetCol(RED, GREEN, BLUE, ALPHA);                                                             //色設定する
 
 	return S_OK; //成功を返す
 }
@@ -297,7 +298,7 @@ void CShopScreen::Update()
 //========================
 CShopScreen* CShopScreen::Create()
 {
-	CShopScreen* pText = new CShopScreen(0); //動的確保
+	CShopScreen* pText = new CShopScreen(CObject2D::INIT_PRIORITY); //動的確保
 
     //初期化に成功した時
 	if (SUCCEEDED(pText->Init()))
@@ -305,5 +306,5 @@ CShopScreen* CShopScreen::Create()
 		pText->Lood(); //テクスチャの読み込み
 		return pText;  //情報を返す
 	}
-	return nullptr; //無を返す
+	return nullptr;    //無を返す
 }

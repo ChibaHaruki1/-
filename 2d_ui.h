@@ -32,8 +32,6 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr int INIT_PRIORITY = 0;          //プライオリティの初期値
-
 	static constexpr int CRETAE_NUMBER_0 = 0;        //生成する番号０番目
 	static constexpr int CRETAE_NUMBER_1 = 1;        //生成する番号１番目
 };
@@ -50,8 +48,6 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr float F_INIT_NUMBER = 0.0f;     //float型の初期化の値
-
 	static constexpr  float SIZEX = 100.0f;          //サイズのX軸の大きさ
 	static constexpr  float SIZEY = 100.0f;          //サイズのY軸の大きさ
 };
@@ -68,8 +64,6 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr float F_INIT_NUMBER = 0.0f;   //float型の初期化の値
-
 	static constexpr  float SIZEX = 600.0f;        //サイズのX軸の大きさ
 	static constexpr  float SIZEY = 700.0f;        //サイズのY軸の大きさ
 };
@@ -88,13 +82,6 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr float F_INIT_NUMBER = 0.0f;   //float型の初期化の値
-
-	static constexpr int INIT_PRIORITY = 0;        //プライオリティの初期値
-
-	static constexpr  int RED = 255;               //赤色
-	static constexpr  int GREEN = 255;             //緑色
-	static constexpr  int BLUE = 255;              //青色
 	static constexpr  int ALPHA = 200;             //アルファ値
 	static constexpr  float SIZEX = 600.0f;        //サイズのX軸の大きさ
 };
@@ -132,15 +119,10 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr float F_INIT_NUMBER = 0.0f;   //float型の初期化の値
-
 	constexpr static float SIZE1X = 600.0f;        //選択ゲージ２番目のX軸の大きさ
 	constexpr static float SIZEY = 50.0f;          //選択ゲージ１番目のY軸の大きさ
 	constexpr static float SIZE1Y = 150.0f;        //選択ゲージ２番目のY軸の大きさ
 											       
-	constexpr static int RED = 255;                //赤色
-	constexpr static int GREEN = 255;              //緑色
-	constexpr static int BLUE = 255;               //青色
 	constexpr static int ALPHA = 100;              //アルファ値
 
 	float m_fSizeX;                                //選択ゲージの１番目X軸の大きさを保管する用の変数
@@ -161,8 +143,4 @@ public:
 	void Update()override;							   //更新処理
 
 	static CSelectGage001* Create();                   //生成処理
-
-private:
-	//マクロ定義
-	static constexpr float F_INIT_NUMBER = 0.0f;       //float型の初期化の値
 };

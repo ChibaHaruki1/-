@@ -52,11 +52,19 @@ public://外部からのアクセス可能
 	 constexpr static float CORE_POS1X = 40.0f;       //スコアのX軸の位置
 	 constexpr static float SCORE_POSY = 40.0f;       //スコアのY軸の位置
 
-private://外部からのアクセス不可能
-	Score m_aScore[MAX_SCORE]; //スコアの情報
-	int m_nSocre;              //スコアの値を保管する用
-	float m_fPosX;             //スコアの初期化位置(x)の更新
-	float m_fPosY;             //スコアの初期化位置(x)の更新
+private:
+	//マクロ定義
+	static constexpr int MOVE_PVTX = 4;             //バーテクスの移動値
+	static constexpr int INIT_DIGIT = 1;            //桁管理用の初期値
+	static constexpr int BEFORE_DIGIT = 1;          //前の桁
+
+	static constexpr float ADJUST_TEX_POS_X = 1.0f; //テクスチャのX軸の位置の調整値
+	static constexpr float ADJUST_TEX_POS_Y = 1.0f; //テクスチャのY軸の位置の調整値
+
+	Score m_aScore[MAX_SCORE];                      //スコアの情報
+	int m_nSocre;                                   //スコアの値を保管する用
+	float m_fPosX;                                  //スコアの初期化位置(x)の更新
+	float m_fPosY;                                  //スコアの初期化位置(x)の更新
 };
 
 

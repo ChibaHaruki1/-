@@ -20,9 +20,9 @@
 //======================
 CManagerScore::CManagerScore(int nPriority) : CObject2D(nPriority)
 {
-	m_nSocre = 0;     //初期化
-	m_fPosX = 0.0f;   //X軸の位置の初期化
-	m_fPosY = 0.0f;   //Y軸の位置の初期化
+	m_nSocre = CObject2D::N_INIT_NUMBER;  //初期化
+	m_fPosX = CObject2D::F_INIT_NUMBER;   //X軸の位置の初期化
+	m_fPosY = CObject2D::F_INIT_NUMBER;   //Y軸の位置の初期化
 }
 
 //======================
@@ -71,7 +71,7 @@ void CManagerScore::Update()
 void CManagerScore::Draw()
 {
 	//最大数分回す
-	for (int nCountScore = 0; nCountScore < MAX_SCORE; nCountScore++)
+	for (int nCountScore = CObject2D::N_INIT_NUMBER; nCountScore < MAX_SCORE; nCountScore++)
 	{
 		//スコアが使用されている
 		if (m_aScore[nCountScore].bUse == true)
@@ -89,10 +89,10 @@ void CManagerScore::SetScorepos(D3DXVECTOR3 pos)
 	VERTEX_2D* pVtx; //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	GetBuffer()->Lock(0, 0, (void**)&pVtx, 0);
+	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, CObject2D::N_INIT_NUMBER);
 
 	//最大数分回す
-	for (int nCutScore = 0; nCutScore < MAX_SCORE; nCutScore++)
+	for (int nCutScore = CObject2D::N_INIT_NUMBER; nCutScore < MAX_SCORE; nCutScore++)
 	{
 		//スコアが使用されていない
 		if (m_aScore[nCutScore].bUse == false)
@@ -101,14 +101,14 @@ void CManagerScore::SetScorepos(D3DXVECTOR3 pos)
 			m_aScore[nCutScore].bUse = true; //使用している状態へ
 
 			//頂点座標の設定
-			pVtx[0].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x - MAX_SIZE_X, m_aScore[nCutScore].pos.y - MAX_SIZE_Y, 0.0f);
-			pVtx[1].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x + MAX_SIZE_X, m_aScore[nCutScore].pos.y - MAX_SIZE_Y, 0.0f);
-			pVtx[2].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x - MAX_SIZE_X, m_aScore[nCutScore].pos.y + MAX_SIZE_Y, 0.0f);
-			pVtx[3].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x + MAX_SIZE_X, m_aScore[nCutScore].pos.y + MAX_SIZE_Y, 0.0f);
+			pVtx[0].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x - MAX_SIZE_X, m_aScore[nCutScore].pos.y - MAX_SIZE_Y, CObject2D::F_INIT_NUMBER);
+			pVtx[1].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x + MAX_SIZE_X, m_aScore[nCutScore].pos.y - MAX_SIZE_Y, CObject2D::F_INIT_NUMBER);
+			pVtx[2].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x - MAX_SIZE_X, m_aScore[nCutScore].pos.y + MAX_SIZE_Y, CObject2D::F_INIT_NUMBER);
+			pVtx[3].pos = D3DXVECTOR3(m_aScore[nCutScore].pos.x + MAX_SIZE_X, m_aScore[nCutScore].pos.y + MAX_SIZE_Y, CObject2D::F_INIT_NUMBER);
 
 			break; //処理を抜ける
 		}
-		pVtx += 4; //バーテクスの移動
+		pVtx += MOVE_PVTX; //バーテクスの移動
 	}
 
 	//頂点バッファをアンロック
@@ -121,32 +121,32 @@ void CManagerScore::SetScorepos(D3DXVECTOR3 pos)
 void CManagerScore::SetScore(int nScore)
 {
 	int nPosTexU[MAX_SCORE]; //テクスチャの分割した位置を保管
-	int nDight = 1;          //桁管理用
+	int nDight = INIT_DIGIT; //桁管理用
 
 	VERTEX_2D* pVtx;         //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	GetBuffer()->Lock(0, 0, (void**)&pVtx, 0);
+	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, CObject2D::N_INIT_NUMBER);
 
 	m_nSocre = nScore;       //引数と同期させる
 
 	//最大数分回す
-	for (int nCalculationScore = 0; nCalculationScore < MAX_SCORE; nCalculationScore++)
+	for (int nCalculationScore = CObject2D::N_INIT_NUMBER; nCalculationScore < MAX_SCORE; nCalculationScore++)
 	{
-		nDight *= DIGIT;                                                                      //桁を増やすために１０で乗算していく
-		nPosTexU[MAX_SCORE - nCalculationScore - 1] = (nScore % nDight * MAX_SCORE) / nDight; //テクスチャの分割した部分の位置を計算する
+		nDight *= DIGIT;                                                                                 //桁を増やすために１０で乗算していく
+		nPosTexU[MAX_SCORE - nCalculationScore - BEFORE_DIGIT] = (nScore % nDight * MAX_SCORE) / nDight; //テクスチャの分割した部分の位置を計算する
 	}
 
 	//最大数分回す
-	for (int nScoreTexture = 0; nScoreTexture < MAX_SCORE; nScoreTexture++)
+	for (int nScoreTexture = CObject2D::N_INIT_NUMBER; nScoreTexture < MAX_SCORE; nScoreTexture++)
 	{
 		//テクスチャの設定
-		pVtx[0].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (1.0f / FMAX_SCORE)), 0.0f);
-		pVtx[1].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (1.0f / FMAX_SCORE)) + (1.0f / FMAX_SCORE), 0.0f);
-		pVtx[2].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (1.0f / FMAX_SCORE)), 1.0f);
-		pVtx[3].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (1.0f / FMAX_SCORE)) + (1.0f / FMAX_SCORE), 1.0f);
+		pVtx[0].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (ADJUST_TEX_POS_X / FMAX_SCORE)), CObject2D::F_INIT_NUMBER);
+		pVtx[1].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (ADJUST_TEX_POS_X / FMAX_SCORE)) + (ADJUST_TEX_POS_X / FMAX_SCORE), CObject2D::F_INIT_NUMBER);
+		pVtx[2].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (ADJUST_TEX_POS_X / FMAX_SCORE)), ADJUST_TEX_POS_X);
+		pVtx[3].tex = D3DXVECTOR2((nPosTexU[nScoreTexture] * (ADJUST_TEX_POS_X / FMAX_SCORE)) + (ADJUST_TEX_POS_X / FMAX_SCORE), ADJUST_TEX_POS_Y);
 
-		pVtx += 4; //バーテクスの移動
+		pVtx += MOVE_PVTX; //バーテクスの移動
 	}
 
 	//頂点バッファをアンロック
@@ -181,10 +181,10 @@ void CManagerScore::InitAddScore(int nValue)
 void CManagerScore::PosScore()
 {
 	//最大数分回す
-	for (int nCutScore = 0; nCutScore < MAX_SCORE; nCutScore++)
+	for (int nCutScore = CObject2D::N_INIT_NUMBER; nCutScore < MAX_SCORE; nCutScore++)
 	{
-		SetScorepos(D3DXVECTOR3(m_fPosX, SCORE_POSY, 0.0f));   //位置
-		m_fPosX += PLUSSCORE_POSX;                             //ｘ軸の位置を増やす
+		SetScorepos(D3DXVECTOR3(m_fPosX, SCORE_POSY, CObject2D::F_INIT_NUMBER));   //位置
+		m_fPosX += PLUSSCORE_POSX;                                      //ｘ軸の位置を増やす
 	}
 }
 
@@ -198,7 +198,7 @@ CManagerScore* CManagerScore::Create(CScene::MODE mode, int Number)
 	//ゲーム１の時
 	if (mode == CScene::MODE::MODE_GAME01)
 	{
-		pScore = new CResultScore(3);                                        //継承クラスで動的確保
+		pScore = new CResultScore();                                         //継承クラスで動的確保
 		pScore->SetFileNamePass("data\\TEXTURE\\UI\\Score\\number001.png");  //テクスチャのパス設定
 		pScore->m_fPosX = CORE_POSX;                                         //位置を調整
 	}
@@ -206,7 +206,7 @@ CManagerScore* CManagerScore::Create(CScene::MODE mode, int Number)
 	//リザルトの時
 	else if (mode == CScene::MODE::MODE_RESULT)
 	{
-		pScore = new CResultScore(3);                                        //継承クラスで動的確
+		pScore = new CResultScore();                                         //継承クラスで動的確
 		pScore->SetFileNamePass("data\\TEXTURE\\UI\\Score\\number002.png");  //テクスチャのパス設
 		pScore->m_fPosX = CORE_POS1X;									     //位置を調整
 	}

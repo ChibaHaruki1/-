@@ -84,6 +84,13 @@ public:
 	float& SetAddjustSizeX() { return m_fSizeX; }                             //X軸の値を変更したいときの設定
 	float& SetAddjustSizeY() { return m_fSizeY; }                             //Y軸の値を変更したいときの設定
 
+
+	//==================================================
+	//マクロ定義
+	static constexpr int N_INIT_NUMBER = 0;                    //int型の初期化の値
+	static constexpr float F_INIT_NUMBER = 0.0f;               //float型の初期化の値
+
+
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture;                                            //テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;                                       //頂点バッファのポインタ

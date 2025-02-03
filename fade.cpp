@@ -18,7 +18,7 @@
 //==========================
 CFade::CFade(int nPriority) : CObject2D(nPriority)
 {
-	SetAlph(255);                                  //aruの設定
+	SetAlph(N_INIT_ALPHA_NUMBER);                  //アルファ値の設定
 	m_Fade = FADE::FADE_IN;                        //フェードのタイプの初期化
 	SetFileNamePass("data\\TEXTURE\\black.jpg");   //ファイルパスを設定
 }
@@ -100,7 +100,7 @@ void CFade::Draw()
 //===================================
 CFade* CFade::Create()
 {
-	CFade* pFade = new CFade(0); //動的確保
+	CFade* pFade = new CFade(CObject2D::INIT_PRIORITY); //動的確保
 
     //初期化が成功した時
 	if (SUCCEEDED(pFade->Init()))
@@ -109,5 +109,5 @@ CFade* CFade::Create()
 		return pFade;  //情報を返す
 	}
 
-	return nullptr;        //無を返す
+	return nullptr;    //無を返す
 }
