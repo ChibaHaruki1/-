@@ -90,6 +90,10 @@ public:
 	static constexpr int N_INIT_NUMBER = 0;                    //int型の初期化の値
 	static constexpr float F_INIT_NUMBER = 0.0f;               //float型の初期化の値
 
+	constexpr static int RED = 255;             //赤色
+	constexpr static int GREEN = 255;           //緑色
+	constexpr static int BLUE = 255;            //青色
+
 
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture;                                            //テクスチャへのポインタ

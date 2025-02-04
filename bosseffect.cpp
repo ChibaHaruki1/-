@@ -24,7 +24,7 @@
 CBossEffectDirection::CBossEffectDirection()
 {
 	m_aEffectFileName = nullptr; //ファイルパスの初期化
-	m_nLife = 0;                 //ライフの初期化
+	m_nLife = N_INIT_NUMBER;     //ライフの初期化
 	m_pVtxBuffMine = nullptr;    //バッファの初期化
 }
 
@@ -44,13 +44,13 @@ void CBossEffectDirection::SetInfo(LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff, float fTe
 	VERTEX_3D* pVtx; //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
-	m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, 0);
+	m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, N_INIT_NUMBER);
 
 	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(fTexSize, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(fTexSize, 1.0f);
+	pVtx[0].tex = D3DXVECTOR2(F_INIT_NUMBER, F_INIT_NUMBER);
+	pVtx[1].tex = D3DXVECTOR2(fTexSize, F_INIT_NUMBER);
+	pVtx[2].tex = D3DXVECTOR2(F_INIT_NUMBER, TEX_POS_Y);
+	pVtx[3].tex = D3DXVECTOR2(fTexSize, TEX_POS_Y);
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();
@@ -69,7 +69,7 @@ void CBossEffectDirection::Effect(LPDIRECT3DTEXTURE9 m_pTexture, LPDIRECT3DVERTE
 		VERTEX_3D* pVtx; //バーテクスのポインター
 
 		//頂点バッファをロックし、頂点情報へのポインタを取得
-		m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, 0);
+		m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, N_INIT_NUMBER);
 
 		//テクスチャ座標の設定
 		pVtx[0].tex.x = pVtx[0].tex.x + fMaxTex;
@@ -137,9 +137,9 @@ CSourceSpecialAttackBoss::~CSourceSpecialAttackBoss()
 CManagerBossEffect::CManagerBossEffect(int nPriority) : CObject3D(nPriority)
 {               
 	m_pEffectDirection000 = nullptr;  //ストラテジー基底クラスのポインターの初期化
-	m_nBossRotNumber = 0;             //向きで大きさを判定する変数の初期化(必殺技)
-	m_nHitNumber = -1;                //当たった方向を番号で判定する変数の初期化(衝撃波)
-	m_dLifeCount = 0.0;               //アニメーションの速度の初期化
+	m_nBossRotNumber = N_INIT_NUMBER; //向きで大きさを判定する変数の初期化(必殺技)
+	m_nHitNumber = INIT_HIT_NUMBER;   //当たった方向を番号で判定する変数の初期化(衝撃波)
+	m_dLifeCount = F_INIT_NUMBER;     //アニメーションの速度の初期化
 }
 
 
@@ -301,34 +301,34 @@ void CImpact::Update()
 	//ボスの情報がある時
 	if (CManager::GetInstance()->GetBoss() != nullptr)
 	{
-		SetAdjustLife()--;                                 //ライフを減らす
-		SetAddjustSizeX() += PLUS_SIZEX;                    //ｘ軸のサイズを大きくする
-		SetAddjustSizeY() += PLUS_SIZEY;                    //ｙ軸のサイズを大きくする
+		SetAdjustLife()--;                                                     //ライフを減らす
+		SetAddjustSizeX() += PLUS_SIZEX;                                       //ｘ軸のサイズを大きくする
+		SetAddjustSizeY() += PLUS_SIZEY;                                       //ｙ軸のサイズを大きくする
 
-		SetCol(RED, GREEN, BLUE, GetAlpha());               //色の設定
-		SetSize(GetSizeX(), GetSizeY(), MAX_SIZEZ);         //大きさの更新
+		SetCol(CObject3D::RED, CObject3D::GREEN, CObject3D::BLUE, GetAlpha()); //色の設定
+		SetSize(GetSizeX(), GetSizeY(), MAX_SIZEZ);                            //大きさの更新
 
 		//右側に当たった時
-		if (CObject3D::CollisionPrts1Right(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
+		if (CObject3D::CollisionPrts1Right(GetSizeX() * ADJUST_SIZE_X, GetSizeY() * ADJUST_SIZE_Y, SIZE_Z) == true)
 		{
-			SetHitNumber(0); //当たった方向の番号を設定
+			SetHitNumber(HIT_NUMBER_0); //当たった方向の番号を設定
 		}
 
 		//左側に当たった時
-		else if (CObject3D::CollisionPrts1Left(GetSizeX() * 1.5f, GetSizeY() * 1.1f, 40.0f) == true)
+		else if (CObject3D::CollisionPrts1Left(GetSizeX() * ADJUST_SIZE_X, GetSizeY() * ADJUST_SIZE_Y, SIZE_Z) == true)
 		{
-			SetHitNumber(1); //当たった方向の番号を設定
+			SetHitNumber(HIT_NUMBER_1); //当たった方向の番号を設定
 		}
 
 		//ライフが尽きた時
-		if (GetLife() <= 0)
+		if (GetLife() <= N_INIT_NUMBER)
 		{
-			CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT,0); //インスタンスのポインターの情報を無くす
-			CObject3D::Release();                                       //自身を破棄する
-			return;                                                     //処理を抜ける
+			CManager::GetInstance()->DesignationUninit3D(TYPE::IMPACT,N_INIT_NUMBER); //インスタンスのポインターの情報を無くす
+			CObject3D::Release();                                                     //自身を破棄する
+			return;                                                                   //処理を抜ける
 		}
 
-		CObject3D::Update();                                            //更新処理を呼ぶ
+		CObject3D::Update();                                              //更新処理を呼ぶ
 	}
 }
 
@@ -363,48 +363,52 @@ void CBossSpecialAttack::Update()
 	{
 		this->GetBossEffectDirection()->Effect(GetTexture(), GetBuffer(), ANIMETION_DLLIFE, MAX_BOSSANIMETION_TEX); //テクスチャのサイズの更新
 
-		SetCol(RED, GREEN, BLUE, GetAlpha());          //色の設定
+		SetCol(CObject3D::RED, CObject3D::GREEN, CObject3D::BLUE, GetAlpha());                                      //色の設定
 
 		//サイズが規定値より小さい時
 		if (GetSizeX() <= MAXIMUM_SIZEX)
 		{
-			SetAddjustSizeX() += PLUS_SIZEX;           //サイズを大きくする
+			SetAddjustSizeX() += PLUS_SIZEX;                                                                        //サイズを大きくする
 		}
 
-		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPartsBoss(17).y * ADJUST_PLAYER_POSY;   //プレイヤーのpos.yを計算+調整=当たり判定の一番下を設定
+		//ボスのpos.yを計算+調整=当たり判定の一番下を設定(銃から撃つので銃のパーツから位置を参照)
+		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPartsBoss(BOSS_GUN_PARTS).y * ADJUST_PLAYER_POSY;
 
 		//向き番号が１の時
-		if (GetRotNumber() == 1)
+		if (GetRotNumber() == ROT_NUMBER_1)
 		{
-			SetEffectSize(GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);    //サイズの設定
+			SetEffectSize(GetSizeX(), MAX_BOSSSPECIALATTACK_Y, F_INIT_NUMBER);    //サイズの設定
 
 			//点BXがプレイヤーより大きい判定にしたいからサイズの更新処理を入れる
 			if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), GetPos().x, GetPos().y + PLUS_POS_Y,
 				GetSizeX() * ADJUST_SIZE_X + GetPos().x, fPosY) == true)
 			{
-				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
+				//プレイヤーのHPゲージを減らす
+				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; 
 			}
 		}
 
 		//向き番号が２の時
-		else if (GetRotNumber() == 2)
+		else if (GetRotNumber() == ROT_NUMBER_2)
 		{
-			SetEffectSize(-GetSizeX(), MAX_BOSSSPECIALATTACK_Y, 0.0f);   //サイズの設定
+			SetEffectSize(-GetSizeX(), MAX_BOSSSPECIALATTACK_Y, F_INIT_NUMBER);   //サイズの設定
 
 			//点SXがプレイヤーより小さい判定にしたいからサイズの更新処理を入れる
 			if (CManager::GetScene()->GetPlayerX()->GetCollision()->TenCricale(CManager::GetScene()->GetPlayerX()->GetPos(), -GetSizeX() * ADJUST_SIZE_X + GetPos().x, GetPos().y + PLUS_POS_Y,
 				GetPos().x, fPosY) == true)
 			{
-				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; //プレイヤーのHPゲージを減らす
+				//プレイヤーのHPゲージを減らす
+				CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_DAMAGE; 
 			}
 		}
 
 		//ライフが０以下の時
-		if (GetLife() <= 0)
+		if (GetLife() <= N_INIT_NUMBER)
 		{
-			SetAdjustAlpha() -= MINUS_ALPHA;          //alpha値を減らす
+			SetAdjustAlpha() -= MINUS_ALPHA;          //アルファ値を減らす
+
 			//アルファ値が０以下の時
-			if (GetAlpha() <= 0)
+			if (GetAlpha() <= N_INIT_NUMBER)
 			{
 				CObject::Release();                    //自身を削除
 				return;                                //処理を抜ける
@@ -412,11 +416,11 @@ void CBossSpecialAttack::Update()
 		}
 		else
 		{
-			SetAdjustLife()--;                        //ライフを減らす
+			SetAdjustLife()--;                         //ライフを減らす
 		}
 	}
 	else
 	{
-		SetAlpha(0);                                   //アルファ値の初期化
+		SetAlpha(N_INIT_NUMBER);                       //アルファ値の初期化
 	}
 }
