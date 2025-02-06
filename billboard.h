@@ -27,7 +27,7 @@ public:
 
 private:
 	//ƒ}ƒNƒ’è‹`
-	constexpr static float MAX_BILLBOARD_SIZE_X = 40.0f; //X²‚Ì‘å‚«‚³
-	constexpr static float MAX_BILLBOARD_SIZE_Y = 40.0f; //Y²‚Ì‘å‚«‚³
+	 static constexpr  float MAX_BILLBOARD_SIZE_X = 40.0f; //X²‚Ì‘å‚«‚³
+	 static constexpr  float MAX_BILLBOARD_SIZE_Y = 40.0f; //Y²‚Ì‘å‚«‚³
 };
 

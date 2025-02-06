@@ -228,6 +228,11 @@ class CSpaceBattleShip000 : public CManagerBlock
 public:
 	CSpaceBattleShip000(int nPriority = DEFAULT_PRIORITY1); //コンストラクタ
 	~CSpaceBattleShip000()override;                         //デストラクタ
+
+private:
+	//マクロ定義
+	static constexpr float INIT_ROT_X = -0.3f; //X軸の向きの初期値
+	static constexpr float INIT_ROT_Y = 1.0f;  //Y軸の向きの初期値
 };
 
 

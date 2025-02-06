@@ -86,9 +86,9 @@ public:
 
 protected:
 	//マクロ定義
-	constexpr static int MAX_OBJECTMANAGERX = 200;       //オブジェクトの最大数
-	constexpr static int DEFAULT_PRIORITY1 = 3;          //デフォルトの描画順
-	constexpr static int MAX_PRIORITY_MANAGER_OBJ = 4;   //描画順の最大数
+	 static constexpr  int MAX_OBJECTMANAGERX = 200;       //オブジェクトの最大数
+	 static constexpr  int DEFAULT_PRIORITY1 = 3;          //デフォルトの描画順
+	 static constexpr  int MAX_PRIORITY_MANAGER_OBJ = 4;   //描画順の最大数
 
 private:
 	static CObjectManagerX* m_apObjectManagerX[MAX_PRIORITY_MANAGER_OBJ][MAX_OBJECTMANAGERX]; //全オブジェクトの管理

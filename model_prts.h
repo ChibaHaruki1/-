@@ -52,7 +52,7 @@ private:
 	static constexpr int N_INIT_NUMBER = 0;            //int型の初期化の値  
 	static constexpr float F_INIT_NUMBER = 0.0f;       //float型の初期化の値
 
-	constexpr static int MAX_MODEL_TEXTURE = 32;       //テクスチャの最大数
+	 static constexpr  int MAX_MODEL_TEXTURE = 32;       //テクスチャの最大数
 
 	CModelPrts* m_pParentlPrts;                        //自分のポインター
 	D3DXVECTOR3 m_pos;                                 //位置

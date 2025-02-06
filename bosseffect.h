@@ -133,7 +133,7 @@ public:
 
 	//================================
 	//マクロ定義
-	constexpr static int MAX_IMPACT_LIFE = 100;  //ライフの最大値
+	 static constexpr  int MAX_IMPACT_LIFE = 100;  //ライフの最大値
 
 private:
 	//マクロ定義

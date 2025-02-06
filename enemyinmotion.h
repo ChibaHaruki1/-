@@ -35,8 +35,8 @@ protected:
 	int JumpRecastTime;                          //飛ぶ為のリキャストタイム（連続で触れている判定になる為その修正）
 
 	//マクロ定義
-	constexpr static float MAX_SPEED = 2.0f;     //追いかける速度
-	constexpr static int MAX_BUULET_SPEED = 30;  //弾の速さ
+	 static constexpr  float MAX_SPEED = 2.0f;     //追いかける速度
+	 static constexpr  int MAX_BUULET_SPEED = 30;  //弾の速さ
 
 };
 
@@ -61,20 +61,20 @@ public: //アクセス可能
 
 private:
 	//マクロ定義
-	constexpr static int MAX_LIFE = 10;                                //ライフの最大値
-	constexpr static int PLUS_SCORE = 2000;                            //スコアの加算値
-	constexpr static int MIN_RANDOM1 = 150;                            //乱数1の最小値
-	constexpr static int MAX_RANDOM1 = MIN_RANDOM1*2;                  //乱数1の最大値
-	constexpr static int MIN_RANDOM2 = 50;                             //乱数2の最小値
-	constexpr static int MAX_RANDOM2 = MIN_RANDOM2*2;                  //乱数2の最大値
+	 static constexpr  int MAX_LIFE = 10;                                //ライフの最大値
+	 static constexpr  int PLUS_SCORE = 2000;                            //スコアの加算値
+	 static constexpr  int MIN_RANDOM1 = 150;                            //乱数1の最小値
+	 static constexpr  int MAX_RANDOM1 = MIN_RANDOM1*2;                  //乱数1の最大値
+	 static constexpr  int MIN_RANDOM2 = 50;                             //乱数2の最小値
+	 static constexpr  int MAX_RANDOM2 = MIN_RANDOM2*2;                  //乱数2の最大値
 													                   
-	constexpr static float ADJUST_PRTAS_ROTX = 0.01f;                  //パーツのX軸の向きを調整する値
-	constexpr static float ADJUST_BULLET_ROTY = 0.3f;                  //弾のY軸の向きを調整する値
-	constexpr static float MULTIPLICATIOB_ADJUST_BULLET_ROTY = 4.0f;   //弾のY軸の向きを調整する掛け算の値
-	constexpr static float IF_ADJUST_BULLET_ROTY = 3.0f;               //弾のY軸の向きを調整する条件式の掛け算の値
-	constexpr static float MAX_EXPLOSION_SIZE1 = 200.0f;               //爆発エフェクトの大きさの値１
-	constexpr static float MAX_EXPLOSION_SIZE2 = 300.0f;               //爆発エフェクトの大きさの値２
-	constexpr static float MAX_DAMAGE = 0.1f;                          //ダメージ数
+	 static constexpr  float ADJUST_PRTAS_ROTX = 0.01f;                  //パーツのX軸の向きを調整する値
+	 static constexpr  float ADJUST_BULLET_ROTY = 0.3f;                  //弾のY軸の向きを調整する値
+	 static constexpr  float MULTIPLICATIOB_ADJUST_BULLET_ROTY = 4.0f;   //弾のY軸の向きを調整する掛け算の値
+	 static constexpr  float IF_ADJUST_BULLET_ROTY = 3.0f;               //弾のY軸の向きを調整する条件式の掛け算の値
+	 static constexpr  float MAX_EXPLOSION_SIZE1 = 200.0f;               //爆発エフェクトの大きさの値１
+	 static constexpr  float MAX_EXPLOSION_SIZE2 = 300.0f;               //爆発エフェクトの大きさの値２
+	 static constexpr  float MAX_DAMAGE = 0.1f;                          //ダメージ数
 
 	int m_nHitFrame;                                                   //プレイヤーと当たった時のリキャストタイム
 	bool m_bHit;                                                       //当たったかどうかの判定用変数

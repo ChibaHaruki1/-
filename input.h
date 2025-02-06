@@ -55,7 +55,7 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static int MAX_KEY = 256;                     //キーの最大数
+	 static constexpr  int MAX_KEY = 256;                     //キーの最大数
 
 	BYTE m_aKeyState[MAX_KEY];                              //キーボードの情報を格納
 	BYTE m_aKeyStateTrigger[MAX_KEY];                       //キーボードトリガーの情報を格納

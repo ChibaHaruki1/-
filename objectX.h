@@ -130,22 +130,25 @@ public://外部からのアクセス可能
 															                                          
 															                                          
 	//==================================================	                                          
-	//マクロ定義											                                             
-	constexpr static int MAX_PRTS = 19;                    //プレイヤーのパーツ数
-	constexpr static int MAX_BOSSPARTS = 18;               //ボスのパーツ数
-	constexpr static int MAX_ENEMYPARTS = 20;              //敵の最大パーツ数
-	constexpr static int NUM_MOTION_KEY = 5;               //キーの数
-	constexpr static float MAX_GRAVITY_G = 0.5f;           //重力の最大値
-	constexpr static float D3DX_PI_ORI = 1.57f;            //半円の角度
-	constexpr static float D3DX_PI_ORI_HALF = 1.57f*0.5f;  //半円の角度の半分(調整用)
+	//マクロ定義					
+	static constexpr int N_INIT_NUMBER = 0;                //int型の初期化の値
+	static constexpr float F_INIT_NUMBER = 0.0f;           //float型の初期化の値
+
+	 static constexpr  int MAX_PRTS = 19;                    //プレイヤーのパーツ数
+	 static constexpr  int MAX_BOSSPARTS = 18;               //ボスのパーツ数
+	 static constexpr  int MAX_ENEMYPARTS = 20;              //敵の最大パーツ数
+	 static constexpr  int NUM_MOTION_KEY = 5;               //キーの数
+	 static constexpr  float MAX_GRAVITY_G = 0.5f;           //重力の最大値
+	 static constexpr  float D3DX_PI_ORI = 1.57f;            //半円の角度
+	 static constexpr  float D3DX_PI_ORI_HALF = 1.57f*0.5f;  //半円の角度の半分(調整用)
 													       
 private:											       
 	//マクロ定義									       
-	constexpr static int MAX_TEXTURE = 32;                 //保管できる最大のテクスチャー数
-	constexpr static float OBJECT_SET_PLUS_X = 1.0f;       //オブジェクトの配置時のX軸の右の移動の速さ
-	constexpr static float OBJECT_SET_MINUS_X = 1.0f;      //オブジェクトの配置時のX軸の左の移動の速さ
-	constexpr static float OBJECT_SET_PLUS_Y = 1.0f;       //オブジェクトの配置時のY軸の上の移動の速さ
-	constexpr static float OBJECT_SET_MINUS_Y = 1.0f;      //オブジェクトの配置時のY軸の下の移動の速さ
+	 static constexpr  int MAX_TEXTURE = 32;                 //保管できる最大のテクスチャー数
+	 static constexpr  float OBJECT_SET_PLUS_X = 1.0f;       //オブジェクトの配置時のX軸の右の移動の速さ
+	 static constexpr  float OBJECT_SET_MINUS_X = 1.0f;      //オブジェクトの配置時のX軸の左の移動の速さ
+	 static constexpr  float OBJECT_SET_PLUS_Y = 1.0f;       //オブジェクトの配置時のY軸の上の移動の速さ
+	 static constexpr  float OBJECT_SET_MINUS_Y = 1.0f;      //オブジェクトの配置時のY軸の下の移動の速さ
 													     
 													     
 	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEXTURE];           //テクスチャへのポインタ

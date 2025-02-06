@@ -45,8 +45,8 @@ private:
 	constexpr  static int PLUS_SCORE = 1000;           //加算するスコア値
 	constexpr  static float MAX_SPPED = 2.0f;          //移動速度
 	constexpr  static float MAX_ENEMY_DAMAGE = 0.001f; //ダメージ数
-	constexpr static int MAX_BUULET_SPEED = 30;        //弾の速さ
-	constexpr static int SET_BULLET_LIFE = 120;        //ライフの最大数
+	 static constexpr  int MAX_BUULET_SPEED = 30;        //弾の速さ
+	 static constexpr  int SET_BULLET_LIFE = 120;        //ライフの最大数
 };
 
 
@@ -62,13 +62,13 @@ public:
 
 	//=======================
 	//マクロ定義
-	constexpr static int MAX_ENEMY001_LIFE = 3;    //ライフの最大値
+	 static constexpr  int MAX_ENEMY001_LIFE = 3;    //ライフの最大値
 	
 private:
 	//マクロ定義
-	constexpr static int PLUS_SCORE = 100;         //スコアの加算値
-	constexpr static float MAX_DAMAGE = 0.005f;    //プレイヤーに与えるダメージ数
-	constexpr static float PLUS_ROTY = 0.1f;       //Y軸の向きを加算する値
+	 static constexpr  int PLUS_SCORE = 100;         //スコアの加算値
+	 static constexpr  float MAX_DAMAGE = 0.005f;    //プレイヤーに与えるダメージ数
+	 static constexpr  float PLUS_ROTY = 0.1f;       //Y軸の向きを加算する値
 };
 
 
@@ -85,13 +85,13 @@ public:
 
 	//=======================
 	//マクロ定義
-	constexpr static int MAX_ENEMY002_LIFE = 3;    //ライフの最大値
+	 static constexpr  int MAX_ENEMY002_LIFE = 3;    //ライフの最大値
 
 
 private:
 	//マクロ定義
-	constexpr static int PLUS_SCORE = 200;         //スコアの加算値
-	constexpr static float MAX_DAMAGE = 0.005f;    //プレイヤーに与えるダメージ数
-	constexpr static float PLUS_ROTY = 0.1f;       //Y軸の向きを加算する値
-	constexpr static float ADJUST_POSY = 10.0f;    //Y軸の位置を加算する値
+	 static constexpr  int PLUS_SCORE = 200;         //スコアの加算値
+	 static constexpr  float MAX_DAMAGE = 0.005f;    //プレイヤーに与えるダメージ数
+	 static constexpr  float PLUS_ROTY = 0.1f;       //Y軸の向きを加算する値
+	 static constexpr  float ADJUST_POSY = 10.0f;    //Y軸の位置を加算する値
 };

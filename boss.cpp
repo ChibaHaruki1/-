@@ -19,11 +19,11 @@
 //========================
 CBoss::CBoss(int nPriority) : CCharacter(nPriority)
 {
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::BOSSHP, 0); //ボスのHPゲージの生成
+	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::BOSSHP, CObjectX::N_INIT_NUMBER); //ボスのHPゲージの生成
 	
-	m_nCoolTime = 0;                              //クールタイムの初期化
-	SetRandom(1);                                 //乱数の初期化
-	m_nSize = 0;                                  //配列数の初期化
+	m_nCoolTime = CObjectX::N_INIT_NUMBER;        //クールタイムの初期化
+	SetRandom(CObjectX::N_INIT_NUMBER);           //乱数の初期化
+	m_nSize = CObjectX::N_INIT_NUMBER;            //配列数の初期化
 	m_nWhichSideNumber = INIT_WICHI_SIDE_NUMBER;  //どちらにいるかの初期化
 
 	m_nSaveData.clear();                          //保管用ベクターの初期化
@@ -57,7 +57,7 @@ CBoss::~CBoss()
 HRESULT CBoss::Init()
 {
 	//ベクターの最大数分回す
-	for (int nCount = 0; nCount < MAX_VECTOR_SIZE; nCount++)
+	for (int nCount = CObjectX::N_INIT_NUMBER; nCount < MAX_VECTOR_SIZE; nCount++)
 	{
 		m_nSaveData.push_back((float)nCount); //nCountをfloat型にcastして代入する
 	}
@@ -87,28 +87,29 @@ void CBoss::Update()
 	CCharacter::UpdateBoss();    //モーションの情報を更新する
 
 	//ボスが生きている時
-	if (CManager::GetInstance()->GetBossHPGage()->GetSaveSizeX() > 0)
+	if (CManager::GetInstance()->GetBossHPGage()->GetSaveSizeX() > CObjectX::N_INIT_NUMBER)
 	{
 		Collision();             //左右どちらにいるか処理している関数を呼ぶ
 		AttackPatternSelect();   //攻撃の種類を選択する関数を呼ぶ
 	}
 
 	//ボスが死んだ時
-	else if (CManager::GetInstance()->GetBossHPGage()->GetSaveSizeX() <= 0)
+	else if (CManager::GetInstance()->GetBossHPGage()->GetSaveSizeX() <= CObjectX::N_INIT_NUMBER)
 	{
-		SetAdjustDieFrame()++;                                                     //死亡カウントを増やす
-		SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSDIE);                        //モーションの種類を設定
+		SetAdjustDieFrame()++;                                //死亡カウントを増やす
+		SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSDIE);  //モーションの種類を設定
 
 		//frameが規定値以上の時
 		if (GetDieFrame() >= DIE_FRAME)
 		{
-			CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::BOSS, 0);  //ボスの（自身）インスタンスの情報を無くす
+			//ボスの（自身）インスタンスの情報を無くす
+			CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::BOSS, CObjectX::N_INIT_NUMBER); 
 			CManager::SetMode(CScene::MODE::MODE_RESULT); //リザルトへ移行
 			return;                                       //処理を抜ける
 		}
 	}
 
-	CObjectX::Update();      //基底クラスの基底クラスでm_moveを更新
+	CObjectX::Update();                                   //基底クラスの基底クラスでm_moveを更新
 }
 
 //====================================================================
@@ -139,7 +140,8 @@ void CBoss::Collision()
 	//ボスに当たった時
 	if (CollisionBossPrts() == true)
 	{
-		CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_TOUCH_DAMAGE; //プレイヤーのHPゲージを減らす
+		//プレイヤーのHPゲージを減らす
+		CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -= CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() * MAX_TOUCH_DAMAGE;
 	}
 }
 

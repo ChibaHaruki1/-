@@ -92,9 +92,9 @@ public:
 	void Release();      
 	
 	//マクロ定義
-	constexpr static int MAX_OBJECT = 500;                    //オブジェクトの最大数
-	constexpr static int DEFAULT_PRIORITY = 3;                //描画順の初期値
-	constexpr static int MAX_PRIORITY_OBJ = 4;                //描画順の最大数//自分自身の解放
+	 static constexpr  int MAX_OBJECT = 500;                    //オブジェクトの最大数
+	 static constexpr  int DEFAULT_PRIORITY = 3;                //描画順の初期値
+	 static constexpr  int MAX_PRIORITY_OBJ = 4;                //描画順の最大数//自分自身の解放
 
 private:
 

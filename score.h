@@ -40,17 +40,17 @@ public://外部からのアクセス可能
 	 static  CManagerScore* Create(CScene::MODE mode, int Number); //スコアの生成処理
 
 	 //マクロ定義 （constexprでコンパイル時に初期化）
-	 constexpr static int MAX_SCORE = 10;             //スコアの最大数
-	 constexpr static float DIVISION_SCORE = 0.1f;    //スコアの最大数
-	 constexpr static int DIGIT = 10;                 //桁管理用
-	 constexpr static int MAX_SIZE_X = 20;            //スコアのX軸の大きさ
-	 constexpr static int MAX_SIZE_Y = 40;            //スコアのY軸の大きさ
-	 constexpr static int MAX_TEXTURE_SIZEX = 10;     //スコアのX軸の大きさ
-	 constexpr static float FMAX_SCORE = 10.0f;       //スコアの最大数(float型)
-	 constexpr static float PLUSSCORE_POSX = 40.0f;   //スコアのX軸の増加させる値
-	 constexpr static float CORE_POSX = 900.0f;       //スコアのX軸の位置
-	 constexpr static float CORE_POS1X = 40.0f;       //スコアのX軸の位置
-	 constexpr static float SCORE_POSY = 40.0f;       //スコアのY軸の位置
+	  static constexpr  int MAX_SCORE = 10;             //スコアの最大数
+	  static constexpr  float DIVISION_SCORE = 0.1f;    //スコアの最大数
+	  static constexpr  int DIGIT = 10;                 //桁管理用
+	  static constexpr  int MAX_SIZE_X = 20;            //スコアのX軸の大きさ
+	  static constexpr  int MAX_SIZE_Y = 40;            //スコアのY軸の大きさ
+	  static constexpr  int MAX_TEXTURE_SIZEX = 10;     //スコアのX軸の大きさ
+	  static constexpr  float FMAX_SCORE = 10.0f;       //スコアの最大数(float型)
+	  static constexpr  float PLUSSCORE_POSX = 40.0f;   //スコアのX軸の増加させる値
+	  static constexpr  float CORE_POSX = 900.0f;       //スコアのX軸の位置
+	  static constexpr  float CORE_POS1X = 40.0f;       //スコアのX軸の位置
+	  static constexpr  float SCORE_POSY = 40.0f;       //スコアのY軸の位置
 
 private:
 	//マクロ定義

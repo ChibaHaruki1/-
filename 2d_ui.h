@@ -119,11 +119,11 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float SIZE1X = 600.0f;        //選択ゲージ２番目のX軸の大きさ
-	constexpr static float SIZEY = 50.0f;          //選択ゲージ１番目のY軸の大きさ
-	constexpr static float SIZE1Y = 150.0f;        //選択ゲージ２番目のY軸の大きさ
+	 static constexpr  float SIZE1X = 600.0f;        //選択ゲージ２番目のX軸の大きさ
+	 static constexpr  float SIZEY = 50.0f;          //選択ゲージ１番目のY軸の大きさ
+	 static constexpr  float SIZE1Y = 150.0f;        //選択ゲージ２番目のY軸の大きさ
 											       
-	constexpr static int ALPHA = 100;              //アルファ値
+	 static constexpr  int ALPHA = 100;              //アルファ値
 
 	float m_fSizeX;                                //選択ゲージの１番目X軸の大きさを保管する用の変数
 	float m_fSizeY;                                //選択ゲージの１番目y軸の大きさを保管する用の変数

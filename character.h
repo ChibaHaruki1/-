@@ -101,11 +101,11 @@ public:
 
 
 	//マクロ定義 （constexprでコンパイル時に初期化）
-	constexpr static int MAX_KEYSET = 8;              //モーションに使うキーの数
-	constexpr static int NUM_MOTION = 11;             //プレイヤーモーションの総数
-	constexpr static int NUM_RIGHTLEFTPRTS = 4;       //プレイヤーの側のパーツ数
-	constexpr static int NUM_MOTIONBOSS = 10;         //ボスのモーションの総数
-	constexpr static int NUM_RIGHTPRTSBOSS = 8;       //ボスの側のパーツ数
+	 static constexpr  int MAX_KEYSET = 8;              //モーションに使うキーの数
+	 static constexpr  int NUM_MOTION = 11;             //プレイヤーモーションの総数
+	 static constexpr  int NUM_RIGHTLEFTPRTS = 4;       //プレイヤーの側のパーツ数
+	 static constexpr  int NUM_MOTIONBOSS = 10;         //ボスのモーションの総数
+	 static constexpr  int NUM_RIGHTPRTSBOSS = 8;       //ボスの側のパーツ数
 	static constexpr float BOSS_PLUS_POS_Y = 200.0f;  //ボスのパーツのY軸の位置を上に上げる為の値
 
 private:

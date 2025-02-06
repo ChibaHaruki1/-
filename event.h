@@ -34,7 +34,7 @@ public:
 
 	//==========================
 	//マクロ定義
-	constexpr static float CANERA_POSY = 400.0f;                //カメラのY軸の位置
+	 static constexpr  float CANERA_POSY = 400.0f;                //カメラのY軸の位置
 
 private:
 	//マクロ定義

@@ -33,23 +33,23 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static int RED = 255;          //赤色
-	constexpr static int GREEN = 255;        //緑色
-	constexpr static int BLUE = 255;         //青色
-	constexpr static int MAX_ALPHA = 255;    //アルファ値の最大数
-	constexpr static int MIN_ALPHA = 10;     //アルファ値の最小数
-	constexpr static int MINUS_ALPHA = 5;    //アルファ値の減算値
+	 static constexpr  int RED = 255;          //赤色
+	 static constexpr  int GREEN = 255;        //緑色
+	 static constexpr  int BLUE = 255;         //青色
+	 static constexpr  int MAX_ALPHA = 255;    //アルファ値の最大数
+	 static constexpr  int MIN_ALPHA = 10;     //アルファ値の最小数
+	 static constexpr  int MINUS_ALPHA = 5;    //アルファ値の減算値
 
-	constexpr static float MAX_SIZEX = 15.0f;             //Xのの大きさ
-	constexpr static float MAX_SIZEY = 100.0f;            //Y軸の大きさ
-	constexpr static float MAX_SIZEZ = 20.0f;             //Z軸の大きさ
-	constexpr static float MIN_SIZEY = 10.0f;             //Y軸の最小値
-	constexpr static float ADJUST_POSX = 50.0f;          //X軸の位置の調整値
-	constexpr static float ADJUST_POSY = 80.0f;          //Y軸の位置の調整値
-	constexpr static float MAX_MAINAS_GAGESPEED = 0.5f;   //ゲージの減る速さ
-	constexpr static float MAX_PLUS_GAGESPEED = 0.5f;     //ゲージの増える速さ
-	constexpr static float MAX_PLUS_PLAYER_MOVE = 1.0f;   //プレイヤー移動量の増える速さ
-	constexpr static float MAX_PLAYER_GRAVITY = 1.0f;     //プレイヤーの重力の限界値
+	 static constexpr  float MAX_SIZEX = 15.0f;             //Xのの大きさ
+	 static constexpr  float MAX_SIZEY = 100.0f;            //Y軸の大きさ
+	 static constexpr  float MAX_SIZEZ = 20.0f;             //Z軸の大きさ
+	 static constexpr  float MIN_SIZEY = 10.0f;             //Y軸の最小値
+	 static constexpr  float ADJUST_POSX = 50.0f;          //X軸の位置の調整値
+	 static constexpr  float ADJUST_POSY = 80.0f;          //Y軸の位置の調整値
+	 static constexpr  float MAX_MAINAS_GAGESPEED = 0.5f;   //ゲージの減る速さ
+	 static constexpr  float MAX_PLUS_GAGESPEED = 0.5f;     //ゲージの増える速さ
+	 static constexpr  float MAX_PLUS_PLAYER_MOVE = 1.0f;   //プレイヤー移動量の増える速さ
+	 static constexpr  float MAX_PLAYER_GRAVITY = 1.0f;     //プレイヤーの重力の限界値
 
 
 	bool m_bUse;                                          //ゲージを減らすかどうか判定するための変数

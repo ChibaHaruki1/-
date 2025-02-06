@@ -62,8 +62,8 @@ public:
 	int& GetFPS() {return m_nFPS; }           //FPSの値を取得する
 
 	//マクロ定義
-	constexpr static int SCREEN_WIDTH = 1280; //ウィンドウの幅
-	constexpr static int SCREEN_HEIGHT = 720; //ウィンドウの高さ
+	 static constexpr  int SCREEN_WIDTH = 1280; //ウィンドウの幅
+	 static constexpr  int SCREEN_HEIGHT = 720; //ウィンドウの高さ
 
 
 private:

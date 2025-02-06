@@ -121,13 +121,13 @@ public:
 	int& GetLaserCount() { return m_nLaser; }                         //レーザーの数
 
 	//マクロ定義 （constexprでコンパイル時に初期化）
-	constexpr static int MAX_ENEMYINMOTION = 10;  //モーション付きの敵の最大数
-	constexpr static int MAX_OBJECT_DATA = 20;    //オブジェクトの最大数
-	constexpr static int MAX_STAGEOBJECT = 20;    //ステージに置く用の配列の最大数
-	constexpr static int MAX_BREAKHOUSE = 10;     //ステージに置く用の配列の最大数
-	constexpr static int MAX_RUBBLE = 40;         //瓦礫の最大数
-	constexpr static int MAX_ENEMY = 25;          //敵の最大数
-	constexpr static int MAX_SHIP = 2;           //スペースシップの最大数
+	 static constexpr  int MAX_ENEMYINMOTION = 10;  //モーション付きの敵の最大数
+	 static constexpr  int MAX_OBJECT_DATA = 20;    //オブジェクトの最大数
+	 static constexpr  int MAX_STAGEOBJECT = 20;    //ステージに置く用の配列の最大数
+	 static constexpr  int MAX_BREAKHOUSE = 10;     //ステージに置く用の配列の最大数
+	 static constexpr  int MAX_RUBBLE = 40;         //瓦礫の最大数
+	 static constexpr  int MAX_ENEMY = 25;          //敵の最大数
+	 static constexpr  int MAX_SHIP = 2;           //スペースシップの最大数
 
 	//インライン展開
 	/*inline void CreateFuelGage()

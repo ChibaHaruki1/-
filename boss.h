@@ -42,41 +42,43 @@ public: //アクセス可能
 
 private: //アクセス不可
 	//マクロ定義 （constexprでコンパイル時に初期化）
-	constexpr static int MAX_VECTOR_SIZE = 50;                  //vector配列の最大数
-	constexpr static int DIE_FRAME = 180;                       //次のシーンへ行くまでの時間
-	constexpr static int INIT_WICHI_SIDE_NUMBER = -1;           //左右どちらの位置に居るかの初期番号
-	constexpr static int WICHI_SIDE_LEFT_NUMBER = 0;            //左右どちらの位置に居るかの左側の番号
-	constexpr static int WICHI_SIDE_RIGHT_NUMBER = 1;           //左右どちらの位置に居るかの右側の番号
+	 static constexpr  int MAX_VECTOR_SIZE = 50;                  //vector配列の最大数
+	 static constexpr  int DIE_FRAME = 180;                       //次のシーンへ行くまでの時間
+	 static constexpr  int INIT_WICHI_SIDE_NUMBER = -1;           //左右どちらの位置に居るかの初期番号
+	 static constexpr  int WICHI_SIDE_LEFT_NUMBER = 0;            //左右どちらの位置に居るかの左側の番号
+	 static constexpr  int WICHI_SIDE_RIGHT_NUMBER = 1;           //左右どちらの位置に居るかの右側の番号
+
+	 static constexpr int CoolTime = 120;                         //
 
 
 	//==============================================
 	//攻撃パターン１の時のマクロ定義
-	constexpr static int ATTACKPATTEN1_FRAME_1 = 30;            //第一行動時のフレーム
-	constexpr static int ATTACKPATTEN1_FRAME_2 = 140;           //第二行動時のフレーム
-	constexpr static int ATTACKPATTEN1_FRAME_3 = 141;           //第三行動時のフレーム
-	constexpr static int ATTACKPATTEN1_FRAME_4 = 162;           //第四行動時のフレーム
-	constexpr static int ATTACKPATTEN1_FRAME_5 = 170;           //第五行動時のフレーム
-	constexpr static float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;     //Y軸のボスの落ちる移動速度を設定
-	constexpr static float MAX_MOVE_SPEED_IN_PLAYER_1 = 12.0f;  //落下攻撃時プレイヤーに向かう速さ
+	 static constexpr  int ATTACKPATTEN1_FRAME_1 = 30;            //第一行動時のフレーム
+	 static constexpr  int ATTACKPATTEN1_FRAME_2 = 140;           //第二行動時のフレーム
+	 static constexpr  int ATTACKPATTEN1_FRAME_3 = 141;           //第三行動時のフレーム
+	 static constexpr  int ATTACKPATTEN1_FRAME_4 = 162;           //第四行動時のフレーム
+	 static constexpr  int ATTACKPATTEN1_FRAME_5 = 170;           //第五行動時のフレーム
+	 static constexpr  float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;     //Y軸のボスの落ちる移動速度を設定
+	 static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_1 = 12.0f;  //落下攻撃時プレイヤーに向かう速さ
 
 
 	//==============================================
 	//攻撃パターン２の時のマクロ定義
-	constexpr static int ATTACKPATTEN2_FRAME = 40;              //行動時のフレーム
-	constexpr static float MAX_DROP_MOVE_Y_SPEED_2 = 0.25f;     //Y軸のボスの落ちる移動速度を設定
-	constexpr static float MAX_MOVE_SPEED_IN_PLAYER_2 = 8.0f;   //炎攻撃時プレイヤーに向かう速さ
-	constexpr static float MAX_MOVE_SPEED_SIDE = 0.1f;          //左右のどちらかにに移動する時の速さ
+	 static constexpr  int ATTACKPATTEN2_FRAME = 40;              //行動時のフレーム
+	 static constexpr  float MAX_DROP_MOVE_Y_SPEED_2 = 0.25f;     //Y軸のボスの落ちる移動速度を設定
+	 static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_2 = 8.0f;   //炎攻撃時プレイヤーに向かう速さ
+	 static constexpr  float MAX_MOVE_SPEED_SIDE = 0.1f;          //左右のどちらかにに移動する時の速さ
 
 
 	//==============================================
 	//攻撃パターン３の時のマクロ定義
-	constexpr static int ATTACKPATTEN3_FRAME_1 = 20;            //第一行動時のフレーム
-	constexpr static int ATTACKPATTEN3_FRAME_2 = 60;            //第二行動時のフレーム
-	constexpr static int ATTACKPATTEN3_FRAME_3 = 61;            //第三行動時のフレーム
+	 static constexpr  int ATTACKPATTEN3_FRAME_1 = 20;            //第一行動時のフレーム
+	 static constexpr  int ATTACKPATTEN3_FRAME_2 = 60;            //第二行動時のフレーム
+	 static constexpr  int ATTACKPATTEN3_FRAME_3 = 61;            //第三行動時のフレーム
 
 
-	constexpr static float MAX_MOVE_SPEED = 0.25f;              //ボスの移動速度を設定
-	constexpr static float MAX_TOUCH_DAMAGE = 0.0005f;          //ボスに触れている時のダメージ数
+	 static constexpr  float MAX_MOVE_SPEED = 0.25f;              //ボスの移動速度を設定
+	 static constexpr  float MAX_TOUCH_DAMAGE = 0.0005f;          //ボスに触れている時のダメージ数
 
 	int m_nCoolTime;                                            //攻撃終了後次の攻撃に行くまでの時間
 	int m_nSize;                                                //vectorの配列数を取得するための変数

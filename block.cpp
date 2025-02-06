@@ -16,13 +16,13 @@
 
 //==================================
 //staticメンバー変数の初期化
-int CManagerBlock::m_nCreateCount = 0; //初期化
+int CManagerBlock::m_nCreateCount = CObjectX::N_INIT_NUMBER; //初期化
 
 
 //==================================
 //文字列の設定
-std::string u8NormalBlockText = u8"ブロックの情報設定"; //日本語対応
-std::string u8NormalBlockNumberText = u8"番目の"; //日本語対応
+std::string u8NormalBlockText = u8"ブロックの情報設定";      //日本語対応
+std::string u8NormalBlockNumberText = u8"番目の";            //日本語対応
 
 
 //====================================================================================================================================
@@ -605,7 +605,7 @@ CUpWallBlock::~CUpWallBlock()
 //============================
 CSpaceBattleShip000::CSpaceBattleShip000(int nPriority) : CManagerBlock(nPriority)
 {
-	GetRot() = D3DXVECTOR3(-0.3f, 1.0f, 0.0f);  //向きを調整
+	SetRot(D3DXVECTOR3(INIT_ROT_X, INIT_ROT_Y, 0.0f)); //向きを調整
 }
 
 //============================
