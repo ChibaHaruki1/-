@@ -237,8 +237,8 @@ HRESULT CLaserCamare::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject3D::SetSize(SIZEX, SIZEY, SIZEZ);                      //大きさを設定
-	SetRot(D3DXVECTOR3(F_INIT_NUMBER, ADJUST_ROTY, ADJUST_ROTZ)); //向きを設定
+	CObject3D::SetSize(SIZEX, SIZEY, SIZEZ);                                 //大きさを設定
+	SetRot(D3DXVECTOR3(CObject3D::F_INIT_NUMBER, ADJUST_ROTY, ADJUST_ROTZ)); //向きを設定
 
 	//位置を監視カメラの上部部分に設定する
 	SetPos(D3DXVECTOR3(CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().x,
@@ -273,14 +273,14 @@ void CLaserCamare::Hit()
 	if (GetRandom() == MIN_RANDOM)
 	{
 		//敵の生成
-		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, N_INIT_NUMBER, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, F_INIT_NUMBER));
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, CObject3D::N_INIT_NUMBER, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, CObject3D::F_INIT_NUMBER));
 		//CObject3D::Release();     //自身の削除
 		//return;                   //処理を抜ける
 	}
 	else
 	{
 		//敵の生成
-		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, N_INIT_NUMBER, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, F_INIT_NUMBER));
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, CObject3D::N_INIT_NUMBER, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, CObject3D::F_INIT_NUMBER));
 		//CObject3D::Release();     //自身の削除
 		//return;                   //処理を抜ける
 	}

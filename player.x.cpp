@@ -283,7 +283,7 @@ void CPlayerX::Update()
 			return;       //処理を抜ける
 		}
 	}
-	SceneMode(2);         //シーンを選択
+	//SceneMode(2);         //シーンを選択
 }
 
 

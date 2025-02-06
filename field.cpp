@@ -28,7 +28,7 @@ string u8FieldText = u8"地面の情報設定";   //日本語対応
 
 //===================================
 //static変数の初期化
-int CField::m_nCountField = N_INIT_NUMBER; //作られた地面の初期化
+int CField::m_nCountField = CObject3D::N_INIT_NUMBER; //作られた地面の初期化
 
 
 //============================
@@ -77,7 +77,7 @@ void CField::Uninit()
 //========================
 void CField::Update()
 {
-	SetSize(GetSizeX(), F_INIT_NUMBER, GetSizeX()); //大きさの設定
+	SetSize(GetSizeX(), CObject3D::F_INIT_NUMBER, GetSizeX()); //大きさの設定
 
 	//if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_1) == true)
 	//{

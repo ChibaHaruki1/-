@@ -69,7 +69,7 @@ void CParticles001::Update()
 	SetAdjustPos().y += PLUS_POSY;  //Y軸の位置を増やす
 
 	//ライフが０より小さい時
-	if (GetLife() <= N_INIT_NUMBER)
+	if (GetLife() <= CObject3D::N_INIT_NUMBER)
 	{
 		CObject3D::Release();       //自身の解放
 		return;                     //処理を抜けることによって、バッファのアクセス違反を防ぐ（破棄しているから）

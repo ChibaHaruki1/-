@@ -69,21 +69,21 @@ void CFuelGage::Update()
 		CManager::GetScene()->GetPlayerX()->GetPos().z));
 
 
-	CObject3D::SetAdjustmentSizeY(MAX_SIZEX, GetSizeY(), MAX_SIZEZ); //Y軸用の大きさを設定
-	CObject3D::SetCol(RED, GREEN, BLUE, GetAlpha());                 //色の設定
+	CObject3D::SetAdjustmentSizeY(MAX_SIZEX, GetSizeY(), MAX_SIZEZ);                  //Y軸用の大きさを設定
+	CObject3D::SetCol(CObject3D::RED, CObject3D::GREEN, CObject3D::BLUE, GetAlpha()); //色の設定
 
 	//使われている時とゲージが満タンの時
 	if (m_bUse == true && m_bCharge == true)
 	{
-		CManager::GetScene()->GetPlayerX()->GetMove().y += MAX_PLUS_PLAYER_MOVE;   //プレイヤーのや軸の移動量を増やす
+		CManager::GetScene()->GetPlayerX()->GetMove().y += MAX_PLUS_PLAYER_MOVE;      //プレイヤーのや軸の移動量を増やす
 
 		//プレイヤーの重力が規定値より高い時
 		if (CManager::GetScene()->GetPlayerX()->GetGravity() > MAX_PLAYER_GRAVITY)
 		{
-			CManager::GetScene()->GetPlayerX()->SetGravity(MAX_PLAYER_GRAVITY);    //重力の設定
+			CManager::GetScene()->GetPlayerX()->SetGravity(MAX_PLAYER_GRAVITY);       //重力の設定
 		}
 
-		CManager::GetScene()->GetPlayerX()->SetGravityFlag(false);                 //重力OFF
+		CManager::GetScene()->GetPlayerX()->SetGravityFlag(false);                    //重力OFF
 
 		//アルファ値が規定値以外の時
 		if (GetAlpha() != MAX_ALPHA)
@@ -184,7 +184,7 @@ CManagerGage::CManagerGage(int nPriority) : CObject2D(nPriority)
 {
 	m_fHPSizeX = MAX_PLAYER_HP_SIZE;       //プレイヤーのHPの設定
 	m_fBossHPSizeX = CMain::SCREEN_WIDTH;  //ボスのHPの設定
-	m_fSaveSizeX = F_INIT_NUMBER;          //セーブHPの設定
+	m_fSaveSizeX = CObject3D::F_INIT_NUMBER;          //セーブHPの設定
 }
 
 //===========================
@@ -248,7 +248,7 @@ CManagerGage* CManagerGage::Create(CObject2D::TYPE type)
 	{
 		pManagerGage = new CPlayerHPGage(CRETAE_PRIORITY);                                                       //動的確保
 		CreateLeave(type);                                                                                       //残すHPゲージの生成
-		CManager::GetInstance()->GetCreateObjectInstnace(TYPE::FUELGAGE,N_INIT_NUMBER, pManagerGage->GetPos());  //燃料ゲージの生成
+		CManager::GetInstance()->GetCreateObjectInstnace(TYPE::FUELGAGE, CObject3D::N_INIT_NUMBER, pManagerGage->GetPos());  //燃料ゲージの生成
 		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\RedGage000.png");                                //ファイルパスの設定
 	}
 
@@ -341,7 +341,7 @@ HRESULT CPlayerHPGage::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(F_INIT_NUMBER, GetPlayerHPSizeX(), SIZE_Y, SIZE_Y1); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, GetPlayerHPSizeX(), SIZE_Y, SIZE_Y1); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
 
 	return S_OK;       //成功を返す
 }
@@ -363,7 +363,7 @@ void CPlayerHPGage::Update()
 		m_fSaveSizeX = GetPlayerHPSizeX();   //現在のHPゲージと同期させる
 	}
 
-	CObject2D::SetSIze(F_INIT_NUMBER, m_fSaveSizeX, MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z); //滑らかに減っているように見せる
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, m_fSaveSizeX, MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z); //滑らかに減っているように見せる
 }
 
 
@@ -400,7 +400,7 @@ HRESULT CBossHPGage::Init()
 	}
 
 	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
-	CObject2D::SetSIze(F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADJUST_POSY), CMain::SCREEN_HEIGHT);
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADJUST_POSY), CMain::SCREEN_HEIGHT);
 
 	return S_OK;       //成功を返す
 }
@@ -422,7 +422,7 @@ void CBossHPGage::Update()
 		m_fSaveSizeX = GetBossHPSizeX(); //現在のHPゲージと同期させる
 	}
 
-	CObject2D::SetSIze(F_INIT_NUMBER, m_fSaveSizeX, (CMain::SCREEN_HEIGHT + MINUS_SIZE_X1), CMain::SCREEN_HEIGHT); //滑らかに減っているように見せる
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, m_fSaveSizeX, (CMain::SCREEN_HEIGHT + MINUS_SIZE_X1), CMain::SCREEN_HEIGHT); //滑らかに減っているように見せる
 }
 
 
@@ -459,7 +459,7 @@ HRESULT CPlayerHPGageLeave::Init()
 	}
 
 	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
-	CObject2D::SetSIze(F_INIT_NUMBER, GetPlayerHPSizeX(), MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z);
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, GetPlayerHPSizeX(), MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z);
 
 	return S_OK;       //成功を返す
 }
@@ -474,7 +474,7 @@ HRESULT CPlayerHPGageLeave::Init()
 //===========================
 CBossHPGageLeave::CBossHPGageLeave(int nPriority) : CManagerGage(nPriority)
 {
-	m_fSaveSizeX = N_INIT_NUMBER; //HPの初期化
+	m_fSaveSizeX = CObject3D::N_INIT_NUMBER; //HPの初期化
 }
 
 //===========================
@@ -498,7 +498,7 @@ HRESULT CBossHPGageLeave::Init()
 	}
 
 	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
-	CObject2D::SetSIze(F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT + CBossHPGage::MINUS_SIZE_X1), CMain::SCREEN_HEIGHT);
+	CObject2D::SetSIze(CObject3D::F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT + CBossHPGage::MINUS_SIZE_X1), CMain::SCREEN_HEIGHT);
 
 	return S_OK;       //成功を返す
 }

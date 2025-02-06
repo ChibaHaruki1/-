@@ -29,8 +29,6 @@ public:
 
 private:
 	//マクロ定義
-	static constexpr int N_INIT_NUMBER = 0;               //int型の初期化の値
-	static constexpr float F_INIT_NUMBER = 0.0f;          //float型の初期化の値
 	static constexpr int TexNumber_0 = 0;                 //テクスチャの番号０番目
 	static constexpr int TexNumber_1 = 1;                 //テクスチャの番号１番目
 	static constexpr int TexNumber_2 = 2;                 //テクスチャの番号２番目
