@@ -44,6 +44,7 @@ public: //外部からアクセス可能
 
 private: //アクセス不可能
     //マクロ定義 （constexprでコンパイル時に初期化）
+	static constexpr int GREEN = 160;                    //緑色
 	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
 	constexpr static float INIT_ROTY = 3.14f;            //ｙ軸の向き
 };
@@ -62,13 +63,20 @@ public: //外部からアクセス可能
 
 private: //アクセス不可能
 	 //マクロ定義 （constexprでコンパイル時に初期化）
-	constexpr static int MINUS_ENEMY000_LIFE = 1;              //敵000のライフを減らす値
-	constexpr static int MINUS_ENEMY001_LIFE = 1;              //敵001のライフを減らす値
-	constexpr static int MINUS_ENEMYMOTION001_LIFE = 1;        //モーション付きの敵001のライフを減らす値
+	static constexpr int MINUS_ENEMY000_LIFE = 1;              //敵000のライフを減らす値
+	static constexpr int MINUS_ENEMY001_LIFE = 1;              //敵001のライフを減らす値
+	static constexpr int MINUS_ENEMYMOTION001_LIFE = 1;        //モーション付きの敵001のライフを減らす値
+	static constexpr int CREATE_PLUS_NUMBER = 1;               //生成数を取得する際の生成数に＋１する為の値
 
-	constexpr static float  ADJUST_HIT_MOTIONENENY001 = 0.5f;  //モーション付きの敵001の当たり判定の調整値
-	constexpr static float  ADJUST_HIT_CAMERA_UP = 1.5f;       //監視カメラ上部分の当たり判定の調整値
-	constexpr static float  MINUS_BOSS_HPGAGE = 0.01f;         //ボスのHPゲージを減らす値
+	static constexpr int BOSS_PARTS_RIGHT_THIGHS = 11;         //ボスの右太もものパーツ番号
+	static constexpr int BOSS_PARTS_RIGHT_KNEES = 12;          //ボスの右ふくらはぎのパーツ番号
+	static constexpr int BOSS_PARTS_RIGHT_FOOT = 13;           //ボスの右足のパーツ番号
+
+	static constexpr float  ADJUST_HIT_MOTIONENENY001 = 0.5f;  //モーション付きの敵001の当たり判定の調整値
+	static constexpr float  ADJUST_HIT_CAMERA_UP = 1.5f;       //監視カメラ上部分の当たり判定の調整値
+	static constexpr float  MINUS_BOSS_HPGAGE = 0.01f;         //ボスのHPゲージを減らす値
+	static constexpr float ADJUST_ENEMY001_HIT = 0.5f;         //敵001の当たり判定の調整値
+	static constexpr float ADJUST_ENEMY002_HIT = 0.5f;         //敵002の当たり判定の調整値
 };
 
 
@@ -128,19 +136,22 @@ public: //外部からアクセス可能
 
 	//============================
 	//マクロ定義
-	constexpr static float MINUS_ROTY = 7.0f;              //Y軸の向きを減算していく
-	constexpr static float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
-	constexpr static float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
-	constexpr static float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
+	static constexpr float MINUS_ROTY = 7.0f;              //Y軸の向きを減算していく
+	static constexpr float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
+	static constexpr float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
+	static constexpr float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
 
 private: //外部からアクセス不可能
 	//マクロ定義
-	constexpr static int BLUE = 200;                     //青色
-	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
-	constexpr static int SET_BULLET_LIFE = 90;           //ライフの最大値
+	static constexpr  int BLUE = 200;                     //青色
+	static constexpr  int MINUS_ALPHA = 5;                //アルファ値を減算
+	static constexpr  int SET_BULLET_LIFE = 90;           //ライフの最大値
+	static constexpr int MAX_FRAME = 10;                 //フレームの最大数
 
-	constexpr static float ADDJUST_HIT = 1.0;            //当たり判定の調整値
-	constexpr static float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
+	static constexpr  float ADDJUST_HIT = 1.0;            //当たり判定の調整値
+	static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
+	static  constexpr float MINUS_POS_Y = -2.5f;          //Y軸の位置を減算していく値
+	
 };
 
 
@@ -158,16 +169,19 @@ public: //外部からアクセス可能
 
 	//============================
 	//マクロ定義
-	constexpr static float MAX_BOSSBULLET_SIZE_X = 40.0f; //X軸の大きさ
-	constexpr static float MAX_BOSSBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
-	constexpr static float MAX_BOSSBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
+	static constexpr float MAX_BOSSBULLET_SIZE_X = 40.0f; //X軸の大きさ
+	static constexpr float MAX_BOSSBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
+	static constexpr float MAX_BOSSBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
 
 
 private: //外部からアクセス不可能
 	//マクロ定義
-	constexpr static int MINUS_ALPHA = 5;                //アルファ値を減算
+	static constexpr int BLUE = 200;                     //青色
+	static constexpr int MINUS_ALPHA = 5;                //アルファ値を減算
 
-	constexpr static float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
-	constexpr static float  MINUS_POSY = 2.0f;           //Y軸の位置を減算する値
+	static constexpr float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
+	static constexpr float  MINUS_POSY = 2.0f;           //Y軸の位置を減算する値
+	static constexpr float PLUS_POS_Y = 200.0f;          //エフェクトのY軸の生成位置を加算する値
+	static constexpr float ADJUST_HIT = 0.5f;            //当たり判定時の調整値
 };
 
