@@ -29,6 +29,10 @@ public:
 	virtual void Hit() = 0;                     //当たり判定処理
 
 	static CUI* Create(CObject3D::TYPE typeui); //生成処理
+
+private:
+	//マクロ定義
+	static constexpr int CREATE_PRIORITY = 0;   //生成時のプライオリティの番号
 };
 
 
@@ -56,9 +60,9 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float SIZEX = 40.0f; //X軸の大きさ
-	constexpr static float SIZEY = 40.0f; //Y軸の大きさ
-	constexpr static float SIZEZ = 40.0f; //Z軸の大きさ
+	static constexpr  float SIZEX = 40.0f; //X軸の大きさ
+	static constexpr  float SIZEY = 40.0f; //Y軸の大きさ
+	static constexpr  float SIZEZ = 40.0f; //Z軸の大きさ
 };
 
 
@@ -77,10 +81,10 @@ public:
 
 	//===========================
 	//マクロ定義
-	constexpr static float SIZEX = 80.0f;                 //X軸の大きさ
-	constexpr static float SIZEY = 20.0f;                 //Y軸の大きさ
-	constexpr static float SIZEZ = 20.0f;                 //Z軸の大きさ
-	constexpr static float ADJUST_ADDJUST_SIZE = 1.3f;   //プレイヤーとの当たり判定時の乗算値
+	static constexpr  float SIZEX = 80.0f;                 //X軸の大きさ
+	static constexpr  float SIZEY = 20.0f;                 //Y軸の大きさ
+	static constexpr  float SIZEZ = 20.0f;                 //Z軸の大きさ
+	static constexpr  float ADJUST_ADDJUST_SIZE = 1.3f;   //プレイヤーとの当たり判定時の乗算値
 
 
 	static 	constexpr float TOTALVALUE_X = SIZEY * ADJUST_ADDJUST_SIZE; //X軸用の当たり判定用の合計値
@@ -89,10 +93,13 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float ADJUST_POSY = 20.0f;          //Y軸の位置の調整値
-	constexpr static float ADJUST_POSZ = 35.0f;          //Z軸の位置の調整値
-	constexpr static float ADJUST_ROTY = 0.54f;          //Y軸の向きの調整値
-	constexpr static float ADJUST_ROTZ = 1.54f;          //Z軸の向きの調整値
-	constexpr static float ADJUST_CREATE_POSX = 300.0f;  //X軸の生成位置の調整値
-	constexpr static float ADJUST_CREATE_POSY = 300.0f;  //Y軸の生成位置の調整値
+	static constexpr int MIN_RANDOM = 1; //乱数の最小値
+	static constexpr int MAX_RANDOM = 2; //乱数の最大値
+
+	static constexpr  float ADJUST_POSY = 20.0f;          //Y軸の位置の調整値
+	static constexpr  float ADJUST_POSZ = 35.0f;          //Z軸の位置の調整値
+	static constexpr  float ADJUST_ROTY = 0.54f;          //Y軸の向きの調整値
+	static constexpr  float ADJUST_ROTZ = 1.54f;          //Z軸の向きの調整値
+	static constexpr  float ADJUST_CREATE_POSX = 300.0f;  //X軸の生成位置の調整値
+	static constexpr  float ADJUST_CREATE_POSY = 300.0f;  //Y軸の生成位置の調整値
 };

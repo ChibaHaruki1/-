@@ -83,7 +83,7 @@ public:  //アクセス可能
 
 	//========================
 	//マクロ定義
-	constexpr static float MAX_PLAYER_HP_SIZE = 400.0f;   //プレイヤーのゲージ最大数
+	static constexpr float MAX_PLAYER_HP_SIZE = 400.0f;   //プレイヤーのゲージ最大数
 
 
 protected://継承クラスのみアクセス可能
@@ -92,13 +92,16 @@ protected://継承クラスのみアクセス可能
 
 	//===================================
 	//マクロ定義
-	constexpr static float MAX_PLAYERGAGE_SIZE_Y = 40.0f; //プレイヤーのゲージのY軸の大きさ
-	constexpr static float MAX_PLAYERGAGE_SIZE_Z = 70.0f; //プレイヤーのゲージのZ軸の大きさ
+	static constexpr float MAX_PLAYERGAGE_SIZE_Y = 40.0f; //プレイヤーのゲージのY軸の大きさ
+	static constexpr float MAX_PLAYERGAGE_SIZE_Z = 70.0f; //プレイヤーのゲージのZ軸の大きさ
 
 private:  //アクセス不可能
+	//マクロ定義
+	static constexpr int CRETAE_PRIORITY = 1;       //生成時のプライオリティの番号
+	static constexpr int CRETAE_LEAVE_PRIORITY = 0; //残すゲージの生成時のプライオリティの番号
 
-	float m_fHPSizeX;      //プレイヤーのHPゲージの大きさを管理する用の変数
-	float m_fBossHPSizeX;  //ボスのHPゲージの大きさを管理する用の変数
+	float m_fHPSizeX;                         //プレイヤーのHPゲージの大きさを管理する用の変数
+	float m_fBossHPSizeX;                     //ボスのHPゲージの大きさを管理する用の変数
 };
 
 
@@ -114,7 +117,9 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float MINUS_HPSIZEX = 1.8f;       //HPゲージの減算値
+	static  constexpr float SIZE_Y = 40.0f;            //Y軸の１番目の大きさを設定
+	static  constexpr float SIZE_Y1 = 70.0f;           //Y軸の２番目の大きさを設定
+	static constexpr float MINUS_HPSIZEX = 1.8f;       //HPゲージの減算値
 };
 	
 
@@ -128,10 +133,15 @@ public:
 	HRESULT Init()override;                            //初期化処理
 	void Update()override;                             //更新処理
 
+
+	//========================
+	//マクロ定義
+	static constexpr float MINUS_SIZE_X1 = -40.0f;     //X軸の２番目の大きさの減算調整値
+
 private:
 	//マクロ定義
-	constexpr static float ADJUST_POSY = 40.0f;       //Y軸の位置の調整値
-	constexpr static float MINUS_HPSIZEX = 1.3f;       //HPゲージの減算値
+	static constexpr float ADJUST_POSY = 40.0f;        //Y軸の位置の調整値
+	static constexpr float MINUS_HPSIZEX = 1.3f;       //HPゲージの減算値
 };
 
 

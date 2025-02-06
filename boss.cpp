@@ -98,11 +98,11 @@ void CBoss::Update()
 	{
 		SetAdjustDieFrame()++;                                                     //死亡カウントを増やす
 		SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSDIE);                        //モーションの種類を設定
-		CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::BOSS, 0);  //ボスの（自身）インスタンスの情報を無くす
 
 		//frameが規定値以上の時
 		if (GetDieFrame() >= DIE_FRAME)
 		{
+			CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::BOSS, 0);  //ボスの（自身）インスタンスの情報を無くす
 			CManager::SetMode(CScene::MODE::MODE_RESULT); //リザルトへ移行
 			return;                                       //処理を抜ける
 		}
@@ -367,7 +367,7 @@ void CBoss::SpecialAttack()
 				CManager::GetInstance()->GetBossSpecialAttack()->SetEffect(D3DXVECTOR3
 				(
 					GetPosPartsBoss(17).x,
-					GetPosPartsBoss(17).y,
+					GetPosPartsBoss(17).y- CCharacter::BOSS_PLUS_POS_Y,
 					GetPosPartsBoss(17).z));
 
 			}
@@ -381,7 +381,7 @@ void CBoss::SpecialAttack()
 				//位置を銃に設定
 				CManager::GetInstance()->GetBossSpecialAttack()->SetEffect(D3DXVECTOR3(
 					GetPosPartsBoss(17).x + 300.0f,
-					GetPosPartsBoss(17).y,
+					GetPosPartsBoss(17).y - CCharacter::BOSS_PLUS_POS_Y,
 					GetPosPartsBoss(17).z));
 			}
 
@@ -390,7 +390,7 @@ void CBoss::SpecialAttack()
 	}
 
 	//終了
-	else if(CManager::GetInstance()->GetBossSpecialAttack()->GetAlpha()<=0)
+	else if (CManager::GetInstance()->GetBossSpecialAttack()->GetAlpha() <= 5)
 	{
 		SetAdjustPos().y = 0.0f; //Y軸の位置を初期化
 		SetAdjustRot().y = 0.0f; //Y軸の向きを初期化

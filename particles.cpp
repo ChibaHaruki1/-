@@ -64,12 +64,12 @@ void CParticles001::Update()
 {
 	SetSize(SIZEX, SIZEY, SIZEZ);   //大きさの設定
 
-	SetAdjustLife()--;             //ライフを減らす
+	SetAdjustLife()--;              //ライフを減らす
 
-	SetAdjustPos().y += PLUS_POSY; //Y軸の位置を増やす
+	SetAdjustPos().y += PLUS_POSY;  //Y軸の位置を増やす
 
-	//ライフが０より大きい時
-	if (GetLife() <= 0)
+	//ライフが０より小さい時
+	if (GetLife() <= N_INIT_NUMBER)
 	{
 		CObject3D::Release();       //自身の解放
 		return;                     //処理を抜けることによって、バッファのアクセス違反を防ぐ（破棄しているから）
@@ -91,7 +91,7 @@ void CParticles001::Draw()
 //========================
 CParticles001* CParticles001::Create(D3DXVECTOR3 pos)
 {
-	CParticles001* pPraticles = new CParticles001(2); //動的確保
+	CParticles001* pPraticles = new CParticles001(CREATE_PRIORITY); //動的確保
 
 	//情報がある時
 	if (pPraticles != nullptr)

@@ -23,12 +23,12 @@ using namespace std; //c++の基礎の省略
 
 //===================================
 //文字列の設定
-string u8FieldText = u8"地面の情報設定"; //日本語対応
+string u8FieldText = u8"地面の情報設定";   //日本語対応
 
 
 //===================================
 //static変数の初期化
-int CField::m_nCountField = 0; //作られた地面の初期化
+int CField::m_nCountField = N_INIT_NUMBER; //作られた地面の初期化
 
 
 //============================
@@ -77,7 +77,7 @@ void CField::Uninit()
 //========================
 void CField::Update()
 {
-	SetSize(GetSizeX(), 0.0f, GetSizeX()); //大きさの設定
+	SetSize(GetSizeX(), F_INIT_NUMBER, GetSizeX()); //大きさの設定
 
 	//if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_1) == true)
 	//{
@@ -141,7 +141,7 @@ void CField::Draw()
 //========================
 CField* CField::Create(D3DXVECTOR3 pos)
 {
-	CField* pCField = new CField(2); //動的確保
+	CField* pCField = new CField(CREATE_PRIORITY); //動的確保
 
     //初期化が成功した時
 	if (SUCCEEDED(pCField->Init()))

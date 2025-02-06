@@ -184,7 +184,7 @@ CManagerGage::CManagerGage(int nPriority) : CObject2D(nPriority)
 {
 	m_fHPSizeX = MAX_PLAYER_HP_SIZE;       //プレイヤーのHPの設定
 	m_fBossHPSizeX = CMain::SCREEN_WIDTH;  //ボスのHPの設定
-	m_fSaveSizeX = 0.0f;                   //セーブHPの設定
+	m_fSaveSizeX = F_INIT_NUMBER;          //セーブHPの設定
 }
 
 //===========================
@@ -246,18 +246,18 @@ CManagerGage* CManagerGage::Create(CObject2D::TYPE type)
 	//タイプがプレイヤーのHPの時
 	if (type == CObject2D::TYPE::HP)
 	{
-		pManagerGage = new CPlayerHPGage(1);                                                         //動的確保
-		CreateLeave(type);                                                                           //残すHPゲージの生成
-		CManager::GetInstance()->GetCreateObjectInstnace(TYPE::FUELGAGE,0, pManagerGage->GetPos());  //燃料ゲージの生成
-		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\RedGage000.png");                    //ファイルパスの設定
+		pManagerGage = new CPlayerHPGage(CRETAE_PRIORITY);                                                       //動的確保
+		CreateLeave(type);                                                                                       //残すHPゲージの生成
+		CManager::GetInstance()->GetCreateObjectInstnace(TYPE::FUELGAGE,N_INIT_NUMBER, pManagerGage->GetPos());  //燃料ゲージの生成
+		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\RedGage000.png");                                //ファイルパスの設定
 	}
 
 	//タイプがボスのHPの時
 	else if (type == CObject2D::TYPE::BOSSHP)
 	{
-		pManagerGage = new CBossHPGage(1);                                                            //動的確保
-		CreateLeave(type);                                                                            //残すHPゲージの生成
-		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\BossHpGage.png");                     //ファイルパスを設定
+		pManagerGage = new CBossHPGage(CRETAE_PRIORITY);                                                         //動的確保
+		CreateLeave(type);                                                                                       //残すHPゲージの生成
+		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\BossHpGage.png");                                //ファイルパスを設定
 	}
 
 	//情報がある時
@@ -284,14 +284,14 @@ CManagerGage* CManagerGage::CreateLeave(CObject2D::TYPE type)
 	//タイプがプレイヤーのHPの時
 	if (type == CObject2D::TYPE::HP)
 	{
-		pManagerGage = new CPlayerHPGageLeave(0);                                    //動的確保
+		pManagerGage = new CPlayerHPGageLeave(CRETAE_LEAVE_PRIORITY);                //動的確保
 		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\RedGage001.png");    //ファイルパスの設定
 	}
 
 	//タイプがボスのHPの時
 	else if (type == CObject2D::TYPE::BOSSHP)
 	{
-		pManagerGage = new CBossHPGageLeave(0);                                      //動的確保
+		pManagerGage = new CBossHPGageLeave(CRETAE_LEAVE_PRIORITY);                  //動的確保
 		pManagerGage->SetFileNamePass("data\\TEXTURE\\UI\\Gage\\BloackGage000.png"); //ファイルパスの設定
 	}
 
@@ -303,7 +303,6 @@ CManagerGage* CManagerGage::CreateLeave(CObject2D::TYPE type)
 		{
 			pManagerGage->Lood(); //テクスチャの読み込み
 			return pManagerGage;  //情報を返す
-
 		}
 	}
 
@@ -342,7 +341,7 @@ HRESULT CPlayerHPGage::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetPlayerHPSizeX(), 40.0f, 70.0f); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(F_INIT_NUMBER, GetPlayerHPSizeX(), SIZE_Y, SIZE_Y1); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
 
 	return S_OK;       //成功を返す
 }
@@ -364,7 +363,7 @@ void CPlayerHPGage::Update()
 		m_fSaveSizeX = GetPlayerHPSizeX();   //現在のHPゲージと同期させる
 	}
 
-	CObject2D::SetSIze(0.0f, m_fSaveSizeX, MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z); //滑らかに減っているように見せる
+	CObject2D::SetSIze(F_INIT_NUMBER, m_fSaveSizeX, MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z); //滑らかに減っているように見せる
 }
 
 
@@ -400,7 +399,8 @@ HRESULT CBossHPGage::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADJUST_POSY), CMain::SCREEN_HEIGHT); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - ADJUST_POSY), CMain::SCREEN_HEIGHT);
 
 	return S_OK;       //成功を返す
 }
@@ -422,7 +422,7 @@ void CBossHPGage::Update()
 		m_fSaveSizeX = GetBossHPSizeX(); //現在のHPゲージと同期させる
 	}
 
-	CObject2D::SetSIze(0.0f, m_fSaveSizeX, (CMain::SCREEN_HEIGHT - 40.0f), CMain::SCREEN_HEIGHT); //滑らかに減っているように見せる
+	CObject2D::SetSIze(F_INIT_NUMBER, m_fSaveSizeX, (CMain::SCREEN_HEIGHT + MINUS_SIZE_X1), CMain::SCREEN_HEIGHT); //滑らかに減っているように見せる
 }
 
 
@@ -458,7 +458,8 @@ HRESULT CPlayerHPGageLeave::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetPlayerHPSizeX(), MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(F_INIT_NUMBER, GetPlayerHPSizeX(), MAX_PLAYERGAGE_SIZE_Y, MAX_PLAYERGAGE_SIZE_Z);
 
 	return S_OK;       //成功を返す
 }
@@ -473,7 +474,7 @@ HRESULT CPlayerHPGageLeave::Init()
 //===========================
 CBossHPGageLeave::CBossHPGageLeave(int nPriority) : CManagerGage(nPriority)
 {
-	m_fSaveSizeX = 1; //HPを同期させる
+	m_fSaveSizeX = N_INIT_NUMBER; //HPの初期化
 }
 
 //===========================
@@ -496,7 +497,8 @@ HRESULT CBossHPGageLeave::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject2D::SetSIze(0.0f, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT - 40.0f), CMain::SCREEN_HEIGHT); //大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	//大きさをあらかじめ決めないと一瞬画面にフルスクリーンで出てしまう
+	CObject2D::SetSIze(F_INIT_NUMBER, GetBossHPSizeX(), (CMain::SCREEN_HEIGHT + CBossHPGage::MINUS_SIZE_X1), CMain::SCREEN_HEIGHT);
 
 	return S_OK;       //成功を返す
 }

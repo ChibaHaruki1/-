@@ -142,13 +142,13 @@ void CCharacter::UpdateBoss()
 	MotionInfoBoss(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = N_INIT_NUMBER; nCount < MAX_BOSSPARTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_BOSSPARTS-1; nCount++)
 	{
 		//上半身
 		if (nCount <= PLAYER_PARTS_LEFTHAND_NUMBER)
 		{
 			//各パーツを保管値＋現在の値で修正
-			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z); 
+			GetPosPartsBoss(nCount) = D3DXVECTOR3(SaveMotionPosBoss[nCount].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nCount].y + CManager::GetInstance()->GetBoss()->GetPos().y+ BOSS_PLUS_POS_Y, SaveMotionPosBoss[nCount].z + CManager::GetInstance()->GetBoss()->GetPos().z);
 		}
 
 		//下半身
@@ -165,7 +165,7 @@ void CCharacter::UpdateBoss()
 		int nRightHand = BOSS_PARTS_RIGHTHAND_NUMBER; //右手
 
 		//銃の位置を右手と現在の位置で設定
-		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(SaveMotionPosBoss[nRightHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nRightHand].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nRightHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
+		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(SaveMotionPosBoss[nRightHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nRightHand].y + CManager::GetInstance()->GetBoss()->GetPos().y+ BOSS_PLUS_POS_Y, SaveMotionPosBoss[nRightHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
 	}
 
 	//右向きの時
@@ -174,7 +174,7 @@ void CCharacter::UpdateBoss()
 		int nLeftHand = BOSS_PARTS_LEFTHAND_NUMBER;  //左手
 
 		//銃の位置を左手と現在の位置で設定
-		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(-SaveMotionPosBoss[nLeftHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nLeftHand].y + CManager::GetInstance()->GetBoss()->GetPos().y, SaveMotionPosBoss[nLeftHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
+		GetPosPartsBoss(BOSS_PARTS_GUN_NUMBER) = D3DXVECTOR3(-SaveMotionPosBoss[nLeftHand].x + CManager::GetInstance()->GetBoss()->GetPos().x, SaveMotionPosBoss[nLeftHand].y + CManager::GetInstance()->GetBoss()->GetPos().y+ BOSS_PLUS_POS_Y, SaveMotionPosBoss[nLeftHand].z + CManager::GetInstance()->GetBoss()->GetPos().z);
 	}
 
 	/*D3DXVECTOR3 pos = CManager::GetInstance()->GetBoss()->GetPos();

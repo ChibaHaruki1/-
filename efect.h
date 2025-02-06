@@ -29,7 +29,18 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float MAX_EXPLOSION_LIFE = 8;        //アニメーションの更新する時のライフ
+	static constexpr int N_INIT_NUMBER = 0;               //int型の初期化の値
+	static constexpr float F_INIT_NUMBER = 0.0f;          //float型の初期化の値
+	static constexpr int TexNumber_0 = 0;                 //テクスチャの番号０番目
+	static constexpr int TexNumber_1 = 1;                 //テクスチャの番号１番目
+	static constexpr int TexNumber_2 = 2;                 //テクスチャの番号２番目
+	static constexpr int TexNumber_3 = 3;                 //テクスチャの番号３番目
+	static constexpr UINT BUFFNUMBE = 0U;                 //バッファのロック時の番号
+
+	static constexpr float TEXTURE_SIZE = 1.0f;           //テクスチャの大きさ
+
+	static constexpr int INIT_LIFE = 0;                   //ライフの初期値
+	static constexpr int MAX_EXPLOSION_LIFE = 8;          //アニメーションの更新する時のライフ
 
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuffMine;               //自身のバッファー
 	int m_nLife;                                          //テクスチャのライフ（アニメーション用の）
@@ -123,21 +134,24 @@ public:
 protected://継承クラスのみアクセス可能
 
 	//マクロ定義 （constexprでコンパイル時に初期化）
-	constexpr static int SET_BULLET_LIFE = 42;            //ライフの最大数
-	constexpr static int MINUS_ALPHA = 5;                 //アルファ値の減算値
-	constexpr static float m_fSepecialAttackX = 200.0f;   //必殺技のX軸の大きさ
-	constexpr static float m_fSepecialAttackY = 200.0f;   //必殺技のY軸の大きさ
+	static constexpr  int SET_BULLET_LIFE = 42;            //ライフの最大数
+	static constexpr  int MINUS_ALPHA = 5;                 //アルファ値の減算値
+	static constexpr  float m_fSepecialAttackX = 200.0f;   //必殺技のX軸の大きさ
+	static constexpr  float m_fSepecialAttackY = 200.0f;   //必殺技のY軸の大きさ
 
 private:
 	//マクロ定義
-	constexpr static int RED = 255;          //赤色
-	constexpr static int GREEN = 255;        //緑色
-	constexpr static int BLUE = 255;         //青色
-	
-	int m_nEffectNumber;                      //最後にエフェクトを呼ぶかどうか
-	double m_dLifeCount;                      //アニメーションの速度
-	float m_fMaxTex;                          //テクスチャの最大のサイズ
-	CEffectDirection* m_pEffectDirection000;  //ストラテジー基底クラスのポインター
+	static constexpr int EXCLUSION_EFFECT_NUMBER = -1; //エフェクトの番号の判定からの除外値
+	static constexpr int IF_EFFECTNUMBER = 1;          //エフェクトナンバーの条件式の値
+	static constexpr double MIN_DLIFECOUNT = 0.0;      //アニメーションライフの最小値
+
+	static constexpr int FIRE_ALPHA = 200;             //ファイアーエフェクトのアルファ値
+	static constexpr int FIRE_LIFE = 60;               //ファイアーエフェクトのライフ
+
+	int m_nEffectNumber;                               //最後にエフェクトを呼ぶかどうか
+	double m_dLifeCount;                               //アニメーションの速度
+	float m_fMaxTex;                                   //テクスチャの最大のサイズ
+	CEffectDirection* m_pEffectDirection000;           //ストラテジー基底クラスのポインター
 };
 
 
@@ -152,9 +166,9 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float THANDER_SIZEX = 70.0f;  //雷エフェクトのX軸の大きさ
-	constexpr static float THANDER_SIZEY = 70.0f;  //雷エフェクトのY軸の大きさ
-	constexpr static float MAX_THANDER_TEX = 1.0f; //アニメーションの分割数
+	static constexpr  float THANDER_SIZEX = 70.0f;  //雷エフェクトのX軸の大きさ
+	static constexpr  float THANDER_SIZEY = 70.0f;  //雷エフェクトのY軸の大きさ
+	static constexpr  float MAX_THANDER_TEX = 1.0f; //アニメーションの分割数
 };
 
 
@@ -169,10 +183,10 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float EXPLSION_SIZEX = 90.0f;                 //爆発エフェクトのX軸の大きさ
-	constexpr static float EXPLSION_SIZEY = 90.0f;                 //爆発エフェクトのY軸の大きさ
-	constexpr static float MAX_EXPLOSION_TEX = 0.125f;             //アニメーションの分割数
-	constexpr static double MAX_EXPLOSION_ANIMETION_SPEED = 0.6;   //アニメーションの速さ
+	static constexpr  float EXPLSION_SIZEX = 90.0f;                 //爆発エフェクトのX軸の大きさ
+	static constexpr  float EXPLSION_SIZEY = 90.0f;                 //爆発エフェクトのY軸の大きさ
+	static constexpr  float MAX_EXPLOSION_TEX = 0.125f;             //アニメーションの分割数
+	static constexpr  double MAX_EXPLOSION_ANIMETION_SPEED = 0.6;   //アニメーションの速さ
 };
 
 
@@ -187,10 +201,10 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float EXPLSION001_SIZEX = 90.0f;                 //爆発エフェクトのX軸の大きさ
-	constexpr static float EXPLSION001_SIZEY = 90.0f;                 //爆発エフェクトのY軸の大きさ
-	constexpr static float MAX_EXPLOSION001_TEX = 0.125f;             //アニメーションの分割数
-	constexpr static double MAX_EXPLOSION001_ANIMETION_SPEED = 0.6;   //アニメーションの速さ
+	static constexpr  float EXPLSION001_SIZEX = 90.0f;                 //爆発エフェクトのX軸の大きさ
+	static constexpr  float EXPLSION001_SIZEY = 90.0f;                 //爆発エフェクトのY軸の大きさ
+	static constexpr  float MAX_EXPLOSION001_TEX = 0.125f;             //アニメーションの分割数
+	static constexpr  double MAX_EXPLOSION001_ANIMETION_SPEED = 0.6;   //アニメーションの速さ
 };
 
 
@@ -206,14 +220,14 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float FIRE_SIZEX = 92.0f;                 //炎エフェクトのX軸の大きさ
-	constexpr static float FIRE_SIZEY = 190.0f;                //炎エフェクトのY軸の大きさ
-	constexpr static float MAX_FIRE_TEX = 0.125f;              //アニメーションの分割数
-	constexpr static double MAX_FIRE_ANIMETION_SPEED = 0.5;    //アニメーションの速さ
+	static constexpr  float FIRE_SIZEX = 92.0f;                 //炎エフェクトのX軸の大きさ
+	static constexpr  float FIRE_SIZEY = 190.0f;                //炎エフェクトのY軸の大きさ
+	static constexpr  float MAX_FIRE_TEX = 0.125f;              //アニメーションの分割数
+	static constexpr  double MAX_FIRE_ANIMETION_SPEED = 0.5;    //アニメーションの速さ
 
 private:
 	//マクロ定義
-	constexpr static int FIRELIFE = 120; //ライフの最大数
+	static constexpr  int FIRELIFE = 120; //ライフの最大数
 };
 
 
@@ -230,20 +244,20 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float PILLAROFFIRE_SIZEX = 200.0f;                 //柱状の炎エフェクトのX軸の大きさ
-	constexpr static float PILLAROFFIRE_SIZEY = 600.0f;                 //柱状の炎エフェクトのY軸の大きさ
-	constexpr static float PILLAROFFIRE_SIZEZ = 40.0f;                  //柱状の炎エフェクトのZ軸の大きさ
-	constexpr static float MAX_PILLAROFFIRE_TEX = 0.125f;               //アニメーションの分割数
-	constexpr static double MAX_PILLAROFFIRE_ANIMETION_SPEED = 0.5;     //アニメーションの速さ
+	static constexpr  float PILLAROFFIRE_SIZEX = 200.0f;                 //柱状の炎エフェクトのX軸の大きさ
+	static constexpr  float PILLAROFFIRE_SIZEY = 600.0f;                 //柱状の炎エフェクトのY軸の大きさ
+	static constexpr  float PILLAROFFIRE_SIZEZ = 40.0f;                  //柱状の炎エフェクトのZ軸の大きさ
+	static constexpr  float MAX_PILLAROFFIRE_TEX = 0.125f;               //アニメーションの分割数
+	static constexpr  double MAX_PILLAROFFIRE_ANIMETION_SPEED = 0.5;     //アニメーションの速さ
 
 private:
 	//マクロ定義
-	constexpr static int PILLARFIRELIFE = 180; //ファイアのライフ
+	static constexpr  int PILLARFIRELIFE = 180;           //ファイアのライフ
+	static constexpr  int MINUS_ALPHA = 5;                //アルファ値の減算値
 
-	constexpr static int RED = 255;          //赤色
-	constexpr static int GREEN = 255;        //緑色
-	constexpr static int BLUE = 255;         //青色
-	constexpr static int MINUS_ALPHA = 5;    //アルファ値の減算値
+	static constexpr  double  D_LIFECOUNT = 0.5;          //アニメーションライフの調整値
+
+	static constexpr float ADJUST_PLAYER_HP_GAGE = 0.01f; //プレイヤーのHPゲージの減りを調整する値
 };
 
 
@@ -263,10 +277,12 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static int SET_EFFECT_LIFE = 30; //ライフの最大数
+	static constexpr  int SET_EFFECT_LIFE = 30; //ライフの最大数
 
-	constexpr static float SIZEX = 40.0f; //X軸の大きさ
-	constexpr static float SIZEY = 40.0f; //Y軸の大きさ
+	static constexpr  float SIZEX = 40.0f;      //X軸の大きさ
+	static constexpr  float SIZEY = 40.0f;      //Y軸の大きさ
+
+	static constexpr int CREATE_PRIORITY = 0;   //生成時のプライオリティの番号
 };
 
 
@@ -282,15 +298,15 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float MAX_DEBRIS_TEX = 1.0f; //アニメーションの分割数
+	static constexpr  float MAX_DEBRIS_TEX = 1.0f; //アニメーションの分割数
 
 
 private:
 	//マクロ定義
-	constexpr static int DEBRISLIFE = 10;         //ライフの最大数
+	static constexpr  int DEBRISLIFE = 10;         //ライフの最大数
 
-	constexpr static float SIZEX = 50.0f;         //X軸の大きさ
-	constexpr static float PLUS_SIZEX = 4.0f;     //X軸の大きさを増やす値
+	static constexpr  float SIZEX = 50.0f;         //X軸の大きさ
+	static constexpr  float PLUS_SIZEX = 4.0f;     //X軸の大きさを増やす値
 
 };
 
@@ -313,23 +329,24 @@ public:
 
 	//=========================
 	//マクロ定義
-	constexpr static float SPECIALATTACK_SIZEX = 200.0f;   //必殺技エフェクトのX軸の大きさ
-	constexpr static float SPECIALATTACK_SIZEY = 200.0f;   //必殺技エフェクトのY軸の大きさ
-	constexpr static float MAX_SPECIALATTACK_TEX = 0.125f; //アニメーションの分割数
+	static constexpr  float SPECIALATTACK_SIZEX = 200.0f;   //必殺技エフェクトのX軸の大きさ
+	static constexpr  float SPECIALATTACK_SIZEY = 200.0f;   //必殺技エフェクトのY軸の大きさ
+	static constexpr  float MAX_SPECIALATTACK_TEX = 0.125f; //アニメーションの分割数
 
 
 private:
 	//マクロ定義
-	constexpr static int SPECIALATTACKLIFE = 180;      //ライフの最大数
+	static constexpr  int SPECIALATTACKLIFE = 180;      //ライフの最大数
+	static constexpr  int MINUS_ALPHA = 5;              //アルファ値の減算値
+	static constexpr  int ROT_NUMBER_1 = 1;             //向き番号１
+	static constexpr  int ROT_NUMBER_2 = 2;             //向き番号２
 
-	constexpr static int RED = 255;                    //赤色
-	constexpr static int GREEN = 255;                  //緑色
-	constexpr static int BLUE = 255;                   //青色
-	constexpr static int MINUS_ALPHA = 5;              //アルファ値の減算値
+	static constexpr double D_LIFECOUNT = 0.3;          //アニメーションライフの調整値
 
-	constexpr static float MAXIMUM_SIZEX = 2000.0f;    //サイズを加算していく時の最大値
-	constexpr static float MAX_DAMAGE_BOSS = 0.00005f; //サイズを加算していく時の最大値
-	constexpr static float PLUS_SIZEX = 30.0f;         //X軸の大きさを増やす値
+	static constexpr  float MAXIMUM_SIZEX = 2000.0f;    //サイズを加算していく時の最大値
+	static constexpr  float MAX_DAMAGE_BOSS = 0.00005f; //サイズを加算していく時の最大値
+	static constexpr  float PLUS_SIZEX = 30.0f;         //X軸の大きさを増やす値
 
-	int m_nRotNumber;                                  //向きで大きさを変えるための変数
+
+	int m_nRotNumber;                                   //向きで大きさを変えるための変数
 };

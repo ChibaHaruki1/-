@@ -45,9 +45,9 @@ HRESULT CManagerBullet::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	SetRot(D3DXVECTOR3(F_INIT_NUMBER, INIT_ROTY, F_INIT_NUMBER)); //向きを設定
+	SetRot(D3DXVECTOR3(CObject3D::F_INIT_NUMBER, INIT_ROTY, CObject3D::F_INIT_NUMBER)); //向きを設定
 	SetSizeX(MAX_BULLET3D_SIZE_X);                                //X軸の大きさの設定
-	SetSize(GetSizeX(), MAX_BULLET3D_SIZE_Y, F_INIT_NUMBER);      //サイズの調整
+	SetSize(GetSizeX(), MAX_BULLET3D_SIZE_Y, CObject3D::F_INIT_NUMBER);      //サイズの調整
 	return S_OK;                                                  //成功を返す
 }
 
@@ -66,12 +66,12 @@ void CManagerBullet::Uninit()
 //=====================
 void CManagerBullet::Update()
 {
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos());             //エフェクト（軌跡）を生成する
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::CObject3D::N_INIT_NUMBER, GetPos());             //エフェクト（軌跡）を生成する
 	CManager::GetInstance()->GetEffect()->SetLife(SET_BULLET_LIFE);                                                            //エフェクトのライフの設定
-	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_ALPHA_NUMBER, GREEN, CObject3D::N_INIT_NUMBER, GetAlpha()); //色の設定
+	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_ALPHA_NUMBER, GREEN, CObject3D::CObject3D::N_INIT_NUMBER, GetAlpha()); //色の設定
 
 	//アルファ値が０より大きい時
-	if (GetAlpha() > N_INIT_NUMBER)
+	if (GetAlpha() > CObject3D::N_INIT_NUMBER)
 	{
 		SetAdjustAlpha() -= MINUS_ALPHA; //アルファ値を減算する
 	}
@@ -79,7 +79,7 @@ void CManagerBullet::Update()
 	SetAdjustLife()--; //ライフを減らす
 
 	//寿命が尽きた
-	if (GetLife() <= N_INIT_NUMBER)
+	if (GetLife() <= CObject3D::N_INIT_NUMBER)
 	{
 		//CallEffect(false);
 		CObject3D::Release();      //自身の解放
@@ -205,10 +205,10 @@ CBullet3D::~CBullet3D()
 void CBullet3D::CallEffect(bool bUse)
 {
 	//爆発エフェクトを生成（1つ目）
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION,N_INIT_NUMBER, D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER));
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION,CObject3D::N_INIT_NUMBER, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));
 
 	//爆発エフェクトを生成（2つ目）
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION001, 0, D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER));   
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION001, 0, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));   
 	//CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::THENDER, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));           //雷エフェクトを呼ぶ
 	//CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::DEBRIS, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));            //破片エフェクトを呼ぶ
 
@@ -231,7 +231,7 @@ void CBullet3D::CollisionOnObject()
 
 
 	//敵001の作られた数分回す
-	for (int nCount1 = N_INIT_NUMBER; nCount1 < SaveEnemy001Count; nCount1++)
+	for (int nCount1 = CObject3D::N_INIT_NUMBER; nCount1 < SaveEnemy001Count; nCount1++)
 	{
 		//敵001の情報がある時
 		if (CManager::GetInstance()->GetEnemy001(nCount1) != nullptr)
@@ -242,20 +242,20 @@ void CBullet3D::CollisionOnObject()
 				CManager::GetInstance()->GetEnemy001(nCount1)->SetAdjustLife() -= MINUS_ENEMY001_LIFE;          //敵のライフを減らす
 
 				//敵のライフが０以下の時
-				if (CManager::GetInstance()->GetEnemy001(nCount1)->GetLife() <= N_INIT_NUMBER)
+				if (CManager::GetInstance()->GetEnemy001(nCount1)->GetLife() <= CObject3D::N_INIT_NUMBER)
 				{
 					CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::ENEMY001, nCount1);        //ポインターをnullptrにする
 				}
 
 				CallEffect(false);      //エフェクト処理を呼ぶ
-				SetLife(N_INIT_NUMBER); //ライフを０にする
+				SetLife(CObject3D::N_INIT_NUMBER); //ライフを０にする
 				return;                 //処理を抜ける
 			}
 		}
 	}
 
 	//敵002の作られた数分回す
-	for (int nCount2 = N_INIT_NUMBER; nCount2 < SaveEnemy002Count; nCount2++)
+	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < SaveEnemy002Count; nCount2++)
 	{
 		//敵002の情報がある時
 		if (CManager::GetInstance()->GetEnemy002(nCount2) != nullptr)
@@ -266,13 +266,13 @@ void CBullet3D::CollisionOnObject()
 				CManager::GetInstance()->GetEnemy002(nCount2)->SetAdjustLife() -= MINUS_ENEMY001_LIFE;          //敵のライフを減らす
 
 				//敵のライフが０以下の時
-				if (CManager::GetInstance()->GetEnemy002(nCount2)->GetLife() <= N_INIT_NUMBER)
+				if (CManager::GetInstance()->GetEnemy002(nCount2)->GetLife() <= CObject3D::N_INIT_NUMBER)
 				{
 					CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::ENEMY002, nCount2);         //ポインターをnullptrにする
 				}
 
 				CallEffect(false);       //エフェクト処理を呼ぶ
-				SetLife(N_INIT_NUMBER);  //ライフを０にする
+				SetLife(CObject3D::N_INIT_NUMBER);  //ライフを０にする
 				return;                  //処理を抜ける
 			}
 		}
@@ -280,7 +280,7 @@ void CBullet3D::CollisionOnObject()
 
 	
 	//カメラの上部分の作られた数分回す
-	for (int nCamera = N_INIT_NUMBER; nCamera < SaveCameraUP; nCamera++)
+	for (int nCamera = CObject3D::N_INIT_NUMBER; nCamera < SaveCameraUP; nCamera++)
 	{
 		//カメラの上部分の情報がある時
 		if (CManager::GetInstance()->GetSurveillanceCameraUp(nCamera) != nullptr)
@@ -300,7 +300,7 @@ void CBullet3D::CollisionOnObject()
 					CManager::GetInstance()->DesignationUninit3D(CObject3D::TYPE::LASER, nCamera);           //レーザーポインターをnullptrにする
 				}
 
-				SetLife(N_INIT_NUMBER); //ライフを０にする
+				SetLife(CObject3D::N_INIT_NUMBER); //ライフを０にする
 				return;                 //処理を抜ける
 			}
 		}
@@ -308,13 +308,13 @@ void CBullet3D::CollisionOnObject()
 
 	
 	//モーション付きの敵の001の作られた数分回す
-	for (int nMotionInEnemy001 = N_INIT_NUMBER; nMotionInEnemy001 < SaveMotionEnemy001Count; nMotionInEnemy001++)
+	for (int nMotionInEnemy001 = CObject3D::N_INIT_NUMBER; nMotionInEnemy001 < SaveMotionEnemy001Count; nMotionInEnemy001++)
 	{
 		//モーション付きの敵001の情報がある時
 		if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001) != nullptr)
 		{
 			//パーツ数分回す
-			for (int nMotionEnemy001 = N_INIT_NUMBER; nMotionEnemy001 < CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetEnemy001PartsNumber(); nMotionEnemy001++)
+			for (int nMotionEnemy001 = CObject3D::N_INIT_NUMBER; nMotionEnemy001 < CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetEnemy001PartsNumber(); nMotionEnemy001++)
 			{
 				//モーション付きの敵001の当たり判定
 				if (CManager::GetScene()->GetPlayerX()->GetCollision()->ColiisionBox3D(GetPos(), CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetPosPartsEnemy(nMotionEnemy001),
@@ -326,13 +326,13 @@ void CBullet3D::CollisionOnObject()
 					//D3DXVECTOR3 Pos = CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetPosPrtsEnemy(nMotionEnemy001);
 
 					//死亡した時
-					if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() <= N_INIT_NUMBER)
+					if (CManager::GetInstance()->GetEnemyInMotion001(nMotionInEnemy001)->GetLife() <= CObject3D::N_INIT_NUMBER)
 					{
 						CManager::GetInstance()->DesignationUninitXEnemy(CObjectX::TYPE::ENEMYINMOTION001, nMotionInEnemy001);  //ポインターをnullptrにする
 					}
 
 					CallEffect(false);       //エフェクト処理を呼ぶ
-					SetLife(N_INIT_NUMBER);  //ライフを０にする
+					SetLife(CObject3D::N_INIT_NUMBER);  //ライフを０にする
 					return;                  //処理を抜ける
 				}
 			}
@@ -343,7 +343,7 @@ void CBullet3D::CollisionOnObject()
 	if (CManager::GetInstance()->GetBoss() != nullptr)
 	{
 		//ボスの最大パーツ数分回す
-		for (int nCount2 = N_INIT_NUMBER; nCount2 < CObjectX::MAX_BOSSPARTS; nCount2++)
+		for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_BOSSPARTS; nCount2++)
 		{
 			//パーツの描画がされている時
 			if (CManager::GetInstance()->GetBoss()->m_pModelPrtsBoss[nCount2]->GetDraw() == true)
@@ -400,13 +400,13 @@ CEnemyBullet::~CEnemyBullet()
 //=====================
 void CEnemyBullet::Update()
 {
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
 	CManager::GetInstance()->GetEffect()->SetLife(SET_BULLET_LIFE);                                     //エフェクトのライフの設定
-	CManager::GetInstance()->GetEffect()->SetCol(N_INIT_NUMBER, N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
+	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
 	SetAdjustPos().y -= m_fAdditionPosY;                                                                //Y軸の位置を減らす
 
 	//アルファ値が0より大きい時
-	if (GetAlpha() > N_INIT_NUMBER)
+	if (GetAlpha() > CObject3D::N_INIT_NUMBER)
 	{
 		SetAdjustAlpha() -= MINUS_ALPHA; //アルファ値を減算
 	}
@@ -414,7 +414,7 @@ void CEnemyBullet::Update()
 	SetAdjustLife()--; //寿命カウント
 
 	//寿命が尽きた
-	if (GetLife() <= N_INIT_NUMBER)
+	if (GetLife() <= CObject3D::N_INIT_NUMBER)
 	{
 		CallEffect(false);         //エフェクト処理を呼ぶ
 
@@ -442,12 +442,12 @@ void CEnemyBullet::CallEffect(bool bUse)
 void CEnemyBullet::CollisionOnObject()
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount2 = N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
+	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
 	{
 		//プレイヤーの当たり判定
 		if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetScene()->GetPlayerX()->GetPosParts(nCount2),
-			MAX_BULLET3D_SIZE_X * ADJUST_HIT, MAX_BULLET3D_SIZE_Y * ADJUST_HIT, F_INIT_NUMBER,
-			CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount2), F_INIT_NUMBER))
+			MAX_BULLET3D_SIZE_X * ADJUST_HIT, MAX_BULLET3D_SIZE_Y * ADJUST_HIT, CObject3D::F_INIT_NUMBER,
+			CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount2), CObject3D::F_INIT_NUMBER))
 		{
 			//プレイヤーのHPゲージを減らす
 			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -=
@@ -492,13 +492,13 @@ void CEnemyBulletBattleShip::Update()
 	//フレームが規定値より高い時
 	if (GetFrame() >= MAX_FRAME)
 	{
-		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
+		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
 		CManager::GetInstance()->GetEffect()->SetLife(SET_BULLET_LIFE);                                     //エフェクトのライフを設定
-		CManager::GetInstance()->GetEffect()->SetCol(N_INIT_NUMBER, N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
-		SetFrame(N_INIT_NUMBER);                                                                            //フレームの初期化
+		CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
+		SetFrame(CObject3D::N_INIT_NUMBER);                                                                            //フレームの初期化
 
 		//アルファ値が0より大きい時
-		if (GetAlpha() > N_INIT_NUMBER)
+		if (GetAlpha() > CObject3D::N_INIT_NUMBER)
 		{
 			SetAdjustAlpha() -= MINUS_ALPHA; //アルファ値を減算
 		}
@@ -509,7 +509,7 @@ void CEnemyBulletBattleShip::Update()
 	SetAdjustLife()--;                       //寿命カウント
 
 	//寿命が尽きた
-	if (GetLife() <= N_INIT_NUMBER)
+	if (GetLife() <= CObject3D::N_INIT_NUMBER)
 	{
 		CallEffect(false);                   //エフェクト処理を呼ぶ
 								             
@@ -537,12 +537,12 @@ void CEnemyBulletBattleShip::CallEffect(bool bUse)
 void CEnemyBulletBattleShip::CollisionOnObject()
 {
 	//体の当たり判定のみで処理を軽くする
-	D3DXVECTOR3 pos = CManager::GetScene()->GetPlayerX()->GetPosParts(N_INIT_NUMBER);
+	D3DXVECTOR3 pos = CManager::GetScene()->GetPlayerX()->GetPosParts(CObject3D::N_INIT_NUMBER);
 
 	//プレイヤーの当たり判定
 	if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), pos,
 		MAX_BULLET3D_SIZE_X * ADDJUST_HIT, MAX_BULLET3D_SIZE_Y * ADDJUST_HIT, MAX_BULLET3D_SIZE_Z,
-		CManager::GetScene()->GetPlayerX()->GetModelSizeParts(N_INIT_NUMBER), F_INIT_NUMBER) == true)
+		CManager::GetScene()->GetPlayerX()->GetModelSizeParts(CObject3D::N_INIT_NUMBER), CObject3D::F_INIT_NUMBER) == true)
 	{
 		//プレイヤーのHPゲージを減らす
 		CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -=
@@ -581,13 +581,13 @@ CBossBullet::~CBossBullet()
 //=====================
 void CBossBullet::Update()
 {
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
-	CManager::GetInstance()->GetEffect()->SetCol(N_INIT_NUMBER, N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
+	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
 
 	SetAdjustPos().y -= MINUS_POSY;                                                                     //Y軸の位置を減算する
 
 	//アルファ値が0より大きい時
-	if (GetAlpha() > N_INIT_NUMBER)
+	if (GetAlpha() > CObject3D::N_INIT_NUMBER)
 	{
 		SetAdjustAlpha() -= MINUS_ALPHA; //アルファ値を減算
 	}
@@ -595,7 +595,7 @@ void CBossBullet::Update()
 	SetAdjustLife()--; //ライフを減らす
 
 	//寿命が尽きた
-	if (GetLife() <= N_INIT_NUMBER)
+	if (GetLife() <= CObject3D::N_INIT_NUMBER)
 	{
 		CallEffect(false);         //エフェクト処理を呼ぶ
 
@@ -614,7 +614,7 @@ void CBossBullet::Update()
 void CBossBullet::CallEffect(bool bUse)
 {
 	//柱状の炎エフェクトを呼ぶ
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PILLAROFFIRE, N_INIT_NUMBER, D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER));
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PILLAROFFIRE, CObject3D::N_INIT_NUMBER, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));
 
 	//柱状の炎エフェクトの位置を設定
 	CManager::GetInstance()->GetPillarOfFire()->SetEffect(D3DXVECTOR3(GetPos().x, GetPos().y + PLUS_POS_Y, GetPos().z));
@@ -627,12 +627,12 @@ void CBossBullet::CallEffect(bool bUse)
 void CBossBullet::CollisionOnObject()
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount2 = N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
+	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
 	{
 		//プレイヤーの当たり判定
 		if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetScene()->GetPlayerX()->GetPosParts(nCount2),
-			MAX_BULLET3D_SIZE_X * ADJUST_HIT, MAX_BULLET3D_SIZE_Y * ADJUST_HIT, F_INIT_NUMBER,
-			CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount2), F_INIT_NUMBER))
+			MAX_BULLET3D_SIZE_X * ADJUST_HIT, MAX_BULLET3D_SIZE_Y * ADJUST_HIT, CObject3D::F_INIT_NUMBER,
+			CManager::GetScene()->GetPlayerX()->GetModelSizeParts(nCount2), CObject3D::F_INIT_NUMBER))
 		{
 			//プレイヤーのHPゲージを減らす
 			CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() -=

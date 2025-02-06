@@ -91,9 +91,16 @@ public:
 	static constexpr float F_INIT_NUMBER = 0.0f;      //float型の初期化の値
 
 	static constexpr int N_INIT_ALPHA_NUMBER = 255;   //アルファ値の初期値
-	constexpr static int RED = 255;                   //赤色
-	constexpr static int GREEN = 255;                 //緑色
-	constexpr static int BLUE = 255;                  //青色
+	static constexpr int RED = 255;                   //赤色
+	static constexpr int GREEN = 255;                 //緑色
+	static constexpr int BLUE = 255;                  //青色
+
+	static constexpr int PVTX_NUMBER_0 = 0;           //頂点情報のpvtxの番目
+	static constexpr int PVTX_NUMBER_1 = 1;           //頂点情報のpvtxの１番目
+	static constexpr int PVTX_NUMBER_2 = 2;           //頂点情報のpvtxの２番目
+	static constexpr int PVTX_NUMBER_3 = 3;           //頂点情報のpvtxの３番目
+	static constexpr int PVTX_NUMBER_OF = 4;          //pvtxの基本数
+
 
 
 private:

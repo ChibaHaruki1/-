@@ -105,7 +105,7 @@ CUI* CUI::Create(CObject3D::TYPE typeui)
 	//タイプが話すテキストの時
 	else if (typeui == CObject3D::TYPE::TALKTEXTR)
 	{
-		pUI = new CTalkText(0); //動的確保
+		pUI = new CTalkText(CREATE_PRIORITY); //動的確保
 
 		//初期化に成功した時
 		if (SUCCEEDED(pUI->Init()))
@@ -237,8 +237,8 @@ HRESULT CLaserCamare::Init()
 		return E_FAIL; //失敗を返す
 	}
 
-	CObject3D::SetSize(SIZEX, SIZEY, SIZEZ);               //大きさを設定
-	SetRot(D3DXVECTOR3(0.0f, ADJUST_ROTY, ADJUST_ROTZ)); //向きを設定
+	CObject3D::SetSize(SIZEX, SIZEY, SIZEZ);                      //大きさを設定
+	SetRot(D3DXVECTOR3(F_INIT_NUMBER, ADJUST_ROTY, ADJUST_ROTZ)); //向きを設定
 
 	//位置を監視カメラの上部部分に設定する
 	SetPos(D3DXVECTOR3(CManager::GetInstance()->GetSurveillanceCameraUp(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount())->GetPos().x,
@@ -266,21 +266,21 @@ void CLaserCamare::Hit()
 	//当たり判定
 	//if (CObject3D::CollisionPrtsPlayer(SIZEY * ADJUST_ADDJUST_SIZE, SIZEX * ADJUST_ADDJUST_SIZE, SIZEZ * ADJUST_ADDJUST_SIZE) == true)
 
-	srand((unsigned)time(NULL));   //乱数系列を初期化
-	SetRandom(1 + rand() % 2);     //乱数の生成(範囲指定1～２）
+	srand((unsigned)time(NULL));                     //乱数系列を初期化
+	SetRandom(MIN_RANDOM + rand() % MAX_RANDOM);     //乱数の生成(範囲指定1～２）
 
 	//乱数が１の時
-	if (GetRandom() == 1)
+	if (GetRandom() == MIN_RANDOM)
 	{
 		//敵の生成
-		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, N_INIT_NUMBER, D3DXVECTOR3(GetPos().x + ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, F_INIT_NUMBER));
 		//CObject3D::Release();     //自身の削除
 		//return;                   //処理を抜ける
 	}
 	else
 	{
 		//敵の生成
-		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, 0, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, 0.0f));
+		CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, N_INIT_NUMBER, D3DXVECTOR3(GetPos().x - ADJUST_CREATE_POSX, GetPos().y + ADJUST_CREATE_POSY, F_INIT_NUMBER));
 		//CObject3D::Release();     //自身の削除
 		//return;                   //処理を抜ける
 	}

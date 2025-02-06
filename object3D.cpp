@@ -55,7 +55,7 @@ HRESULT CObject3D::Init()
 	m_rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //向きの初期化
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * 4, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
 
 	VERTEX_3D* pVtx; //頂点情報へのポインタ
 
@@ -63,28 +63,28 @@ HRESULT CObject3D::Init()
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//頂点座標の設定
-	pVtx[0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	pVtx[3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[PVTX_NUMBER_0].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[PVTX_NUMBER_1].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[PVTX_NUMBER_2].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	pVtx[PVTX_NUMBER_3].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	//法線ベクトルの設定
-	pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-	pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[PVTX_NUMBER_0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[PVTX_NUMBER_1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[PVTX_NUMBER_2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	pVtx[PVTX_NUMBER_3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 	//頂点カラーの設定
-	pVtx[0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[PVTX_NUMBER_0].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[PVTX_NUMBER_1].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[PVTX_NUMBER_2].col = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[PVTX_NUMBER_3].col = D3DCOLOR_RGBA(255, 255, 255, 255);
 
 	//テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f); //UV座標に注意（上限１．０ｆ）
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	pVtx[PVTX_NUMBER_0].tex = D3DXVECTOR2(0.0f, 0.0f); //UV座標に注意（上限１．０ｆ）
+	pVtx[PVTX_NUMBER_1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[PVTX_NUMBER_2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[PVTX_NUMBER_3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	//頂点バッファをアンロック
 	m_pVtxBuff->Unlock();

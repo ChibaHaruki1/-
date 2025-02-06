@@ -28,7 +28,8 @@ public:
 
 private:
 	//マクロ定義
-	constexpr static float SIZEX = 200.0f;     //ｘ軸の大きさ
+	static constexpr int CREATE_PRIORITY = 2;  //生成時のプライオリティの番号
+	static constexpr float SIZEX = 200.0f;     //ｘ軸の大きさ
 
 	static int m_nCountField;                  //生成された地面の数を格納する用の変数
 };
