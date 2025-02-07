@@ -205,16 +205,16 @@ CBullet3D::~CBullet3D()
 void CBullet3D::CallEffect(bool bUse)
 {
 	//爆発エフェクトを生成（1つ目）
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION,CObject3D::N_INIT_NUMBER, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION,CObject3D::N_INIT_NUMBER, GetPos());
 
 	//爆発エフェクトを生成（2つ目）
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION001, 0, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));   
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EXPLOSION001, 0, GetPos());
 	//CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::THENDER, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));           //雷エフェクトを呼ぶ
 	//CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::DEBRIS, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));            //破片エフェクトを呼ぶ
 
 
-	CManager::GetInstance()->GetExplosion()->SetEffect(GetPos());      //爆発エフェクトの位置を設定
-	CManager::GetInstance()->GetExplosion001()->SetEffect(GetPos());   //爆発エフェクトの位置を設定
+	//CManager::GetInstance()->GetExplosion()->SetEffect(GetPos());    //爆発エフェクトの位置を設定
+	//CManager::GetInstance()->GetExplosion001()->SetEffect(GetPos()); //爆発エフェクトの位置を設定
 	//CManager::GetInstance()->GetThander()->SetEffect(GetPos());      //雷エフェクトの位置を設定
 	//CManager::GetInstance()->GetDebris()->SetEffect(GetPos());       //破片エフェクトの位置を設定
 }
@@ -581,10 +581,13 @@ CBossBullet::~CBossBullet()
 //=====================
 void CBossBullet::Update()
 {
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
-	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
+	//エフェクト（軌跡）を生成する
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos());       
 
-	SetAdjustPos().y -= MINUS_POSY;                                                                     //Y軸の位置を減算する
+	//色の設定
+	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());      
+
+	SetAdjustPos().y -= MINUS_POSY;      //Y軸の位置を減算する
 
 	//アルファ値が0より大きい時
 	if (GetAlpha() > CObject3D::N_INIT_NUMBER)
@@ -614,10 +617,7 @@ void CBossBullet::Update()
 void CBossBullet::CallEffect(bool bUse)
 {
 	//柱状の炎エフェクトを呼ぶ
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PILLAROFFIRE, CObject3D::N_INIT_NUMBER, D3DXVECTOR3(CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER, CObject3D::F_INIT_NUMBER));
-
-	//柱状の炎エフェクトの位置を設定
-	CManager::GetInstance()->GetPillarOfFire()->SetEffect(D3DXVECTOR3(GetPos().x, GetPos().y + PLUS_POS_Y, GetPos().z));
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PILLAROFFIRE, CObject3D::N_INIT_NUMBER, GetPos());
 }
 
 
