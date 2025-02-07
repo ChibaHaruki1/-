@@ -146,7 +146,7 @@ private: //外部からアクセス不可能
 	static constexpr  int BLUE = 200;                     //青色
 	static constexpr  int MINUS_ALPHA = 5;                //アルファ値を減算
 	static constexpr  int SET_BULLET_LIFE = 90;           //ライフの最大値
-	static constexpr int MAX_FRAME = 10;                 //フレームの最大数
+	static constexpr int MAX_FRAME = 10;                  //フレームの最大数
 
 	static constexpr  float ADDJUST_HIT = 1.0;            //当たり判定の調整値
 	static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値

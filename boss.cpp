@@ -151,22 +151,22 @@ void CBoss::Collision()
 void CBoss::AttackPatternSelect()
 {
 	//攻撃のクールタイムが過ぎた時
-	if (m_nCoolTime >= 120)
+	if (m_nCoolTime >= COOLTIME)
 	{
 		//乱数が０の時
-		if (GetRandom() == 0)
+		if (GetRandom() == DROP_ATTACK_NUMBER)
 		{
 			AttackPattern();    //落下攻撃を呼ぶ
 		}
 
 		//乱数が１の時
-		else if (GetRandom() == 1)
+		else if (GetRandom() == FIRE_ATTACK_NUMBER)
 		{
 			AttackPattern001(); //炎攻撃を呼ぶ
 		}
 
 		//乱数が２の時
-		else if (GetRandom() == 2)
+		else if (GetRandom() == SPECIAL_ATTACK_NUMBER)
 		{
 			SpecialAttack();    //必殺技を呼ぶ
 		}
@@ -176,12 +176,13 @@ void CBoss::AttackPatternSelect()
 	else
 	{
 		//乱数が３の時（全ての攻撃パターンを実行）
-		if (GetRandom() == 3)
+		if (GetRandom() == NONE_ATTACK_NUMBER)
 		{
 			//srand((unsigned)time(NULL));  // 乱数系列を初期化
 			//SetRandom(rand() % 3);
-			SetRandom(0); //乱数を初期化
+			SetRandom(CObjectX::N_INIT_NUMBER); //乱数を初期化
 		}
+
 		m_nCoolTime++;    //クールタイムを増やす
 	}
 }
@@ -205,10 +206,10 @@ void CBoss::StatusInit()
 	std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataY)); //ｙ軸用の位置の初期化
 
 	//メンバ変数の初期化
-	SetFrame(0);                                   //フレームの初期化
-	SetAdjustRandom() += 1;                       //乱数を増やす
-	m_nCoolTime = 0;                               //クールタイムの初期化
-	m_nSize = 0;                                   //vectorの配列数を初期化
+	SetFrame(CObjectX::N_INIT_NUMBER);             //フレームの初期化
+	SetAdjustRandom()++;                           //乱数を増やす
+	m_nCoolTime = CObjectX::N_INIT_NUMBER;         //クールタイムの初期化
+	m_nSize = CObjectX::N_INIT_NUMBER;             //vectorの配列数を初期化
 	m_nWhichSideNumber = INIT_WICHI_SIDE_NUMBER;   //左右のどちらに居るかの初期化
 	m_bOneCreateFlag = false;                      //衝撃波を出すフラグの初期化
 }
@@ -231,15 +232,15 @@ void CBoss::AttackPattern()
 	//第二行動
 	else if (GetFrame()<= ATTACKPATTEN1_FRAME_2)
 	{
-		SetAdjustRot().y = 0.0f;                                                            //Y軸の向きの初期化
-		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSIMPACT);                  //モーションの種類を設定
-		SetAdjustPos().y += PopY() * MAX_MOVE_SPEED;                                        //Y軸の位置を保管してある値分上に移動
-	}
-
-	//第三行動
-	else if (GetFrame() <= ATTACKPATTEN1_FRAME_3)
-	{
-		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataY));     //Y軸用の位置の初期化
+		SetAdjustRot().y = CObjectX::F_INIT_NUMBER;                                            //Y軸の向きの初期化
+		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSIMPACT);                    //モーションの種類を設定
+		SetAdjustPos().y += PopY() * MAX_MOVE_SPEED;                                           //Y軸の位置を保管してある値分上に移動
+	}																						   
+																							   
+	//第三行動																				   
+	else if (GetFrame() <= ATTACKPATTEN1_FRAME_3)											   
+	{																						   
+		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataY));       //Y軸用の位置の初期化
 	}
 
 	//第四行動
@@ -254,8 +255,11 @@ void CBoss::AttackPattern()
 		//フラグがoffの時
 		if (m_bOneCreateFlag == false)
 		{
-			CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::IMPACT, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f)); //衝撃波を生成
-			CManager::GetInstance()->GetImpact()->SetEffect(GetPos());                                                   //衝撃波エフェクトを呼ぶ
+			//衝撃波を生成
+			CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::IMPACT, CObjectX::N_INIT_NUMBER, D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER)); 
+
+			//衝撃波エフェクトを呼ぶ
+			CManager::GetInstance()->GetImpact()->SetEffect(GetPos());                                                                        
 
 			m_bOneCreateFlag = true; //フラグをOnにして通らなくする
 		}
@@ -264,9 +268,9 @@ void CBoss::AttackPattern()
 	//終了
 	else
 	{
-		SetAdjustPos().y = 0.0f; //Y軸の位置を初期化
-		SetAdjustRot().y = 0.0f; //Y軸の向きを初期化
-		StatusInit();             //初期化
+		SetAdjustPos().y = CObjectX::F_INIT_NUMBER; //Y軸の位置を初期化
+		SetAdjustRot().y = CObjectX::F_INIT_NUMBER; //Y軸の向きを初期化
+		StatusInit();                               //初期化
 	}
 }
 
@@ -278,33 +282,33 @@ void CBoss::AttackPattern001()
 	SetAdjustFrame()++; //フレーム加算
 
 	//第一行動
-	if (GetFrame() <= ATTACKPATTEN2_FRAME)
+	if (GetFrame() <= ATTACKPATTEN2_FRAME_1)
 	{
 		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSWALK);                       //モーションの種類を設定
 		TargetHeadingTowards(CManager::GetScene()->GetPlayerX(), MAX_MOVE_SPEED_IN_PLAYER_2);   //プレイヤーに向かうように設定
 	}
 
 	//第二行動
-	else if (GetFrame() <= ATTACKPATTEN2_FRAME*3)
+	else if (GetFrame() <= ATTACKPATTEN2_FRAME_2)
 	{
-		SetAdjustRot().y = 0.0f;                                           //Y軸の向きを初期化
+		SetAdjustRot().y = CObjectX::F_INIT_NUMBER;                         //Y軸の向きを初期化
 		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSATTACK); //モーションの種類を設定
-		SetAdjustPos().y += PopY() * MAX_DROP_MOVE_Y_SPEED_2;              //Y軸の位置を保管してある値分上に移動     
+		SetAdjustPos().y += PopY() * MAX_DROP_MOVE_Y_SPEED_2;               //Y軸の位置を保管してある値分上に移動     
 	}
 
 	//第三行動
-	else if (GetFrame() <= ATTACKPATTEN2_FRAME*3+1)
+	else if (GetFrame() <= ATTACKPATTEN2_FRAME_3)
 	{
 		//弾の生成(弾にエフェクトを呼ぶ処理がついているためエフェクトを変更したい時は弾の処理をいじる)
-		CManagerBullet::Create(D3DXVECTOR3(GetPosPartsBoss(17).x+100.0f, GetPosPartsBoss(17).y, GetPosPartsBoss(17).z), D3DXVECTOR3(-sinf(GetRot().y) * 0, 0.0f, -cosf(GetRot().y) * 0), CManagerBullet::SET_BULLET_LIFE,CObject3D::TYPE::BOSSBULLET);
-		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataY));      //ｘ軸用の位置の初期化
-		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataX));      //ｘ軸用の位置の初期化
+		CManagerBullet::Create(D3DXVECTOR3(GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).x+ CREATE_BULLET_PLUS_POS_X, GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).y, GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).z), D3DXVECTOR3(-sinf(GetRot().y) * CObjectX::N_INIT_NUMBER, CObjectX::F_INIT_NUMBER, -cosf(GetRot().y) * CObjectX::N_INIT_NUMBER), CManagerBullet::SET_BULLET_LIFE,CObject3D::TYPE::BOSSBULLET);
+		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataY));      //Y軸用の位置の初期化
+		std::copy(m_nSaveData.begin(), m_nSaveData.end(), std::back_inserter(m_nDataX));      //X軸用の位置の初期化
 	}
 
 	//第四行動
-	else if (GetFrame() <= ATTACKPATTEN2_FRAME*4)
+	else if (GetFrame() <= ATTACKPATTEN2_FRAME_4)
 	{
-		SetAdjustPos().y -= PopY() * MAX_DROP_MOVE_Y_SPEED_2; //Y軸の位置を保管してある値分下に移動 
+		SetAdjustPos().y -= PopY() * MAX_DROP_MOVE_Y_SPEED_2;   //Y軸の位置を保管してある値分下に移動 
 
 		//左にいる時
 		if (m_nWhichSideNumber == WICHI_SIDE_LEFT_NUMBER)
@@ -324,9 +328,9 @@ void CBoss::AttackPattern001()
     //終了
 	else
 	{
-		SetAdjustPos().y = 0.0f; //Y軸の位置を初期化
-		SetAdjustRot().y = 0.0f; //Y軸の向きを初期化
-		StatusInit();             //初期化
+		SetAdjustPos().y = CObjectX::F_INIT_NUMBER; //Y軸の位置を初期化
+		SetAdjustRot().y = CObjectX::F_INIT_NUMBER; //Y軸の向きを初期化
+		StatusInit();                               //初期化
 	}
 }
 
@@ -340,8 +344,8 @@ void CBoss::SpecialAttack()
 	//第一行動
 	if (GetFrame() <= ATTACKPATTEN3_FRAME_1)
 	{
-		TargetHeadingTowards(CManager::GetScene()->GetPlayerX(), 10.0f);    //プレイヤーに向かうように設定
-		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSACTION); //モーションの種類を設定
+		TargetHeadingTowards(CManager::GetScene()->GetPlayerX(), MAX_MOVE_SPEED_IN_PLAYER_3);  //プレイヤーに向かうように設定
+		CCharacter::SetMotionBoss(CCharacter::BOSSMOTIONSTATE::BOSSACTION);                    //モーションの種類を設定
 	}
 
 	//第二行動
@@ -357,34 +361,34 @@ void CBoss::SpecialAttack()
 		if (m_bOneCreateFlag == false)
 		{
 			//必殺技のエフェクトの生成
-			CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::BOSSSPECIALATTACK, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f)); 
+			CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::BOSSSPECIALATTACK, CObjectX::N_INIT_NUMBER, D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER));
 
 			//向きの条件式
-			if (GetRot().y >= D3DX_PI_ORI_HALF)
+			if (GetRot().y <= -D3DX_PI_ORI_HALF)
 			{
 				//サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetBossSpecialAttack()->SetRotNumber(2);
+				CManager::GetInstance()->GetBossSpecialAttack()->SetRotNumber(CBossSpecialAttack::ROT_NUMBER_1);
+
+				//位置を銃に設定
+				CManager::GetInstance()->GetBossSpecialAttack()->SetEffect(D3DXVECTOR3(
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).x + SHOT_IN_GUM_PLUS_POS_X,
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).y - CCharacter::BOSS_PLUS_POS_Y,
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).z));
+			}
+
+			//向きの条件式
+			else if (GetRot().y >= D3DX_PI_ORI_HALF)
+			{
+				//サイズの設定用の番号を渡す
+				CManager::GetInstance()->GetBossSpecialAttack()->SetRotNumber(CBossSpecialAttack::ROT_NUMBER_2);
 
 				//位置を銃に設定
 				CManager::GetInstance()->GetBossSpecialAttack()->SetEffect(D3DXVECTOR3
 				(
-					GetPosPartsBoss(17).x,
-					GetPosPartsBoss(17).y- CCharacter::BOSS_PLUS_POS_Y,
-					GetPosPartsBoss(17).z));
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).x,
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).y - CCharacter::BOSS_PLUS_POS_Y,
+					GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).z));
 
-			}
-
-			//向きの条件式
-			else if (GetRot().y <= -D3DX_PI_ORI_HALF)
-			{
-				//サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetBossSpecialAttack()->SetRotNumber(1);
-
-				//位置を銃に設定
-				CManager::GetInstance()->GetBossSpecialAttack()->SetEffect(D3DXVECTOR3(
-					GetPosPartsBoss(17).x + 300.0f,
-					GetPosPartsBoss(17).y - CCharacter::BOSS_PLUS_POS_Y,
-					GetPosPartsBoss(17).z));
 			}
 
 			m_bOneCreateFlag = true; //生成フラグOnにする
@@ -392,11 +396,11 @@ void CBoss::SpecialAttack()
 	}
 
 	//終了
-	else if (CManager::GetInstance()->GetBossSpecialAttack()->GetAlpha() <= 5)
+	else if (CManager::GetInstance()->GetBossSpecialAttack()->GetAlpha() < CObjectX::N_INIT_NUMBER)
 	{
-		SetAdjustPos().y = 0.0f; //Y軸の位置を初期化
-		SetAdjustRot().y = 0.0f; //Y軸の向きを初期化
-		StatusInit();             //初期化
+		SetAdjustPos().y = CObjectX::F_INIT_NUMBER; //Y軸の位置を初期化
+		SetAdjustRot().y = CObjectX::F_INIT_NUMBER; //Y軸の向きを初期化
+		StatusInit();                               //初期化
 	}
 }
 
@@ -410,17 +414,17 @@ void CBoss::SpecialAttack()
 //============================
 float CBoss::PopX()
 {
-	int nSize = m_nDataX.size() - 1;        //サイズの設定
+	int nSize = m_nDataX.size() + MINUS_SIZE_COUNT;       //サイズの設定
 
 	//大きさが０以上の時
-	if (nSize > 0)
+	if (nSize > CObjectX::N_INIT_NUMBER)
 	{
-		nSize--;                            //大きさを減らす
-		m_nDataX.erase(m_nDataX.end() - 1); //それぞれの配列のX軸の値を返す
-		return m_nDataX[nSize];             //情報を返す
+		nSize--;                                          //大きさを減らす
+		m_nDataX.erase(m_nDataX.end()+ MINUS_SIZE_COUNT); //それぞれの配列のX軸の値を返す
+		return m_nDataX[nSize];                           //情報を返す
 	}
 
-	return 0;                               //０を返す
+	return CObjectX::N_INIT_NUMBER;                       //０を返す
 }
 
 //============================
@@ -428,17 +432,17 @@ float CBoss::PopX()
 //============================
 float CBoss::PopY()
 {
-	int nSize = m_nDataY.size() - 1;        //サイズの設定
+	int nSize = m_nDataY.size() + MINUS_SIZE_COUNT;        //サイズの設定
 
 	//サイズが０以上の時
-	if (nSize > 0)
+	if (nSize > CObjectX::N_INIT_NUMBER)
 	{
-		nSize--;                            //サイズを減らす
-		m_nDataY.erase(m_nDataY.end() - 1); //それぞれの配列のX軸の値を返す
-		return m_nDataY[nSize];             //情報を返す
+		nSize--;                                           //サイズを減らす
+		m_nDataY.erase(m_nDataY.end() + MINUS_SIZE_COUNT); //それぞれの配列のX軸の値を返す
+		return m_nDataY[nSize];                            //情報を返す
 	}
 
-	return 0;                               //０を返す
+	return CObjectX::N_INIT_NUMBER;                        //０を返す
 }
 
 //========================
@@ -454,14 +458,14 @@ void CBoss::Draw()
 //========================
 CBoss* CBoss::Create(D3DXVECTOR3 pos)
 {
-	CBoss* pBoss = new CBoss(3); //動的確保
+	CBoss* pBoss = new CBoss(); //動的確保
 
 	//初期化が成功した時
 	if (SUCCEEDED(pBoss->Init()))
 	{
-		pBoss->SetPos(pos); //位置を引数と同期させる
-		return pBoss;       //プレイヤーの情報を返す
-	}
-
+		pBoss->SetPos(pos);     //位置を引数と同期させる
+		return pBoss;           //情報を返す
+	}						    
+							    
 	return nullptr;             //無を返す
 }

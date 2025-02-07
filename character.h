@@ -99,14 +99,23 @@ public:
 	//情報の設定
 	void SetMotionType(bool bMotionType) { m_bMotionType = bMotionType; }            //プレイヤーのモーションタイプの設定
 
+	//==========================================
+	//マクロ定義
+	static constexpr  int MAX_KEYSET = 8;              //モーションに使うキーの数
 
-	//マクロ定義 （constexprでコンパイル時に初期化）
-	 static constexpr  int MAX_KEYSET = 8;              //モーションに使うキーの数
+
+	//==========================================
+	//プレイヤーに関するマクロ
 	 static constexpr  int NUM_MOTION = 11;             //プレイヤーモーションの総数
 	 static constexpr  int NUM_RIGHTLEFTPRTS = 4;       //プレイヤーの側のパーツ数
+
+
+	 //==========================================
+	 //ボスに関するマクロ
 	 static constexpr  int NUM_MOTIONBOSS = 10;         //ボスのモーションの総数
 	 static constexpr  int NUM_RIGHTPRTSBOSS = 8;       //ボスの側のパーツ数
-	static constexpr float BOSS_PLUS_POS_Y = 200.0f;  //ボスのパーツのY軸の位置を上に上げる為の値
+	static constexpr float BOSS_PLUS_POS_Y = 200.0f;    //ボスのパーツのY軸の位置を上に上げる為の値
+	static constexpr int BOSS_PARTS_GUN_NUMBER = 17;    //銃の番号
 
 private:
 	//マクロ定義
@@ -141,7 +150,6 @@ private:
 	static constexpr int BOSS_PARTS_RIGHTHAND_NUMBER = 5;            //右手の番号
 	static constexpr int BOSS_PARTS_LEFTHAND_NUMBER = 9;             //左手の番号
 	static constexpr int BOSS_PARTS_WAIST_NUMBER = 10;               //腰の番号
-	static constexpr int BOSS_PARTS_GUN_NUMBER = 17;                 //銃の番号
 	static constexpr int BOSS_PARTS_SHOULDER_FROM_HAND = 4;          //肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
 	static constexpr int BOSS_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;    //右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
 	static constexpr int BOSS_PARTS_LEFT_SHOULDER_FROM_HAND = 6;     //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）

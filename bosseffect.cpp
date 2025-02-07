@@ -372,7 +372,7 @@ void CBossSpecialAttack::Update()
 		}
 
 		//ボスのpos.yを計算+調整=当たり判定の一番下を設定(銃から撃つので銃のパーツから位置を参照)
-		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPartsBoss(BOSS_GUN_PARTS).y * ADJUST_PLAYER_POSY;
+		float fPosY = GetPos().y - CManager::GetInstance()->GetBoss()->GetPosPartsBoss(CCharacter::BOSS_PARTS_GUN_NUMBER).y * ADJUST_PLAYER_POSY;
 
 		//向き番号が１の時
 		if (GetRotNumber() == ROT_NUMBER_1)

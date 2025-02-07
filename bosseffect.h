@@ -164,12 +164,12 @@ public:
 	static constexpr float MAX_SPECIALATTACK_SIZEY = 200.0f; //ｙ軸の大きさ
 	static constexpr int MAX_BOSSSPZECIALATTACK_LIFE = 120;  //ライフの最大値
 
+	static constexpr int ROT_NUMBER_1 = 1;                   //１番目の向きの番号
+	static constexpr int ROT_NUMBER_2 = 2;                   //２番目の向きの番号
+
 private:
 	//マクロ定義
 	static constexpr  int MINUS_ALPHA = 5;                    //アルファ値を減算していく値
-	static constexpr int ROT_NUMBER_1 = 1;                    //１番目の向きの番号
-	static constexpr int ROT_NUMBER_2 = 2;                    //２番目の向きの番号
-	static constexpr int BOSS_GUN_PARTS = 17;                 //ボスの銃のパーツ番号
 
 	static constexpr  float ADJUST_SIZE_X = 0.8f;             //必殺技の当たり判定の乗算調整値
 	static constexpr  float MAXIMUM_SIZEX = 2000.0f;          //サイズを加算していく時の最大値
