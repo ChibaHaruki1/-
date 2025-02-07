@@ -61,9 +61,9 @@ void CDebrisX::Update()
 	SetAdjustLife()--; //ライフを減らす
 
 	//ライフが尽きた時
-	if (GetLife()<=0)
+	if (GetLife() <= N_INIT_NUMBER)
 	{
-  		CObjectX::Release(); //自身を削除
+		CObjectX::Release(); //自身を削除
 		//CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::DEBRIS, m_nDirectionCount);
 		return;              //処理を抜ける
 	}
