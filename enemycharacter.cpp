@@ -143,7 +143,7 @@ void CEnemyCharacter::UpdateEnemy002()
 //========================
 //敵の描画処理
 //========================
-void CEnemyCharacter::DrawEnemy001(int NumPrts, int nNumber)
+void CEnemyCharacter::DrawEnemy001(int NumPrts)
 {
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	
@@ -187,7 +187,7 @@ void CEnemyCharacter::DrawEnemy001(int NumPrts, int nNumber)
 //========================
 //敵の描画処理
 //========================
-void CEnemyCharacter::DrawEnemy002(int NumPrts, int nNumber)
+void CEnemyCharacter::DrawEnemy002(int NumPrts)
 {
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスのポインタ	

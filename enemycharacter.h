@@ -5,12 +5,15 @@
 //
 //==============================================
 
+
 #pragma once
+
 
 //==============================================
 //インクルード
 #include "objectX.h"
 #include "model_prts.h"
+
 
 class CEnemyCharacter : public CObjectX
 {
@@ -32,11 +35,11 @@ public:
 	void Uninit();                                             //破棄処理
 
 	void UpdateEnemy001();                                     //敵001の更新処理
-	void DrawEnemy001(int NumPrts, int nNumber);               //敵001の描画処理
+	void DrawEnemy001(int NumPrts);                            //敵001の描画処理
 	void MotionInfoEnemy001();                                 //敵001のモーションの情報を扱う処理
 
 	void UpdateEnemy002();                                     //敵002の更新処理
-	void DrawEnemy002(int NumPrts, int nNumber);               //敵002の描画処理
+	void DrawEnemy002(int NumPrts);                            //敵002の描画処理
 	void MotionInfoEnemy002();                                 //敵002のモーションの情報を扱う処理
 
 	void LoodEnemy(const char* aSelect);                       //モデルを読み込む処理＋情報を取得する処理
@@ -55,6 +58,12 @@ public:
 	void SetMotionType(bool bMotionType) { m_bMotionEnemyType = bMotionType; } //モーションタイプの設定
 
 
+	//===========================
+	//敵001に関するマクロ定義
+	static constexpr  int PARTS_BODY_NUMBER = 0;                  //体の番号
+	static constexpr  int PARTS_RIGHT_SHOLDER_WEAPON_NUMBER = 4;  //右肩の武器の番号
+
+
 private:
 	//マクロ定義		
 	static constexpr int N_INIT_NUMBER = 0;                       //int型の初期化の値  
@@ -67,9 +76,10 @@ private:
 	static constexpr int NUM_ENEMYMOTION = 10;                    //モーションの数
 	static constexpr int HALF = 2;                                //int型の時の半分
 
-	static constexpr  int PARTS_BODY_NUMBER = 0;                  //体の番号
+
+	//============================================
+	//敵001に関するマクロ定義
 	static constexpr  int PARTS_RIGHT_SHOLDER_NUMBER = 2;         //右肩の番号
-	static constexpr  int PARTS_RIGHT_SHOLDER_WEAPON_NUMBER = 4;  //右肩の武器の番号
 	static constexpr  int PARTS_LEFT_SHOLDER_NUMBER = 5;          //左肩の番号
 	static constexpr  int PARTS_LEFT_SHOLDER_WEAPON_NUMBER = 7;   //左肩の武器の番号
 	static constexpr  int PARTS_LEFT_WAIST_NUMBER = 8;            //腰の番号

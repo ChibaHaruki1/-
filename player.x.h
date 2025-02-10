@@ -77,7 +77,11 @@ public: //アクセス可能
 
 	//=====================================
 	//マクロ定義
-	 static constexpr  float MAX_MOVESPEED = 3.0f;              //感性を減らした分の移動量の増加
+	static constexpr  int ROT_NUMBER_1 = 1; //向き番号１番
+	static constexpr  int ROT_NUMBER_2 = 2; //向き番号２番
+
+	static constexpr  float MAX_MOVESPEED = 3.0f;              //感性を減らした分の移動量の増加
+
 
 private:
 	//==========================================

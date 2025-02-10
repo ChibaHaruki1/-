@@ -57,39 +57,42 @@ private: //アクセス不可
 
    //==============================================
    //攻撃パターン１の時のマクロ定義
-	static constexpr  int ATTACKPATTEN1_FRAME_1 = 30;            //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_2 = 140;           //第二行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_3 = 141;           //第三行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_4 = 162;           //第四行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_5 = 170;           //第五行動時のフレーム
-	static constexpr  float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;     //Y軸のボスの落ちる移動速度を設定
-	static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_1 = 12.0f;  //落下攻撃時プレイヤーに向かう速さ
-	static constexpr float CREATE_BULLET_PLUS_POS_X = 100.0f;    //弾の生成時のX軸の位置を加算する値
+	static constexpr  int ATTACKPATTEN1_FRAME_1 = 30;                      //第一行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_2 = 140;                     //第二行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_3 = ATTACKPATTEN1_FRAME_2+1; //第三行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_4 = 162;                     //第四行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_5 = 170;                     //第五行動時のフレーム
+
+	static constexpr  float MAX_DROP_MOVE_Y_SPEED_1 = 0.35f;               //Y軸のボスの落ちる移動速度を設定
+	static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_1 = 12.0f;            //落下攻撃時プレイヤーに向かう速さ
+	static constexpr float CREATE_BULLET_PLUS_POS_X = 100.0f;              //弾の生成時のX軸の位置を加算する値
 
 
    //==============================================
    //攻撃パターン２の時のマクロ定義
-	static constexpr  int ATTACKPATTEN2_FRAME_1 = 40;              //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN2_FRAME_2 = 120;             //第二行動時のフレーム
-	static constexpr  int ATTACKPATTEN2_FRAME_3 = 121;             //第三行動時のフレーム
-	static constexpr  int ATTACKPATTEN2_FRAME_4 = 160;             //第四行動時のフレーム
-	static constexpr  float MAX_DROP_MOVE_Y_SPEED_2 = 0.25f;       //Y軸のボスの落ちる移動速度を設定
-	static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_2 = 8.0f;     //炎攻撃時プレイヤーに向かう速さ
-	static constexpr  float MAX_MOVE_SPEED_SIDE = 0.1f;            //左右のどちらかにに移動する時の速さ
+	static constexpr  int ATTACKPATTEN2_FRAME_1 = 40;                      //第一行動時のフレーム
+	static constexpr  int ATTACKPATTEN2_FRAME_2 = 120;                     //第二行動時のフレーム
+	static constexpr  int ATTACKPATTEN2_FRAME_3 = ATTACKPATTEN2_FRAME_2+1; //第三行動時のフレーム
+	static constexpr  int ATTACKPATTEN2_FRAME_4 = 160;                     //第四行動時のフレーム
+
+	static constexpr  float MAX_DROP_MOVE_Y_SPEED_2 = 0.25f;               //Y軸のボスの落ちる移動速度を設定
+	static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_2 = 8.0f;             //炎攻撃時プレイヤーに向かう速さ
+	static constexpr  float MAX_MOVE_SPEED_SIDE = 0.1f;                    //左右のどちらかにに移動する時の速さ
 
 
    //==============================================
    //攻撃パターン３の時のマクロ定義
-	static constexpr  int ATTACKPATTEN3_FRAME_1 = 20;             //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN3_FRAME_2 = 60;             //第二行動時のフレーム
-	static constexpr  int ATTACKPATTEN3_FRAME_3 = 61;             //第三行動時のフレーム
+	static constexpr  int ATTACKPATTEN3_FRAME_1 = 20;                      //第一行動時のフレーム
+	static constexpr  int ATTACKPATTEN3_FRAME_2 = 60;                      //第二行動時のフレーム
+	static constexpr  int ATTACKPATTEN3_FRAME_3 = ATTACKPATTEN3_FRAME_2+1; //第三行動時のフレーム
+
 	static constexpr  float MAX_MOVE_SPEED_IN_PLAYER_3 = 10.0f;   //必殺技時プレイヤーに向かう速さ
 	static constexpr  float SHOT_IN_GUM_PLUS_POS_X = 300.0f;      //必殺技の銃のX軸の位置を加算する値
 
 
-	static constexpr  int MINUS_SIZE_COUNT = -1;                 //サイズの総数からー１する為の物
-	static constexpr  float MAX_MOVE_SPEED = 0.25f;              //ボスの移動速度を設定
-	static constexpr  float MAX_TOUCH_DAMAGE = 0.0005f;          //ボスに触れている時のダメージ数
+	static constexpr  int MINUS_SIZE_COUNT = -1;                  //サイズの総数からー１する為の物
+	static constexpr  float MAX_MOVE_SPEED = 0.25f;               //ボスの移動速度を設定
+	static constexpr  float MAX_TOUCH_DAMAGE = 0.0005f;           //ボスに触れている時のダメージ数
 
 
 	int m_nCoolTime;                                              //攻撃終了後次の攻撃に行くまでの時間

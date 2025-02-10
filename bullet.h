@@ -105,7 +105,7 @@ public: //外部からアクセス可能
 
 	//============================
 	//マクロ定義
-	 static constexpr  float MINUS_ROTY = 7.0f;              //Y軸の向きを減算していく
+	 static constexpr  float PLUS_ROT_Y = 7.0f;               //Y軸の向きを減算していく
 	 static constexpr  float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
 	 static constexpr  float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
 	 static constexpr  float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
@@ -136,7 +136,7 @@ public: //外部からアクセス可能
 
 	//============================
 	//マクロ定義
-	static constexpr float MINUS_ROTY = 7.0f;              //Y軸の向きを減算していく
+	static constexpr float PLUS_ROT_Y = 7.0f;              //Y軸の向きを減算していく
 	static constexpr float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
 	static constexpr float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
 	static constexpr float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ

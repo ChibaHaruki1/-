@@ -76,7 +76,7 @@ private:
 	 static constexpr  int PLUS_SCORE = 100;                       //スコアの加算値
 													               
 	 static constexpr  float MAX_DAMAGE = 0.005f;                  //プレイヤーに与えるダメージ数
-	 static constexpr  float PLUS_ROTY = 0.1f;                     //Y軸の向きを加算する値
+	 static constexpr  float PLUS_ROT_Y = 0.1f;                     //Y軸の向きを加算する値
 	 static constexpr  float EXPLOSION_EFFECT_PLUS_POS_Y = 50.0f;  //爆発エフェクトのY軸の位置を加算する値
 };
 
@@ -105,7 +105,7 @@ private:
 	 static constexpr  float ATTACKPATTEN_FRAME_2 = ATTACKPATTEN_FRAME_1 * 2.0f;  //第二行動時のフレーム
 													               
 	 static constexpr  float MAX_DAMAGE = 0.005f;                  //プレイヤーに与えるダメージ数
-	 static constexpr  float PLUS_ROTY = 0.1f;                     //Y軸の向きを加算する値
+	 static constexpr  float PLUS_ROT_Y = 0.1f;                     //Y軸の向きを加算する値
 	 static constexpr  float ADJUST_POSY = 10.0f;                  //Y軸の位置を加算する値
 	 static constexpr  float EXPLOSION_EFFECT_PLUS_POS_Y = 50.0f;  //爆発エフェクトのY軸の位置を加算する値
 };

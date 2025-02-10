@@ -376,7 +376,7 @@ void CBullet3D::CollisionOnObject()
 //======================================================================================================================================================================
 
 //static変数の初期化
-float CEnemyBullet::m_fAdditionPosY = MINUS_ROTY; //位置を初期設定
+float CEnemyBullet::m_fAdditionPosY = PLUS_ROT_Y; //位置を初期設定
 
 //=====================
 //コンストラクタ

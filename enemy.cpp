@@ -220,7 +220,7 @@ CEnemy001X::~CEnemy001X()
 //=========================
 void CEnemy001X::Update()
 {
-	SetAdjustRot().y += PLUS_ROTY; //Y²‚ÌŒü‚«‚ğ‰ÁZ
+	SetAdjustRot().y += PLUS_ROT_Y; //Y²‚ÌŒü‚«‚ğ‰ÁZ
 
 	//ƒvƒŒƒCƒ„[‚Æ“–‚½‚Á‚½
 	if (CollisionPlayerSelect(this) == true)
@@ -266,7 +266,7 @@ CEnemy002X::~CEnemy002X()
 //=========================
 void CEnemy002X::Update()
 {
-	SetAdjustRot().x += PLUS_ROTY; //Y²‚ÌŒü‚«‚ğ‰ÁZ
+	SetAdjustRot().x += PLUS_ROT_Y; //Y²‚ÌŒü‚«‚ğ‰ÁZ
 
 	Move();                        //s“®ˆ—ŠÖ”‚ğŒÄ‚Ô
 

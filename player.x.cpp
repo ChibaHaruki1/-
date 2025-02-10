@@ -283,7 +283,7 @@ void CPlayerX::Update()
 			return;       //処理を抜ける
 		}
 	}
-	SceneMode(2);         //シーンを選択
+	//SceneMode(2);         //シーンを選択
 }
 
 
@@ -554,7 +554,7 @@ void CPlayerX::KeySet()
 		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI;                                //カメラの向きに合わせて向く
 		SetAdjustMove().x -= sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから減算
 		SetAdjustMove().z -= cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから減算
-		m_nRotNumber = 1;                                                                                        //向き番号の設定
+		m_nRotNumber = ROT_NUMBER_1;                                                                                        //向き番号の設定
 
 		//撃ってない時
 		if (m_nMotionFrame <= 0 && m_nMotionFrame001 <= 0)
@@ -570,7 +570,7 @@ void CPlayerX::KeySet()
 		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y - D3DX_PI_ORI;                         //カメラの向きに合わせて向く
 		GetMove().x += sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから加算
 		GetMove().z += cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから加算
-		m_nRotNumber = 2;                                                                                 //向き番号の設定
+		m_nRotNumber = ROT_NUMBER_2;                                                                                 //向き番号の設定
 
 		//撃ってない時
 		if (m_nMotionFrame <= 0 && m_nMotionFrame001 <= 0)
