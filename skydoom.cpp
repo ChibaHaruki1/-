@@ -66,14 +66,14 @@ void CSkyDoom::Update()
 	//Dキーが押された時
 	if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_D) == true)
 	{
-		GetRot().y += 0.0001f; //動いた方向と同じ向きに傾く
+		GetRot().y += ADJUST_ROT_Y; //動いた方向と同じ向きに傾く
 		SetAdjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
 	}
 
 	//Aキーが押された時
 	else if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_A) == true)
 	{
-		GetRot().y -= 0.0001f; //動いた方向と同じ向きに傾く
+		GetRot().y -= ADJUST_ROT_Y; //動いた方向と同じ向きに傾く
 		SetAdjustMove().x += CManager::GetScene()->GetPlayerX()->GetMove().x;
 	}
 
@@ -97,22 +97,23 @@ void CSkyDoom::Draw()
 //========================
 CSkyDoom* CSkyDoom::Create(D3DXVECTOR3 pos, int nNumber)
 {
-	CSkyDoom* pCBlockX = new CSkyDoom(1); //動的確保
+	CSkyDoom* pCBlockX = new CSkyDoom(CRETAE_PRIORITY); //動的確保
 
 	//初期化に成功
 	if (SUCCEEDED(pCBlockX->Init()))
 	{
 		//番号が０の時
-		if (nNumber == 0)
+		if (nNumber == CREATE_NUMBER_0)
 		{
 			pCBlockX->SetFileName("data\\XFILE\\StageObj\\SkyDoom.x");      //宇宙
 		}
 
 		//番号が１の時
-		else if (nNumber == 1)
+		else if (nNumber == CREATE_NUMBER_1)
 		{
 			pCBlockX->SetFileName("data\\XFILE\\StageObj\\SkyDoom001.x");  //曇り空
 		}
+
 		pCBlockX->GetPos() = pos;   //位置を同期させる
 		pCBlockX->CObjectX::Lood(); //Xファイルを読み込む関数を呼ぶ
 		return pCBlockX;            //情報を返す

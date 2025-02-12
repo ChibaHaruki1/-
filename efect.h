@@ -327,6 +327,9 @@ public:
 
 	//=========================
 	//マクロ定義
+	static constexpr  int ROT_NUMBER_1 = 1;                 //向き番号１
+	static constexpr  int ROT_NUMBER_2 = 2;                 //向き番号２
+
 	static constexpr  float SPECIALATTACK_SIZEX = 200.0f;   //必殺技エフェクトのX軸の大きさ
 	static constexpr  float SPECIALATTACK_SIZEY = 200.0f;   //必殺技エフェクトのY軸の大きさ
 	static constexpr  float MAX_SPECIALATTACK_TEX = 0.125f; //アニメーションの分割数
@@ -336,8 +339,6 @@ private:
 	//マクロ定義
 	static constexpr  int SPECIALATTACKLIFE = 180;      //ライフの最大数
 	static constexpr  int MINUS_ALPHA = 5;              //アルファ値の減算値
-	static constexpr  int ROT_NUMBER_1 = 1;             //向き番号１
-	static constexpr  int ROT_NUMBER_2 = 2;             //向き番号２
 
 	static constexpr double D_LIFECOUNT = 0.3;          //アニメーションライフの調整値
 

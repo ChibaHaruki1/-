@@ -58,20 +58,6 @@ public:
 	int& SetAdjustAlpha() { return m_nAlpha; }                 //アルファ値の変更したいときの設定
 
 
-	//==================================================
-	//マクロ定義
-	static constexpr int N_INIT_NUMBER = 0;                    //int型の初期化の値
-	static constexpr float F_INIT_NUMBER = 0.0f;               //float型の初期化の値
-
-	static constexpr int INIT_PRIORITY = 0;                    //プライオリティの初期値
-	static constexpr int N_INIT_COL_NUMBER = 255;              //色の初期値
-
-	static constexpr int N_INIT_ALPHA_NUMBER = 255;            //アルファ値の初期値
-	 static constexpr  int RED = 255;                            //赤色
-	 static constexpr  int GREEN = 255;                          //緑色
-	 static constexpr  int BLUE = 255;                           //青色
-
-
 private:
 	LPDIRECT3DTEXTURE9 m_pTexture;                             //テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;                        //頂点バッファのポインタ

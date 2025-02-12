@@ -44,9 +44,9 @@ public: //外部からアクセス可能
 
 private: //アクセス不可能
     //マクロ定義 （constexprでコンパイル時に初期化）
-	static constexpr int GREEN = 160;                    //緑色
-	 static constexpr  int MINUS_ALPHA = 5;                //アルファ値を減算
-	 static constexpr  float INIT_ROTY = 3.14f;            //ｙ軸の向き
+	static constexpr int GREEN = 160;                     //緑色
+	 static constexpr  int MINUS_ALPHA = 5;               //アルファ値を減算
+	 static constexpr  float INIT_ROTY = 3.14f;           //ｙ軸の向き
 };
 
 
@@ -57,7 +57,7 @@ class CBullet3D : public CManagerBullet
 public: //外部からアクセス可能
 	CBullet3D(int nPriority = DEFAULT_PRIORITY);   //引数付きコンストラクタ
 	~CBullet3D()override;                          //デストラクタ
-	//void Update()override;                        //更新処理
+	//void Update()override;                       //更新処理
 	void CallEffect(bool bUse);                    //エフェクトの処理を呼ぶ関数 (引数でエフェクトを追加するかどうか判定)
 	void CollisionOnObject();                      //オブジェクトとの当たり判定
 
@@ -106,19 +106,19 @@ public: //外部からアクセス可能
 	//============================
 	//マクロ定義
 	 static constexpr  float PLUS_ROT_Y = 7.0f;               //Y軸の向きを減算していく
-	 static constexpr  float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
-	 static constexpr  float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
-	 static constexpr  float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
+	 static constexpr  float MAX_ENEMYBULLET_SIZE_X = 40.0f;  //X軸の大きさ
+	 static constexpr  float MAX_ENEMYBULLET_SIZE_Y = 40.0f;  //Y軸の大きさ
+	 static constexpr  float MAX_ENEMYBULLET_SIZE_Z = 40.0f;  //Z軸の大きさ
 
 private: //外部からアクセス不可能
     //マクロ定義
-	 static constexpr  int BLUE = 200;                     //青色
-	 static constexpr  int MINUS_ALPHA = 5;                //アルファ値を減算
-													     
-	 static constexpr  float ADJUST_HIT = 0.5;             //当たり判定の調整値
-	 static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
-
-	static float m_fAdditionPosY;                         //rot.yに値を追加していくための変数
+	 static constexpr  int BLUE = 200;                        //青色
+	 static constexpr  int MINUS_ALPHA = 5;                   //アルファ値を減算
+													         
+	 static constexpr  float ADJUST_HIT = 0.5;                //当たり判定の調整値
+	 static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f;    //プレイヤーのHPゲージを減らす値
+														     
+	static float m_fAdditionPosY;                             //rot.yに値を追加していくための変数
 };
 
 
@@ -129,28 +129,28 @@ class CEnemyBulletBattleShip : public CManagerBullet
 public: //外部からアクセス可能
 	CEnemyBulletBattleShip(int nPriority = DEFAULT_PRIORITY);  //引数付きコンストラクタ
 	~CEnemyBulletBattleShip()override;                         //デストラクタ
-	void Update()override;                           //更新処理
-	void CallEffect(bool bUse);                      //エフェクトの処理を呼ぶ関数 (引数でエフェクトを追加するかどうか判定)
-	void CollisionOnObject();                        //オブジェクトとの当たり判定
+	void Update()override;                                     //更新処理
+	void CallEffect(bool bUse);                                //エフェクトの処理を呼ぶ関数 (引数でエフェクトを追加するかどうか判定)
+	void CollisionOnObject();                                  //オブジェクトとの当たり判定
 
 
 	//============================
 	//マクロ定義
-	static constexpr float PLUS_ROT_Y = 7.0f;              //Y軸の向きを減算していく
-	static constexpr float MAX_ENEMYBULLET_SIZE_X = 40.0f; //X軸の大きさ
-	static constexpr float MAX_ENEMYBULLET_SIZE_Y = 40.0f; //Y軸の大きさ
-	static constexpr float MAX_ENEMYBULLET_SIZE_Z = 40.0f; //Z軸の大きさ
+	static constexpr float PLUS_ROT_Y = 7.0f;                  //Y軸の向きを減算していく
+	static constexpr float MAX_ENEMYBULLET_SIZE_X = 40.0f;     //X軸の大きさ
+	static constexpr float MAX_ENEMYBULLET_SIZE_Y = 40.0f;     //Y軸の大きさ
+	static constexpr float MAX_ENEMYBULLET_SIZE_Z = 40.0f;     //Z軸の大きさ
 
 private: //外部からアクセス不可能
 	//マクロ定義
-	static constexpr  int BLUE = 200;                     //青色
-	static constexpr  int MINUS_ALPHA = 5;                //アルファ値を減算
-	static constexpr  int SET_BULLET_LIFE = 90;           //ライフの最大値
-	static constexpr int MAX_FRAME = 10;                  //フレームの最大数
-
-	static constexpr  float ADDJUST_HIT = 1.0;            //当たり判定の調整値
-	static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
-	static  constexpr float MINUS_POS_Y = -2.5f;          //Y軸の位置を減算していく値
+	static constexpr  int BLUE = 200;                          //青色
+	static constexpr  int MINUS_ALPHA = 5;                     //アルファ値を減算
+	static constexpr  int SET_BULLET_LIFE = 90;                //ライフの最大値
+	static constexpr int MAX_FRAME = 10;                       //フレームの最大数
+														       
+	static constexpr  float ADDJUST_HIT = 1.0;                 //当たり判定の調整値
+	static constexpr  float  MINUS_PLAYER_HPGAGE = 0.05f;      //プレイヤーのHPゲージを減らす値
+	static  constexpr float MINUS_POS_Y = -2.5f;               //Y軸の位置を減算していく値
 	
 };
 
@@ -160,11 +160,11 @@ private: //外部からアクセス不可能
 class CBossBullet : public CManagerBullet
 {
 public: //外部からアクセス可能
-	CBossBullet(int nPriority = DEFAULT_PRIORITY);  //引数付きコンストラクタ
-	~CBossBullet()override;                         //デストラクタ
-	void Update()override;                          //更新処理
-	void CallEffect(bool bUse);                     //エフェクトの処理を呼ぶ関数 (引数でエフェクトを追加するかどうか判定)
-	void CollisionOnObject();                       //オブジェクトとの当たり判定
+	CBossBullet(int nPriority = DEFAULT_PRIORITY);        //引数付きコンストラクタ
+	~CBossBullet()override;                               //デストラクタ
+	void Update()override;                                //更新処理
+	void CallEffect(bool bUse);                           //エフェクトの処理を呼ぶ関数 (引数でエフェクトを追加するかどうか判定)
+	void CollisionOnObject();                             //オブジェクトとの当たり判定
 
 
 	//============================
@@ -176,12 +176,12 @@ public: //外部からアクセス可能
 
 private: //外部からアクセス不可能
 	//マクロ定義
-	static constexpr int BLUE = 200;                     //青色
-	static constexpr int MINUS_ALPHA = 5;                //アルファ値を減算
-
-	static constexpr float  MINUS_PLAYER_HPGAGE = 0.05f; //プレイヤーのHPゲージを減らす値
-	static constexpr float  MINUS_POSY = 2.0f;           //Y軸の位置を減算する値
-	static constexpr float PLUS_POS_Y = 200.0f;          //エフェクトのY軸の生成位置を加算する値
-	static constexpr float ADJUST_HIT = 0.5f;            //当たり判定時の調整値
+	static constexpr int BLUE = 200;                      //青色
+	static constexpr int MINUS_ALPHA = 5;                 //アルファ値を減算
+														  
+	static constexpr float  MINUS_PLAYER_HPGAGE = 0.05f;  //プレイヤーのHPゲージを減らす値
+	static constexpr float  MINUS_POSY = 2.0f;            //Y軸の位置を減算する値
+	static constexpr float PLUS_POS_Y = 200.0f;           //エフェクトのY軸の生成位置を加算する値
+	static constexpr float ADJUST_HIT = 0.5f;             //当たり判定時の調整値
 };
 

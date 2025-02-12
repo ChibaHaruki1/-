@@ -84,6 +84,23 @@ public:
 	void SetType(TYPE type) { m_type = type; }                                                                    //タイプ設定
 	void Release();                                                                                               //自分自身の解放
 
+
+	//==================================================	                                          
+	//マクロ定義					
+	static constexpr int N_INIT_NUMBER = 0;                  //int型の初期化の値
+	static constexpr int INIT_ALPHA = 255;                   //アルファ値の初期値
+	static constexpr float F_INIT_NUMBER = 0.0f;             //float型の初期化の値
+
+	static constexpr  int MAX_PARTS = 19;                    //プレイヤーのパーツ数
+	static constexpr  int MAX_BOSSPARTS = 18;               //ボスのパーツ数
+	static constexpr  int MAX_ENEMYPARTS = 20;              //敵の最大パーツ数
+	static constexpr  int NUM_MOTION_KEY = 5;               //キーの数
+
+	static constexpr  float MAX_GRAVITY_G = 0.5f;           //重力の最大値
+	static constexpr  float D3DX_PI_ORI = 1.57f;            //半円の角度
+	static constexpr  float D3DX_PI_ORI_HALF = 1.57f * 0.5f;  //半円の角度の半分(調整用)
+
+
 protected:
 	//マクロ定義
 	 static constexpr  int MAX_OBJECTMANAGERX = 200;       //オブジェクトの最大数

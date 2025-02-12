@@ -19,7 +19,7 @@
 CCharacter::CCharacter(int nPriority) : CObjectX(nPriority)
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PARTS; nCount++)
 	{
 		m_pModelPrts[nCount] = nullptr;                                                   //プレイヤーのパーツの初期化
 		SaveMotionPos[nCount] = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //各パーツの場所の保管場所の初期化
@@ -76,7 +76,7 @@ void CCharacter::Uninit()
 	CObjectX::Uninit(); //破棄処理を呼ぶ
 
 	//プレイヤーのパーツ分回す
-	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PARTS; nCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrts[nCount] != nullptr)
@@ -108,10 +108,10 @@ void CCharacter::UpdatePlayer()
 	MotionInfo(); //モーションを行う処理を呼ぶ
 
 	//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-	for (int nCount = N_INIT_NUMBER; nCount < MAX_PRTS-2; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_PARTS - CREATE_GUN_COUNT; nCount++)
 	{
 		//各パーツを保管値＋現在の値で修正
-		GetPosParts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);  
+		GetPosParts(nCount) = D3DXVECTOR3(SaveMotionPos[nCount].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nCount].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nCount].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
 	}
 
 	//左向きの時
@@ -119,8 +119,12 @@ void CCharacter::UpdatePlayer()
 	{
 		int nRightHand = PLAYER_PARTS_RIGHTHAND_NUMBER; //右手
 
-		//銃の位置を右手と現在の位置で設定
-		GetPosParts(PLAYER_PARTS_GUN_NUMBER) = D3DXVECTOR3(SaveMotionPos[nRightHand].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nRightHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nRightHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
+		//銃の開始番号から終わりまで回す
+		for (int nGun = MAX_PARTS - CREATE_GUN_COUNT; nGun < MAX_PARTS; nGun++)
+		{
+			//銃の位置を右手と現在の位置で設定
+			GetPosParts(nGun) = D3DXVECTOR3(SaveMotionPos[nRightHand].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nRightHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nRightHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
+		}
 	}
 
 	//右向きの時
@@ -128,8 +132,12 @@ void CCharacter::UpdatePlayer()
 	{
 		int nLeftHand = PLAYER_PARTS_LEFTHAND_NUMBER; //左手
 
-		//銃の位置を左手と現在の位置で設定
-		GetPosParts(PLAYER_PARTS_GUN_NUMBER) = D3DXVECTOR3(-SaveMotionPos[nLeftHand].x +CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nLeftHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nLeftHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
+		//銃の開始番号から終わりまで回す
+		for (int nGun1 = MAX_PARTS - CREATE_GUN_COUNT; nGun1 < MAX_PARTS; nGun1++)
+		{
+			//銃の位置を左手と現在の位置で設定
+			GetPosParts(nGun1) = D3DXVECTOR3(-SaveMotionPos[nLeftHand].x + CManager::GetScene()->GetPlayerX()->GetPos().x, SaveMotionPos[nLeftHand].y + CManager::GetScene()->GetPlayerX()->GetPos().y, SaveMotionPos[nLeftHand].z + CManager::GetScene()->GetPlayerX()->GetPos().z);
+		}
 	}
 }
 
@@ -319,7 +327,7 @@ void CCharacter::Lood()
 					(void)fscanf(m_pFile, "%s %s", &m_aDataSearch, &aPrtsPass[nModelPrtsCount]); //パーツの取得
 
 					//モデルパーツカウントが最大数より小さい時
-					if (nModelPrtsCount < MAX_PRTS)
+					if (nModelPrtsCount < MAX_PARTS)
 					{
 						//情報がない時
 						if (m_pModelPrts[nModelPrtsCount] == nullptr)
@@ -940,7 +948,7 @@ void CCharacter::LoodBoss()
 void CCharacter::MotionInfo()
 {
 	//モデルのパーツ分繰り返す
-	for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PRTS; nModelCount++)
+	for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PARTS; nModelCount++)
 	{
 		//パーツの情報がある時
 		if (m_pModelPrts[nModelCount] != nullptr)
@@ -1114,7 +1122,7 @@ void CCharacter::SetMotion(MOTIONSTATE motiontype)
 		SetFrame(N_INIT_NUMBER);         //フレームを初期化
 
 		//モデルのパーツ分繰り返す
-		for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PRTS; nModelCount++)
+		for (int nModelCount = N_INIT_NUMBER; nModelCount < MAX_PARTS; nModelCount++)
 		{
 			//モデルパーツの情報がある時
 			if (m_pModelPrts[nModelCount] != nullptr)

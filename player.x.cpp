@@ -24,63 +24,64 @@
 //===================
 CPlayerX::CPlayerX(int nPriority) : CCharacter(nPriority)
 {
-	SetJumpFlag(false);                                                         //飛んでいないに設定
-	SetGravity(0.0f);                                                           //重力の初期化
+	SetJumpFlag(false);                                            //飛んでいないに設定
+	SetGravity(CObjectX::F_INIT_NUMBER);                           //重力の初期化
 
 	//テキストファイルに登録する時の葉配列番号の初期化
-	m_nFiledCount = -1;                                   //地面の生成数の初期化
-	m_nTelephonCount = -1;                                //電柱の生成数の初期化
+	m_nFiledCount = INIT_NUMBER;                                   //地面の生成数の初期化
+	m_nTelephonCount = INIT_NUMBER;                                //電柱の生成数の初期化
 
 	//テキストファイルに登録するした全ての配列番号の初期化
-	m_nAllTelephonPoleCount = -1;
-	m_nAllFiledCount = -1;
+	m_nAllTelephonPoleCount = INIT_NUMBER;
+	m_nAllFiledCount = INIT_NUMBER;
 
-	m_ObjectNumber = 0;                                   //現在のオブジェクトの番号の初期化
+	m_ObjectNumber = CObjectX::N_INIT_NUMBER;                      //現在のオブジェクトの番号の初期化
+							                              		   
+	m_nFrameParticle = CObjectX::N_INIT_NUMBER;                    //パーティクルのフレームの初期化
+	m_nPraticlesCount = CObjectX::N_INIT_NUMBER;                   //パーティクルの配列カウントの初期化
+	m_nRandomCol = CObjectX::N_INIT_NUMBER;                        //乱数を保管する為の変数
 							                              
-	m_nFrameParticle = 0;                                 //パーティクルのフレームの初期化
-	m_nPraticlesCount = 0;                                //パーティクルの配列カウントの初期化
-	m_nRandomCol = 0;                                     //乱数を保管する為の変数
-							                              
-	m_pMenyu = nullptr;                                   //メニューポインターの初期化
-	m_pLaserUI = nullptr;                                 //レーザーUIの初期化
-	m_pTalkText = nullptr;                                //話すUIの初期化
-	m_pBuyText = nullptr;                                 //買うテキストの初期化
-	m_nSelectShopCount = 0;                               //SHOPで選んでいる物
-	m_nBuyOrSendCount = 0;                                //買い物時の選択カウントの初期化
-	m_pSelectGage = nullptr;                              //選択ゲージの初期化
-	m_pSelectGage001 = nullptr;                           //選択ゲージ001の初期化 
-	SpecialAttack = false;                                //必殺技を使っているかどうかの初期化
-	m_PlayerState = CPlayerX::PLAYER_STATE::NORMAI_MODE;  //現在のプレイヤーの状態の設定
-	m_FlagSate = CPlayerX::PLAYER_STATE::NORMAI_MODE;     //現在のフラグの設定
-	m_nAlpha = 255;                                       //パーティクルのアルファ値の設定
+	m_pMenyu = nullptr;                                            //メニューポインターの初期化
+	m_pLaserUI = nullptr;                                          //レーザーUIの初期化
+	m_pTalkText = nullptr;                                         //話すUIの初期化
+	m_pBuyText = nullptr;                                          //買うテキストの初期化
+	m_nSelectShopCount = CObjectX::N_INIT_NUMBER;                  //SHOPで選んでいる物
+	m_nBuyOrSendCount = CObjectX::N_INIT_NUMBER;                   //買い物時の選択カウントの初期化
+	m_pSelectGage = nullptr;                                       //選択ゲージの初期化
+	m_pSelectGage001 = nullptr;                                    //選択ゲージ001の初期化 
+	SpecialAttack = false;                                         //必殺技を使っているかどうかの初期化
+	m_PlayerState = CPlayerX::PLAYER_STATE::NORMAI_MODE;           //現在のプレイヤーの状態の設定
+	m_FlagSate = CPlayerX::PLAYER_STATE::NORMAI_MODE;              //現在のフラグの設定
+	m_nAlpha = CObjectX::INIT_ALPHA;                               //パーティクルのアルファ値の設定
 
-	m_nMotionFrame = 0;                                   //銃を撃つ時のフレームの初期化
-	m_nMotionFrame001 = 0;                                //銃001を撃つ時のフレームの初期化
-	m_bPlayerMoveNext = false;                            //次のステージへ行く時のプレイヤーの動きの判定用の変数の初期化
-	m_bNextStage = false;                                 //次のステージに行くかどうかの変数の初期化
+	m_nMotionFrame = CObjectX::N_INIT_NUMBER;                      //銃を撃つ時のフレームの初期化
+	m_nMotionFrame001 = CObjectX::N_INIT_NUMBER;                   //銃001を撃つ時のフレームの初期化
+	m_bPlayerMoveNext = false;                                     //次のステージへ行く時のプレイヤーの動きの判定用の変数の初期化
+	m_bNextStage = false;                                          //次のステージに行くかどうかの変数の初期化
 
 	//吹っ飛ぶ処理の初期化
-	m_nFlayFrame = 0;                                     //飛ぶフレームの初期化
-	m_bFly = false;                                       //飛んでない
+	m_nFlayFrame = CObjectX::N_INIT_NUMBER;                        //飛ぶフレームの初期化
+	m_bFly = false;                                                //飛んでない
 
-	m_nDieRandom = 0;                                     //死亡時の方向乱数の初期化
-	m_nRotNumber = 0;                                     //向き番号の初期化
-	m_nSpecialAttackCount = 0;                            //必殺技のカウントの初期化
+	m_nDieRandom = CObjectX::N_INIT_NUMBER;                        //死亡時の方向乱数の初期化
+	m_nRotNumber = CObjectX::N_INIT_NUMBER;                        //向き番号の初期化
+	m_nSpecialAttackCount = CObjectX::N_INIT_NUMBER;               //必殺技のカウントの初期化
 
-	m_nNextStageFrame = 0;                                   //次のステージに行くまでのフレームの初期化
-	m_bLandingFlag = false;                               //着地してない
-	m_nLandingFrame = 0;                                  //着地時の次の動きへのフレームの初期化
+	m_nNextStageFrame = CObjectX::N_INIT_NUMBER;                   //次のステージに行くまでのフレームの初期化
+	m_bLandingFlag = false;                                        //着地してない
+	m_nLandingFrame = CObjectX::N_INIT_NUMBER;                     //着地時の次の動きへのフレームの初期化
 
 	m_pNowCreateUI = CManager2DUI::Create(CObject::TYPE_UI::NOWCREATE); //現在の配置オブジェクトのUIの生成
 
 	//生成数の保管用変数の初期化
-	m_nFieldBlock = 0;
-	m_nGoUpBlock = 0;
-	m_nRoadBlock = 0;
-	m_nWallRoadBlock = 0;
-	m_nWallRoadBlock001 = 0;
-	m_nSmalBlock = 0;
-	m_nLaserCount = 0;
+	m_nFieldBlock = CObjectX::N_INIT_NUMBER;
+	m_nGoUpBlock = CObjectX::N_INIT_NUMBER;
+	m_nRoadBlock = CObjectX::N_INIT_NUMBER;
+	m_nWallRoadBlock = CObjectX::N_INIT_NUMBER;
+	m_nWallRoadBlock001 = CObjectX::N_INIT_NUMBER;
+	m_nSmalBlock = CObjectX::N_INIT_NUMBER;
+	m_nLaserCount = CObjectX::N_INIT_NUMBER;
+	m_nSmalBlock001 = CObjectX::N_INIT_NUMBER;
 }
 
 
@@ -89,7 +90,7 @@ CPlayerX::CPlayerX(int nPriority) : CCharacter(nPriority)
 //===================
 CPlayerX::~CPlayerX()
 {
-	//mciSendStringA("close BGM", NULL, 0, NULL);
+	//mciSendStringA("close BGM", NULL, CObjectX::N_INIT_NUMBER, NULL);
 }
 
 
@@ -98,13 +99,13 @@ CPlayerX::~CPlayerX()
 //====================
 HRESULT CPlayerX::Init()
 {
-	CCharacter::Init();                                                           //初期化処理を呼ぶ
-	CCharacter::Lood();                                                           //テキストファイルを読み込む処理
-	SetRot(D3DXVECTOR3(0.0f, D3DX_PI * -0.5f, 0.0f));                             //向きの調整（右向き）
-	m_pModelPrts[18]->SetDraw(false);                                             //パーツの銃部分を非表示に設定
-	SetPos(D3DXVECTOR3(000.0f,0.0f,0.0f));                                        //位置の調整
-	SetLife(1);                                                                   //自身のライフ
-	return S_OK;                                                                  //成功を返す
+	CCharacter::Init();                                                                             //初期化処理を呼ぶ
+	CCharacter::Lood();                                                                             //テキストファイルを読み込む処理
+	SetRot(D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::D3DX_PI_ORI, CObjectX::F_INIT_NUMBER));   //向きの調整（右向き）
+	SetPos(D3DXVECTOR3(000.0f,CObjectX::F_INIT_NUMBER,CObjectX::F_INIT_NUMBER));                    //位置の調整
+	SetLife(LIFE);                                                                                  //自身のライフ
+	m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(false);                                       //パーツの銃部分を非表示に設定
+	return S_OK;                                                                                    //成功を返す
 }
 
 //==================
@@ -142,8 +143,8 @@ void CPlayerX::ShopInstanceMakeNullptr()
 	//選択ゲージの情報がある時
 	if (m_pSelectGage != nullptr)
 	{
-		m_pSelectGage->Release(); //情報を消す
-		m_pSelectGage = nullptr;  //情報を無くす
+		m_pSelectGage->Release();    //情報を消す
+		m_pSelectGage = nullptr;     //情報を無くす
 	}
 
 	//選択ゲージ001の情報がある時
@@ -156,15 +157,15 @@ void CPlayerX::ShopInstanceMakeNullptr()
 	//買うテキストの情報がある時
 	if (m_pBuyText != nullptr)
 	{
-		m_pBuyText->Release(); //情報を消す
-		m_pBuyText = nullptr;  //情報を無くす
+		m_pBuyText->Release();       //情報を消す
+		m_pBuyText = nullptr;        //情報を無くす
 	}
 
 	//メニューの情報がある時
 	if (m_pMenyu != nullptr)
 	{
-		m_pMenyu->Release(); //情報を消す
-		m_pMenyu = nullptr;  //情報を無くす
+		m_pMenyu->Release();         //情報を消す
+		m_pMenyu = nullptr;          //情報を無くす
 	}
 
 	//ショップ時の背景の情報がある時
@@ -173,6 +174,8 @@ void CPlayerX::ShopInstanceMakeNullptr()
 		CManager::GetInstance()->GetShopScreen()->Release();                   //情報を消す
 		CManager::GetInstance()->DesignationUninit2D(CObject2D::TYPE::SCREEN); //情報を無くす
 	}
+
+	m_nSelectShopCount = 0;
 }
 
 
@@ -182,40 +185,40 @@ void CPlayerX::ShopInstanceMakeNullptr()
 void CPlayerX::Update()
 {
 	//生きている時
-	if (GetLife() == 1)
+	if (GetLife() == LIFE)
 	{
-		CCharacter::UpdatePlayer();  //モーションの更新
+		CCharacter::UpdatePlayer();           //モーションの更新
 
 		if (GetPos().y <= -DIE_POS_Y)
 		{
-			SetLife(0); //ライフの初期化
+			SetLife(CObjectX::N_INIT_NUMBER); //ライフの初期化
 		}
 
 		//重力値が規定値より高い時
 		if (GetGravity() >= MAX_GRAVITY)
 		{
-			GetGravity() = MAX_GRAVITY; //重力の設定
+			GetGravity() = MAX_GRAVITY;       //重力の設定
 		}
 
 		//遊べる状態になっている時
 		if (CManager::GetScene()->GetPlay() == true)
 		{
-			HitAttack();                 //特定の攻撃を受けた時の処理関数を呼ぶ
+			HitAttack();                      //特定の攻撃を受けた時の処理関数を呼ぶ
 
 			//必殺技カウントが規定値より低い時
 			if (m_nSpecialAttackCount <= MAX_SPECIALATTACKCOUNT)
 			{
-				m_nSpecialAttackCount++; //カウントを進める
+				m_nSpecialAttackCount++;      //カウントを進める
 			}
 
 			//ゲージのmanagerが生成されていた時
 			if (CManager::GetInstance()->GetPlayerHPGage() != nullptr)
 			{
 				//HPゲージが０以下の時
-				if (CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() <= 0)
+				if (CManager::GetInstance()->GetPlayerHPGage()->GetPlayerHPSizeX() <= CObjectX::N_INIT_NUMBER)
 				{
-					CManager::GetInstance()->GetPlayerHPGage()->GetSaveSizeX() = 0.0f;  //HPゲージのサイズを０にする
-					SetLife(0);                                                         //ライフを０に設定で死亡判定にする
+					CManager::GetInstance()->GetPlayerHPGage()->GetSaveSizeX() = CObjectX::F_INIT_NUMBER;  //HPゲージのサイズを０にする
+					SetLife(CObjectX::N_INIT_NUMBER);                                                      //ライフを０に設定で死亡判定にする
 				}
 			}
 
@@ -242,36 +245,36 @@ void CPlayerX::Update()
 			//次のsceneに行くフラグがOnの時
 			if (m_bNextStage == true)
 			{
-				SceneMode(1); //sceneの切り替え
-				return;		  //処理を抜ける
+				SceneMode(SCENE_NEXT_STAGE); //sceneの切り替え
+				return;		                 //処理を抜ける
 			}
 
-			CObjectX::Update();                 //基底クラスの基底クラスの更新処理を呼ぶ
+			CObjectX::Update();              //基底クラスの基底クラスの更新処理を呼ぶ
 		}
 
 		//着地までに必要な処理
 		else
 		{
-			BlockJudgement();              //地面に触れる事でようやく移動などができるようにするためブロックの当たり判定処理を呼ぶ
-			Junp(TYPE::PLAYER, 10.0f);     //重力処理関数を呼ぶ事で落ちるようにする
+			BlockJudgement();                   //地面に触れる事でようやく移動などができるようにするためブロックの当たり判定処理を呼ぶ
+			Junp(TYPE::PLAYER, MAX_JUMPPAWER);  //重力処理関数を呼ぶ事で落ちるようにする
 		}
 	}
 
 	//死んだ時
-	else if (GetLife() == 0)
+	else if (GetLife() == CObjectX::N_INIT_NUMBER)
 	{
-		GetDieFrame()++;                //死亡フレームを増やす
+		SetAdjustDieFrame()++;          //死亡フレームを増やす
 		//GetPos().y = -50.0f;          //位置を低くする
 		srand((unsigned)time(NULL));    //乱数系列を初期化
 
 		//乱数が入ってない時
-		if (m_nDieRandom == 0)
+		if (m_nDieRandom == CObjectX::N_INIT_NUMBER)
 		{
-			m_nDieRandom = -1 + rand() % 3; //乱数を入れる
+			m_nDieRandom = MIN_DIE_RANDOM + rand() % MAX_DIE_RANDOM; //乱数を入れる
 		}
 
-		//パーツの位置を設定
-		m_pModelPrts[0]->GetPos() += D3DXVECTOR3(GetDieFrame() * 0.1f * m_nDieRandom, 0.0f, GetDieFrame() * 0.1f * m_nDieRandom);
+		//体の位置を設定
+		m_pModelPrts[PLAYER_PARTS_BODY_NUMBER]->GetPos() += D3DXVECTOR3(GetDieFrame() * DIE_FRAME_REDUCTION * m_nDieRandom, CObjectX::F_INIT_NUMBER, GetDieFrame() * DIE_FRAME_REDUCTION * m_nDieRandom);
 
 		CCharacter::Update();  //基底クラスの更新処理を呼ぶ
 		SetMotion(DIE);        //モーションを死亡に設定する
@@ -279,11 +282,11 @@ void CPlayerX::Update()
 		//既定の数値
 		if (GetDieFrame() >= MAX_DIE_COUNT)
 		{
-			SceneMode(3); //シーンの設定
-			return;       //処理を抜ける
+			SceneMode(SCENE_DIE_STAGE); //シーンの設定
+			return;                     //処理を抜ける
 		}
 	}
-	//SceneMode(2);         //シーンを選択
+	SceneMode(SCENE_DEBUG_STAGE);         //シーンを選択
 }
 
 
@@ -292,7 +295,7 @@ void CPlayerX::Update()
 //==================================================================================================================================================
 void CPlayerX::BlowAway()
 {
-	m_nFlayFrame++; //飛ぶフレームを進める
+	m_nFlayFrame++;                  //飛ぶフレームを進める
 
 	CCharacter::SetMotion(BLOWAWAY); //ぶっ飛びモーションの設定
 
@@ -313,8 +316,8 @@ void CPlayerX::BlowAway()
 	//終了
 	else
 	{
-		m_bFly = false;   //飛ぶフラグをOffにする
-		m_nFlayFrame = 0; //飛ぶフレームの初期化
+		m_bFly = false;                         //飛ぶフラグをOffにする
+		m_nFlayFrame = CObjectX::N_INIT_NUMBER; //飛ぶフレームの初期化
 	}
 }
 
@@ -328,7 +331,7 @@ void CPlayerX::HitAttack()
 	if (CManager::GetInstance()->GetImpact() != nullptr)
 	{
 		//当たったフラグがONの時
-		if (CManager::GetInstance()->GetImpact()->GetHitNumber() == 0)
+		if (CManager::GetInstance()->GetImpact()->GetHitNumber() == CObjectX::N_INIT_NUMBER)
 		{
 			m_bFly = true; //飛ぶ
 		}
@@ -337,7 +340,7 @@ void CPlayerX::HitAttack()
 	//飛ぶフラグがONの時
 	if (m_bFly == true)
 	{
-		BlowAway();  //吹っ飛び処理を呼ぶ
+		BlowAway();       //吹っ飛び処理を呼ぶ
 	}
 }
 
@@ -348,7 +351,7 @@ void CPlayerX::HitAttack()
 void CPlayerX::SceneMode(int nType)
 {
 	//次のステージに行く用（ゲームループ）
-	if (nType == 1)
+	if (nType == SCENE_NEXT_STAGE)
 	{
 		m_bNextStage = false; //次のステージのフラグをOffにする
 
@@ -368,10 +371,10 @@ void CPlayerX::SceneMode(int nType)
 	}
 
 	//デバック用
-	else if (nType == 2)
+	else if (nType == SCENE_DEBUG_STAGE)
 	{
 		//Enterキーが押された時（デバック用）
-		if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_RETURN) == true)
+		if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_I) == true)
 		{
 			m_bNextStage = false; //次のステージのフラグをOffにする
 
@@ -397,11 +400,11 @@ void CPlayerX::SceneMode(int nType)
 	}
 
 	//死亡した時用
-	else if (nType == 3)
+	else if (nType == SCENE_DIE_STAGE)
 	{
-		m_bNextStage = false; //次のステージのフラグをOffにする
-		CManager::SetMode(CScene::MODE::MODE_GAMEOVER); //ゲームオーバーに遷移
-		return;                                         //処理を抜ける
+		m_bNextStage = false;                                 //次のステージのフラグをOffにする
+		CManager::SetMode(CScene::MODE::MODE_GAMEOVER);       //ゲームオーバーに遷移
+		return;                                               //処理を抜ける
 	}
 }
 
@@ -424,7 +427,7 @@ void CPlayerX::NormalStateSummarizeFunction()
 	}
 	BlockJudgement();              //オブジェクトとの当たり判定処理関数を呼ぶ
 	UIJudgement();                 //UIとの当たり判定処理関数を呼ぶ
-						           
+
 	NowCreateNumberObj();          //配置オブジェクトのUIを生成する処理関数
 	NowCreateObjectUI();           //現在作っているオブジェクトのUIを出す処理
 
@@ -436,24 +439,24 @@ void CPlayerX::NormalStateSummarizeFunction()
 	else
 	{
 		//銃を撃つフレームが０以上の時
-		if (m_nMotionFrame >= 0)
+		if (m_nMotionFrame >= CObjectX::N_INIT_NUMBER)
 		{
 			m_nMotionFrame--;      //フレームを増やす
 		}
 
 		//銃を撃つフレーム001が０以上の時
-		if (m_nMotionFrame001 >= 0)
+		if (m_nMotionFrame001 >= CObjectX::N_INIT_NUMBER)
 		{
 			m_nMotionFrame001--;   //フレームを増やす
 		}
 
 		//両方のフレームが０以下の時
-		else if(m_nMotionFrame<=0&& m_nMotionFrame001<=0)
+		else if (m_nMotionFrame <= CObjectX::N_INIT_NUMBER && m_nMotionFrame001 <= CObjectX::N_INIT_NUMBER)
 		{
-			SpecialAttack = false; //必殺技フラグをOffにする
+			SpecialAttack = false;     //必殺技フラグをOffにする
 		}
 	}
-	Junp(TYPE::PLAYER, 10.0f);     //ジャンプと重力処理関数を呼ぶ
+	Junp(TYPE::PLAYER, MAX_JUMPPAWER); //ジャンプと重力処理関数を呼ぶ
 }
 
 
@@ -473,9 +476,9 @@ void CPlayerX::ShopStateSummarizeFunction()
 void CPlayerX::Random()
 {
 	//最小値＋rand()%最小値から何個分増やすか　（５だったら％６だったら　５、６、７、８、９、１０の合計６個になる）
-	//srand((unsigned)time(NULL));    //乱数系列を初期化
-	SetRandom(-50 + rand() % 100);  //-50～50の数値を出す（範囲指定）
-	m_nRandomCol = rand() % 255;    //0～255の数値を出す（範囲指定）
+	//srand((unsigned)time(NULL));  //乱数系列を初期化
+	SetRandom(MIN_RANDOM + rand() % MAX_RANDOM);  //（範囲指定）
+	m_nRandomCol = rand() % MAX_COL_RANDOM;       //（範囲指定）
 }
 
 
@@ -488,24 +491,30 @@ void CPlayerX::Praticles()
 	m_nFrameParticle++;   //フレームを加算させていく
 
 	//フレームが既定の数値まで行った時
-	if (m_nFrameParticle >= 4)
+	if (m_nFrameParticle >= MAX_PARTICLE_FRAME)
 	{
-		m_nFrameParticle = 0; //フレームを初期化する
+		m_nFrameParticle = CObjectX::N_INIT_NUMBER; //フレームを初期化する
 
-		//配列の最大数か最大数より下分回す
-		if (m_nPraticlesCount >= 0 && m_nPraticlesCount <= CInstance::MAX_OBJECT_DATA - 1)
-		{
-			//パーティクルの生成
-			CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PRTICLES001, m_nPraticlesCount, D3DXVECTOR3((float)GetPos().x + GetRandom(), GetPos().y+50.0f, 0.0f)); //パーティクルの生成処理
-			CManager::GetInstance()->GetPraticles001(m_nPraticlesCount)->SetCol(m_nRandomCol, 0, 0, m_nAlpha);//色の設定
-			m_nPraticlesCount++; //配列を進める
-		}
+		////配列の最大数か最大数より下分回す
+		//if (m_nPraticlesCount >= 0 && m_nPraticlesCount <= CInstance::MAX_OBJECT_DATA - 1)
+		//{
+		//	//パーティクルの生成
+		//	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PRTICLES001, m_nPraticlesCount, D3DXVECTOR3((float)GetPos().x + GetRandom(), GetPos().y+50.0f, CObjectX::F_INIT_NUMBER)); //パーティクルの生成処理
+		//	CManager::GetInstance()->GetPraticles001(m_nPraticlesCount)->SetCol(m_nRandomCol, 0, 0, m_nAlpha);//色の設定
+		//	m_nPraticlesCount++; //配列を進める
+		//}
 
-		//最大数に突入
-		else
-		{
-			m_nPraticlesCount = 0; //配列カウントを初期化する
-		}
+		////最大数に突入
+		//else
+		//{
+		//	m_nPraticlesCount = 0; //配列カウントを初期化する
+		//}
+
+		//パーティクルの生成処理
+		CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::PRTICLES001, m_nPraticlesCount, D3DXVECTOR3((float)GetPos().x + GetRandom(), GetPosParts(PLAYER_PARTS_BODY_NUMBER).y, CObjectX::F_INIT_NUMBER)); 
+
+		//色の設定
+		CManager::GetInstance()->GetPraticles001(m_nPraticlesCount)->SetCol(m_nRandomCol, CObjectX::N_INIT_NUMBER, CObjectX::N_INIT_NUMBER, m_nAlpha);
 	}
 }
 
@@ -515,34 +524,47 @@ void CPlayerX::Praticles()
 //===============================================================================================================================================================================
 void CPlayerX::KeySet()
 {
+
 	//=================================================
 	//必殺技の発動
 	if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_K) == true || CManager::GetJyoPad()->GetJoypadTrigger(CInputJoyPad::JOYKEY::JOYKEY_RB) == true)
 	{
 		//武器が買われた時と必殺技カウントが規定値より高い時
-		if (m_pModelPrts[18]->GetDraw() == true && m_nSpecialAttackCount >= MAX_SPECIALATTACKCOUNT)
+		if (m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->GetDraw() == true && m_nSpecialAttackCount >= MAX_SPECIALATTACKCOUNT)
 		{
-			SpecialAttack = true;       //必殺技フラグをOnにする  
-			m_nSpecialAttackCount = 0;  //必殺技カウントの初期化
+			SpecialAttack = true;                             //必殺技フラグをOnにする  
+			m_nSpecialAttackCount = CObjectX::N_INIT_NUMBER;  //必殺技カウントの初期化
 
 			//右向きの時
 			if (GetRot().y == CManager::GetScene()->GetCamera()->GetRot().y - D3DX_PI_ORI)
 			{
-				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));  //必殺技のエフェクトの生成
-				m_nMotionFrame = CManager::GetInstance()->GetSpecialAttack()->GetLife();                                             //モーションのライフを同期させる
-				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = 1;                                                     //サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosParts(17).x + 220.0f,                        //エフェクトの出す位置を設定
-					GetPosParts(17).y, GetPosParts(17).z));
+				//必殺技のエフェクトの生成
+				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, CObjectX::N_INIT_NUMBER, D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER));
+
+				m_nMotionFrame = CManager::GetInstance()->GetSpecialAttack()->GetLife();                    //モーションのライフを同期させる
+				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = CSpecialAttack::ROT_NUMBER_1; //サイズの設定用の番号を渡す
+
+				 //エフェクトの出す位置を設定
+				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).x + ROT_NUMBER_1_SPECIAL_EFFECT_PLUS_POS_Y,
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).y,
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).z));
 			}
 
 			//左向きの時
 			else if (GetRot().y == CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI)
 			{
-				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, 0, D3DXVECTOR3(0.0f, 0.0f, 0.0f));  //必殺技のエフェクトの生成
-				m_nMotionFrame001 = CManager::GetInstance()->GetSpecialAttack()->GetLife();                                          //モーションのライフを同期させる
-				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = 2;											         //サイズの設定用の番号を渡す
-				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(GetPosParts(17).x - 50.0f, 				         //エフェクトの出す位置を設定
-					GetPosParts(17).y, GetPosParts(17).z));
+				//必殺技のエフェクトの生成
+				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::SPECIALATTACK, CObjectX::N_INIT_NUMBER, D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER));
+
+				m_nMotionFrame001 = CManager::GetInstance()->GetSpecialAttack()->GetLife();                 //モーションのライフを同期させる
+				CManager::GetInstance()->GetSpecialAttack()->GetRotNumber() = CSpecialAttack::ROT_NUMBER_2; //サイズの設定用の番号を渡す
+
+				  //エフェクトの出す位置を設定
+				CManager::GetInstance()->GetSpecialAttack()->SetEffect(D3DXVECTOR3(
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).x + ROT_NUMBER_2_SPECIAL_EFFECT_MINUS_POS_Y,
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).y,
+					GetPosParts(PLAYER_PARTS_GUN_NUMBER).z));
 			}
 		}
 	}
@@ -551,13 +573,13 @@ void CPlayerX::KeySet()
 	//Aキーが押された時（押され続けた時）
 	if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_A) == true || CManager::GetJyoPad()->GetJoypadPress(CInputJoyPad::JOYKEY::JOYKEY_LEFT) == true)
 	{
-		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI;                                //カメラの向きに合わせて向く
+		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI;                               //カメラの向きに合わせて向く
 		SetAdjustMove().x -= sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから減算
 		SetAdjustMove().z -= cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから減算
-		m_nRotNumber = ROT_NUMBER_1;                                                                                        //向き番号の設定
+		m_nRotNumber = ROT_NUMBER_1;                                                                            //向き番号の設定
 
 		//撃ってない時
-		if (m_nMotionFrame <= 0 && m_nMotionFrame001 <= 0)
+		if (m_nMotionFrame <= CObjectX::N_INIT_NUMBER && m_nMotionFrame001 <= CObjectX::N_INIT_NUMBER)
 		{
 			CCharacter::SetMotion(CCharacter::MOTIONSTATE::WALK); //歩きモーション
 		}
@@ -570,10 +592,10 @@ void CPlayerX::KeySet()
 		GetRot().y = CManager::GetScene()->GetCamera()->GetRot().y - D3DX_PI_ORI;                         //カメラの向きに合わせて向く
 		GetMove().x += sinf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //X軸の移動量をカメラの向きから加算
 		GetMove().z += cosf(D3DX_PI_ORI + CManager::GetScene()->GetCamera()->GetRot().y) * MAX_MOVESPEED; //Z軸の移動量をカメラの向きから加算
-		m_nRotNumber = ROT_NUMBER_2;                                                                                 //向き番号の設定
+		m_nRotNumber = ROT_NUMBER_2;                                                                      //向き番号の設定
 
 		//撃ってない時
-		if (m_nMotionFrame <= 0 && m_nMotionFrame001 <= 0)
+		if (m_nMotionFrame <= CObjectX::N_INIT_NUMBER && m_nMotionFrame001 <= CObjectX::N_INIT_NUMBER)
 		{
 			CCharacter::SetMotion(CCharacter::MOTIONSTATE::WALK); //歩きモーション
 		}
@@ -584,7 +606,7 @@ void CPlayerX::KeySet()
 	else
 	{
 		//撃ってない時と吹っ飛んでない時
-		if (m_nMotionFrame <= 0 && m_nMotionFrame001 <= 0 && m_bFly == false)
+		if (m_nMotionFrame <= CObjectX::N_INIT_NUMBER && m_nMotionFrame001 <= CObjectX::N_INIT_NUMBER && m_bFly == false)
 		{
 			SpecialAttack = false;                                   //必殺技フラグをOffにする  
 			CCharacter::SetMotion(CCharacter::MOTIONSTATE::NEUTRAL); //待機モーション
@@ -600,19 +622,19 @@ void CPlayerX::KeySet()
 		//右向きの時
 		if (GetRot().y == CManager::GetScene()->GetCamera()->GetRot().y - D3DX_PI_ORI)
 		{
-			m_nMotionFrame = 60;   //銃を撃つフレームを設定
+			m_nMotionFrame = GUN_FRAME_MOTION;    //銃を撃つフレームを設定
 
 			//弾の設定
-			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(17).x + 240.0f, GetPosParts(17).y, GetPosParts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, 0.0f), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
+			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(PLAYER_PARTS_GUN_NUMBER).x + RIGHT_BULLET_PLUS_POS_X, GetPosParts(PLAYER_PARTS_GUN_NUMBER).y, GetPosParts(PLAYER_PARTS_GUN_NUMBER).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, CObjectX::F_INIT_NUMBER, CObjectX::F_INIT_NUMBER), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
 		}
 
 		//左向きの時
 		else if (GetRot().y == CManager::GetScene()->GetCamera()->GetRot().y + D3DX_PI_ORI)
 		{
-			m_nMotionFrame001 = 60; //銃を撃つフレームを設定
+			m_nMotionFrame001 = GUN_FRAME_MOTION; //銃を撃つフレームを設定
 
 			//弾の設定
-			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(17).x - 50.0f, GetPosParts(17).y, GetPosParts(17).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, 0.0f, -cosf(GetRot().y) * MAX_BUULET_SPEED), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
+			CManagerBullet::Create(D3DXVECTOR3(GetPosParts(PLAYER_PARTS_GUN_NUMBER).x + LEFT_BULLET_MINUS_POS_X, GetPosParts(PLAYER_PARTS_GUN_NUMBER).y, GetPosParts(PLAYER_PARTS_GUN_NUMBER).z), D3DXVECTOR3(-sinf(GetRot().y) * MAX_BUULET_SPEED, CObjectX::F_INIT_NUMBER, -cosf(GetRot().y) * MAX_BUULET_SPEED), CManagerBullet::SET_BULLET_LIFE, CObject3D::TYPE::BULLET); //正面
 		}
 	}
 
@@ -649,7 +671,7 @@ void CPlayerX::KeySet()
 
 	//=================================================
 	//右側の銃に関するフレームの処理
-	if (m_nMotionFrame >= 0)
+	if (m_nMotionFrame >= CObjectX::N_INIT_NUMBER)
 	{
 		m_nMotionFrame--;                            //銃を撃つフレームを減らす
 		SetMotion(CCharacter::MOTIONSTATE::ACTION);  //撃つアクションの設定
@@ -657,7 +679,7 @@ void CPlayerX::KeySet()
 
 	//=================================================
 	//左側の銃に関するフレーム処理
-	if (m_nMotionFrame001 >= 0)
+	if (m_nMotionFrame001 >= CObjectX::N_INIT_NUMBER)
 	{
 		m_nMotionFrame001--;                          //銃を撃つフレーム001を減らす
 		SetMotion(CCharacter::MOTIONSTATE::ACTION);	  //撃つアクションの設定
@@ -717,32 +739,32 @@ void CPlayerX::ShopKeySet()
 		//フラグ状態が通常時の時
 		if (m_FlagSate == CPlayerX::PLAYER_STATE::NORMAI_MODE)
 		{
-			SelectGageUISize(50.0f, 270.0f);                  //選択ゲージ1つ目の大きさを設定する
-			m_FlagSate = CPlayerX::PLAYER_STATE::SHOP_MODE;   //フラグ状態を店の状態へ変化させる
+			SelectGageUISize(MODE_SHOP_SELECT_GAGE_SIXE1_X, MODE_SHOP1_SELECT_GAGE_SIXE2_X); //選択ゲージ1つ目の大きさを設定する
+			m_FlagSate = CPlayerX::PLAYER_STATE::SHOP_MODE;                                  //フラグ状態を店の状態へ変化させる
 		}
 
 		//買うを選択したとき（０からスタートもしくは０に戻る）
-		if (m_nBuyOrSendCount == 0)
+		if (m_nBuyOrSendCount == CObjectX::N_INIT_NUMBER)
 		{
 			//Enterキーを押した時かJoyキーのＢキーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_RETURN) == true || CManager::GetJyoPad()->GetJoypadTrigger(CInputJoyPad::JOYKEY::JOYKEY_B) == true)
 			{
-				SelectGageUISize(50.0,150.0f);                    //大きさを設定
-				m_PlayerState = CPlayerX::PLAYER_STATE::BUY_MODE; //モードを買うモードに設定
+				SelectGageUISize(MODE_SHOP_SELECT_GAGE_SIXE1_X, MODE_SHOP2_SELECT_GAGE_SIXE2_X); //大きさを設定
+				m_PlayerState = CPlayerX::PLAYER_STATE::BUY_MODE;                                //モードを買うモードに設定
 			}
 		}
 
 		//Sキーが押された時かJoyキー下キーが押された時
 		if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_S) == true || CManager::GetJyoPad()->GetJoypadTrigger(CInputJoyPad::JOYKEY::JOYKEY_DOWN) == true)
 		{
-			SelectGageUISizeCalculation("Plus", 400.0f, 400.0f); //サイズを調整する
-			m_nBuyOrSendCount += 1;                              //カウントを進める
+			SelectGageUISizeCalculation("Plus", MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X, MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X); //サイズを調整する
+			m_nBuyOrSendCount++;                                                                                       //カウントを進める
 
 			//選択外の数値になった時
-			if (m_nBuyOrSendCount == 2 )
+			if (m_nBuyOrSendCount == MODE_SHOP_DOWN_COUNT)
 			{
-				SelectGageUISize(50.0, 270.0f);  //サイズを調整
-				m_nBuyOrSendCount = 0;           //カウントを初期化する
+				SelectGageUISize(MODE_SHOP_SELECT_GAGE_SIXE1_X, MODE_SHOP1_SELECT_GAGE_SIXE2_X); //大きさを戻す
+				m_nBuyOrSendCount = MODE_SHOP_DOWN_COUNT-MODE_SHOP_SELECT_COUNT;                           //カウントを初期化する
 
 			}
 		}
@@ -750,14 +772,16 @@ void CPlayerX::ShopKeySet()
 		//Wキーが押された時かJoyキーの上キーが押された時
 		else if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_W) == true || CManager::GetJyoPad()->GetJoypadTrigger(CInputJoyPad::JOYKEY::JOYKEY_UP) == true)
 		{
-			SelectGageUISizeCalculation("Minus", 400.0f, 400.0f); //サイズを調整する
-			m_nBuyOrSendCount -= 1;                               //カウントを減らす
+			SelectGageUISizeCalculation("Minus", MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X, MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X); //サイズを調整する
+			m_nBuyOrSendCount--;                                                                                        //カウントを減らす
 
 			//選択外の数値になった時
-			if (m_nBuyOrSendCount ==-1)
+			if (m_nBuyOrSendCount == MODE_SHOP_UP_COUNT)
 			{
-				SelectGageUISize(450.0, 670.0f); //サイズを調整
-				m_nBuyOrSendCount = 1;           //カウントを初期化する
+				//サイズを調整
+				SelectGageUISize(MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X+ MODE_SHOP_SELECT_GAGE_SIXE1_X, MODE_SHOP_SELECT_GAGE_PLUS_SIZE_X+ MODE_SHOP1_SELECT_GAGE_SIXE2_X); 
+
+				m_nBuyOrSendCount = MODE_SHOP_UP_COUNT+MODE_SHOP_SELECT_COUNT; //カウントを初期化する
 
 			}
 		}
@@ -810,14 +834,14 @@ void CPlayerX::ShopKeySet()
 				m_nSelectShopCount ++; //選択カウントを増やす
 
 				//選択カウントが既定の値になった時
-				if (m_nSelectShopCount == 4 || m_nSelectShopCount == 5)
+				if (m_nSelectShopCount >= MODE_BUY_DOWN_COUNT)
 				{
-					m_pSelectGage->GetSizeY() = 50.0f;   //選択ゲージの１つ目のY軸の大きさを設定
-					m_pSelectGage->GetSize1Y() = 150.0f; //選択ゲージの２つ目のY軸の大きさを設定
+					m_pSelectGage->GetSizeY() = MODE_BUY_SELECT_GAGE_SIXE1_Y;   //選択ゲージの１つ目のY軸の大きさを設定
+					m_pSelectGage->GetSize1Y() = MODE_BUY_SELECT_GAGE_SIXE2_Y;  //選択ゲージの２つ目のY軸の大きさを設定
 
 					//選択ゲージ001の大きさを設定
 					m_pSelectGage001->SetSIze(m_pSelectGage->GetSizeX(), m_pSelectGage->GetSize1X(), m_pSelectGage->GetSizeY(), m_pSelectGage->GetSize1Y());
-					m_nSelectShopCount = 0; //選択カウントの初期化
+					m_nSelectShopCount = MODE_BUY_DOWN_COUNT - MODE_BUY_SELECT_COUNT; //選択カウントの初期化
 				}
 			}
 		}
@@ -832,17 +856,23 @@ void CPlayerX::ShopKeySet()
 
 				//選択ゲージ001のサイズを調整
 				m_pSelectGage001->SetSIze(m_pSelectGage->GetSizeX(), m_pSelectGage->GetSize1X(), m_pSelectGage->GetSizeY(), m_pSelectGage->GetSize1Y());
-				m_nSelectShopCount -= 1; //選択カウントを引く
+				m_nSelectShopCount --; //選択カウントを引く
 
 				//選択カウントが既定の値の時
-				if (m_nSelectShopCount == -1)
+				if (m_nSelectShopCount == MODE_BUY_UP_COUNT)
 				{
-					m_pSelectGage->GetSizeY() = 530.0f;  //選択ゲージの１つ目のY軸の大きさを設定
-					m_pSelectGage->GetSize1Y() = 630.0f; //選択ゲージの２つ目のY軸の大きさを設定
+					int nCount = MODE_BUY_UP_COUNT + MODE_BUY_SELECT_COUNT;                        //項目数の設定（全体の項目数ー規定値）
+
+					 //サイズの設定（あらかじめ設定したサイズ＋調整値*回数）
+					float fSizeY = MODE_BUY_SELECT_GAGE_SIXE1_Y + ADJUST_SELECT_SIZEY * nCount;   
+					float fSize1Y = MODE_BUY_SELECT_GAGE_SIXE2_Y + ADJUST_SELECT_SIZEY * nCount;
+
+					m_pSelectGage->GetSizeY() = fSizeY;   //選択ゲージの１つ目のY軸の大きさを設定
+					m_pSelectGage->GetSize1Y() = fSize1Y; //選択ゲージの２つ目のY軸の大きさを設定
 
 					//選択ゲージ001のサイズを調整
 					m_pSelectGage001->SetSIze(m_pSelectGage->GetSizeX(), m_pSelectGage->GetSize1X(), m_pSelectGage->GetSizeY(), m_pSelectGage->GetSize1Y());
-					m_nSelectShopCount = 3;              //選択カウントを設定
+					m_nSelectShopCount = nCount;         //選択カウントを設定
 				}
 			}
 		}
@@ -896,42 +926,42 @@ void CPlayerX::SelectGageUISizeCalculation(const char* aSelect,float fSIzeX, flo
 void CPlayerX::CreateGun()
 {
 	//一番目の武器が選ばれた時
-	if (m_nSelectShopCount == 0)
+	if (m_nSelectShopCount == CREATE_GUN_NUMBER_0)
 	{
 		//銃が描画されていない時
-		if (m_pModelPrts[18]->GetDraw() == false)
+		if (m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->GetDraw() == false)
 		{
-			m_pModelPrts[18]->SetDraw(true); //描画する
+			m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(true); //描画する
 		}
 	}
 
 	//二番目の武器が選ばれた時
-	if (m_nSelectShopCount == 1)
+	if (m_nSelectShopCount == CREATE_GUN_NUMBER_1)
 	{
 		//銃が描画されていない時
-		if (m_pModelPrts[18]->GetDraw() == false)
+		if (m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->GetDraw() == false)
 		{
-			m_pModelPrts[18]->SetDraw(true); //描画する
+			m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(true); //描画する
 		}
 	}
 
 	//三番目の武器が選ばれた時
-	if (m_nSelectShopCount == 2)
+	if (m_nSelectShopCount == CREATE_GUN_NUMBER_2)
 	{
 		//銃が描画されていない時
-		if (m_pModelPrts[18]->GetDraw() == false)
+		if (m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->GetDraw() == false)
 		{
-			m_pModelPrts[18]->SetDraw(true); //描画する
+			m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(true); //描画する
 		}
 	}
 
 	//四番目の武器が選ばれた時
-	if (m_nSelectShopCount == 3)
+	if (m_nSelectShopCount == CREATE_GUN_NUMBER_3)
 	{
 		//銃が描画されていない時
-		if (m_pModelPrts[18]->GetDraw() == false)
+		if (m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->GetDraw() == false)
 		{
-			m_pModelPrts[18]->SetDraw(true); //描画する
+			m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(true); //描画する
 		}
 	}
 
@@ -942,7 +972,7 @@ void CPlayerX::CreateGun()
 //===============================================================================================================================================================================
 void CPlayerX::Draw()
 {
-	CCharacter::DrawPlayer(MAX_PRTS); //パーツごとの描画処理
+	CCharacter::DrawPlayer(MAX_PARTS); //パーツごとの描画処理
 }
 
 //===============================================================================================================================================================================
@@ -950,9 +980,11 @@ void CPlayerX::Draw()
 //===============================================================================================================================================================================
 void CPlayerX::BlockJudgement()
 {
+	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
+
 	//=================================
 	//地面用のブロックの生成数分回す
-	for (int nCount = 0; nCount < m_nFieldBlock; nCount++)
+	for (int nCount = nInitNumber; nCount < m_nFieldBlock; nCount++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetFiledBlock(nCount) != nullptr)
@@ -992,12 +1024,11 @@ void CPlayerX::BlockJudgement()
 						SetMotion(MOTIONSTATE::LANDING); //着地モーションの設定
 
 						//着地フレームが規定値より高い時
-						if (m_nLandingFrame >= 60)
+						if (m_nLandingFrame >= MAX_LANDING_FRAME)
 						{
-							m_bLandingFlag = true;                                                              //着地しているに設定
-							m_nLandingFrame = 0;                                                                //着地フレームの初期化
-							CManager::GetScene()->SetPlay(true);                                                //遊べるに設定
-						
+							m_bLandingFlag = true;                     //着地しているに設定
+							m_nLandingFrame = CObjectX::N_INIT_NUMBER; //着地フレームの初期化
+							CManager::GetScene()->SetPlay(true);       //遊べるに設定
 						}
 					}
 				}
@@ -1007,7 +1038,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//上がる用のブロックの生成数分回す
-	for (int nCount1 = 0; nCount1 < m_nGoUpBlock; nCount1++)
+	for (int nCount1 = nInitNumber; nCount1 < m_nGoUpBlock; nCount1++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetGoUpBlock(nCount1) != nullptr)
@@ -1045,7 +1076,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//道用ブロック分回す
-	for (int nCount2 = 0; nCount2 < m_nRoadBlock; nCount2++)
+	for (int nCount2 = nInitNumber; nCount2 < m_nRoadBlock; nCount2++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetRoadBlock(nCount2) != nullptr)
@@ -1083,7 +1114,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//壁兼道用ブロック分回す
-	for (int nCount3 = 0; nCount3 < m_nWallRoadBlock; nCount3++)
+	for (int nCount3 = nInitNumber; nCount3 < m_nWallRoadBlock; nCount3++)
 	{
 		if (CManager::GetInstance()->GetWallRoadBlock(nCount3) != nullptr)
 		{
@@ -1118,7 +1149,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//壁兼道001用ブロック分回す
-	for (int nCount4 = 0; nCount4 < m_nWallRoadBlock001; nCount4++)
+	for (int nCount4 = nInitNumber; nCount4 < m_nWallRoadBlock001; nCount4++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetWallRoadBlock001(nCount4) != nullptr)
@@ -1148,7 +1179,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//小さいブロック分回す
-	for (int nCount5 = 0; nCount5 < m_nSmalBlock; nCount5++)
+	for (int nCount5 = nInitNumber; nCount5 < m_nSmalBlock; nCount5++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetSmallBlock(nCount5) != nullptr)
@@ -1185,7 +1216,7 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//小さいブロック001分回す
-	for (int nCount7 = 0; nCount7 < m_nSmalBlock001; nCount7++)
+	for (int nCount7 = nInitNumber; nCount7 < m_nSmalBlock001; nCount7++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetSmallBlock001(nCount7) != nullptr)
@@ -1295,7 +1326,7 @@ void CPlayerX::BlockJudgement()
 			//if (GetCollision()->ColiisionBoxOutside(GetPos(), CManager::GetInstance()->GetFinalCeiling()->GetPos(), GetModelSize(), CManager::GetInstance()->GetFinalCeiling()->GetModelSize(), GetMove()) == true)
 			//{
 			//	SetGravityFlag(true);//重力ON
-			//	//CManager::GetScene()->GetCamera()->GetAdjustmentPosY() = 0.0f;
+			//	//CManager::GetScene()->GetCamera()->GetAdjustmentPosY() = CObjectX::F_INIT_NUMBER;
 			//}
 			//else
 			//{
@@ -1310,10 +1341,10 @@ void CPlayerX::BlockJudgement()
 
 	//=================================
 	//バトルシップとの当たり判定
-	if (CManager::GetInstance()->GetSpeceBattleShip(1) != nullptr)
+	if (CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP) != nullptr)
 	{
 		//当たり判定
-		if (GetCollision() ->CircleCollisionAll(GetPos(), CManager::GetInstance()->GetSpeceBattleShip(1)->GetPos(), GetModelSize(), CManager::GetInstance()->GetSpeceBattleShip(1)->GetModelSize() * 1.1f) == true)
+		if (GetCollision() ->CircleCollisionAll(GetPos(), CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetPos(), GetModelSize(), CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetModelSize() * ADJUST_HIT_BATTLE) == true)
 		{
 			//NextStageMotion();
 			m_bPlayerMoveNext = true; //次のsceneへ行くフラフをONにする
@@ -1367,14 +1398,16 @@ void CPlayerX::BlockJudgement()
 //===============================================================================================================================================================================
 void CPlayerX::UIJudgement()
 {
+	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
+
 	//レーザーの数分回す
-	for (int nLaser = 0; nLaser < m_nLaserCount; nLaser++)
+	for (int nLaser = nInitNumber; nLaser < m_nLaserCount; nLaser++)
 	{
 		//情報がある時
 		if (CManager::GetInstance()->GetLaser(nLaser) != nullptr)
 		{
 			//プレイヤーの各パーツ毎の当たり判定処理
-			for (int nCount = 0; nCount < CObjectX::MAX_PRTS; nCount++)
+			for (int nCount = nInitNumber; nCount < CObjectX::MAX_PARTS; nCount++)
 			{
 				//当たり判定処理
 				if (GetCollision()->ColiisionBox3D(CManager::GetInstance()->GetLaser(nLaser)->GetPos(), GetPosParts(nCount),
@@ -1398,23 +1431,23 @@ void CPlayerX::NextStageMotion()
 	m_nNextStageFrame++;        //フレームを増やす
 
 	SetPos(D3DXVECTOR3(
-		CManager::GetInstance()->GetSpeceBattleShip(1)->GetPos().x,
-		CManager::GetInstance()->GetSpeceBattleShip(1)->GetPos().y+100.0f,
-		CManager::GetInstance()->GetSpeceBattleShip(1)->GetPos().z-250.0f));
+		CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetPos().x,
+		CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetPos().y + PLUS_POS_Y,
+		CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetPos().z + MINUS_POS_Z));
 	//GetPos().y= CManager::GetInstance()->GetSpeceBattleShip(1)->GetPos().y;
 
 	//第一行動
-	if (m_nNextStageFrame <= 1)
+	if (m_nNextStageFrame <= ATTACKPATTEN_FRAME_1)
 	{
-		CManager::GetInstance()->GetSpeceBattleShip(1)->GetRot().y = -D3DX_PI_ORI;  //Y軸の向きを設定
+		CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->GetRot().y = -D3DX_PI_ORI;  //Y軸の向きを設定
 	}
 
 	//第二行動
-	else if (m_nNextStageFrame <= 60*3)
+	else if (m_nNextStageFrame <= ATTACKPATTEN_FRAME_2)
 	{
 		//X軸の移動
-		CManager::GetInstance()->GetSpeceBattleShip(1)->SetAdjustPos().x += (float)m_nNextStageFrame* MAX_POS_NEXTSTAGE; 
-		SetAdjustPos().x+= (float)m_nNextStageFrame * MAX_POS_NEXTSTAGE;                                                
+		CManager::GetInstance()->GetSpeceBattleShip(NEXT_STAGE_BATTLESHIP)->SetAdjustPos().x += (float)m_nNextStageFrame * MAX_POS_NEXTSTAGE;
+		SetAdjustPos().x += (float)m_nNextStageFrame * MAX_POS_NEXTSTAGE;
 	}
 
 	//終了
@@ -1429,7 +1462,7 @@ void CPlayerX::NextStageMotion()
 //===============================================================================================================================================================================
 CPlayerX* CPlayerX::Create()
 {
-	CPlayerX* pPlayerX = new CPlayerX(3); //動的確保
+	CPlayerX* pPlayerX = new CPlayerX(); //動的確保
 
 	//初期化に成功した時
 	if (SUCCEEDED(pPlayerX->Init()))
@@ -1451,13 +1484,13 @@ void CPlayerX::NowCreateObjectUI()
 	if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_1) == true)
 	{
 		//今の対象のオブジェクトの番号が０以下
-		if (m_ObjectNumber <= 0)
+		if (m_ObjectNumber <= CObjectX::N_INIT_NUMBER)
 		{
 			m_ObjectNumber = MAX_TEXT_OBJECT; //今作られている数にする
 		}
 		else
 		{
-			m_ObjectNumber -= 1;              //減らす
+			m_ObjectNumber--;                 //減らす
 		}
 
 		//情報がある時
@@ -1481,11 +1514,11 @@ void CPlayerX::NowCreateObjectUI()
 		//オブジェクトナンバーが生成されている数以上の時
 		if (m_ObjectNumber >= MAX_TEXT_OBJECT)
 		{
-			m_ObjectNumber = 0; //初期化
+			m_ObjectNumber = CObjectX::N_INIT_NUMBER; //初期化
 		}
 		else
 		{
-			m_ObjectNumber += 1; //増やす
+			m_ObjectNumber++;   //増やす
 		}
 
 		//情報がある時
@@ -1513,16 +1546,16 @@ void CPlayerX::NowCreateNumberObj()
 
 	switch (m_ObjectNumber)
 	{
-	case 0:
-		CObjectX::ObjectArrangement(TYPE::FIELDBLOCK, nullptr);      //地面の配置処理
+	case CREATE_FIELDBLOCK:
+		CObjectX::ObjectArrangement(TYPE::FIELDBLOCK, nullptr);                //地面の配置処理
 		break;
 
-	case 1:
+	case CREATE_TELEPHONPOLE:
 		CObjectX::ObjectArrangement(CObjectX::TYPE::TELEPHONPOLE, m_pLaserUI); //電柱の配置処理
 		break;
 
-	case 2:
-		CObjectX::ObjectArrangement(TYPE::GOUPBLOCK, nullptr);       //上がる用ブロックの配置処理
+	case CREATE_GOUPBLOCK:
+		CObjectX::ObjectArrangement(TYPE::GOUPBLOCK, nullptr);                 //上がる用ブロックの配置処理
 		break;
 	}
 }

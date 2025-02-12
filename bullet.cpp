@@ -400,10 +400,16 @@ CEnemyBullet::~CEnemyBullet()
 //=====================
 void CEnemyBullet::Update()
 {
-	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos()); //エフェクト（軌跡）を生成する
-	CManager::GetInstance()->GetEffect()->SetLife(SET_BULLET_LIFE);                                     //エフェクトのライフの設定
-	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());       //色の設定
-	SetAdjustPos().y -= m_fAdditionPosY;                                                                //Y軸の位置を減らす
+	//エフェクト（軌跡）を生成する
+	CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::EFFECT, CObject3D::N_INIT_NUMBER, GetPos());
+
+	//エフェクトのライフの設定
+	CManager::GetInstance()->GetEffect()->SetLife(SET_BULLET_LIFE);                                               
+
+	//色の設定
+	CManager::GetInstance()->GetEffect()->SetCol(CObject3D::N_INIT_NUMBER, CObject3D::N_INIT_NUMBER, BLUE, GetAlpha());    
+
+	SetAdjustPos().y -= m_fAdditionPosY; //Y軸の位置を減らす
 
 	//アルファ値が0より大きい時
 	if (GetAlpha() > CObject3D::N_INIT_NUMBER)
@@ -442,7 +448,7 @@ void CEnemyBullet::CallEffect(bool bUse)
 void CEnemyBullet::CollisionOnObject()
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
+	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PARTS; nCount2++)
 	{
 		//プレイヤーの当たり判定
 		if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetScene()->GetPlayerX()->GetPosParts(nCount2),
@@ -627,7 +633,7 @@ void CBossBullet::CallEffect(bool bUse)
 void CBossBullet::CollisionOnObject()
 {
 	//プレイヤーのパーツ数分回す
-	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PRTS; nCount2++)
+	for (int nCount2 = CObject3D::N_INIT_NUMBER; nCount2 < CObjectX::MAX_PARTS; nCount2++)
 	{
 		//プレイヤーの当たり判定
 		if (CManager::GetScene()->GetPlayerX()->GetCollision()->Coliision3Dcircle(GetPos(), CManager::GetScene()->GetPlayerX()->GetPosParts(nCount2),

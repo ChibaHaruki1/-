@@ -85,7 +85,7 @@ public:
 
 	MOTIONSTATE m_MotionState;                   //プレイヤーのモーションの種類の情報を持つ
 	BOSSMOTIONSTATE m_MotionStateBoss;           //ボスのモーションの種類の情報を持つ
-	CModelPrts* m_pModelPrts[MAX_PRTS];          //モデルパーツの情報のポインター
+	CModelPrts* m_pModelPrts[MAX_PARTS];          //モデルパーツの情報のポインター
 	CModelPrts* m_pModelPrtsBoss[MAX_BOSSPARTS]; //モデルパーツの情報のポインター
 
 
@@ -106,8 +106,16 @@ public:
 
 	//==========================================
 	//プレイヤーに関するマクロ
-	 static constexpr  int NUM_MOTION = 11;             //プレイヤーモーションの総数
-	 static constexpr  int NUM_RIGHTLEFTPRTS = 4;       //プレイヤーの側のパーツ数
+	static constexpr int PLAYER_PARTS_BODY_NUMBER = 0;      //体の番号
+	static constexpr int PLAYER_PARTS_RIGHT_SHOLDER = 2;    //右肩の番号
+	static constexpr int PLAYER_PARTS_LEFT_SHOLDER = 6;     //左肩の番号
+	static constexpr int PLAYER_PARTS_RIGHT_THIGHS = 11;    //右太ももの番号
+	static constexpr int PLAYER_PARTS_LEFT_THIGHS = 14;     //左太ももの番号
+	static constexpr int PLAYER_PARTS_GUN_NUMBER = 17;      //銃の番号
+	static constexpr int PLAYER_PARTS_GUN001_NUMBER = 18;   //銃001の番号
+	static constexpr int NUM_MOTION = 11;                   //プレイヤーモーションの総数
+	static constexpr int NUM_RIGHTLEFTPRTS = 4;             //プレイヤーの側のパーツ数
+	static constexpr int PLAYER_GUN_COUNT = 2;              //銃の数
 
 
 	 //==========================================
@@ -116,6 +124,7 @@ public:
 	 static constexpr  int NUM_RIGHTPRTSBOSS = 8;       //ボスの側のパーツ数
 	static constexpr float BOSS_PLUS_POS_Y = 200.0f;    //ボスのパーツのY軸の位置を上に上げる為の値
 	static constexpr int BOSS_PARTS_GUN_NUMBER = 17;    //銃の番号
+	static constexpr int BOSS_GUN_COUNT = 1;            //銃の数
 
 private:
 	//マクロ定義
@@ -128,11 +137,9 @@ private:
 
 	//========================================================
 	//プレイヤーに関するマクロ定義
-	static constexpr int PLAYER_PARTS_BODY_NUMBER = 0;               //体の番号
 	static constexpr int PLAYER_PARTS_RIGHTHAND_NUMBER = 5;          //右手の番号
 	static constexpr int PLAYER_PARTS_LEFTHAND_NUMBER = 9;           //左手の番号
 	static constexpr int PLAYER_PARTS_WAIST_NUMBER = 10;             //腰の番号
-	static constexpr int PLAYER_PARTS_GUN_NUMBER = 17;               //銃の番号
 	static constexpr int PLAYER_PARTS_SHOULDER_FROM_HAND = 4;        //肩から手のFor文を回す際0,1,2,3の順（肩、上腕、下腕、手）で回す用
 	static constexpr int PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND = 2;  //右肩から右手のFor文を回したい時の値（０～３の場合、右肩からは２番以上なのでどれくらい離れているかを常に足したい為）
 	static constexpr int PLAYER_PARTS_LEFT_SHOULDER_FROM_HAND = 6;   //左肩から右手のFor文を回したい時の値（０～３の場合、左肩からは６番以上なのでどれくらい離れているかを常に足したい為）
@@ -142,6 +149,7 @@ private:
 	static constexpr int PLAYER_NEXT_MOTION_COUNT = 1;               //モーション時の差分を求める時の次のモーションカウント
 	static constexpr int PLAYER_BEFORE_MOTION_COUNT = 1;             //モーション時の差分が同じ時の前のモーションカウント
 	static constexpr int PLAYER_FIRST_KEYSET_NUMBER = 0;             //最初のキーセットの初めの番号
+	static constexpr int CREATE_GUN_COUNT = 2;                       //銃の個数
 	 
 
 	//========================================================
@@ -173,7 +181,7 @@ private:
 	typedef struct
 	{
 		int Frame;                 //フレーム数
-		Key aKey[MAX_PRTS];        //キー数(パーツ分確保)
+		Key aKey[MAX_PARTS];        //キー数(パーツ分確保)
 	}KeySet;
 
 	//モーションの構造体
@@ -192,9 +200,9 @@ private:
 	}SAVEMODELINFO;
 
 	//キャラクターの情報を保管する変数
-	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_PRTS], m_pSaveModelPrtInfoBoss[MAX_BOSSPARTS];   //モデルパーツの情報のポインター
-	D3DXVECTOR3 SaveMotionPos[MAX_PRTS], SaveMotionPosBoss[MAX_BOSSPARTS];                 //各パーツの位置情報を確保する変数
-	D3DXVECTOR3 SaveMotionRot[MAX_PRTS], SaveMotionRotBoss[MAX_BOSSPARTS];                 //各パーツの向き情報を獲得する変数
+	SAVEMODELINFO m_pSaveModelPrtInfo[MAX_PARTS], m_pSaveModelPrtInfoBoss[MAX_BOSSPARTS];   //モデルパーツの情報のポインター
+	D3DXVECTOR3 SaveMotionPos[MAX_PARTS], SaveMotionPosBoss[MAX_BOSSPARTS];                 //各パーツの位置情報を確保する変数
+	D3DXVECTOR3 SaveMotionRot[MAX_PARTS], SaveMotionRotBoss[MAX_BOSSPARTS];                 //各パーツの向き情報を獲得する変数
 	MotionSet MotionSetPlayer[NUM_MOTION], MotionSetBoss[NUM_MOTIONBOSS];                  //各モーションの種類を格納する変数
 
 	int m_nMotionFrameBoss;            //モーション時のフレームをカウントするための変数

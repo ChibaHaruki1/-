@@ -26,5 +26,12 @@ private:
 	void Draw()override;						           //描画処理
 
 public:
+	//マクロ定義
+	static constexpr int CRETAE_PRIORITY = 1;              //生成時のプライオリティの番号
+	static constexpr int CREATE_NUMBER_0 = 0;              //生成番号０番
+	static constexpr int CREATE_NUMBER_1 = 1;              //生成番号１番
+
+	static constexpr float ADJUST_ROT_Y = 0.0005f;         //向きの調整値
+
 	static CSkyDoom* Create(D3DXVECTOR3 pos, int nNumber); //生成処理
 };

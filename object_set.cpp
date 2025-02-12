@@ -224,10 +224,10 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::TELEPHONPOLE, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX, PosY, PosZ));                                   
 
 				//監視カメラの上の部分の生成
-				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERAUP, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX + CAMERA_PLUS_POS_X, PosY + CAMERA_UP_PLUS_POS_Y, PosZ - CAMERA_MINUS_POS_Z));
+				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERAUP, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX + CAMERA_PLUS_POS_X, PosY + CAMERA_UP_PLUS_POS_Y, PosZ + CAMERA_MINUS_POS_Z));
 
 				//監視カメラの下の部分の生成
-				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERADOWN, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX + CAMERA_PLUS_POS_X, PosY + CAMERA_DOWN_PLUS_POS_Y, PosZ - CAMERA_MINUS_POS_Z));
+				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERADOWN, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX + CAMERA_PLUS_POS_X, PosY + CAMERA_DOWN_PLUS_POS_Y, PosZ + CAMERA_MINUS_POS_Z));
 
 				//レーザーの生成
 				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::LASER, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));

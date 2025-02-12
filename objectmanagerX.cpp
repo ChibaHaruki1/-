@@ -30,10 +30,10 @@ CObjectManagerX::CObjectManagerX(int nPriority)
 {
 	m_nPriority = nPriority; //プライオリティを引数と同期する
 	m_type = TYPE::NONE;     //タイプ初期化する
-	m_nID = 0;               //自身のIDを初期化する
+	m_nID = N_INIT_NUMBER;   //自身のIDを初期化する
 
 	//オブジェクト分回す
-	for (int nCnt = 0; nCnt < MAX_OBJECTMANAGERX; nCnt++)
+	for (int nCnt = N_INIT_NUMBER; nCnt < MAX_OBJECTMANAGERX; nCnt++)
 	{
 		//情報がない場合
 		if (m_apObjectManagerX[m_nPriority][nCnt] == nullptr)
@@ -98,10 +98,10 @@ void CObjectManagerX::Draw()
 void CObjectManagerX::ReleaseAll()
 {
 	//puriority分回す(平行処理)
-	Concurrency::parallel_for(0, CObject::MAX_PRIORITY_OBJ, [&](int nCountPri)
+	Concurrency::parallel_for(N_INIT_NUMBER, CObject::MAX_PRIORITY_OBJ, [&](int nCountPri)
 		{
 			//オブジェクト分回す
-			for (int nCount = 0; nCount < MAX_OBJECTMANAGERX; nCount++)
+			for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECTMANAGERX; nCount++)
 			{
 				//情報がある場合
 				if (m_apObjectManagerX[nCountPri][nCount] != nullptr)
@@ -133,10 +133,10 @@ void CObjectManagerX::UpdateAll()
 	//	});
 	
 	//puriority分回す
-	for (int nCountPri = 0; nCountPri < CObject::MAX_PRIORITY_OBJ; nCountPri++)
+	for (int nCountPri = N_INIT_NUMBER; nCountPri < CObject::MAX_PRIORITY_OBJ; nCountPri++)
 	{
 		//オブジェクト分回す
-		for (int nCount = 0; nCount < MAX_OBJECTMANAGERX; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECTMANAGERX; nCount++)
 		{
 			//情報がある場合
 			if (m_apObjectManagerX[nCountPri][nCount] != nullptr)
@@ -156,10 +156,10 @@ void CObjectManagerX::UpdateAll()
 void CObjectManagerX::DrawAll()
 {
 	//puriority分回す
-	for (int nCountPri = 0; nCountPri < CObject::MAX_PRIORITY_OBJ; nCountPri++)
+	for (int nCountPri = N_INIT_NUMBER; nCountPri < CObject::MAX_PRIORITY_OBJ; nCountPri++)
 	{
 		//オブジェクト分回す
-		for (int nCount = 0; nCount < MAX_OBJECTMANAGERX; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECTMANAGERX; nCount++)
 		{
 			//情報がある場合
 			if (m_apObjectManagerX[nCountPri][nCount] != nullptr)

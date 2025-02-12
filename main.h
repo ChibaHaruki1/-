@@ -56,14 +56,18 @@ typedef struct
 class CMain
 {
 public:
-	CMain();                                  //コンストラクタ
-	~CMain();                                 //デストラクタ
-	void Uninit();                            //破棄処理
-	int& GetFPS() {return m_nFPS; }           //FPSの値を取得する
+	CMain();                                         //コンストラクタ
+	~CMain();                                        //デストラクタ
+	void Uninit();                                   //破棄処理
+	inline int& GetFPS() {return m_nFPS; }           //FPSの値を取得する
 
 	//マクロ定義
-	 static constexpr  int SCREEN_WIDTH = 1280; //ウィンドウの幅
-	 static constexpr  int SCREEN_HEIGHT = 720; //ウィンドウの高さ
+	 static constexpr  int SCREEN_WIDTH = 1280;      //ウィンドウの幅
+	 static constexpr  int SCREEN_HEIGHT = 720;      //ウィンドウの高さ
+
+	 static constexpr  float RHW = 1.0f;             //座標変換用の固定値
+	 static constexpr float NOR = 1.0f;              //法線ベクトルの固定値
+	 static constexpr float MAX_TEXTURE_SIZE = 1.0f; //テクスチャの最大の大きさ
 
 
 private:

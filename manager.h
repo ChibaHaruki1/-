@@ -37,15 +37,15 @@ public:
 
 	//==================================
 	//情報を取得
-	static CRenderer* GetRenderer() { return m_pRenderer; }      //レンダラーの情報を取得
-	static CInputKeyBoard* GetKeyBorad() { return m_pKeyBoard; } //キーボードの情報を取得
-	static CInputJoyPad* GetJyoPad() { return m_pJyoPad; }       //ジョイパットの情報を取得
-	static CSound* GetSound() { return m_pSound; }               //音源の情報を取得
-	static CInstance* GetInstance() { return m_pInstance; }      //インスタンス情報を取得する
-	static CScene* GetScene() { return m_pScene; }               //シーンの情報を取得
-	static CObjectSet* GetObjectSet() { return m_pObjectSet; }   //オブジェクト配置の情報を取得
-	static CEvent* GetEvent() { return m_pEvent; }               //イベントの情報を取得
-	static CMain* GetMain() { return m_pMain; }                  //メインの情報を取得
+	inline static CRenderer* GetRenderer() { return m_pRenderer; }      //レンダラーの情報を取得
+	inline static CInputKeyBoard* GetKeyBorad() { return m_pKeyBoard; } //キーボードの情報を取得
+	inline static CInputJoyPad* GetJyoPad() { return m_pJyoPad; }       //ジョイパットの情報を取得
+	inline static CSound* GetSound() { return m_pSound; }               //音源の情報を取得
+	inline static CInstance* GetInstance() { return m_pInstance; }      //インスタンス情報を取得する
+	inline static CScene* GetScene() { return m_pScene; }               //シーンの情報を取得
+	inline static CObjectSet* GetObjectSet() { return m_pObjectSet; }   //オブジェクト配置の情報を取得
+	inline static CEvent* GetEvent() { return m_pEvent; }               //イベントの情報を取得
+	inline static CMain* GetMain() { return m_pMain; }                  //メインの情報を取得
 
 
    //==================================

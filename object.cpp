@@ -13,6 +13,7 @@
 #include "object3D.h"
 #include "manager.h"
 
+
 //静的メンバーの初期化
 CObject* CObject::m_apObject[MAX_PRIORITY_OBJ][MAX_OBJECT] = {}; //全オブジェクトの初期化
 
@@ -24,10 +25,10 @@ CObject::CObject(int nPriority)
 {
 	m_nPriority = nPriority; //プライオリティを引数と同期する
 	m_type = TYPE::NONE;     //タイプを初期化する
-	m_nID = 0;               //自身のIDを初期化する
+	m_nID = N_INIT_NUMBER;   //自身のIDを初期化する
 
 	//オブジェクト分回す
-	for (int nCnt = 0; nCnt < MAX_OBJECT; nCnt++)
+	for (int nCnt = N_INIT_NUMBER; nCnt < MAX_OBJECT; nCnt++)
 	{
 		//情報がない場合
 		if (m_apObject[m_nPriority][nCnt] == nullptr)
@@ -92,10 +93,10 @@ void CObject::Draw()
 void CObject::ReleaseAll()
 {
 	//puriority分回す
-	for (int nCountPri = 0; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
+	for (int nCountPri = N_INIT_NUMBER; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
 	{
 		//オブジェクト分回す
-		for (int nCount = 0; nCount < MAX_OBJECT; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECT; nCount++)
 		{
 			//情報がある場合
 			if (m_apObject[nCountPri][nCount] != nullptr)
@@ -113,10 +114,10 @@ void CObject::ReleaseAll()
 void CObject::UpdateAll()
 {
 	//puriority分回す
-	for (int nCountPri = 0; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
+	for (int nCountPri = N_INIT_NUMBER; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
 	{
 		//オブジェクト分回す
-		for (int nCount = 0; nCount < MAX_OBJECT; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECT; nCount++)
 		{
 			//情報がある場合
 			if (m_apObject[nCountPri][nCount] != nullptr)
@@ -135,10 +136,10 @@ void CObject::UpdateAll()
 void CObject::DrawAll()
 {
 	//puriority分回す
-	for (int nCountPri = 0; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
+	for (int nCountPri = N_INIT_NUMBER; nCountPri < MAX_PRIORITY_OBJ; nCountPri++)
 	{
 		//オブジェクト分回す
-		for (int nCount = 0; nCount < MAX_OBJECT; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < MAX_OBJECT; nCount++)
 		{
 			//情報がある場合
 			if (m_apObject[nCountPri][nCount] != nullptr)
