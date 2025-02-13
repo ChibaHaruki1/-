@@ -19,7 +19,7 @@
 CModelPrts::CModelPrts()
 {
 	//テクスチャの最大数分回す
-	for (int nCount = 0; nCount < MAX_MODEL_TEXTURE; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < MAX_MODEL_TEXTURE; nCount++)
 	{
 		m_pTexture[nCount] = nullptr;     //テクスチャの初期化
 	}
@@ -27,7 +27,7 @@ CModelPrts::CModelPrts()
 	m_nIndexPrts = N_INIT_NUMBER;         //パーツ番号の初期化
 	m_nIndexModelPrts = N_INIT_NUMBER;    //親パーツ番号の初期化
 	m_bDraw = true;                       //描画をする
-	m_nNumMat = 0;                        //マテリアルの数の初期化
+	m_nNumMat = N_INIT_NUMBER;            //マテリアルの数の初期化
 	m_pMesh = nullptr;                    //メッシュの初期化
 	m_pBuffMat = nullptr;                 //バッファの初期化
 	m_pParentlPrts = nullptr;             //自身のポインターの初期化
@@ -141,13 +141,13 @@ void CModelPrts::Draw(D3DXMATRIX MtxWolrd)
 		pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
 		//マテリアルの数分回す
-		for (int nCount = 0; nCount < (int)m_nNumMat; nCount++)
+		for (int nCount = N_INIT_NUMBER; nCount < (int)m_nNumMat; nCount++)
 		{
 			//マテリアルの設定
 			pDevice->SetMaterial(&pMat[nCount].MatD3D);
 
 			//テクスチャの設定
-			pDevice->SetTexture(0, m_pTexture[nCount]);
+			pDevice->SetTexture(N_INIT_NUMBER, m_pTexture[nCount]);
 
 			//モデルパーツの描画
 			m_pMesh->DrawSubset(nCount);
@@ -306,7 +306,7 @@ void CModelPrts::Size()
 		//最小値が最大値より大きい時
 		if (m_max.y < m_min.y)
 		{
-			m_max.y = m_min.y * -1.0f; //最小値のプラス値を代入する
+			m_max.y = m_min.y * ADJUST_ROT_NUMBER; //最小値のプラス値を代入する
 		}
 		m_min.y = N_INIT_NUMBER; //最小値の初期化
 	}
