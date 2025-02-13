@@ -52,6 +52,7 @@ public:
    //情報の設定
 	static void SetMode(CScene::MODE mode);                      //モードの設定
 
+
 private:
 	static CRenderer* m_pRenderer;                               //レンダラーのポインター
 	static CInputKeyBoard* m_pKeyBoard;                          //キーボードのポインター

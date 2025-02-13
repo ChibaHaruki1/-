@@ -10,6 +10,7 @@
 //インクルード
 #include"main.h"      
 #include "manager.h"  
+#include "objectX.h"
 #include "DxLib.h"   //外部ファイルの読み込み
 
 
@@ -34,7 +35,7 @@ CManager* g_pMnager = nullptr;
 //=========================
 CMain::CMain()
 {
-	m_nFPS = 0; //FPSの値を初期化
+	m_nFPS = CObjectX::N_INIT_NUMBER; //FPSの値を初期化
 }
 
 
@@ -70,28 +71,30 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 
 	//DxLib_End();
 
+	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
+
 
 	//ウィンドウクラスの設定
 	WNDCLASSEX wcex =
 	{
-		sizeof(WNDCLASSEX),             //WNDCLASSEXのメモリサイズ
-		CS_CLASSDC,                     //ウィンドウのスタイル
-		WindowProc,                     //ウィンドウプロージャ
-		0,                              //０にする（通常は使用しない）
-		0,                              //０にする（通常は使用しない）
-		hInstance,                      //インスタンスハンドル
-		LoadIcon(NULL,IDI_APPLICATION), //タスクバーのアイコン
-		LoadCursor(NULL,IDC_ARROW),     //マウスカーソル
-		(HBRUSH)(COLOR_WINDOW + 1),     //クライアント領域の背景色
-		NULL,                           //メニューバー
-		CLASS_NAME,                     //ウィンドウクラスの名前
-		LoadIcon(NULL,IDI_APPLICATION)  //ファイルのアイコン
-	};
+		sizeof(WNDCLASSEX),                              //WNDCLASSEXのメモリサイズ
+		CS_CLASSDC,                                      //ウィンドウのスタイル
+		WindowProc,                                      //ウィンドウプロージャ
+		nInitNumber,                                     //０にする（通常は使用しない）
+		nInitNumber,                                     //０にする（通常は使用しない）
+		hInstance,                                       //インスタンスハンドル
+		LoadIcon(NULL,IDI_APPLICATION),                  //タスクバーのアイコン
+		LoadCursor(NULL,IDC_ARROW),                      //マウスカーソル
+		(HBRUSH)(COLOR_WINDOW + CMain::CLIENT_COL_PLUS), //クライアント領域の背景色
+		NULL,                                            //メニューバー
+		CLASS_NAME,                                      //ウィンドウクラスの名前
+		LoadIcon(NULL,IDI_APPLICATION)                   //ファイルのアイコン
+	};									                 
+										                 
+	HWND hWnd;                                           //ウィンドウハンドル
+	MSG msg;                                             //メッセージ受信ハンドル
 
-	HWND hWnd;                          //ウィンドウハンドル
-	MSG msg;                            //メッセージ受信ハンドル
-
-	RECT rect = { 0,0,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT }; //ウィンドウの大きさ設定
+	RECT rect = { nInitNumber,nInitNumber,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT }; //ウィンドウの大きさ設定
 
 	//ウィンドウクラスの登録
 	RegisterClassEx(&wcex);
@@ -100,18 +103,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 
 	//ウィンドウを生成
-	hWnd = CreateWindowEx(0,       //拡張ウィンドウスタイル
-		CLASS_NAME,                //ウィンドウクラスの名前
-		WINDOWS_NAME,              //ウィンドウの名前
-		WS_OVERLAPPEDWINDOW,       //ウィンドウのスタイル
-		CW_USEDEFAULT,             //ウィンドウの左上X座標
-		CW_USEDEFAULT,             //ウィンドウの左上Y座標
-		(rect.right - rect.left),  //ウィンドウの幅
-		(rect.bottom - rect.top),  //ウィンドウの高さ
-		NULL,                      //親ウィンドウのハンドル
-		NULL,                      //メニューハンドルまたは子ウィンドウID
-		hInstance,                 //インスタンスハンドル
-		NULL);                     //ウィンドウ作成データ
+	hWnd = CreateWindowEx(nInitNumber, //拡張ウィンドウスタイル
+		CLASS_NAME,                    //ウィンドウクラスの名前
+		WINDOWS_NAME,                  //ウィンドウの名前
+		WS_OVERLAPPEDWINDOW,           //ウィンドウのスタイル
+		CW_USEDEFAULT,                 //ウィンドウの左上X座標
+		CW_USEDEFAULT,                 //ウィンドウの左上Y座標
+		(rect.right - rect.left),      //ウィンドウの幅
+		(rect.bottom - rect.top),      //ウィンドウの高さ
+		NULL,                          //親ウィンドウのハンドル
+		NULL,                          //メニューハンドルまたは子ウィンドウID
+		hInstance,                     //インスタンスハンドル
+		NULL);                         //ウィンドウ作成データ
 
 	//生成＆初期化
 	g_pMnager = new CManager(); //マネージャーの生成
@@ -119,7 +122,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 	//初期化処理
 	if (FAILED(g_pMnager->Init(hInstance, hWnd, TRUE)))
 	{//初期化処理を失敗した場合
-		return -1;
+		return CMain::RETURN_NUMBER;
 	}
 
 	//ウィンドウの表示
@@ -133,9 +136,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 	DWORD dwFPSLastTime;  //最後にFPSを計測した時刻
 
 	//分解能を設定
-	timeBeginPeriod(1);              //定期的なタイマーの最小解像度を要求する関数 (禁断APIから安心APIへ変更済み)
-	dwCurrentTime = 0;               //現在時刻の初期化
-	dwFrameCount = 0;                //フレームの初期化
+	timeBeginPeriod(CMain::PERIOD);  //定期的なタイマーの最小解像度を要求する関数 (禁断APIから安心APIへ変更済み)
+	dwCurrentTime = nInitNumber;     //現在時刻の初期化
+	dwFrameCount = nInitNumber;      //フレームの初期化
 	dwExecLastTime = timeGetTime();  //最後に処理した時刻の設定(ミリ秒)
 	dwFPSLastTime = timeGetTime();   //最後にFPSを観測した時刻の設定(ミリ秒)
 

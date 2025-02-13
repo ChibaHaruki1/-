@@ -55,10 +55,10 @@ public:
 
 private:
 	//マクロ定義
-	 static constexpr  int MAX_KEY = 256;                     //キーの最大数
+	 static constexpr int MAX_KEY = 256;                   //キーの最大数
 
-	BYTE m_aKeyState[MAX_KEY];                              //キーボードの情報を格納
-	BYTE m_aKeyStateTrigger[MAX_KEY];                       //キーボードトリガーの情報を格納
+	BYTE m_aKeyState[MAX_KEY];                             //キーボードの情報を格納
+	BYTE m_aKeyStateTrigger[MAX_KEY];                      //キーボードトリガーの情報を格納
 };
 
 
@@ -103,7 +103,6 @@ public:
 	inline bool GetJoypadTrigger(JOYKEY key) { return (m_JyoPad.joykeyStateTrigger.Gamepad.wButtons & (0x01 << (int)key)); }  //JyoPadのトリガー情報を設定
 
 private:
-
 	//コントローラーの構造体
 	typedef struct {
 		int KeyPressCount;					//キーを押してる時間のカウント

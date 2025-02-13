@@ -9,6 +9,7 @@
 //=================================
 //インクルード
 #include "input.h"
+#include "objectX.h"
 #include <vector>
 
 
@@ -105,7 +106,7 @@ CInputKeyBoard::CInputKeyBoard()
 	//}
 
 	//キーの最大数分回す
-	for (int nKey = 0; nKey < MAX_KEY; nKey++)
+	for (int nKey = CObjectX::N_INIT_NUMBER; nKey < MAX_KEY; nKey++)
 	{
 		m_aKeyState[nKey] = {};        //プレス情報の初期化
 		m_aKeyStateTrigger[nKey] = {}; //トリガー情報の初期化
@@ -172,10 +173,10 @@ void CInputKeyBoard::Update(void)
 	BYTE aKeyState[MAX_KEY]; //キーボードの入力情報
 	
 	//入力デバイスからデータを取得に成功した時
-	if (SUCCEEDED(GetDevice()->GetDeviceState(sizeof(aKeyState), &aKeyState[0])))
+	if (SUCCEEDED(GetDevice()->GetDeviceState(sizeof(aKeyState), &aKeyState[CObjectX::N_INIT_NUMBER])))
 	{
 		//キーの最大数分回す
-		for (int nCntKey = 0; nCntKey < MAX_KEY; nCntKey++)
+		for (int nCntKey = CObjectX::N_INIT_NUMBER; nCntKey < MAX_KEY; nCntKey++)
 		{
 			m_aKeyStateTrigger[nCntKey] = (m_aKeyState[nCntKey] ^ aKeyState[nCntKey]) & aKeyState[nCntKey]; //キーボードのトリガー情報を保存	
 			m_aKeyState[nCntKey] = aKeyState[nCntKey];                                                      //キーボードのプレス情報を保存	
@@ -215,8 +216,8 @@ CInputJoyPad::~CInputJoyPad()
 HRESULT CInputJoyPad::Init(void)
 {
 	//メモリのクリア
-	memset(&m_JyoPad.joykeyState, 0, sizeof(XINPUT_STATE));
-	memset(&m_JyoPad.joykeyStateTrigger, 0, sizeof(XINPUT_STATE));
+	memset(&m_JyoPad.joykeyState, CObjectX::N_INIT_NUMBER, sizeof(XINPUT_STATE));
+	memset(&m_JyoPad.joykeyStateTrigger, CObjectX::N_INIT_NUMBER, sizeof(XINPUT_STATE));
 
 	//XInputのステート設定(有効にする)
 	XInputEnable(true);
@@ -242,7 +243,7 @@ void CInputJoyPad::Update(void)
 	XINPUT_STATE joykeystate; //ジョイパッドの入力情報
 
 	//ジョイパッドの情報を取得
-	if (XInputGetState(0, &joykeystate) == ERROR_SUCCESS)
+	if (XInputGetState(CObjectX::N_INIT_NUMBER, &joykeystate) == ERROR_SUCCESS)
 	{
 		m_JyoPad.Button = m_JyoPad.joykeyState.Gamepad.wButtons;                              //ボタンの情報を設定
 		m_JyoPad.joykeyStateTrigger.Gamepad.wButtons = m_JyoPad.Button & ~m_JyoPad.OldButton; //トリガーの情報を設定

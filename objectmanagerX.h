@@ -92,13 +92,14 @@ public:
 	static constexpr float F_INIT_NUMBER = 0.0f;             //float型の初期化の値
 
 	static constexpr  int MAX_PARTS = 19;                    //プレイヤーのパーツ数
-	static constexpr  int MAX_BOSSPARTS = 18;               //ボスのパーツ数
-	static constexpr  int MAX_ENEMYPARTS = 20;              //敵の最大パーツ数
-	static constexpr  int NUM_MOTION_KEY = 5;               //キーの数
+	static constexpr  int MAX_BOSSPARTS = 18;                //ボスのパーツ数
+	static constexpr  int MAX_ENEMYPARTS = 20;               //敵の最大パーツ数
+	static constexpr  int NUM_MOTION_KEY = 5;                //キーの数
+	static constexpr  int WHILE_NUMBER = 1;                  //whileの（）の中の数
 
-	static constexpr  float MAX_GRAVITY_G = 0.5f;           //重力の最大値
-	static constexpr  float D3DX_PI_ORI = 1.57f;            //半円の角度
-	static constexpr  float D3DX_PI_ORI_HALF = 1.57f * 0.5f;  //半円の角度の半分(調整用)
+	static constexpr  float MAX_GRAVITY_G = 0.5f;            //重力の最大値
+	static constexpr  float D3DX_PI_ORI = 1.57f;             //半円の角度
+	static constexpr  float D3DX_PI_ORI_HALF = 1.57f * 0.5f; //半円の角度の半分(調整用)
 
 
 protected:

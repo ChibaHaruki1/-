@@ -123,7 +123,7 @@ void CObjectSet::StageOneInformation(const char* pFileName)
 	}
 
 	//外部ファイル読み込み (無限)
-	while (1)
+	while (CObjectX::WHILE_NUMBER)
 	{
 		(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
@@ -198,7 +198,7 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 	if (!strcmp(m_aData, "TELEPHONPOLESET"))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -247,7 +247,7 @@ void CObjectSet::LoodBreakHouse(FILE* pFile)
 	if (!strcmp(m_aData, "BREAKHOUSESET"))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
@@ -283,7 +283,7 @@ void CObjectSet::LoodCeiling(FILE* pFile)
 	if (!strcmp(m_aData, "CEILINGSET"))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
@@ -320,7 +320,7 @@ void CObjectSet::LoodEnemy(FILE* pFile)
 	if (!strcmp(m_aData, "ENEMYSET"))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
@@ -374,7 +374,7 @@ void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 	if (!strcmp(m_aData, "MOTIONENEMYSET"))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
@@ -423,7 +423,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	if (!strcmp(m_aData, m_aFieldBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -453,7 +453,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aGoUpBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -483,7 +483,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aRoadBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -513,7 +513,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aWallRoadBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -543,7 +543,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aWallRoadBlock001StratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -573,7 +573,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aSmallBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -603,7 +603,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aSmallBlock001StratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData);     //文字を読み取る
 
@@ -633,7 +633,7 @@ void CObjectSet::LoodBlock(FILE* pFile)
 	else if (!strcmp(m_aData, m_aUpWallBlockStratName))
 	{
 		//ループ(無限月読)
-		while (1)
+		while (CObjectX::WHILE_NUMBER)
 		{
 			(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 

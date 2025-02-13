@@ -101,7 +101,7 @@ HRESULT CPlayerX::Init()
 {
 	CCharacter::Init();                                                                             //初期化処理を呼ぶ
 	CCharacter::Lood();                                                                             //テキストファイルを読み込む処理
-	SetRot(D3DXVECTOR3(CObjectX::F_INIT_NUMBER, CObjectX::D3DX_PI_ORI, CObjectX::F_INIT_NUMBER));   //向きの調整（右向き）
+	SetRot(D3DXVECTOR3(CObjectX::F_INIT_NUMBER, -CObjectX::D3DX_PI_ORI, CObjectX::F_INIT_NUMBER));  //向きの調整（右向き）
 	SetPos(D3DXVECTOR3(000.0f,CObjectX::F_INIT_NUMBER,CObjectX::F_INIT_NUMBER));                    //位置の調整
 	SetLife(LIFE);                                                                                  //自身のライフ
 	m_pModelPrts[PLAYER_PARTS_GUN001_NUMBER]->SetDraw(false);                                       //パーツの銃部分を非表示に設定
