@@ -55,9 +55,9 @@ HRESULT CObject3D::Init()
 	m_rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //向きの初期化
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	pDevice->CreateVertexBuffer(sizeof(CMain::VERTEX_3D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
 
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -106,9 +106,9 @@ HRESULT CObject3D::BillboardInit()
 	m_rot = D3DXVECTOR3(F_INIT_NUMBER, F_INIT_NUMBER, F_INIT_NUMBER); //向きの初期化
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	pDevice->CreateVertexBuffer(sizeof(CMain::VERTEX_3D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_3D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
 
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -187,7 +187,7 @@ void CObject3D::Update()
 //==================
 void CObject3D::SetSize(float SIZE_X, float SIZE_Y, float SIZE_Z)
 {
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -207,7 +207,7 @@ void CObject3D::SetSize(float SIZE_X, float SIZE_Y, float SIZE_Z)
 //=========================================
 void CObject3D::SetEffectSize(float SIZE_X, float SIZE_Y, float SIZE_Z)
 {
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -227,7 +227,7 @@ void CObject3D::SetEffectSize(float SIZE_X, float SIZE_Y, float SIZE_Z)
 //=======================
 void CObject3D::SetAdjustmentSizeY(float SIZE_X, float SIZE_Y, float SIZE_Z)
 {
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -248,7 +248,7 @@ void CObject3D::SetAdjustmentSizeY(float SIZE_X, float SIZE_Y, float SIZE_Z)
 //===================================================
 void CObject3D::SetCol(int Red, int Green, int Blue,int& Alpha)
 {
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -269,7 +269,7 @@ void CObject3D::SetCol(int Red, int Green, int Blue,int& Alpha)
 //===================================================
 void CObject3D::SetTexture(float SizeX, float Size1X)
 {
-	VERTEX_3D* pVtx; //頂点情報へのポインタ
+	CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -390,7 +390,7 @@ void CObject3D::Draw()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_3D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -443,7 +443,7 @@ void CObject3D::DrawBillboard()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_3D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -500,7 +500,7 @@ void CObject3D::DrawEffect()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_3D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);
@@ -570,7 +570,7 @@ void CObject3D::DrawEffect1()
 	pDevice->SetTransform(D3DTS_WORLD, &m_mtxWorld);
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_3D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_3D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_3D);

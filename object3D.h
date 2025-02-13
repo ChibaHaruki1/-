@@ -42,48 +42,47 @@ public:
 
 	//==================================================
 	//情報の取得
-	LPDIRECT3DVERTEXBUFFER9& GetBuffer() { return m_pVtxBuff; } //バッファの取得
-	LPDIRECT3DTEXTURE9& GetTexture() { return m_pTexture; }     //テクスチャの取得
-	int& GetLife() { return m_nLife; }                          //ライフの取得
-	int& GetAlpha() { return m_nAlpha; }                        //アルファ値を取得
-	int& GetFrame() { return m_nFrame; }                        //フレームを取得
-	int& GetRandom() { return m_nRandom; }                      //乱数を取得
-	float& GetSizeX() { return m_fSizeX; }                      //X軸の大きさを取得
-	float& GetSizeY() { return m_fSizeY; }                      //Y軸の大きさを取得
+	inline LPDIRECT3DVERTEXBUFFER9& GetBuffer() { return m_pVtxBuff; } //バッファの取得
+	inline LPDIRECT3DTEXTURE9& GetTexture() { return m_pTexture; }     //テクスチャの取得
+	inline int& GetLife() { return m_nLife; }                          //ライフの取得
+	inline int& GetAlpha() { return m_nAlpha; }                        //アルファ値を取得
+	inline int& GetFrame() { return m_nFrame; }                        //フレームを取得
+	inline int& GetRandom() { return m_nRandom; }                      //乱数を取得
+	inline float& GetSizeX() { return m_fSizeX; }                      //X軸の大きさを取得
+	inline float& GetSizeY() { return m_fSizeY; }                      //Y軸の大きさを取得
 
 
 	//==================================================
 	///三大基本情報の取得
-	D3DXVECTOR3& GetPos() { return m_pos; }                     //位置の取得
-	D3DXVECTOR3& GetMove() { return m_move; }                   //移動量の取得
-	D3DXVECTOR3& GetRot() { return m_rot; }                     //向きの取得
+	inline D3DXVECTOR3& GetPos() { return m_pos; }                     //位置の取得
+	inline D3DXVECTOR3& GetMove() { return m_move; }                   //移動量の取得
+	inline D3DXVECTOR3& GetRot() { return m_rot; }                     //向きの取得
 
 
 	//==================================================
 	//各情報の設定
-	void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }                             //位置を引数と同期させる
-	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }                             //向きを引数と同期させる
-	void SetMove(D3DXVECTOR3 move) { m_move = move; }                         //移動量を引数と同期させる
-	void SetLife(int nLife) { m_nLife = nLife; }                              //ライフを引数と同期させる
-	void SetAlpha(int nAlpha) { m_nAlpha = nAlpha; }                          //アルファ値を引数と同期させる
-	void SetFrame(int nFrame) { m_nFrame = nFrame; }                          //フレームを引数と同期させる
-	void SetRandom(int nRandom) { m_nRandom = nRandom; }                      //乱数を引数と同期させる
-	void SetSizeX(float fSizeX) { m_fSizeX = fSizeX; }                        //X軸の大きさを引数と同期させる
-	void SetSizeY(float fSizeY) { m_fSizeY = fSizeY; }                        //X軸の大きさを引数と同期させる
-	void SetFileNamePass(const char* aFileName) { m_aFileName = aFileName; }  //ファイルパスを引数と同期させる
+	inline void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }                             //位置を引数と同期させる
+	inline void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }                             //向きを引数と同期させる
+	inline void SetMove(D3DXVECTOR3 move) { m_move = move; }                         //移動量を引数と同期させる
+	inline void SetLife(int nLife) { m_nLife = nLife; }                              //ライフを引数と同期させる
+	inline void SetAlpha(int nAlpha) { m_nAlpha = nAlpha; }                          //アルファ値を引数と同期させる
+	inline void SetFrame(int nFrame) { m_nFrame = nFrame; }                          //フレームを引数と同期させる
+	inline void SetRandom(int nRandom) { m_nRandom = nRandom; }                      //乱数を引数と同期させる
+	inline void SetSizeX(float fSizeX) { m_fSizeX = fSizeX; }                        //X軸の大きさを引数と同期させる
+	inline void SetSizeY(float fSizeY) { m_fSizeY = fSizeY; }                        //X軸の大きさを引数と同期させる
+	inline void SetFileNamePass(const char* aFileName) { m_aFileName = aFileName; }  //ファイルパスを引数と同期させる
 	
 
 	//==================================================
 	//情報の値を計して設定
 	D3DXVECTOR3& SetAdjustPos() { return m_pos; }                             //位置の値を変更したいときの設定
 																	          
-	int& SetAdjustLife() { return m_nLife; }                                  //ライフの値を変更したいときの設定
-	int& SetAdjustAlpha() { return m_nAlpha; }                                //アルファ値の変更したいときの設定
-	int& SetAdjustFrame() { return m_nFrame; }                                //フレームの値を変更したいときの設定
+	inline int& SetAdjustLife() { return m_nLife; }                           //ライフの値を変更したいときの設定
+	inline int& SetAdjustAlpha() { return m_nAlpha; }                         //アルファ値の変更したいときの設定
+	inline int& SetAdjustFrame() { return m_nFrame; }                         //フレームの値を変更したいときの設定
 																	          
-	float& SetAddjustSizeX() { return m_fSizeX; }                             //X軸の値を変更したいときの設定
-	float& SetAddjustSizeY() { return m_fSizeY; }                             //Y軸の値を変更したいときの設定
-
+	inline float& SetAddjustSizeX() { return m_fSizeX; }                      //X軸の値を変更したいときの設定
+	inline float& SetAddjustSizeY() { return m_fSizeY; }                      //Y軸の値を変更したいときの設定
 
 
 private:

@@ -75,11 +75,11 @@ private:
 	//==============================================
 	//行動パターン１の時の行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_1 = 1;                           //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_2 = 40;                          //第二行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_2 = 25;                          //第二行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_3 = ATTACKPATTEN1_FRAME_2 + 1;   //第三行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_4 = 60;                          //第四行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_4 = 50;                          //第四行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_5 = ATTACKPATTEN1_FRAME_4 + 1;   //第五行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_6 = 80;                          //第六行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_6 = 75;                          //第六行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_7 = ATTACKPATTEN1_FRAME_6 + 1;   //第七行動時のフレーム
 																			   
 																			   

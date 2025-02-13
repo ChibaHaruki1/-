@@ -61,7 +61,7 @@ void CManagerBg::Uninit(void)
 //=======================
 void CManagerBg::Update()
 {
-	VERTEX_2D* pVtx; //バーテクスのポインター
+	CMain::VERTEX_2D* pVtx; //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点データへのポインタを取得
 	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, 0);

@@ -35,27 +35,29 @@
 #define FVF_VERTEX_2D (D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1)              //2D用VERTWXの情報を設定
 #define FVF_VERTEX_3D (D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_DIFFUSE|D3DFVF_TEX1)   //3D用VERTWXの情報を設定
 
-//頂点情報の構造体
-typedef struct
-{
-	D3DXVECTOR3 pos; //頂点情報
-	float rhw;       //座標変換用係数（１．０ｆで固定）
-	D3DCOLOR col;    //頂点カラー
-	D3DXVECTOR2 tex; //テクスチャ座標
-}VERTEX_2D;
-
-typedef struct
-{
-	D3DXVECTOR3 pos; //頂点情報
-	D3DXVECTOR3 nor; //法線情報
-	D3DCOLOR col;    //頂点カラー
-	D3DXVECTOR2 tex; //テクスチャ座標
-}VERTEX_3D;
-
 
 class CMain
 {
 public:
+
+	//2D頂点情報の構造体
+	typedef struct
+	{
+		D3DXVECTOR3 pos; //頂点情報
+		float rhw;       //座標変換用係数（１．０ｆで固定）
+		D3DCOLOR col;    //頂点カラー
+		D3DXVECTOR2 tex; //テクスチャ座標
+	}VERTEX_2D;
+
+	//3D頂点情報の構造体
+	typedef struct
+	{
+		D3DXVECTOR3 pos; //頂点情報
+		D3DXVECTOR3 nor; //法線情報
+		D3DCOLOR col;    //頂点カラー
+		D3DXVECTOR2 tex; //テクスチャ座標
+	}VERTEX_3D;
+
 	CMain();                                         //コンストラクタ
 	~CMain();                                        //デストラクタ
 	void Uninit();                                   //破棄処理

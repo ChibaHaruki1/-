@@ -48,29 +48,29 @@ public://外部からのアクセス可能
 
 	//==================================================
 	//それぞれの処理に必要な情報を取得する
-	int& GetLife() { return m_nLife; }                                                                //ライフを取得
-	int& GetRandom() { return m_nRandom; }                                                            //乱数を取得
-	int& GetFrame() { return m_nFrame; }                                                              //フレームを取得
-	int& GetDieFrame() { return m_nDieFrame; }                                                        //死亡時のフレームを観測する用の情報を取得
-	float& GetGravity() { return m_fGravity; }                                                        //重力の情報を収得
-	bool& GetJumpFlag() { return m_bJumpFlag; }                                                       //飛ぶかどうかのフラグを取得
-	bool& GetOneFlag() { return m_bOneFlag; }                                                         //一度だけ通すフラグの取得
-	const char* GetFileName() { return m_aFileName; }                                                 //ファイルパスの取得
+	inline int& GetLife() { return m_nLife; }                                                                //ライフを取得
+	inline int& GetRandom() { return m_nRandom; }                                                            //乱数を取得
+	inline int& GetFrame() { return m_nFrame; }                                                              //フレームを取得
+	inline int& GetDieFrame() { return m_nDieFrame; }                                                        //死亡時のフレームを観測する用の情報を取得
+	inline float& GetGravity() { return m_fGravity; }                                                        //重力の情報を収得
+	inline bool& GetJumpFlag() { return m_bJumpFlag; }                                                       //飛ぶかどうかのフラグを取得
+	inline bool& GetOneFlag() { return m_bOneFlag; }                                                         //一度だけ通すフラグの取得
+	inline const char* GetFileName() { return m_aFileName; }                                                 //ファイルパスの取得
 
 
 	//==================================================
 	//各情報の設定
-	void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }                                                     //位置を引数と同期させる
-	void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }                                                     //向きを引数と同期させる
-	void SetLife(int nLife) { m_nLife = nLife; }                                                      //ライフを引数と同期させる
-	void SetRandom(int nRandom) { m_nRandom = nRandom; }                                              //乱数を引数と同期させる	
-	void SetFrame(int nFrame) { m_nFrame = nFrame; }                                                  //フレームを引数と同期させる
-	void SetDieFrame(int nDieFrame) { m_nDieFrame = nDieFrame; }                                      //死亡時のフレームを引数と同期させる
-	void SetGravity(float fGravity) { m_fGravity = fGravity; }                                        //重力の値を引数と同期させる
-	void SetGravityFlag(bool bGravityFlag) { m_bGravityFlag = bGravityFlag; }                         //重力フラグを引数と同期させる
-	void SetJumpFlag(bool bJumpFlag) { m_bJumpFlag = bJumpFlag; }                                     //飛ぶかどうかの設定
-	void SetOneFlag(bool bOneFlag) { m_bOneFlag = bOneFlag; }                                         //一度だけ通す処理のフラグ設定
-	void SetFileName(const char* aFileName) { m_aFileName = aFileName; }                              //ファイルパスの設定
+	inline void SetPos(D3DXVECTOR3 pos) { m_pos = pos; }                                                     //位置を引数と同期させる
+	inline void SetRot(D3DXVECTOR3 rot) { m_rot = rot; }                                                     //向きを引数と同期させる
+	inline void SetLife(int nLife) { m_nLife = nLife; }                                                      //ライフを引数と同期させる
+	inline void SetRandom(int nRandom) { m_nRandom = nRandom; }                                              //乱数を引数と同期させる	
+	inline void SetFrame(int nFrame) { m_nFrame = nFrame; }                                                  //フレームを引数と同期させる
+	inline void SetDieFrame(int nDieFrame) { m_nDieFrame = nDieFrame; }                                      //死亡時のフレームを引数と同期させる
+	inline void SetGravity(float fGravity) { m_fGravity = fGravity; }                                        //重力の値を引数と同期させる
+	inline void SetGravityFlag(bool bGravityFlag) { m_bGravityFlag = bGravityFlag; }                         //重力フラグを引数と同期させる
+	inline void SetJumpFlag(bool bJumpFlag) { m_bJumpFlag = bJumpFlag; }                                     //飛ぶかどうかの設定
+	inline void SetOneFlag(bool bOneFlag) { m_bOneFlag = bOneFlag; }                                         //一度だけ通す処理のフラグ設定
+	inline void SetFileName(const char* aFileName) { m_aFileName = aFileName; }                              //ファイルパスの設定
 
 
 	//==================================================

@@ -59,9 +59,9 @@ HRESULT CObject2D:: Init()
 	pDevice = pRenderer->GetDevice();
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
+	pDevice->CreateVertexBuffer(sizeof(CMain::VERTEX_2D) * PVTX_NUMBER_OF, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &m_pVtxBuff, NULL);
 
-	VERTEX_2D* pVtx;  //頂点情報へのポインタ
+	CMain::VERTEX_2D* pVtx;  //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -108,9 +108,9 @@ HRESULT CObject2D::SelectInit(int nPieces,float nTexture)
 	pDevice = pRenderer->GetDevice();
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * PVTX_NUMBER_OF * nPieces, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &GetBuffer(), NULL);
+	pDevice->CreateVertexBuffer(sizeof(CMain::VERTEX_2D) * PVTX_NUMBER_OF * nPieces, D3DUSAGE_WRITEONLY, FVF_VERTEX_2D, D3DPOOL_MANAGED, &GetBuffer(), NULL);
 
-	VERTEX_2D* pVtx;  //頂点情報へのポインタ
+	CMain::VERTEX_2D* pVtx;  //頂点情報へのポインタ
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -185,7 +185,7 @@ void CObject2D::Draw()
 	pDevice = pRenderer->GetDevice();
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_2D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -211,7 +211,7 @@ void CObject2D::MultipleDraw(int nPieces)
 	pDevice = pRenderer->GetDevice();
 
 	//頂点バッファをデータストリームに設定
-	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(VERTEX_2D));
+	pDevice->SetStreamSource(STREAMNUMBER, m_pVtxBuff, STREAMNUMBER, sizeof(CMain::VERTEX_2D));
 
 	//頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -230,7 +230,7 @@ void CObject2D::MultipleDraw(int nPieces)
 //==================
 void CObject2D::SetSIze(float SIZE_X, float SIZE1_X, float SIZE_Y, float SIZE1_Y)
 {
-	VERTEX_2D* pVtx;
+	CMain::VERTEX_2D* pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);
@@ -250,7 +250,7 @@ void CObject2D::SetSIze(float SIZE_X, float SIZE1_X, float SIZE_Y, float SIZE1_Y
 //==================
 void CObject2D::SetCol(int Red, int Green, int Blue, int Alph)
 {
-	VERTEX_2D* pVtx;
+	CMain::VERTEX_2D* pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFF_NUMBE, BUFF_NUMBE, (void**)&pVtx, N_INIT_NUMBER);

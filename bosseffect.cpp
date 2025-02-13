@@ -41,7 +41,7 @@ CBossEffectDirection::~CBossEffectDirection()
 //==================================================================================
 void CBossEffectDirection::SetInfo(LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff, float fTexSize)
 {
-	VERTEX_3D* pVtx; //バーテクスのポインター
+	CMain::VERTEX_3D* pVtx; //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, N_INIT_NUMBER);
@@ -66,7 +66,7 @@ void CBossEffectDirection::Effect(LPDIRECT3DTEXTURE9 m_pTexture, LPDIRECT3DVERTE
 	//ライフが既定の数値以上になった時
 	if (m_nLife >= CManagerBossEffect::MAX_BOSSANIMATION_LIFE * dLifeCount)
 	{
-		VERTEX_3D* pVtx; //バーテクスのポインター
+		CMain::VERTEX_3D* pVtx; //バーテクスのポインター
 
 		//頂点バッファをロックし、頂点情報へのポインタを取得
 		m_pVtxBuff->Lock(0U, 0U, (void**)&pVtx, N_INIT_NUMBER);

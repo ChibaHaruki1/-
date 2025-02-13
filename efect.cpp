@@ -41,7 +41,7 @@ CEffectDirection::~CEffectDirection()
 //==================================================================================
 void CEffectDirection::SetInfo(LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff, float fTexSize)
 {
-	VERTEX_3D* pVtx;
+	CMain::VERTEX_3D* pVtx;
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	m_pVtxBuff->Lock(BUFFNUMBE, BUFFNUMBE, (void**)&pVtx, CObject3D::N_INIT_NUMBER);
@@ -66,7 +66,7 @@ void CEffectDirection::Effect(LPDIRECT3DTEXTURE9 m_pTexture, LPDIRECT3DVERTEXBUF
 	//ライフが既定の数値になった時
 	if (m_nLife >=MAX_EXPLOSION_LIFE * dLifeCount)
 	{
-		VERTEX_3D* pVtx; //頂点情報へのポインタ
+		CMain::VERTEX_3D* pVtx; //頂点情報へのポインタ
 
 		//頂点バッファをロックし、頂点情報へのポインタを取得
 		m_pVtxBuff->Lock(BUFFNUMBE, BUFFNUMBE, (void**)&pVtx, CObject3D::N_INIT_NUMBER);

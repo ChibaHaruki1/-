@@ -86,7 +86,7 @@ void CManagerScore::Draw()
 //=======================
 void CManagerScore::SetScorepos(D3DXVECTOR3 pos)
 {
-	VERTEX_2D* pVtx; //バーテクスのポインター
+	CMain::CMain::VERTEX_2D* pVtx; //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, CObject2D::N_INIT_NUMBER);
@@ -123,7 +123,7 @@ void CManagerScore::SetScore(int nScore)
 	int nPosTexU[MAX_SCORE]; //テクスチャの分割した位置を保管
 	int nDight = INIT_DIGIT; //桁管理用
 
-	VERTEX_2D* pVtx;         //バーテクスのポインター
+	CMain::VERTEX_2D* pVtx;         //バーテクスのポインター
 
 	//頂点バッファをロックし、頂点情報へのポインタを取得
 	GetBuffer()->Lock(0U, 0U, (void**)&pVtx, CObject2D::N_INIT_NUMBER);
