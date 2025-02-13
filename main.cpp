@@ -16,8 +16,8 @@
 
 //============================
 //マクロ定義
-#define CLASS_NAME	"WindowClass" //ウィンドウクラスの名前
-#define WINDOWS_NAME	"狂戦士ケルベロス" //ウィンドウの名前
+#define CLASS_NAME	 "WindowClass"      //ウィンドウクラスの名前
+#define WINDOWS_NAME "狂戦士ケルベロス" //ウィンドウの名前
 
 
 //============================
