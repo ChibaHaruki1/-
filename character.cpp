@@ -308,7 +308,6 @@ void CCharacter::Lood()
 	}
 
 	int nLoopNumber = CObjectX::WHILE_NUMBER;  //ループの初期値
-	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
 
 	//ループ
 	while (nLoopNumber)
@@ -367,7 +366,7 @@ void CCharacter::Lood()
 						}
 
 						//処理を続行させる条件
-						if (m_aDataSearch[nInitNumber] == '#')
+						if (m_aDataSearch[N_INIT_NUMBER] == '#')
 						{
 							continue; //続行
 						}
@@ -398,7 +397,7 @@ void CCharacter::Lood()
 									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pModelPrts[nCount]->GetIndexModelPrts()); //親パーツかを読み取る
 
 									//読み込んだ値がー１の時
-									if (m_pModelPrts[nCount]->GetIndexModelPrts() == -1)
+									if (m_pModelPrts[nCount]->GetIndexModelPrts() == PARENT_NUMBER)
 									{
 										m_pModelPrts[nCount]->SetParent(nullptr); //情報無し
 									}
@@ -445,7 +444,7 @@ void CCharacter::Lood()
 						(void)fscanf(m_pFile, "%s", m_aDataSearch); // 検索
 
 						//処理を続行する条件
-						if (m_aDataSearch[nInitNumber] == '#')
+						if (m_aDataSearch[N_INIT_NUMBER] == '#')
 						{
 							continue;                                      //続行
 							fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile);  //ファイルから文字列を読み込む
@@ -464,7 +463,7 @@ void CCharacter::Lood()
 							(void)fscanf(m_pFile, "%d", &LoopType);     //ループするかどうか検索
 
 							//読み込んだ値が０の時
-							if (LoopType == nInitNumber)
+							if (LoopType == N_INIT_NUMBER)
 							{
 								MotionSetPlayer[nMotionCount].Loop = false; //ループしない
 							}
@@ -492,7 +491,7 @@ void CCharacter::Lood()
 								(void)fscanf(m_pFile, "%s", &m_aDataSearch); //文字を読み取る
 
 								//コメントを読み込んだ時
-								if (m_aDataSearch[nInitNumber] == '#')
+								if (m_aDataSearch[N_INIT_NUMBER] == '#')
 								{
 									fgets(m_aDataSearch, FGET_NUMBER_2, m_pFile); //ファイルから文字列を読み込む
 									continue;                          //処理を続ける
@@ -520,7 +519,7 @@ void CCharacter::Lood()
 										(void)fscanf(m_pFile, "%s", &m_aDataSearch); //文字を読み取る
 
 										//コメントを読み込んだ時
-										if (m_aDataSearch[nInitNumber] == '#')
+										if (m_aDataSearch[N_INIT_NUMBER] == '#')
 										{
 											continue;                                      //処理を続ける
 											fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile);  //ファイルから文字列を読み込む
@@ -554,11 +553,11 @@ void CCharacter::Lood()
 									nKeyCount++;   //キーカウントの加算
 								}
 							}
-							nKeyCount = nInitNumber;   //キーカウントを初期化
+							nKeyCount = N_INIT_NUMBER;   //キーカウントを初期化
 							nKeySetCount++;            //データの加算
 						}
 					}
-					nKeySetCount = nInitNumber; //カウントの初期化
+					nKeySetCount = N_INIT_NUMBER; //カウントの初期化
 					nMotionCount++;             //データの加算
 				}
 			}
@@ -572,10 +571,10 @@ void CCharacter::Lood()
 	//=================================================================================================================================================================
 
 	//肩から手までの位置を取得する
-	for (int nCount = nInitNumber; nCount < PLAYER_PARTS_SHOULDER_FROM_HAND; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < PLAYER_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
 		//現在のパーツの次のパーツ分回す(手の場合、肩から上腕から下腕から手の順になるが、腕は手の情報までいらないので現在のパーツ＋１で増やしていく)
-		for (int Next = nInitNumber; Next < nCount + PLAYER_NEXT_PARTS_COUNT; Next++)
+		for (int Next = N_INIT_NUMBER; Next < nCount + PLAYER_NEXT_PARTS_COUNT; Next++)
 		{
 			//右側のパーツ数
 			SaveMotionPos[nCount + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND] += m_pSaveModelPrtInfo[Next + PLAYER_PARTS_RIGHT_SHOULDER_FROM_HAND].pos;
@@ -601,7 +600,7 @@ void CCharacter::Lood()
 	}
 
 	//頭と体の位置を取得する
-	for (int nCount2 = nInitNumber; nCount2 < PLAYER_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
+	for (int nCount2 = N_INIT_NUMBER; nCount2 < PLAYER_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
 	{
 		SaveMotionPos[nCount2] += m_pModelPrts[nCount2]->GetPos(); //位置を加算
 		//GetPosParts(nCount2) = D3DXVECTOR3(SaveMotionPos[nCount2].x + GetPos().x, SaveMotionPos[nCount2].y + GetPos().y + 20.0f, SaveMotionPos[nCount2].z + GetPos().z); //パーツの位置を修正
@@ -640,7 +639,6 @@ void CCharacter::LoodBoss()
 	}
 
 	int nLoopNumber = CObjectX::WHILE_NUMBER;  //ループの初期値
-	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
 
 	//ループ
 	while (nLoopNumber)
@@ -696,7 +694,7 @@ void CCharacter::LoodBoss()
 						}
 
 						//コメントを読み込んだ時
-						if (m_aDataSearch[nInitNumber] == '#')
+						if (m_aDataSearch[N_INIT_NUMBER] == '#')
 						{
 							continue; //続行
 						}
@@ -727,7 +725,7 @@ void CCharacter::LoodBoss()
 									(void)fscanf(m_pFile, "%s %d", &m_aDataSearch, &m_pModelPrtsBoss[nCount]->GetIndexModelPrts()); //親パーツかを読み取る
 
 									//読み込んだ値がー１の時
-									if (m_pModelPrtsBoss[nCount]->GetIndexModelPrts() == -1)
+									if (m_pModelPrtsBoss[nCount]->GetIndexModelPrts() == PARENT_NUMBER)
 									{
 										m_pModelPrtsBoss[nCount]->SetParent(nullptr); //情報無し
 									}
@@ -774,7 +772,7 @@ void CCharacter::LoodBoss()
 						(void)fscanf(m_pFile, "%s", m_aDataSearch); // 検索
 
 						//コメントを読み込んだ時
-						if (m_aDataSearch[nInitNumber] == '#')
+						if (m_aDataSearch[N_INIT_NUMBER] == '#')
 						{
 							continue;                                     //続行
 							fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile); //ファイルから文字を読み込む
@@ -793,7 +791,7 @@ void CCharacter::LoodBoss()
 							(void)fscanf(m_pFile, "%d", &LoopType);     //ループするかどうか検索
 
 							//読み込んだ値が０の時
-							if (LoopType == nInitNumber)
+							if (LoopType == N_INIT_NUMBER)
 							{
 								MotionSetBoss[nMotionCount].Loop = false; //ループしない
 							}
@@ -821,7 +819,7 @@ void CCharacter::LoodBoss()
 								(void)fscanf(m_pFile, "%s", &m_aDataSearch); //文字を読み取る
 
 								//コメントを読み込んだ時
-								if (m_aDataSearch[nInitNumber] == '#')
+								if (m_aDataSearch[N_INIT_NUMBER] == '#')
 								{
 									fgets(m_aDataSearch, FGET_NUMBER_2, m_pFile); //ファイルから文字を読み取る
 									continue;                                     //処理を続ける
@@ -849,7 +847,7 @@ void CCharacter::LoodBoss()
 										(void)fscanf(m_pFile, "%s", &m_aDataSearch); //文字を読み取る
 
 										//コメントを読み込んだ時
-										if (m_aDataSearch[nInitNumber] == '#')
+										if (m_aDataSearch[N_INIT_NUMBER] == '#')
 										{
 											continue;                                     //処理を続ける
 											fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile); //ファイルから文字を読み取る
@@ -882,11 +880,11 @@ void CCharacter::LoodBoss()
 									nKeyCount++; //キーカウントの加算
 								}
 							}
-							nKeyCount = nInitNumber;  //キーカウントの初期化
+							nKeyCount = N_INIT_NUMBER;  //キーカウントの初期化
 							nKeySetCount++;           //データの加算
 						}
 					}
-					nKeySetCount = nInitNumber; //カウントの初期化
+					nKeySetCount = N_INIT_NUMBER; //カウントの初期化
 					nMotionCount++;             //データの加算
 				}
 			}
@@ -900,10 +898,10 @@ void CCharacter::LoodBoss()
 	//=================================================================================================================================================================
 	
 	//肩から手までの位置を取得する
-	for (int nCount = nInitNumber; nCount < BOSS_PARTS_SHOULDER_FROM_HAND; nCount++)
+	for (int nCount = N_INIT_NUMBER; nCount < BOSS_PARTS_SHOULDER_FROM_HAND; nCount++)
 	{
 		//現在のパーツの次のパーツ分回す
-		for (int nNext = nInitNumber; nNext < nCount + BOSS_NEXT_PARTS_COUNT; nNext++)
+		for (int nNext = N_INIT_NUMBER; nNext < nCount + BOSS_NEXT_PARTS_COUNT; nNext++)
 		{
 			//各パーツの位置を足し合わせる
 			 
@@ -932,7 +930,7 @@ void CCharacter::LoodBoss()
 	}
 
 	//頭と体の位置を取得
-	for (int nCount2 = nInitNumber; nCount2 < BOSS_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
+	for (int nCount2 = N_INIT_NUMBER; nCount2 < BOSS_PARTS_HEAD_AND_BODY_COUNT; nCount2++)
 	{
 		SaveMotionPosBoss[nCount2] += m_pModelPrtsBoss[nCount2]->GetPos();                                                                  //位置を加算
 	//	GetPosPartsBoss(nCount2) = D3DXVECTOR3(SaveMotionPosBoss[nCount2].x, SaveMotionPosBoss[nCount2].y, SaveMotionPosBoss[nCount2].z); //位置を修正
@@ -1119,8 +1117,6 @@ void CCharacter::MotionInfoBoss()
 //================================
 void CCharacter::SetMotion(MOTIONSTATE motiontype)
 {
-	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
-
 	//現在のモーションと違ったら
 	if (m_MotionState != motiontype && m_bMotionType == false)
 	{
@@ -1136,8 +1132,8 @@ void CCharacter::SetMotion(MOTIONSTATE motiontype)
 			{
 				m_pModelPrts[nModelCount]->SetPos(m_pSaveModelPrtInfo[nModelCount].pos);                            //現在の位置を読み取った値にする
 				m_pModelPrts[nModelCount]->SetRot(m_pSaveModelPrtInfo[nModelCount].rot);                            //現在の向きを読み取った値にする
-				m_pModelPrts[nModelCount]->GetPos() += MotionSetPlayer[motiontype].KeySet[nInitNumber].aKey[nModelCount].pos; //現在の位置を設定したモーションの位置と加算
-				m_pModelPrts[nModelCount]->GetRot() += MotionSetPlayer[motiontype].KeySet[nInitNumber].aKey[nModelCount].rot; //現在の向きを設定したモーションの向きと加算
+				m_pModelPrts[nModelCount]->GetPos() += MotionSetPlayer[motiontype].KeySet[N_INIT_NUMBER].aKey[nModelCount].pos; //現在の位置を設定したモーションの位置と加算
+				m_pModelPrts[nModelCount]->GetRot() += MotionSetPlayer[motiontype].KeySet[N_INIT_NUMBER].aKey[nModelCount].rot; //現在の向きを設定したモーションの向きと加算
 			}
 		}
 	}
@@ -1149,8 +1145,6 @@ void CCharacter::SetMotion(MOTIONSTATE motiontype)
 //================================
 void CCharacter::SetMotionBoss(BOSSMOTIONSTATE motiontype)
 {
-	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
-
 	//現在のモーションと違ったら
 	if (m_MotionStateBoss != motiontype && m_bMotionBossType == false)
 	{
@@ -1166,8 +1160,8 @@ void CCharacter::SetMotionBoss(BOSSMOTIONSTATE motiontype)
 			{
 				m_pModelPrtsBoss[nModelCount]->SetPos(m_pSaveModelPrtInfoBoss[nModelCount].pos);                        //現在の位置を読み取った値にする
 				m_pModelPrtsBoss[nModelCount]->SetRot(m_pSaveModelPrtInfoBoss[nModelCount].rot);					    //現在の向きを読み取った値にする
-				m_pModelPrtsBoss[nModelCount]->GetPos() += MotionSetBoss[motiontype].KeySet[nInitNumber].aKey[nModelCount].pos;	//現在の位置を設定したモーションの位置と加算
-				m_pModelPrtsBoss[nModelCount]->GetRot() += MotionSetBoss[motiontype].KeySet[nInitNumber].aKey[nModelCount].rot;	//現在の向きを設定したモーションの向きと加算
+				m_pModelPrtsBoss[nModelCount]->GetPos() += MotionSetBoss[motiontype].KeySet[N_INIT_NUMBER].aKey[nModelCount].pos;	//現在の位置を設定したモーションの位置と加算
+				m_pModelPrtsBoss[nModelCount]->GetRot() += MotionSetBoss[motiontype].KeySet[N_INIT_NUMBER].aKey[nModelCount].rot;	//現在の向きを設定したモーションの向きと加算
 			}
 		}
 	}

@@ -66,15 +66,13 @@ public:
 
 private:
 	//マクロ定義		
-	static constexpr int N_INIT_NUMBER = 0;                       //int型の初期化の値  
-	static constexpr float F_INIT_NUMBER = 0.0f;                  //float型の初期化の値
-
 	static constexpr int MAX_PARTS_SEARCH = 100;                  //パーツの取得時の配列の最大数
 	static constexpr int MAX_DATA_SEARCH = 512;                   //テキストファイルの読み込み時の配列の最大数
 
 	static constexpr int MAX_ENEMYKEYSET = 5;                     //モーションに使うキーの数
 	static constexpr int NUM_ENEMYMOTION = 10;                    //モーションの数
 	static constexpr int HALF = 2;                                //int型の時の半分
+	static constexpr int PARENT_NUMBER = -1;                      //親パーツの読み込み値
 
 
 	//============================================
@@ -83,7 +81,8 @@ private:
 	static constexpr  int PARTS_LEFT_SHOLDER_NUMBER = 5;          //左肩の番号
 	static constexpr  int PARTS_LEFT_SHOLDER_WEAPON_NUMBER = 7;   //左肩の武器の番号
 	static constexpr  int PARTS_LEFT_WAIST_NUMBER = 8;            //腰の番号
-	static constexpr  int PARTS_LOWER_BODY_COUNT = 7;             //腰の番号
+	static constexpr  int PARTS_LEFT_MIDDLELEG_NUMBER = 9;        //足の中間のパーツ番号
+	static constexpr  int PARTS_LOWER_BODY_COUNT = 7;             //下半身のパーツ数
 	static constexpr  int NEXT_MOTION_COUNT = 1;                  //モーション時の差分を求める時の次のモーションカウント
 	static constexpr  int BEFORE_MOTION_COUNT = 1;                //モーション時の差分が同じ時の前のモーションカウント
 
