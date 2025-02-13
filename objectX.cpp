@@ -483,6 +483,8 @@ void CObjectX::Size()
 //==================================
 void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 {
+	int nInitCreateNumber = CInstance::N_INIT_CREATE_NUMBER; //生成数の初期値
+
 	//Oキーが押された時に生成する処理を通す
 	if (CManager::GetKeyBorad()->GetKeyboardTrigger(DIK_O) == true)
 	{
@@ -517,56 +519,56 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 		else if (type == CObjectX::TYPE::FIELDBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FIELDBLOCK, D3DXVECTOR3(m_pos.x + 600.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FIELDBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_1, m_pos.y, m_pos.z));
 		}
 
 		//上がる用ブロックの時
 		else if (type == CObjectX::TYPE::GOUPBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::GOUPBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::GOUPBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_2, m_pos.y, m_pos.z));
 		}
 
 		//道用ブロックの時
 		else if (type == CObjectX::TYPE::ROADBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::ROADBLOCK, D3DXVECTOR3(m_pos.x + 100.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::ROADBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_2, m_pos.y, m_pos.z));
 		}
 
 		//壁兼道用ブロックの時
 		else if (type == CObjectX::TYPE::WALLROADBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::WALLROADBLOCK, D3DXVECTOR3(m_pos.x + 500.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::WALLROADBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_3, m_pos.y, m_pos.z));
 		}
 
 		//壁兼道用001ブロックの時
 		else if (type == CObjectX::TYPE::WALLROADBLOCK_001)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::WALLROADBLOCK001, D3DXVECTOR3(m_pos.x + 500.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::WALLROADBLOCK001, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_3, m_pos.y, m_pos.z));
 		}
 
 		//小さい用ブロックの時
 		else if (type == CObjectX::TYPE::SMALLBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SMALLBLOCK, D3DXVECTOR3(m_pos.x + 200.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SMALLBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_4, m_pos.y, m_pos.z));
 		}
 
 		//小さい用001ブロックの時
 		else if (type == CObjectX::TYPE::SMALLBLOCK_001)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SMALLBLOCK001, D3DXVECTOR3(m_pos.x + 200.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SMALLBLOCK001, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_4, m_pos.y, m_pos.z));
 		}
 
 		//上に設置する用ブロックの時
 		else if (type == CObjectX::TYPE::UPWALLBLOCK)
 		{
 			//生成する
-			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::UPWALLBLOCK, D3DXVECTOR3(m_pos.x + 200.0f, m_pos.y, m_pos.z));
+			CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::UPWALLBLOCK, D3DXVECTOR3(m_pos.x + CREATE_PLUS_POS_X_4, m_pos.y, m_pos.z));
 		}
 	}
 
@@ -574,7 +576,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	if (type == CObjectX::TYPE::TELEPHONPOLE)
 	{
 		//電柱カウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() < CInstance::MAX_STAGEOBJECT && CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() > -1 && CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount()) != nullptr)
+		if (CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() < CInstance::MAX_STAGEOBJECT && CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount() > nInitCreateNumber && CManager::GetInstance()->GetTelephonPole(CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount()) != nullptr)
 		{
 			/*if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
 			{
@@ -615,7 +617,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::FIELDBLOCK)
 	{
 		//地面用ブロックのカウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetInstance()->GetFieldBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetFieldBlockCount() > -1 && CManager::GetInstance()->GetFiledBlock(CManager::GetInstance()->GetFieldBlockCount()) != nullptr)
+		if (CManager::GetInstance()->GetFieldBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetFieldBlockCount() > nInitCreateNumber && CManager::GetInstance()->GetFiledBlock(CManager::GetInstance()->GetFieldBlockCount()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -663,7 +665,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::GOUPBLOCK)
 	{
 		//上がる用ブロックのカウントが最大数より低くー１より高く、情報がある時
-		if (CManager::GetInstance()->GetGoUpBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetGoUpBlockCount() > -1 && CManager::GetInstance()->GetGoUpBlock(CManager::GetInstance()->GetGoUpBlockCount()) != nullptr)
+		if (CManager::GetInstance()->GetGoUpBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetGoUpBlockCount() > nInitCreateNumber && CManager::GetInstance()->GetGoUpBlock(CManager::GetInstance()->GetGoUpBlockCount()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -711,7 +713,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::ROADBLOCK)
 	{
 		//道用ブロックのカウントが最大数より低く、ー１より高く、情報がある
-		if (CManager::GetInstance()->GetRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetRoadBlockCount() > -1 && CManager::GetInstance()->GetRoadBlock(CManager::GetInstance()->GetRoadBlockCount()) != nullptr)
+		if (CManager::GetInstance()->GetRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetRoadBlockCount() > nInitCreateNumber && CManager::GetInstance()->GetRoadBlock(CManager::GetInstance()->GetRoadBlockCount()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -759,7 +761,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::WALLROADBLOCK)
 	{
 		//壁兼道用ブロックのカウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetInstance()->GetWallRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlockCount() > -1 && CManager::GetInstance()->GetWallRoadBlock(CManager::GetInstance()->GetWallRoadBlockCount()) != nullptr)
+		if (CManager::GetInstance()->GetWallRoadBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlockCount() > nInitCreateNumber && CManager::GetInstance()->GetWallRoadBlock(CManager::GetInstance()->GetWallRoadBlockCount()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -806,7 +808,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::WALLROADBLOCK_001)
 	{
 		//壁兼道用ブロック001のカウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetInstance()->GetWallRoadBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlock001Count() > -1 && CManager::GetInstance()->GetWallRoadBlock001(CManager::GetInstance()->GetWallRoadBlock001Count()) != nullptr)
+		if (CManager::GetInstance()->GetWallRoadBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetWallRoadBlock001Count() > nInitCreateNumber && CManager::GetInstance()->GetWallRoadBlock001(CManager::GetInstance()->GetWallRoadBlock001Count()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -854,7 +856,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::SMALLBLOCK)
 	{
 		//小さいブロックのカウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetInstance()->GetSmallBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlockCount() > -1 && CManager::GetInstance()->GetSmallBlock(CManager::GetInstance()->GetSmallBlockCount()) != nullptr)
+		if (CManager::GetInstance()->GetSmallBlockCount() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlockCount() > nInitCreateNumber && CManager::GetInstance()->GetSmallBlock(CManager::GetInstance()->GetSmallBlockCount()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -902,7 +904,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 	else if (type == CObjectX::TYPE::SMALLBLOCK_001)
 	{
 		//小さいブロック001のカウントが最大数より低く、ー１より高く、情報がある時
-		if (CManager::GetInstance()->GetSmallBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlock001Count() > -1 && CManager::GetInstance()->GetSmallBlock001(CManager::GetInstance()->GetSmallBlock001Count()) != nullptr)
+		if (CManager::GetInstance()->GetSmallBlock001Count() < CInstance::MAX_OBJECT_DATA && CManager::GetInstance()->GetSmallBlock001Count() > nInitCreateNumber && CManager::GetInstance()->GetSmallBlock001(CManager::GetInstance()->GetSmallBlock001Count()) != nullptr)
 		{
 			//上キーが押された時
 			if (CManager::GetKeyBorad()->GetKeyboardPress(DIK_UP) == true)
@@ -953,7 +955,7 @@ void CObjectX::ObjectArrangement(CObjectX::TYPE type, CUI* pUI1)
 //==================================
 HRESULT CObjectX::Lood()
 {
-	int nNumTexture = 0;                                //テクスチャの配列を進める為の変数
+	int nNumTexture = N_INIT_NUMBER;                    //テクスチャの配列を進める為の変数
 	CRenderer* pRenderer = CManager::GetRenderer();     //レンダラーの取得
 	LPDIRECT3DDEVICE9 pDevice = pRenderer->GetDevice(); //デバイスの取得
 
@@ -967,7 +969,7 @@ HRESULT CObjectX::Lood()
 	m_pMat = (D3DXMATERIAL*)m_pBuffMat->GetBufferPointer();
 
 	//マテリアル（テクスチャ）分回す
-	for (int nCntMat = 0; nCntMat < (int)m_dwNumMat; nCntMat++)
+	for (int nCntMat = N_INIT_NUMBER; nCntMat < (int)m_dwNumMat; nCntMat++)
 	{
 		if (m_pMat[nCntMat].pTextureFilename != nullptr)
 		{//テクスチャファイルが存在する

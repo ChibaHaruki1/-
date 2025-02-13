@@ -132,22 +132,29 @@ public://外部からのアクセス可能
 													       
 private:											       
 	//マクロ定義									       
-	 static constexpr  int MAX_TEXTURE = 32;                 //保管できる最大のテクスチャー数
+	 static constexpr int MAX_TEXTURE = 32;                  //保管できる最大のテクスチャー数
 	 static constexpr int MINUS_ROT = -1;                    //向きの調整値
+
+	 static constexpr float HALF = 0.5f;                     //半分
+	 static constexpr float ENEMYINMOTION_PLUS_POS_X = 3.0f; //モーション付きの敵のX軸の位置の加算する値
 
 
 	 //===========================================
 	 //オブジェクト配置のマクロ定義
+
 	 static constexpr  float OBJECT_SET_PLUS_X = 1.0f;       //オブジェクトの配置時のX軸の右の移動の速さ
 	 static constexpr  float OBJECT_SET_MINUS_X = 1.0f;      //オブジェクトの配置時のX軸の左の移動の速さ
 	 static constexpr  float OBJECT_SET_PLUS_Y = 1.0f;       //オブジェクトの配置時のY軸の上の移動の速さ
 	 static constexpr  float OBJECT_SET_MINUS_Y = 1.0f;      //オブジェクトの配置時のY軸の下の移動の速さ
+	 static constexpr float CREATE_PLUS_POS_X_1 = 600.0f;    //生成時のX軸の位置の加算値１つ目
+	 static constexpr float CREATE_PLUS_POS_X_2 = 100.0f;    //生成時のX軸の位置の加算値２つ目
+	 static constexpr float CREATE_PLUS_POS_X_3 = 500.0f;    //生成時のX軸の位置の加算値３つ目
+	 static constexpr float CREATE_PLUS_POS_X_4 = 200.0f;    //生成時のX軸の位置の加算値４つ目
 
 	 static constexpr  float UI_SIZE = 50.0f;                //UIサイズの設定
 
 
-	 static constexpr float HALF = 0.5f;                     //半分
-	 static constexpr float ENEMYINMOTION_PLUS_POS_X = 3.0f; //モーション付きの敵のX軸の位置の加算する値
+	 
 													     
 													     
 	LPDIRECT3DTEXTURE9 m_pTexture[MAX_TEXTURE];          //テクスチャへのポインタ

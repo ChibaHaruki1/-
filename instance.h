@@ -135,10 +135,15 @@ public:
 		m_pFuelGage = CFuelGage::Create();
 	}*/
 
+
+	 //==========================
+	 //マクロ定義
+	 static constexpr int N_INIT_CREATE_NUMBER = -1; //生成数の初期値
+
+
 private:
 	//マクロ定義
-	static constexpr int N_INIT_NUMBER = 0;         //int型の初期化の値
-	static constexpr int N_INIT_CREATE_NUMBER = -1; //生成数の初期値
+	static constexpr int N_INIT_NUMBER = 0;          //int型の初期化の値
 
 
 	//ブロックのインスタンスを生成
