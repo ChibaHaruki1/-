@@ -211,11 +211,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 //=============================
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	int nInitNumber = CObjectX::N_INIT_NUMBER; //初期値
+
 	//PAINTSTRUCT ps;
 	//HPEN hPen, hPenold;
-	int nID;                                                              //ID
-	static POINT pos = { 100.100 };                                       //ポイント（点）のXY軸の設定
-	const RECT rect = { 0,0,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT };   //ウィンドウの大きさ
+	int nID;                                                                                 //ID
+	static POINT pos = { CMain::POINT_POS };                                                 //ポイント（点）のXY軸の設定
+	const RECT rect = { CMain::RECT,CMain::RECT,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT };  //ウィンドウの大きさ
 
 	//int型で判定
 	switch (uMsg)
@@ -223,7 +225,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY: //ウィンドウ破棄のメッセージ
 
 		//WM_QUITメッセージを送る
-		PostQuitMessage(0);
+		PostQuitMessage(nInitNumber);
 		break; //処理を抜ける
 
 		//ECS選択時の処理
@@ -266,7 +268,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			return 0; //ゼロを返さないと終了してしまう
+			return nInitNumber; //ゼロを返さないと終了してしまう
 		}
 
 		break; //処理を抜ける
@@ -296,3 +298,4 @@ void CMain::Uninit()
 		g_pMnager = nullptr;  //情報を無くす
 	}
 }
+
