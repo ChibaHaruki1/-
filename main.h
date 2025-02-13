@@ -65,16 +65,19 @@ public:
 	//=============================
 	//マクロ定義
 
-	static constexpr UINT PERIOD = 1U;               //分解能の設定＿タイマーの最小解像度を要求する関数の値
+	static constexpr UINT PERIOD = 1U;                //分解能の設定＿タイマーの最小解像度を要求する関数の値
+													  
+	 static constexpr  int SCREEN_WIDTH = 1280;       //ウィンドウの幅
+	 static constexpr  int SCREEN_HEIGHT = 720;       //ウィンドウの高さ
+	 static constexpr  int CLIENT_COL_PLUS = 1;       //クライアント領域の背景色の値の加算値
+	 static constexpr  int RETURN_NUMBER = -1;        //返す値
+	 static constexpr  int FPS_HALF_TIME = 500;       //FPS値の到達秒（０．５秒）
+	 static constexpr  int DIVISION = 1000;           //分割数(分子で１０００/６０＝１)
+	 static constexpr  int ONE_FRAME = DIVISION / 60; //１フレーム経過
 
-	 static constexpr  int SCREEN_WIDTH = 1280;      //ウィンドウの幅
-	 static constexpr  int SCREEN_HEIGHT = 720;      //ウィンドウの高さ
-	 static constexpr  int CLIENT_COL_PLUS = 1;      //クライアント領域の背景色の値の加算値
-	 static constexpr  int RETURN_NUMBER = -1;       //返す値
-
-	 static constexpr float RHW = 1.0f;              //座標変換用の固定値
-	 static constexpr float NOR = 1.0f;              //法線ベクトルの固定値
-	 static constexpr float MAX_TEXTURE_SIZE = 1.0f; //テクスチャの最大の大きさ
+	 static constexpr float RHW = 1.0f;               //座標変換用の固定値
+	 static constexpr float NOR = 1.0f;               //法線ベクトルの固定値
+	 static constexpr float MAX_TEXTURE_SIZE = 1.0f;  //テクスチャの最大の大きさ
 
 
 private:

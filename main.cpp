@@ -146,10 +146,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	//メッセージループ
-	while (1)
+	while (CObjectX::WHILE_NUMBER)
 	{
 		//msgにあるhwndの情報がある時
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) != 0)
+		if (PeekMessage(&msg, NULL, nInitNumber, nInitNumber, PM_REMOVE) != nInitNumber)
 		{//Windowの処理
 
 			//終了メッセージを受け取った時
@@ -169,17 +169,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hInstanceprev, _
 			dwCurrentTime = timeGetTime(); //現在時刻
 
 			//現在時刻ー最後に観測したFPSが0.5秒より高き時
-			if ((dwCurrentTime - dwFPSLastTime) >= 500)
+			if ((dwCurrentTime - dwFPSLastTime) >= CMain::FPS_HALF_TIME)
 			{//0.5秒経過
 
 				//FPSを観測
-				CManager::GetMain()->GetFPS() = (dwFrameCount * 1000) / (dwCurrentTime - dwFPSLastTime); //FPSの値を設定
-				dwFPSLastTime = dwCurrentTime;                                                           //FPSを測定した時刻を保存
-				dwFrameCount = 0;                                                                        //フレイムカウントをクリア
+				CManager::GetMain()->GetFPS() = (dwFrameCount * CMain::DIVISION) / (dwCurrentTime - dwFPSLastTime); //FPSの値を設定
+				dwFPSLastTime = dwCurrentTime;                                                                      //FPSを測定した時刻を保存
+				dwFrameCount = nInitNumber;                                                                         //フレイムカウントをクリア
 			}
 
 			//１フレーム経過
-			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))
+			if ((dwCurrentTime - dwExecLastTime) >= CMain::ONE_FRAME)
 			{//６０分の１秒経過
 
 				dwExecLastTime = dwCurrentTime; //処理開始の時刻（現在時刻）を保存

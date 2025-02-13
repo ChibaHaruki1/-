@@ -567,10 +567,14 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		for (RightnCount = PARTS_RIGHT_SHOLDER_NUMBER; RightnCount <= PARTS_RIGHT_SHOLDER_WEAPON_NUMBER; RightnCount++)
 		{
 			//初期値は現在の右パーツ
-			for (int nCount1 = RightnCount; nCount1 < RightnCount; nCount1++)
+			for (int nCount1 = RightnCount+ BEFORE_PARTS_COUNT; nCount1 < RightnCount; nCount1++)
 			{
-				//位置を加算する,
-				m_pSaveModelPrtUpdateInfo001[RightnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount1].pos.x, m_pSaveModelPrtUpdateInfo001[nCount1].pos.y, m_pSaveModelPrtUpdateInfo001[nCount1].pos.z);
+				//カウントが右肩からの時
+				if (nCount1 >= PARTS_RIGHT_SHOLDER_NUMBER)
+				{
+					//位置を加算する,
+					m_pSaveModelPrtUpdateInfo001[RightnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount1].pos.x, m_pSaveModelPrtUpdateInfo001[nCount1].pos.y, m_pSaveModelPrtUpdateInfo001[nCount1].pos.z);
+				}
 			}
 		}
 
@@ -578,9 +582,14 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		for (LeftnCount = PARTS_LEFT_SHOLDER_NUMBER; LeftnCount <= PARTS_LEFT_SHOLDER_WEAPON_NUMBER; LeftnCount++)
 		{
 			//初期値は現在の左パーツ
-			for (int nCount2 = LeftnCount; nCount2 < LeftnCount; nCount2++)
+			for (int nCount2 = LeftnCount + BEFORE_PARTS_COUNT; nCount2 < LeftnCount; nCount2++)
 			{
-				m_pSaveModelPrtUpdateInfo001[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount2].pos.x, m_pSaveModelPrtUpdateInfo001[nCount2].pos.y, m_pSaveModelPrtUpdateInfo001[nCount2].pos.z);  //位置を加算する
+				//カウントが左肩からの時
+				if (nCount2 >= PARTS_LEFT_SHOLDER_NUMBER)
+				{
+					//位置を加算する
+					m_pSaveModelPrtUpdateInfo001[LeftnCount].pos += D3DXVECTOR3(m_pSaveModelPrtUpdateInfo001[nCount2].pos.x, m_pSaveModelPrtUpdateInfo001[nCount2].pos.y, m_pSaveModelPrtUpdateInfo001[nCount2].pos.z);  
+				}
 			}
 		}
 

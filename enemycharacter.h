@@ -70,6 +70,7 @@ private:
 	static constexpr int MAX_DATA_SEARCH = 512;                   //テキストファイルの読み込み時の配列の最大数
 	static constexpr int MAX_ENEMYKEYSET = 5;                     //モーションに使うキーの数
 	static constexpr int NUM_ENEMYMOTION = 10;                    //モーションの数
+	static constexpr int BEFORE_PARTS_COUNT = -1;                 //前のパーツカウント
 	static constexpr int HALF = 2;                                //int型の時の半分
 	static constexpr int FGET_NUMBER_1 = 40;                      //fgets関数の読み取り値１つ目
 	static constexpr int FGET_NUMBER_2 = 20;                      //fgets関数の読み取り値２つ目

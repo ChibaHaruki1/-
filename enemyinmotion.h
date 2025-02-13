@@ -75,18 +75,18 @@ private:
 	//==============================================
 	//行動パターン１の時の行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_1 = 1;                           //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_2 = 20;                          //第二行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_2 = 40;                          //第二行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_3 = ATTACKPATTEN1_FRAME_2 + 1;   //第三行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_4 = 40;                          //第四行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_4 = 60;                          //第四行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_5 = ATTACKPATTEN1_FRAME_4 + 1;   //第五行動時のフレーム
-	static constexpr  int ATTACKPATTEN1_FRAME_6 = 60;                          //第六行動時のフレーム
+	static constexpr  int ATTACKPATTEN1_FRAME_6 = 80;                          //第六行動時のフレーム
 	static constexpr  int ATTACKPATTEN1_FRAME_7 = ATTACKPATTEN1_FRAME_6 + 1;   //第七行動時のフレーム
 																			   
 																			   
 	//==============================================						   
 	//行動パターン２の時の行動時のフレーム								       
 	static constexpr  int ATTACKPATTEN2_FRAME_1 = 1;                   //第一行動時のフレーム
-	static constexpr  int ATTACKPATTEN2_FRAME_2 = 20;                  //第一行動時のフレーム
+	static constexpr  int ATTACKPATTEN2_FRAME_2 = 20;                  //第二行動時のフレーム
 
 	static constexpr float PLAYER_MOVE = 10.0f;                        //プレイヤーの移動量を増減させる値(この方が１つにまとまるからいい？)
 										
