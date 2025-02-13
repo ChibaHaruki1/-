@@ -411,8 +411,8 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 						//コメントを読み込んだ時
 						if (m_aDataSearch[N_INIT_NUMBER] == '#')
 						{
-							continue;                          //続行
-							fgets(m_aDataSearch, 40, m_pFile); //ファイルから文字列を読み込む
+							continue;                                     //続行
+							fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile); //ファイルから文字列を読み込む
 						}
 
 						//終了条件
@@ -459,8 +459,8 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 								//コメントを読み込んだ時
 								if (m_aDataSearch[N_INIT_NUMBER] == '#')
 								{
-									fgets(m_aDataSearch, 20, m_pFile); //ファイルから文字を読み取る
-									continue;                          //処理を続ける
+									fgets(m_aDataSearch, FGET_NUMBER_2, m_pFile); //ファイルから文字を読み取る
+									continue;                                     //処理を続ける
 								}
 
 								//モーションの読み込み終了
@@ -487,8 +487,8 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 										//コメントを読み込んだ時
 										if (m_aDataSearch[N_INIT_NUMBER] == '#')
 										{
-											continue;                           //処理を続ける
-											fgets(m_aDataSearch, 40, m_pFile);  //ファイルから文字を読み取る
+											continue;                                      //処理を続ける
+											fgets(m_aDataSearch, FGET_NUMBER_1, m_pFile);  //ファイルから文字を読み取る
 										}
 
 										//位置を読み取る条件
