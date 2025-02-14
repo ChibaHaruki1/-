@@ -151,7 +151,20 @@ CScene* CScene::Create(MODE mode)
 		{									  
 			return pScene;                    //情報を返す
 		}									  
-	}										  
+	}	
+
+	//裏ステージの時
+	else if (mode == MODE::MODE_HIDEGAME)
+	{
+		pScene = new CGame02();               //動的確保
+		pScene->m_Mode = mode;                //現在のモードを引数と同期させる
+
+		//初期化に成功した時				     
+		if (SUCCEEDED(pScene->Init()))
+		{
+			return pScene;                    //情報を返す
+		}
+	}
 											  
 	//タイトルの時						   	  
 	else if (mode == MODE::MODE_TITLE)		  

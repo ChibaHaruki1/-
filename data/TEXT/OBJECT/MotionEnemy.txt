@@ -11,7 +11,7 @@
 #=====================================
 MOTIONENEMYSET
 		POS = 1000.0 100.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 
@@ -20,7 +20,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 2900.0 2000.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 
@@ -29,7 +29,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 7000.0 2000.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 
@@ -38,7 +38,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 8100.0 4450.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 #=====================================
@@ -46,7 +46,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 8200.0 4450.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 
@@ -55,7 +55,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 8300.0 4450.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 #=====================================
@@ -63,7 +63,7 @@ END_MOTIONENEMYSET
 #=====================================
 MOTIONENEMYSET
 		POS = 11000.0 1830.0 0.0 
-		1
+		0
 END_MOTIONENEMYSET
 
 END_SCRIPT

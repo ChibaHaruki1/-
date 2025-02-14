@@ -35,6 +35,7 @@ public:
 		MODE_TITLE = 0,                 //タイトル
 		MODE_GAME01,                    //ステージ１
 		MODE_GAME02,                    //ステージ２
+		MODE_HIDEGAME,                  //裏ステージ
 		MODE_RESULT,                    //リザルト
 		MODE_GAMEOVER,                  //ゲームオーバー
 		MODE_MAX                        //最大数
@@ -52,32 +53,32 @@ public:
 
 	//==================================
 	//情報の取得
-	MODE& GetMode() { return m_Mode; }               //現在モードの取得
-	CCamera* GetCamera() { return m_pCamera; }       //カメラの情報を取得
-	CLight* GetLight() { return m_pLight; }          //光源の情報を取得
-	CPlayerX*& GetPlayerX() { return m_pPlayerX; }   //プレイヤーの情報を取得する
+	inline MODE& GetMode() { return m_Mode; }               //現在モードの取得
+	inline CCamera* GetCamera() { return m_pCamera; }       //カメラの情報を取得
+	inline CLight* GetLight() { return m_pLight; }          //光源の情報を取得
+	inline CPlayerX*& GetPlayerX() { return m_pPlayerX; }   //プレイヤーの情報を取得する
 
-	int& GetFrame() { return m_nFrame; }
+	inline int& GetFrame() { return m_nFrame; }
 
 
 	//==================================
 	//情報の設定
-	void SetFrame(int nFrame) { m_nFrame = nFrame; } //フレームの設定
-	int& SetAdjustFrame() { return m_nFrame; }       //フレームの調整
+	inline void SetFrame(int nFrame) { m_nFrame = nFrame; } //フレームの設定
+	inline int& SetAdjustFrame() { return m_nFrame; }       //フレームの調整
 
 
 	//===========================================================
 	//情報の取得
-	bool& GetOneSound() { return m_bOneSound; }      //音源が再生されているかどうかの判定を取得
-	bool& GetOneScene() { return m_bOneScene; }      //シーンの移動するかどうかの情報を取得
-	bool& GetPlay() { return m_bPlay; }              //遊べるかどうかの情報を取得
+	inline bool& GetOneSound() { return m_bOneSound; }      //音源が再生されているかどうかの判定を取得
+	inline bool& GetOneScene() { return m_bOneScene; }      //シーンの移動するかどうかの情報を取得
+	inline bool& GetPlay() { return m_bPlay; }              //遊べるかどうかの情報を取得
 
 
 	//===========================================================
 	//情報の設定
-	void SetOneSound(bool bOneSound) { m_bOneSound = bOneSound; } //音源を生成するかどうかを設定
-	void SetOneScene(bool bOneScene) { m_bOneScene = bOneScene; } //シーンを移動するかどうかを設定	
-	void SetPlay(bool bPlay) { m_bPlay = bPlay; }                 //遊べるか設定する
+	inline void SetOneSound(bool bOneSound) { m_bOneSound = bOneSound; } //音源を生成するかどうかを設定
+	inline void SetOneScene(bool bOneScene) { m_bOneScene = bOneScene; } //シーンを移動するかどうかを設定	
+	inline void SetPlay(bool bPlay) { m_bPlay = bPlay; }                 //遊べるか設定する
 
 private:
 	CCamera* m_pCamera;        //カメラの情報

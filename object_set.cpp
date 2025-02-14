@@ -15,7 +15,7 @@
 
 //============================
 //static変数の初期化
-int CObjectSet::m_nClearScore = N_INIT_NUMBER;
+int CObjectSet::m_nClearScore = CObject::N_INIT_NUMBER;
 
 
 //=========================
@@ -44,19 +44,19 @@ CObjectSet::CObjectSet()
 	m_aUpWallBlockEndName = "END_UPWALLBLOCKSET";			//上壁の名前を設定
 
 	//読み取れる最大数分回す
-	for (int nCount = N_INIT_NUMBER; nCount < MAX_DATAMOJI; nCount++)
+	for (int nCount = CObject::N_INIT_NUMBER; nCount < MAX_DATAMOJI; nCount++)
 	{
 		m_aData[nCount] = {}; //文字の読み取り配列の初期化
 	}
 
-	m_nFieldBlockCount = N_INIT_NUMBER;       //地面用ブロックの生成数の初期化
-	m_nGoUpBlockCount = N_INIT_NUMBER;        //上がる用ブロックの生成数の初期化
-	m_nRoadBlockCount = N_INIT_NUMBER;        //道用ブロックの生成数の初期化
-	m_nWallRoadBlockCount = N_INIT_NUMBER;    //壁兼道用ブロックの生成数を初期化
-	m_nWallRoadBlock001Count = N_INIT_NUMBER; //壁兼道用ブロック001の生成数を初期化
-	m_nSmalBlockCount = N_INIT_NUMBER;        //小さいブロックの生成数を初期化
-	m_nSmalBlock001Count = N_INIT_NUMBER;     //小さいブロック001の生成数を初期化
-	m_nLaserCount = N_INIT_NUMBER;            //レーザーの生成数の初期化
+	m_nFieldBlockCount = CObject::N_INIT_NUMBER;       //地面用ブロックの生成数の初期化
+	m_nGoUpBlockCount = CObject::N_INIT_NUMBER;        //上がる用ブロックの生成数の初期化
+	m_nRoadBlockCount = CObject::N_INIT_NUMBER;        //道用ブロックの生成数の初期化
+	m_nWallRoadBlockCount = CObject::N_INIT_NUMBER;    //壁兼道用ブロックの生成数を初期化
+	m_nWallRoadBlock001Count = CObject::N_INIT_NUMBER; //壁兼道用ブロック001の生成数を初期化
+	m_nSmalBlockCount = CObject::N_INIT_NUMBER;        //小さいブロックの生成数を初期化
+	m_nSmalBlock001Count = CObject::N_INIT_NUMBER;     //小さいブロック001の生成数を初期化
+	m_nLaserCount = CObject::N_INIT_NUMBER;            //レーザーの生成数の初期化
 }
 
 
@@ -65,7 +65,7 @@ CObjectSet::CObjectSet()
 //=========================
 CObjectSet::~CObjectSet()
 {
-	m_nClearScore = N_INIT_NUMBER; //スコアの初期化
+	m_nClearScore = CObject::N_INIT_NUMBER; //スコアの初期化
 }
 
 
@@ -85,27 +85,48 @@ HRESULT CObjectSet::Init()
 		StageOneInformation("data\\TEXT\\OBJECT\\Enemy.txt");        //敵の読み込み
 		StageOneInformation("data\\TEXT\\OBJECT\\MotionEnemy.txt");  //モーション付きの敵の読み込み
 
-		SetCreateCountInPlayer();                                    //生成数をプレイヤーに渡す処理関数を呼ぶ
+		break; //処理を抜ける
 
-		return S_OK;  //処理を抜ける
 
 		//ステージ２の時
 	case CScene::MODE::MODE_GAME02:
 		StageOneInformation("data\\TEXT\\OBJECT\\Block1.txt");       //ブロック1の読み込み
 		StageOneInformation("data\\TEXT\\OBJECT\\Ceiling.txt");      //天井の読み込み
 
-		SetCreateCountInPlayer();                                    //生成数をプレイヤーに渡す処理関数を呼ぶ
+		break; //処理を抜ける
 
-		return S_OK; //処理を抜ける
+
+		//裏ステージの時
+	case CScene::MODE::MODE_HIDEGAME:
+		StageOneInformation("data\\TEXT\\OBJECT\\Block2.txt");       //ブロック2の読み込み
+
+		break; //処理を抜ける
+
 
 		//リザルト時の時
 	case CScene::MODE::MODE_RESULT:
-		ResultScoreWrite("data\\TEXT\\ResultScore.txt");        //リザルトスコアの書き込み
-		ResultScoreInformation("data\\TEXT\\ResultScore.txt");  //リザルトスコアの読み込み
+		ResultScoreWrite("data\\TEXT\\ResultScore.txt");             //リザルトスコアの書き込み
+		ResultScoreInformation("data\\TEXT\\ResultScore.txt");       //リザルトスコアの読み込み
 
-		return S_OK;
+		return S_OK; //成功を返す
 	}
-	return E_FAIL;
+
+	//現在のモードを読み取る
+	switch (CManager::GetScene()->GetMode())
+	{
+		//リザルト
+	case CScene::MODE::MODE_RESULT:
+
+		return S_OK; //成功を返す
+
+		//その他
+	default:
+		SetCreateCountInPlayer(); //プレイヤーに生成数を渡す処理
+
+		return S_OK; //成功を返す
+	}
+	
+	return E_FAIL;   //失敗を返す
 }
 
 
@@ -128,7 +149,7 @@ void CObjectSet::StageOneInformation(const char* pFileName)
 		(void)fscanf(pFile, "%s", m_aData); //文字を読み取る
 
 		//コメントを読み込んだ時
-		if (m_aData[0] == '#')
+		if (m_aData[CObject::N_INIT_NUMBER] == '#')
 		{
 			continue; //続行
 		}
@@ -192,7 +213,7 @@ void CObjectSet::ResultScoreWrite(const char* pFileName)
 //=================================
 void CObjectSet::LoodTelephonPole(FILE* pFile)
 {
-	float PosX, PosY, PosZ = F_INIT_NUMBER;         //posの位置を保管するための変数
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;         //posの位置を保管するための変数
 
 	///これが書かれていた時
 	if (!strcmp(m_aData, "TELEPHONPOLESET"))
@@ -230,7 +251,7 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SURVEILLANCECAMERADOWN, CManager::GetScene()->GetPlayerX()->GetTelephonPoleCount(), D3DXVECTOR3(PosX + CAMERA_PLUS_POS_X, PosY + CAMERA_DOWN_PLUS_POS_Y, PosZ + CAMERA_MINUS_POS_Z));
 
 				//レーザーの生成
-				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::LASER, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
+				CManager::GetInstance()->GetCreateObjectInstnace(CObject3D::TYPE::LASER, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
 			}
 		}
 	}
@@ -241,7 +262,7 @@ void CObjectSet::LoodTelephonPole(FILE* pFile)
 //=================================
 void CObjectSet::LoodBreakHouse(FILE* pFile)
 {
-	float PosX, PosY, PosZ = F_INIT_NUMBER;    //posの位置を保管するための変数
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;    //posの位置を保管するための変数
 
 	//これが書かれていた時
 	if (!strcmp(m_aData, "BREAKHOUSESET"))
@@ -266,7 +287,7 @@ void CObjectSet::LoodBreakHouse(FILE* pFile)
 				(void)fscanf(pFile, "%f", &PosZ);   //三番目の値を格納
 
 				//生成する
-				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::BREAKHOUSE, 0, D3DXVECTOR3(PosX, PosY, PosZ)); //壊れた家の生成
+				CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::BREAKHOUSE, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ)); //壊れた家の生成
 			}
 		}
 	}
@@ -277,7 +298,7 @@ void CObjectSet::LoodBreakHouse(FILE* pFile)
 //=================================
 void CObjectSet::LoodCeiling(FILE* pFile)
 {
-	float PosX, PosY, PosZ = F_INIT_NUMBER;     //posの位置を保管するための変数
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;     //posの位置を保管するための変数
 
 	//これが書かれていた時
 	if (!strcmp(m_aData, "CEILINGSET"))
@@ -313,8 +334,8 @@ void CObjectSet::LoodCeiling(FILE* pFile)
 //=================================
 void CObjectSet::LoodEnemy(FILE* pFile)
 {
-	int nNumber = N_INIT_NUMBER;               //生成番号
-	float PosX, PosY, PosZ = F_INIT_NUMBER;    //posの位置を保管するための変数
+	int nNumber = CObject::N_INIT_NUMBER;               //生成番号
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;    //posの位置を保管するための変数
 
 	//これが書かれていた時
 	if (!strcmp(m_aData, "ENEMYSET"))
@@ -342,19 +363,19 @@ void CObjectSet::LoodEnemy(FILE* pFile)
 				//番号で判定
 				switch (nNumber)
 				{
-				case 0:
+				case CASE_0:
 					//敵の生成
 					CManagerEnemy::Create(D3DXVECTOR3(PosX, PosY, PosZ), CObjectX::TYPE::ENEMY);                                 
 					break; //処理を抜ける
 
-				case 1:
+				case CASE_1:
 					//敵001の生成
-					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMY001, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
+					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMY001, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
 					break; //処理を抜ける
 
-				case 2:
+				case CASE_2:
 					//敵002の生成
-					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMY002, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
+					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMY002, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
 					break; //処理を抜ける
 				}
 			}
@@ -367,8 +388,8 @@ void CObjectSet::LoodEnemy(FILE* pFile)
 //==============================================
 void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 {
-	int nNumber = N_INIT_NUMBER;                //生成番号
-	float PosX, PosY, PosZ = F_INIT_NUMBER;     //posの位置を保管するための変数
+	int nNumber = CObject::N_INIT_NUMBER;                //生成番号
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;     //posの位置を保管するための変数
 
 	//これが書かれていた時
 	if (!strcmp(m_aData, "MOTIONENEMYSET"))
@@ -396,14 +417,14 @@ void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 				//番号で判定
 				switch (nNumber)
 				{
-				case 1:
+				case CASE_0:
 					//敵001の生成
-					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
+					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION001, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ));
 					break; //処理を抜ける
 
-				case 2:
+				case CASE_1:
 					//敵002の生成
-					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION002, N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ)); 
+					CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::ENEMYINMOTION002, CObject::N_INIT_NUMBER, D3DXVECTOR3(PosX, PosY, PosZ)); 
 					break; //処理を抜ける
 				}
 			}
@@ -416,7 +437,7 @@ void CObjectSet::LoodMotionInEnemy(FILE* pFile)
 //========================================
 void CObjectSet::LoodBlock(FILE* pFile)
 {
-	float PosX, PosY, PosZ = F_INIT_NUMBER;         //posの位置を保管するための変数
+	float PosX, PosY, PosZ = CObject::F_INIT_NUMBER;         //posの位置を保管するための変数
 
 	//===========================================
 	//地面用ブロックの読み込み

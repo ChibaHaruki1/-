@@ -57,12 +57,16 @@ public:
 	static constexpr float CAMERA_DOWN_PLUS_POS_Y = 170.0f; //カメラの下部分のY軸の値を加算する値
 
 
-private:
+private:										            
 	//マクロ定義
-	static constexpr int N_INIT_NUMBER = 0;                 //int型の初期化の値  
-	static constexpr float F_INIT_NUMBER = 0.0f;            //float型の初期化の値
-												            
-	static constexpr  int MAX_DATAMOJI = 200;               //文字列の配列の最大数
+	static constexpr int MAX_DATAMOJI = 200;    //文字列の配列の最大数
+
+
+	//====================================
+	//SWITCH文に関するマクロ
+	static constexpr int CASE_0 = 0;            //ケース番号０番
+	static constexpr int CASE_1 = 1;            //ケース番号１番
+	static constexpr int CASE_2 = 2;            //ケース番号２番
 
 
 	//テキストファイルから読み込む時に使うメンバ変数

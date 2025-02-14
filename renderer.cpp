@@ -49,7 +49,7 @@ HRESULT CRenderer::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//DirectXオブジェクトの作成
 	m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 
-    //情報がない時
+	//情報がない時
 	if (m_pD3D == nullptr)
 	{
 		return E_FAIL; //失敗を返す
@@ -106,8 +106,8 @@ HRESULT CRenderer::Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	m_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT);
 
 	//デバック表示用のフォントの生成
-	D3DXCreateFont(m_pD3DDevice, 18, 0, 0, 0, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
-	
+	D3DXCreateFont(m_pD3DDevice, FONT_HEIGHT, FONT_WIDTH, FONT_WEIGHT, FONT_MIPLEVELS, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, "Terminal", &m_pFont);
+
 	CManager::SetMode(CScene::MODE::MODE_GAME01); //初めのシーンを設定
 
 	return S_OK; //成功を返す
@@ -173,7 +173,7 @@ void CRenderer::Update()
 void CRenderer::Draw()
 {
 	//画面クリア（バックバッファ＆Zバッファのクリア
-	m_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(0, 0, 0, 0), 1.0f, 0);
+	m_pD3DDevice->Clear(CObject::N_INIT_NUMBER, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(CObject::RED, CObject::GREEN, CObject::BLUE, CObject::N_INIT_ALPHA_NUMBER), CLEAR_Z, CLEAR_STENCIL);
 
 	//描画開始
 	if (SUCCEEDED(m_pD3DDevice->BeginScene()))
@@ -241,13 +241,14 @@ void CRenderer::Draw()
 void CRenderer::DrawFPS()
 {
 	//表示用変数
-	RECT rect = { 0,0,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT }; //X,Y,大きさ（横、縦）で位置設定
+	RECT rect = { CObject::N_INIT_NUMBER, CObject::N_INIT_NUMBER,CMain::SCREEN_WIDTH,CMain::SCREEN_HEIGHT }; //X,Y,大きさ（横、縦）で位置設定
 
-	char aStr[10];                                                //文字列を保管する用の変数
+	//文字列を保管する用の変数
+	char aStr[MAX_STR];
 
 	//文字列に代入
-	wsprintf(&aStr[0], "FPS;%d\n", CManager::GetMain()->GetFPS());
+	wsprintf(&aStr[CObject::N_INIT_NUMBER], "FPS;%d\n", CManager::GetMain()->GetFPS());
 
 	//テキストの描画
-	m_pFont->DrawText(NULL, &aStr[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(255, 255, 255, 255));
+	m_pFont->DrawText(NULL, &aStr[CObject::N_INIT_NUMBER], DRAW_LONG_TEXT, &rect, DT_LEFT, D3DCOLOR_RGBA(CObject::RED, CObject::GREEN, CObject::BLUE, CObject::N_INIT_ALPHA_NUMBER));
 }

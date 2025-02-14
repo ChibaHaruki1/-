@@ -175,7 +175,7 @@ void CPlayerX::ShopInstanceMakeNullptr()
 		CManager::GetInstance()->DesignationUninit2D(CObject2D::TYPE::SCREEN); //情報を無くす
 	}
 
-	m_nSelectShopCount = 0;
+	m_nSelectShopCount = N_INIT_NUMBER;
 }
 
 
@@ -383,7 +383,7 @@ void CPlayerX::SceneMode(int nType)
 			{
 				//ステージ１の時
 			case CScene::MODE::MODE_GAME01:
-				CManager::SetMode(CScene::MODE::MODE_GAME02); //ステージ２に遷移
+				CManager::SetMode(CScene::MODE::MODE_HIDEGAME); //ステージ２に遷移
 				return;                                       //処理を抜ける
 
 				//ステージ２の時
@@ -718,7 +718,7 @@ void CPlayerX::ShopKeySet()
 			//背景UIを生成する
 			if (CManager::GetInstance()->GetShopScreen() == nullptr)
 			{
-				CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCREEN, 0); //背景の生成
+				CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCREEN, N_INIT_NUMBER); //背景の生成
 			}
 
 			//買うか売るかのUIを生成する
