@@ -383,7 +383,7 @@ void CPlayerX::SceneMode(int nType)
 			{
 				//ステージ１の時
 			case CScene::MODE::MODE_GAME01:
-				CManager::SetMode(CScene::MODE::MODE_HIDEGAME); //ステージ２に遷移
+				CManager::SetMode(CScene::MODE::MODE_GAME02); //ステージ２に遷移
 				return;                                       //処理を抜ける
 
 				//ステージ２の時

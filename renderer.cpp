@@ -224,7 +224,7 @@ void CRenderer::Draw()
 		CObjectManagerX::DrawAll();
 		CObject::DrawAll();
 
-		DrawFPS(); //debug•`‰æ
+		//DrawFPS(); //debug•`‰æ
 
 		//•`‰æI—¹
 		m_pD3DDevice->EndScene();

@@ -43,6 +43,7 @@ CObjectSet::CObjectSet()
 	m_aSmallBlock001EndName = "END_SMALLBLOCK001SET";		//小さいブロック001の名前を設定
 	m_aUpWallBlockEndName = "END_UPWALLBLOCKSET";			//上壁の名前を設定
 
+
 	//読み取れる最大数分回す
 	for (int nCount = CObject::N_INIT_NUMBER; nCount < MAX_DATAMOJI; nCount++)
 	{
@@ -79,34 +80,35 @@ HRESULT CObjectSet::Init()
 	{
 		//ステージ１の時
 	case CScene::MODE::MODE_GAME01:
-		StageOneInformation("data\\TEXT\\OBJECT\\TelephonPole.txt"); //電柱の読み込み
-		StageOneInformation("data\\TEXT\\OBJECT\\Block.txt");        //ブロックの読み込み
-		StageOneInformation("data\\TEXT\\OBJECT\\BreakHouse.txt");   //壊れた家の読み込み
-		StageOneInformation("data\\TEXT\\OBJECT\\Enemy.txt");        //敵の読み込み
-		StageOneInformation("data\\TEXT\\OBJECT\\MotionEnemy.txt");  //モーション付きの敵の読み込み
+		StageInformation(TELEPHONPOLE);   //電柱の読み込み
+		StageInformation(BLOCK);          //ブロックの読み込み
+		StageInformation(BREAKHOUSE);     //壊れた家の読み込み
+		StageInformation(ENEMY);          //敵の読み込み
+		StageInformation(MOTIONINENEMY);  //モーション付きの敵の読み込み
 
 		break; //処理を抜ける
 
 
 		//ステージ２の時
 	case CScene::MODE::MODE_GAME02:
-		StageOneInformation("data\\TEXT\\OBJECT\\Block1.txt");       //ブロック1の読み込み
-		StageOneInformation("data\\TEXT\\OBJECT\\Ceiling.txt");      //天井の読み込み
+		StageInformation(BLOCK_1);       //ブロック1の読み込み
+		StageInformation(CEILING);       //天井の読み込み
 
 		break; //処理を抜ける
 
 
 		//裏ステージの時
 	case CScene::MODE::MODE_HIDEGAME:
-		StageOneInformation("data\\TEXT\\OBJECT\\Block2.txt");       //ブロック2の読み込み
+		StageInformation(BLOCK_2);         //ブロック2の読み込み
+		StageInformation(MOTIONINENEMY_1); //敵の読み込み
 
 		break; //処理を抜ける
 
 
 		//リザルト時の時
 	case CScene::MODE::MODE_RESULT:
-		ResultScoreWrite("data\\TEXT\\ResultScore.txt");             //リザルトスコアの書き込み
-		ResultScoreInformation("data\\TEXT\\ResultScore.txt");       //リザルトスコアの読み込み
+		ResultScoreWrite("data\\TEXT\\ResultScore.txt");          //リザルトスコアの書き込み
+		ResultScoreInformation("data\\TEXT\\ResultScore.txt");    //リザルトスコアの読み込み
 
 		return S_OK; //成功を返す
 	}
@@ -131,9 +133,9 @@ HRESULT CObjectSet::Init()
 
 
 //================================================================================
-//ステージ１番目のオブジェクトの情報を設定
+//ステージ１番目から～のオブジェクトの情報を設定
 //================================================================================
-void CObjectSet::StageOneInformation(const char* pFileName)
+void CObjectSet::StageInformation(const char* pFileName)
 {
 	FILE* pFile = fopen(pFileName, "r"); //ファイルを読み込む
 
@@ -162,12 +164,46 @@ void CObjectSet::StageOneInformation(const char* pFileName)
 			break;                //処理を抜ける
 		}
 
-		LoodTelephonPole(pFile);  //電柱の情報を読み取る
-		LoodBlock(pFile);         //ブロックの情報を読み取る
-		LoodBreakHouse(pFile);    //壊れた家の情報を読み取る
-		LoodEnemy(pFile);         //敵の情報を読み込む
-		LoodMotionInEnemy(pFile); //モーション付きの敵の情報を読み込む
-		LoodCeiling(pFile);
+
+		//===============================================================================================================================
+		//文字列から読み取る関数を選ぶ処理
+		//===============================================================================================================================
+
+		//電柱
+		if (pFileName == TELEPHONPOLE)
+		{
+			LoodTelephonPole(pFile);  //電柱の情報を読み取る
+		}
+
+		//ブロック
+		else if (pFileName == BLOCK || pFileName == BLOCK_1 || pFileName == BLOCK_2)
+		{
+			LoodBlock(pFile);         //ブロックの情報を読み取る
+		}
+
+		//壊れた家
+		else if (pFileName == BREAKHOUSE)
+		{
+			LoodBreakHouse(pFile);    //壊れた家の情報を読み取る
+		}
+
+		//敵
+		else if (pFileName == ENEMY)
+		{
+			LoodEnemy(pFile);         //敵の情報を読み込む
+		}
+
+		//モーション付きの敵
+		else if (pFileName == MOTIONINENEMY || pFileName == MOTIONINENEMY_1)
+		{
+			LoodMotionInEnemy(pFile); //モーション付きの敵の情報を読み込む
+		}
+
+		//天井
+		else if (pFileName == CEILING)
+		{
+			LoodCeiling(pFile);       //天井
+		}
 	}
 }
 

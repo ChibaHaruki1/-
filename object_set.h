@@ -23,14 +23,14 @@ public:
 	HRESULT Init(); //初期化処理
 
 	//ステージ毎の読み込む関数をまとめる関数
-	void StageOneInformation(const char*pFileName);       //ステージ１番目のオブジェクトの位置などを読み込む
+	void StageInformation(const char* pFileName);          //ステージオブジェクトの位置などを読み込む
 	void ResultScoreInformation(const char* pFileName);	  //リザルトのオブジェクトの位置などを読み込む
-	
+
 	//ファイルに書き込む関数
 	void ResultScoreWrite(const char* pFileName);         //リザルトスコアの情報を読み込む
 
 	//それぞれのオブジェクトの読み込み処理＋生成する関数（txtファイルの中身の情報を読み込む）
-	void LoodTelephonPole(FILE*pFile);         //電柱の情報に関するデータを読み込む関数
+	void LoodTelephonPole(FILE* pFile);         //電柱の情報に関するデータを読み込む関数
 	void LoodBlock(FILE* pFile);               //ブロックの情報に関するデータを読み込む関数
 	void LoodBreakHouse(FILE* pFile);          //壊れた家の読み込み処理
 	void LoodResultScore(FILE* pFile);         //リザルトの情報読み込み生成
@@ -57,7 +57,7 @@ public:
 	static constexpr float CAMERA_DOWN_PLUS_POS_Y = 170.0f; //カメラの下部分のY軸の値を加算する値
 
 
-private:										            
+private:
 	//マクロ定義
 	static constexpr int MAX_DATAMOJI = 200;    //文字列の配列の最大数
 
@@ -69,10 +69,13 @@ private:
 	static constexpr int CASE_2 = 2;            //ケース番号２番
 
 
+	//================================================
 	//テキストファイルから読み込む時に使うメンバ変数
 	static int m_nClearScore;                   //現在のスコアを保管する用の変数
 	char m_aData[MAX_DATAMOJI];                 //文字列を読み取る　
 
+
+	//================================================
 	//テキストファイルの読み書きに使うメンバ変数
 	const char* m_aFieldBlockStratName;         //地面用のブロックの読み込み用の名前変数
 	const char* m_aGoUpBlockStratName;	        //上がる用のブロックの読み込み用の名前変数
@@ -93,7 +96,20 @@ private:
 	const char* m_aUpWallBlockEndName;     		//上壁ブロックの終了用の名前変数
 
 
-	//=====================================
+	//================================================
+	//読み込むファイルの文字列用のマクロ定義
+	static constexpr const char* TELEPHONPOLE = "data\\TEXT\\OBJECT\\TelephonPole.txt";   //電柱
+	static constexpr const char* BLOCK = "data\\TEXT\\OBJECT\\Block.txt";                 //ブロック
+	static constexpr const char* BLOCK_1 = "data\\TEXT\\OBJECT\\Block1.txt";              //ブロック1
+	static constexpr const char* BLOCK_2 = "data\\TEXT\\OBJECT\\Block2.txt";              //ブロック2
+	static constexpr const char* BREAKHOUSE = "data\\TEXT\\OBJECT\\BreakHouse.txt";       //壊れた家
+	static constexpr const char* ENEMY = "data\\TEXT\\OBJECT\\Enemy.txt";                 //敵
+	static constexpr const char* MOTIONINENEMY = "data\\TEXT\\OBJECT\\MotionEnemy.txt";   //モーション付きの敵
+	static constexpr const char* MOTIONINENEMY_1 = "data\\TEXT\\OBJECT\\MotionEnemy1.txt"; //モーション付きの敵1
+	static constexpr const char* CEILING = "data\\TEXT\\OBJECT\\Ceiling.txt";              //天井
+
+
+	//================================================
 	//生成数のカウント
 	int m_nFieldBlockCount;        //地面用ブロックの生成数をカウントする用の変数
 	int m_nGoUpBlockCount;         //上がる用ブロックの生成数をカウントする用の変数

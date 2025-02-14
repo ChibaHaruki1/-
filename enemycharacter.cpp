@@ -127,17 +127,7 @@ void CEnemyCharacter::UpdateEnemy002()
 {
 	MotionInfoEnemy002(); //モーションを行う処理を呼ぶ
 
-	for (int nCount = N_INIT_NUMBER; nCount < m_nEnemy002Parts; nCount++)
-	{
-		//パーツごとの位置を常に更新＝もともとのパーツのposを足し合わせた物
-		for (int nCount = N_INIT_NUMBER; nCount < m_nEnemy001Parts; nCount++)
-		{
-			//パーツの位置の更新
-			GetPosPartsEnemy(nCount) = D3DXVECTOR3(m_pSaveModelPrtUpdateInfo002[nCount].pos.x + GetPos().x,
-				m_pSaveModelPrtUpdateInfo002[nCount].pos.y + GetPos().y,
-				m_pSaveModelPrtUpdateInfo002[nCount].pos.z + GetPos().z); //各パーツを保管値＋現在の位置で修正
-		}
-	}
+	
 }
 
 //========================
@@ -615,6 +605,11 @@ void CEnemyCharacter::LoodEnemy(const char* aSelect)
 		for (int nCount = N_INIT_NUMBER; nCount < m_nNumParts; nCount++)
 		{
 			m_pSaveModelPrtUpdateInfo002[nCount].pos = m_pSaveModelPrtInfo[nCount].pos; //値を複製する
+		}
+
+		for (int nLoodModelPrtsEnemy = N_INIT_NUMBER; nLoodModelPrtsEnemy < MAX_ENEMYPARTS; nLoodModelPrtsEnemy++)
+		{
+			m_pModelPrtsEnemy002[nLoodModelPrtsEnemy] = m_pLoodModelPrtsEnemy[nLoodModelPrtsEnemy];
 		}
 
 	}

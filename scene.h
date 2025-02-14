@@ -98,7 +98,7 @@ private:
 //ステージ１のクラス管理
 class CGame01 : public CScene
 {
-public:                      //アクセス可能
+public:                     
 	CGame01();               //コンストラクタ
 	~CGame01()override;      //デストラクタ
 	HRESULT Init()override;  //初期化処理
@@ -116,9 +116,29 @@ private:
 //ステージ２のクラス管理
 class CGame02 : public CScene
 {
-public:                       //アクセス可能
+public:                    
 	CGame02();                //コンストラクタ
 	~CGame02()override;       //デストラクタ
+	HRESULT Init()override;   //初期化処理
+	void Uninit()override;    //破棄処理
+	void Update()override;    //更新処理
+	void CompileCreate();     //create関数をまとめる関数
+
+private:
+	//マクロ定義
+	static constexpr float POS_X = 1500.0f;      //X軸の生成位置
+	static constexpr float PLUS_POS_X = 20.0f;   //X軸の加算値
+
+};
+
+
+//=====================================
+//裏ステージのクラス管理
+class CHideGame : public CScene
+{
+public:
+	CHideGame();              //コンストラクタ
+	~CHideGame()override;     //デストラクタ
 	HRESULT Init()override;   //初期化処理
 	void Uninit()override;    //破棄処理
 	void Update()override;    //更新処理
@@ -136,7 +156,7 @@ private:
 //タイトルのクラス管理
 class CTitle : public CScene
 {
-public:                     //アクセス可能
+public:                   
 	CTitle();               //コンストラクタ
 	~CTitle()override;      //デストラクタ
 	HRESULT Init()override; //初期化処理
@@ -144,7 +164,7 @@ public:                     //アクセス可能
 	void Update()override;  //更新処理
 	void Game();            //タイトルゲーム画面
 
-private:             //アクセス不可能
+private:           
 	CFade* m_pFade;  //フェードのポインター
 };
 
@@ -153,7 +173,7 @@ private:             //アクセス不可能
 //リザルトのクラス管理
 class CResult : public CScene
 {
-public:                     //アクセス可能
+public:                     
 	CResult();              //コンストラクタ
 	~CResult()override;     //デストラクタ
 	HRESULT Init()override; //初期化処理
@@ -166,10 +186,10 @@ public:                     //アクセス可能
 //ゲームオーバークラス管理
 class CGameOver : public CScene
 {
-public: //アクセス可能
-	CGameOver(); //コンストラクタ
-	~CGameOver()override; //デストラクタ
-	HRESULT Init()override; //初期化処理
-	void Uninit()override; //破棄処理
-	void Update()override; //更新処理
+public: 
+	CGameOver();             //コンストラクタ
+	~CGameOver()override;    //デストラクタ
+	HRESULT Init()override;  //初期化処理
+	void Uninit()override;   //破棄処理
+	void Update()override;   //更新処理
 };
