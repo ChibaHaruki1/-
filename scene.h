@@ -80,6 +80,11 @@ public:
 	inline void SetOneScene(bool bOneScene) { m_bOneScene = bOneScene; } //シーンを移動するかどうかを設定	
 	inline void SetPlay(bool bPlay) { m_bPlay = bPlay; }                 //遊べるか設定する
 
+
+	//===========================================================
+	//マクロ定義
+	static constexpr int BATTLESHIP_NUMBER = 0;            //シーン用のバトルシップの番号
+
 private:
 	CCamera* m_pCamera;        //カメラの情報
 	CLight* m_pLight;          //光源の情報
@@ -98,7 +103,7 @@ private:
 //ステージ１のクラス管理
 class CGame01 : public CScene
 {
-public:                     
+public:
 	CGame01();               //コンストラクタ
 	~CGame01()override;      //デストラクタ
 	HRESULT Init()override;  //初期化処理
@@ -107,7 +112,31 @@ public:
 	void InitCreate();       //初期化時に生成したい物をまとめる関数
 	void CompileCreate();    //create関数をまとめる関数
 
-private:          
+private:
+	//マクロ定義
+	static constexpr int INIT_CAMERA_ADJUST_POS_Z = 500;   //カメラのZ軸の位置を設定
+	static constexpr int UPDATE_CAMERA_ADJUST_POS_Z = 800; //カメラのZ軸の位置を設定
+	static constexpr int MAX_FRAME = 180;                  //フレームの最大数
+
+	static constexpr float MINUS_ROT = -1.0f;              //向きの値の減算値
+	static constexpr float INIT_PLAYER_POS_Y = 2050.0f;    //プレイヤーのY軸の位置を設定
+
+
+	//==================================================
+	//バトルシップに関するマクロ定義
+	static constexpr float BATTLESHIP_0_POS_Y = 2000.0f;   //バトルシップ0のY軸の位置
+	static constexpr float BATTLESHIP_0_POS_Z = 100.0f;    //バトルシップ0のZ軸の位置
+
+	static constexpr float BATTLESHIP_1_POS_X = 12700.0f;  //バトルシップ1のX軸の位置
+	static constexpr float BATTLESHIP_1_POS_Y = 1900.0f;   //バトルシップ1のY軸の位置
+
+
+	//==================================================
+	//空に関するマクロ定義
+	static constexpr int SKY_CREATE_NUMBER = 1; //空の生成番号
+
+	static constexpr float SKY_POS_Z = 200.0f;  //空のZ軸の位置
+
 	CFade* m_pFade;          //フェードのポインター
 };
 
@@ -117,39 +146,70 @@ private:
 class CGame02 : public CScene
 {
 public:                    
-	CGame02();                //コンストラクタ
-	~CGame02()override;       //デストラクタ
-	HRESULT Init()override;   //初期化処理
-	void Uninit()override;    //破棄処理
-	void Update()override;    //更新処理
-	void CompileCreate();     //create関数をまとめる関数
+	CGame02();                                        //コンストラクタ
+	~CGame02()override;                               //デストラクタ
+	HRESULT Init()override;                           //初期化処理
+	void Uninit()override;                            //破棄処理
+	void Update()override;                            //更新処理
+	void CompileCreate();                             //create関数をまとめる関数
 
 private:
 	//マクロ定義
-	static constexpr float POS_X = 1500.0f;      //X軸の生成位置
-	static constexpr float PLUS_POS_X = 20.0f;   //X軸の加算値
+	static constexpr float PLUS_POS_X = 20.0f;        //X軸の加算値
+	static constexpr float PLUS_POS_Y = 3.0f;         //Y軸の加算値
+	static constexpr float BATTLESHOP_POS_Z = 100.0f; //バトルシップのZ軸の位置
+
+
+	//==================================================
+	//共通マクロ定義
+	static constexpr float POS_X = -1500.0f;          //X軸の生成位置
+	static constexpr float POS_Y = 200.0f;            //Y軸の生成位置
+
+
+	//==================================================
+	//空に関するマクロ定義
+	static constexpr float SKY_POS_Z = 200.0f;        //空のZ軸の位置
+
+
+	//==================================================
+	//足場に関するマクロ定義
+	static constexpr float SCAFFOLD_POS_X = 4335.0f;  //足場のX軸の生成位置
+	static constexpr float SCAFFOLD_POS_Y = -200.0f;  //足場のY軸の生成位置
+
+
+	//==================================================
+	//店に関するマクロ定義
+	static constexpr float SHOP_POS_X = 200.0f; //店のX軸の生成位置
+	static constexpr float SHOP_POS_Z = 150.0f; //店のZ軸の生成位置
+
+
+	//==============================
+	//行動時のマクロ定義
+	static constexpr int FRAME_1 = 80;           //第一行動
+	static constexpr int FRAME_2 = FRAME_1 + 1;  //第二行動
+	static constexpr int FRAME_3 = 300;          //第三行動
 
 };
 
 
-//=====================================
-//裏ステージのクラス管理
-class CHideGame : public CScene
-{
-public:
-	CHideGame();              //コンストラクタ
-	~CHideGame()override;     //デストラクタ
-	HRESULT Init()override;   //初期化処理
-	void Uninit()override;    //破棄処理
-	void Update()override;    //更新処理
-	void CompileCreate();     //create関数をまとめる関数
-
-private:
-	//マクロ定義
-	static constexpr float POS_X = 1500.0f;      //X軸の生成位置
-	static constexpr float PLUS_POS_X = 20.0f;   //X軸の加算値
-
-};
+////=====================================
+////裏ステージのクラス管理
+//class CHideGame : public CScene
+//{
+//public:
+//	CHideGame();              //コンストラクタ
+//	~CHideGame()override;     //デストラクタ
+//	HRESULT Init()override;   //初期化処理
+//	void Uninit()override;    //破棄処理
+//	void Update()override;    //更新処理
+//	void CompileCreate();     //create関数をまとめる関数
+//
+//private:
+//	//マクロ定義
+//	static constexpr float POS_X = 1500.0f;      //X軸の生成位置
+//	static constexpr float PLUS_POS_X = 20.0f;   //X軸の加算値
+//
+//};
 
 
 //=====================================

@@ -34,14 +34,14 @@ CManagerBg* g_pBG; //”wŒi‚ÌBG‚ÌƒOƒ[ƒoƒ‹•Ï”(‚·‚Å‚Ébg.h‚Éscene.h‚ğƒCƒ“ƒNƒ‹[ƒh‚
 //=======================
 CScene::CScene()
 {
-	m_pCamera = nullptr;          //ƒJƒƒ‰ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
-	m_pLight = nullptr;           //ŒõŒ¹ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
-	m_pPlayerX = nullptr;         //ƒvƒŒƒCƒ„[ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
-	m_bOneSound = false;          //‚P“x‚¾‚¯‰¹Œ¹‚ğ—¬‚·ƒtƒ‰ƒO‚Ì‰Šú‰»
-	m_bOneScene = false;          //‚P“x‚¾‚¯‚»‚ÌƒV[ƒ“‚Ìˆ—‚ğ’Ê‚·ƒtƒ‰ƒO‚Ì‰Šú‰»
-	m_bPlay = false;              //—V‚×‚éó‘Ô‚É‚È‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚Ì‰Šú‰»
-	m_Mode = MODE::MODE_RESULT;   //ƒ‚[ƒh‚Ìİ’è
-	m_nFrame = 0;
+	m_pCamera = nullptr;               //ƒJƒƒ‰ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+	m_pLight = nullptr;                //ŒõŒ¹ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+	m_pPlayerX = nullptr;              //ƒvƒŒƒCƒ„[ƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+	m_bOneSound = false;               //‚P“x‚¾‚¯‰¹Œ¹‚ğ—¬‚·ƒtƒ‰ƒO‚Ì‰Šú‰»
+	m_bOneScene = false;               //‚P“x‚¾‚¯‚»‚ÌƒV[ƒ“‚Ìˆ—‚ğ’Ê‚·ƒtƒ‰ƒO‚Ì‰Šú‰»
+	m_bPlay = false;                   //—V‚×‚éó‘Ô‚É‚È‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO‚Ì‰Šú‰»
+	m_Mode = MODE::MODE_RESULT;        //ƒ‚[ƒh‚Ìİ’è
+	m_nFrame = CObject::N_INIT_NUMBER; //ƒtƒŒ[ƒ€‚Ì‰Šú‰»
 }
 
 
@@ -153,18 +153,18 @@ CScene* CScene::Create(MODE mode)
 		}									  
 	}	
 
-	//— ƒXƒe[ƒW‚Ì
-	else if (mode == MODE::MODE_HIDEGAME)
-	{
-		pScene = new CHideGame();             //“IŠm•Û
-		pScene->m_Mode = mode;                //Œ»İ‚Ìƒ‚[ƒh‚ğˆø”‚Æ“¯Šú‚³‚¹‚é
+	////— ƒXƒe[ƒW‚Ì
+	//else if (mode == MODE::MODE_HIDEGAME)
+	//{
+	//	pScene = new CHideGame();             //“IŠm•Û
+	//	pScene->m_Mode = mode;                //Œ»İ‚Ìƒ‚[ƒh‚ğˆø”‚Æ“¯Šú‚³‚¹‚é
 
-		//‰Šú‰»‚É¬Œ÷‚µ‚½				     
-		if (SUCCEEDED(pScene->Init()))
-		{
-			return pScene;                    //î•ñ‚ğ•Ô‚·
-		}
-	}
+	//	//‰Šú‰»‚É¬Œ÷‚µ‚½				     
+	//	if (SUCCEEDED(pScene->Init()))
+	//	{
+	//		return pScene;                    //î•ñ‚ğ•Ô‚·
+	//	}
+	//}
 											  
 	//ƒ^ƒCƒgƒ‹‚Ì						   	  
 	else if (mode == MODE::MODE_TITLE)		  
@@ -242,25 +242,32 @@ CGame01::~CGame01()
 //=======================
 HRESULT CGame01::Init()
 {
+	float fInitNumber = CObject::F_INIT_NUMBER; //‰Šú’l
+
 	//‰Šú‰»‚É¸”s‚µ‚½
 	if (FAILED(CScene::Init()))
 	{
-		return E_FAIL;                                        //¸”s‚ğ•Ô‚·
-	}
+		return E_FAIL;                                           //¸”s‚ğ•Ô‚·
+	}														    
+															    
+	g_pBG = CManagerBg::Create(MODE::MODE_TITLE);                //”wŒi‚ÌUI¶¬
+	m_pFade = CFade::Create();                                   //ƒtƒF[ƒh‚Ì¶¬
 
-	g_pBG = CManagerBg::Create(MODE::MODE_TITLE);             //”wŒi‚ÌUI¶¬
-	m_pFade = CFade::Create();                                //ƒtƒF[ƒh‚Ì¶¬
-													          
-	GetCamera()->GetAdjustmentPosZ() = 500;                   //ƒJƒƒ‰‚ÌZ²‚Ì’²®
-	GetCamera()->SetRot(D3DXVECTOR3(0.0f,0.57f,0.0f));        //ƒJƒƒ‰‚ÌŒü‚«‚Ìİ’è
-													          
-	InitCreate();                                             //ƒ^ƒCƒgƒ‹‚É•K—v‚È¶¬
-	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING); //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğ’T‚·‚Éİ’è
-	GetPlayerX()->SetRot(D3DXVECTOR3(0.0f,0.57f,0.0f));       //ƒvƒŒƒCƒ„[‚ÌŒü‚«‚ğİ’è
-	
-	GetPlayerX()->SetAdjustPos().y = 2050.0f;                //ƒvƒŒƒCƒ„[‚ÌY²‚ÌˆÊ’u‚ğİ’è
-										                      
-	return S_OK;                                              //¬Œ÷‚ğ•Ô‚·
+	GetCamera()->GetAdjustmentPosZ() = INIT_CAMERA_ADJUST_POS_Z; //ƒJƒƒ‰‚ÌZ²‚Ì’²®
+
+	//ƒJƒƒ‰‚ÌŒü‚«‚Ìİ’è
+	GetCamera()->SetRot(D3DXVECTOR3(fInitNumber, CObjectX::D3DX_PI_ORI + MINUS_ROT, fInitNumber));
+
+	InitCreate();                                                //ƒ^ƒCƒgƒ‹‚É•K—v‚È¶¬
+	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING);    //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğ’T‚·‚Éİ’è
+
+	//ƒvƒŒƒCƒ„[‚ÌŒü‚«‚ğİ’è
+	GetPlayerX()->SetRot(D3DXVECTOR3(fInitNumber, CObjectX::D3DX_PI_ORI + MINUS_ROT, fInitNumber));
+
+	//ƒvƒŒƒCƒ„[‚ÌY²‚ÌˆÊ’u‚ğİ’è
+	GetPlayerX()->SetPos(D3DXVECTOR3(fInitNumber, INIT_PLAYER_POS_Y, fInitNumber));
+															    
+	return S_OK;                                                 //¬Œ÷‚ğ•Ô‚·
 }
 
 
@@ -289,30 +296,35 @@ void CGame01::Update()
 			//ƒtƒF[ƒh‚Ìˆ—‚ªI‚í‚Á‚½‚çiŠ®‘S‚ÉˆÃ‚­‚È‚Á‚½‚çj
 			if (m_pFade->GetAlph() >= CFade::FINISH_FADE_OUT)
 			{
-				m_pFade->Release();                                                    //î•ñ‚ğÁ‚·
-				g_pBG->Release();                                                      //î•ñ‚ğÁ‚·
-				m_pFade = nullptr;                                                     //î•ñ‚ğ–³‚­‚·
-				g_pBG = nullptr;                                                       //î•ñ‚ğ–³‚­‚·
-				GetPlayerX()->SetGravityFlag(true);                                    //d—ÍON
-				GetCamera()->GetAdjustmentPosZ() = 800;                                //ƒJƒƒ‰‚ÌZ²‚Ì’²®
-				GetCamera()->SetRot(D3DXVECTOR3(0.0f, 0.0f, 0.0f));                    //ƒJƒƒ‰‚ÌŒü‚«‚Ì‰Šú‰»
-				GetPlayerX()->SetRot(D3DXVECTOR3(0.0f, -CObjectX::D3DX_PI_ORI, 0.0f)); //ƒJƒƒ‰‚ÌŒü‚«‚Ì‰Šú‰»
-				GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);          //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
-				CompileCreate();                                                       //create‚µ‚½‚¢‚à‚Ì‚ğŠÖ”‰»‚µ‚ÄŒÄ‚Ô
-				return;                                                                //ˆ—‚ğ”²‚¯‚é
+				float fInitNumber = CObject::F_INIT_NUMBER; //‰Šú’l
+
+				m_pFade->Release();                                                                  //î•ñ‚ğÁ‚·
+				g_pBG->Release();                                                                    //î•ñ‚ğÁ‚·
+				m_pFade = nullptr;                                                                   //î•ñ‚ğ–³‚­‚·
+				g_pBG = nullptr;                                                                     //î•ñ‚ğ–³‚­‚·
+				GetPlayerX()->SetGravityFlag(true);                                                  //d—ÍON
+				GetCamera()->GetAdjustmentPosZ() = UPDATE_CAMERA_ADJUST_POS_Z;                       //ƒJƒƒ‰‚ÌZ²‚Ì’²®
+				GetCamera()->SetRot(D3DXVECTOR3(fInitNumber, fInitNumber, fInitNumber));             //ƒJƒƒ‰‚ÌŒü‚«‚Ì‰Šú‰»
+				GetPlayerX()->SetRot(D3DXVECTOR3(fInitNumber, -CObjectX::D3DX_PI_ORI, fInitNumber)); //ƒJƒƒ‰‚ÌŒü‚«‚Ì‰Šú‰»
+				GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);                        //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
+				CompileCreate();                                                                     //create‚µ‚½‚¢‚à‚Ì‚ğŠÖ”‰»‚µ‚ÄŒÄ‚Ô
+				return;                                                                              //ˆ—‚ğ”²‚¯‚é
 			}
 		}
 
 		//ƒXƒy[ƒXƒVƒbƒv‚O”Ô–Ú‚Ìî•ñ‚ª‚ ‚é
-		if (CManager::GetInstance()->GetSpeceBattleShip(0) != nullptr)
+		if (CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER) != nullptr)
 		{
 			SetAdjustFrame()++; //ƒtƒŒ[ƒ€‚ğ‘‚â‚·
 
 			//ƒtƒŒ[ƒ€‚ª‹K’è’l‚æ‚è‚‚¢
-			if (GetFrame() >= 180)
+			if (GetFrame() >= MAX_FRAME)
 			{
-				CManager::GetInstance()->GetSpeceBattleShip(0)->Release();							//ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
-				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, 0); //ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+				//ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
+				CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->Release();	        
+
+				//ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+				CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, BATTLESHIP_NUMBER); 
 			}
 		}
 	}
@@ -347,9 +359,16 @@ void CGame01::Update()
 //=======================
 void CGame01::InitCreate()
 {
-	GetPlayerX() = CPlayerX::Create();                                                                                     //ƒvƒŒƒCƒ„[‚Ì¶¬
-	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(0.0f, 2000.0f, 100.0f));  //ƒXƒy[ƒXƒVƒbƒv1”Ô–Ú‚Ì¶¬
-	CSkyDoom::Create(D3DXVECTOR3(0.0f, 0.0f, 200.0f), 1);                                                                  //‹ó‚Ì¶¬
+	float fInitNumber = CObject::F_INIT_NUMBER; //‰Šú’l
+
+	//ƒvƒŒƒCƒ„[‚Ì¶¬
+	GetPlayerX() = CPlayerX::Create();
+
+	//ƒXƒy[ƒXƒVƒbƒv1”Ô–Ú‚Ì¶¬
+	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(fInitNumber, BATTLESHIP_0_POS_Y, BATTLESHIP_0_POS_Z));
+
+	//‹ó‚Ì¶¬
+	CSkyDoom::Create(D3DXVECTOR3(fInitNumber, fInitNumber, SKY_POS_Z), SKY_CREATE_NUMBER);
 }
 
 
@@ -358,11 +377,16 @@ void CGame01::InitCreate()
 //=======================
 void CGame01::CompileCreate()
 {
-	//Xƒtƒ@ƒCƒ‹‚Ìcreate
-	//CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SHOP, 0, D3DXVECTOR3(200.0f, 0.0f, 150.0f));          //“X‚Ì¶¬
-	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(12700.0f, 1900.0f, 0.0f));   //ƒXƒy[ƒXƒVƒbƒv‚Q”Ô–Ú‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE,0);                                             //ƒXƒRƒA‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, 0);                                               //ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
+	int nInitNumber = CObject::N_INIT_NUMBER; //‰Šú’l
+
+	//ƒXƒy[ƒXƒVƒbƒv‚Q”Ô–Ú‚Ì¶¬
+	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(BATTLESHIP_1_POS_X, BATTLESHIP_1_POS_Y, CObject::F_INIT_NUMBER));
+
+	//ƒXƒRƒA‚Ì¶¬
+	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE, nInitNumber);
+
+	//ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
+	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, nInitNumber);
 }
 
 
@@ -394,6 +418,8 @@ CGame02::~CGame02()
 //=======================
 HRESULT CGame02::Init()
 {
+	float fInitNumber = CObject::F_INIT_NUMBER; //‰Šú’l
+
 	//‰Šú‰»‚É¸”s‚µ‚½
 	if (FAILED(CScene::Init()))
 	{
@@ -401,9 +427,11 @@ HRESULT CGame02::Init()
 	}
 
 	CompileCreate();                                                                      //create‚µ‚½‚¢‚à‚Ì‚ğŠÖ”‰»‚µ‚ÄŒÄ‚Ô
-	GetPlayerX()->SetPos(D3DXVECTOR3(-POS_X,200.0f,0.0f));                                //ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚Ìİ’è
+	GetPlayerX()->SetPos(D3DXVECTOR3(POS_X, POS_Y, CObject::F_INIT_NUMBER));              //ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚Ìİ’è
 	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING);                             //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğ’T‚·‚Éİ’è
-	CManager::GetInstance()->GetSpeceBattleShip(0)->GetRot().y = -CObjectX::D3DX_PI_ORI;  //Y²‚ÌŒü‚«‚ğİ’è
+
+	 //Y²‚ÌŒü‚«‚ğİ’è
+	CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetRot(D3DXVECTOR3(fInitNumber, -CObjectX::D3DX_PI_ORI, fInitNumber));
 
 	return S_OK;       //¬Œ÷‚ğ•Ô‚·
 }
@@ -426,32 +454,40 @@ void CGame02::Update()
 	//ƒV[ƒ“‚Ìˆ—‚ª’Ê‚Á‚½
 	if (GetOneScene() == false)
 	{
-		SetAdjustFrame()++;
+		SetAdjustFrame()++; //ƒtƒŒ[ƒ€‚ğ‘‚â‚·
 
-		if (GetFrame() <= 80)
+		//‘æˆês“®
+		if (GetFrame() <= FRAME_1)
 		{
-			GetPlayerX()->SetGravityFlag(false);                                                //ƒvƒŒƒCƒ„[‚Ìd—ÍOff
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
-			GetPlayerX()->SetAdjustPos().x += PLUS_POS_X;                                      //X²‚ÌˆÊ’u‚Ì‘‰Á
-		}																					   
-		else if(GetFrame ()<=81)															   
-		{																					   
-			GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);                       //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
-			GetPlayerX()->SetGravityFlag(true);                                                 //d—ÍON
-		}																					   
-		else if (GetFrame() <= 300)															   
-		{																					   
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().y += 3.0f;         //X²‚ÌˆÊ’u‚Ì‘‰Á
-		}																					   
-		else																				   
+			GetPlayerX()->SetGravityFlag(false);                                                              //ƒvƒŒƒCƒ„[‚Ìd—ÍOff
+			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().x += PLUS_POS_X;   //X²‚ÌˆÊ’u‚Ì‘‰Á
+			GetPlayerX()->SetAdjustPos().x += PLUS_POS_X;                                                     //X²‚ÌˆÊ’u‚Ì‘‰Á
+		}
+
+		//‘æ“ñs“®
+		else if (GetFrame() <= FRAME_2)
 		{
-			SetOneScene(true);                                                                  //ƒtƒ‰ƒO‚ÌOff
-			CManager::GetInstance()->GetSpeceBattleShip(0)->Release();                          //ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
-			CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, 0); //ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+			GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);                                      //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
+			GetPlayerX()->SetGravityFlag(true);                                                                //d—ÍON
+		}
+
+		//‘æOs“®
+		else if (GetFrame() <= FRAME_3)
+		{
+			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
+			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().y += PLUS_POS_Y;    //Y²‚ÌˆÊ’u‚Ì‘‰Á
+		}
+		else
+		{
+			SetOneScene(true);                                                                                 //ƒtƒ‰ƒO‚ÌOff
+			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->Release();                         //ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
+
+			//ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+			CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, BATTLESHIP_NUMBER); 
 			return;
 		}
 	}
+
 	CScene::Update(); //XVˆ—
 }
 
@@ -461,120 +497,135 @@ void CGame02::Update()
 //=======================
 void CGame02::CompileCreate()
 {
+	int nInitNumber = CObject::N_INIT_NUMBER;   //‰Šú’l
+	float fInitNumber = CObject::F_INIT_NUMBER; //‰Šú’l
+
 	//Xƒtƒ@ƒCƒ‹‚Ìcreate
-	GetPlayerX() = CPlayerX::Create();                                                                                        //ƒvƒŒƒCƒ„[‚Ì¶¬
-	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(-POS_X, 200.0f, 100.0f));    //ƒXƒy[ƒXƒVƒbƒv‚Ì¶¬
-	CSkyDoom::Create(D3DXVECTOR3(0.0f, 0.0f, 200.0f), 0);                                                                     //‹ó‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SHOP, 0, D3DXVECTOR3(200.0f, 0.0f, 150.0f));            //“X‚Ì¶¬
-	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FINALBLOCK, D3DXVECTOR3(4335.0f, -200.0f, 0.0f));            //ƒ{ƒXí‚Ì‘«ê
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE, CManager::GetObjectSet()->GetClearScore());    //ƒXƒRƒA‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, 0);                                               //ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
+	GetPlayerX() = CPlayerX::Create(); //ƒvƒŒƒCƒ„[‚Ì¶¬
+
+	//ƒXƒy[ƒXƒVƒbƒv‚Ì¶¬
+	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(POS_X, POS_Y, BATTLESHOP_POS_Z));    
+
+	//‹ó‚Ì¶¬
+	CSkyDoom::Create(D3DXVECTOR3(fInitNumber, fInitNumber, SKY_POS_Z), nInitNumber);                                         
+
+	//“X‚Ì¶¬
+	CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SHOP, nInitNumber, D3DXVECTOR3(SHOP_POS_X, fInitNumber, SHOP_POS_Z));
+
+	//ƒ{ƒXí‚Ì‘«ê
+	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::FINALBLOCK, D3DXVECTOR3(SCAFFOLD_POS_X, SCAFFOLD_POS_Y, fInitNumber));     
+
+	//ƒXƒRƒA‚Ì¶¬
+	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE, CManager::GetObjectSet()->GetClearScore());  
+
+	//ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
+	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, nInitNumber);                                             
 }
 
 
-//================================================================================================================================
-//                                                    — ƒXƒe[ƒW
-//================================================================================================================================
-
-
-//=======================
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-//=======================
-CHideGame::CHideGame()
-{
-	SetPlay(false); //—V‚×‚é‚Éİ’è
-}
-
-
-//=======================
-//ƒfƒXƒgƒ‰ƒNƒ^
-//=======================
-CHideGame::~CHideGame()
-{
-
-}
-
-
-//=======================
-//‰Šú‰»ˆ—
-//=======================
-HRESULT CHideGame::Init()
-{
-	//‰Šú‰»‚É¸”s‚µ‚½
-	if (FAILED(CScene::Init()))
-	{
-		return E_FAIL; //¸”s‚ğ•Ô‚·
-	}
-
-	CompileCreate();                                                                      //create‚µ‚½‚¢‚à‚Ì‚ğŠÖ”‰»‚µ‚ÄŒÄ‚Ô
-	GetPlayerX()->SetPos(D3DXVECTOR3(-POS_X, 200.0f, 0.0f));                              //ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚Ìİ’è
-	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING);                             //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğ’T‚·‚Éİ’è
-	CManager::GetInstance()->GetSpeceBattleShip(0)->GetRot().y = -CObjectX::D3DX_PI_ORI;  //Y²‚ÌŒü‚«‚ğİ’è
-
-	return S_OK;       //¬Œ÷‚ğ•Ô‚·
-}
-
-
-//=======================
-//I—¹ˆ—
-//=======================
-void CHideGame::Uninit()
-{
-	CScene::Uninit(); //”jŠüˆ—
-}
-
-
-//=======================
-//XVˆ—
-//=======================
-void CHideGame::Update()
-{
-	//ƒV[ƒ“‚Ìˆ—‚ª’Ê‚Á‚½
-	if (GetOneScene() == false)
-	{
-		SetAdjustFrame()++;
-
-		if (GetFrame() <= 80)
-		{
-			GetPlayerX()->SetGravityFlag(false);                                                //ƒvƒŒƒCƒ„[‚Ìd—ÍOff
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
-			GetPlayerX()->SetAdjustPos().x += PLUS_POS_X;                                      //X²‚ÌˆÊ’u‚Ì‘‰Á
-		}
-		else if (GetFrame() <= 81)
-		{
-			GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);                       //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
-			GetPlayerX()->SetGravityFlag(true);                                                 //d—ÍON
-		}
-		else if (GetFrame() <= 300)
-		{
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
-			CManager::GetInstance()->GetSpeceBattleShip(0)->SetAdjustPos().y += 3.0f;         //X²‚ÌˆÊ’u‚Ì‘‰Á
-		}
-		else
-		{
-			SetOneScene(true);                                                                  //ƒtƒ‰ƒO‚ÌOff
-			CManager::GetInstance()->GetSpeceBattleShip(0)->Release();                          //ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
-			CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, 0); //ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
-			return;
-		}
-	}
-	CScene::Update(); //XVˆ—
-}
-
-
-//=======================
-//CretaeŠÖ”‚ğŒÄ‚Ô
-//=======================
-void CHideGame::CompileCreate()
-{
-	//Xƒtƒ@ƒCƒ‹‚Ìcreate
-	GetPlayerX() = CPlayerX::Create();                                                                                        //ƒvƒŒƒCƒ„[‚Ì¶¬
-	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(-POS_X, 200.0f, 100.0f));    //ƒXƒy[ƒXƒVƒbƒv‚Ì¶¬
-	CSkyDoom::Create(D3DXVECTOR3(0.0f, 0.0f, 200.0f), 0);                                                                     //‹ó‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SHOP, 0, D3DXVECTOR3(200.0f, 0.0f, 150.0f));            //“X‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE, CManager::GetObjectSet()->GetClearScore());    //ƒXƒRƒA‚Ì¶¬
-	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, 0);                                               //ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
-}
+////================================================================================================================================
+////                                                    — ƒXƒe[ƒW
+////================================================================================================================================
+//
+//
+////=======================
+////ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+////=======================
+//CHideGame::CHideGame()
+//{
+//	SetPlay(false); //—V‚×‚é‚Éİ’è
+//}
+//
+//
+////=======================
+////ƒfƒXƒgƒ‰ƒNƒ^
+////=======================
+//CHideGame::~CHideGame()
+//{
+//
+//}
+//
+//
+////=======================
+////‰Šú‰»ˆ—
+////=======================
+//HRESULT CHideGame::Init()
+//{
+//	//‰Šú‰»‚É¸”s‚µ‚½
+//	if (FAILED(CScene::Init()))
+//	{
+//		return E_FAIL; //¸”s‚ğ•Ô‚·
+//	}
+//
+//	CompileCreate();                                                                      //create‚µ‚½‚¢‚à‚Ì‚ğŠÖ”‰»‚µ‚ÄŒÄ‚Ô
+//	GetPlayerX()->SetPos(D3DXVECTOR3(-POS_X, 200.0f, 0.0f));                              //ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚Ìİ’è
+//	GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::LOKING);                             //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğ’T‚·‚Éİ’è
+//	CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->GetRot().y = -CObjectX::D3DX_PI_ORI;  //Y²‚ÌŒü‚«‚ğİ’è
+//
+//	return S_OK;       //¬Œ÷‚ğ•Ô‚·
+//}
+//
+//
+////=======================
+////I—¹ˆ—
+////=======================
+//void CHideGame::Uninit()
+//{
+//	CScene::Uninit(); //”jŠüˆ—
+//}
+//
+//
+////=======================
+////XVˆ—
+////=======================
+//void CHideGame::Update()
+//{
+//	//ƒV[ƒ“‚Ìˆ—‚ª’Ê‚Á‚½
+//	if (GetOneScene() == false)
+//	{
+//		SetAdjustFrame()++;
+//
+//		if (GetFrame() <= 80)
+//		{
+//			GetPlayerX()->SetGravityFlag(false);                                                //ƒvƒŒƒCƒ„[‚Ìd—ÍOff
+//			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
+//			GetPlayerX()->SetAdjustPos().x += PLUS_POS_X;                                      //X²‚ÌˆÊ’u‚Ì‘‰Á
+//		}
+//		else if (GetFrame() <= 81)
+//		{
+//			GetPlayerX()->SetMotion(CCharacter::MOTIONSTATE::TITLE_JUMP);                       //ƒvƒŒƒCƒ„[‚Ìƒ‚[ƒVƒ‡ƒ“‚ğİ’è
+//			GetPlayerX()->SetGravityFlag(true);                                                 //d—ÍON
+//		}
+//		else if (GetFrame() <= 300)
+//		{
+//			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().x += PLUS_POS_X;    //X²‚ÌˆÊ’u‚Ì‘‰Á
+//			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->SetAdjustPos().y += 3.0f;         //X²‚ÌˆÊ’u‚Ì‘‰Á
+//		}
+//		else
+//		{
+//			SetOneScene(true);                                                                  //ƒtƒ‰ƒO‚ÌOff
+//			CManager::GetInstance()->GetSpeceBattleShip(BATTLESHIP_NUMBER)->Release();                          //ƒXƒy[ƒXƒVƒbƒv‚ğÁ‚·
+//			CManager::GetInstance()->DesignationUninitX(CObjectX::TYPE::SPECEBATTLESHIP000, 0); //ƒXƒy[ƒXƒVƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚Ì‰Šú‰»
+//			return;
+//		}
+//	}
+//	CScene::Update(); //XVˆ—
+//}
+//
+//
+////=======================
+////CretaeŠÖ”‚ğŒÄ‚Ô
+////=======================
+//void CHideGame::CompileCreate()
+//{
+//	//Xƒtƒ@ƒCƒ‹‚Ìcreate
+//	GetPlayerX() = CPlayerX::Create();                                                                                        //ƒvƒŒƒCƒ„[‚Ì¶¬
+//	CManager::GetInstance()->CreateBlock(CObjectX::STRATEGYTYPE::SPECEBATTLESHIP000, D3DXVECTOR3(-POS_X, 200.0f, 100.0f));    //ƒXƒy[ƒXƒVƒbƒv‚Ì¶¬
+//	CSkyDoom::Create(D3DXVECTOR3(0.0f, 0.0f, 200.0f), 0);                                                                     //‹ó‚Ì¶¬
+//	CManager::GetInstance()->GetCreateObjectInstanceX(CObjectX::TYPE::SHOP, 0, D3DXVECTOR3(200.0f, 0.0f, 150.0f));            //“X‚Ì¶¬
+//	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::SCORE, CManager::GetObjectSet()->GetClearScore());    //ƒXƒRƒA‚Ì¶¬
+//	CManager::GetInstance()->GetCreateObjectInstnace2D(CObject2D::TYPE::HP, 0);                                               //ƒvƒŒƒCƒ„[‚ÌHPƒQ[ƒW‚Ì¶¬
+//}
 
 
 //================================================================================================================================
