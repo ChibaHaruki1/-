@@ -95,7 +95,7 @@ private:
 	static constexpr  float   MAX_GRAVITY = 50.0f;               //重力の最大値
 	static constexpr  float   DIE_POS_Y = 4000.0f;               //死亡位置の設定値
 	static constexpr  float   MAX_JUMPPAWER = 10.0f;             //飛ぶ力
-	static constexpr  float   MAX_SPECIALATTACKCOUNT = 60 * 0;  //必殺技のリキャストタイム
+	static constexpr  float   MAX_SPECIALATTACKCOUNT = 60 * 30;  //必殺技のリキャストタイム
 	static constexpr  float   MAX_POS_NEXTSTAGE = 0.4f;          //次のステージへ行く時の位置の乗算値
 
 
